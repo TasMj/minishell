@@ -1,0 +1,9 @@
+
+
+
+
+
+//parsing
+
+1) recuperer la ligne de commande avec readline
+2) reussir a separer tous les token en fonction de tous les cas possible (quoate,...)

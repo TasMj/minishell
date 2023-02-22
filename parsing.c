@@ -6,61 +6,77 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:50:57 by tmejri            #+#    #+#             */
-/*   Updated: 2023/02/20 16:57:23 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/02/22 17:38:44 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	ft_strlen(const char *str)
+char    *get_input()
 {
-	size_t	i;
+    char* input;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+    input = readline("$");
+    if (input == NULL) {
+        printf("Erreur de lecture de la input.\n");
+        exit(EXIT_FAILURE);
+    }
+	add_history(input);
+
+    printf("Input: %s\n\n", input);
+    return input;
 }
 
-char	*ft_strdup(const char *s)
+char    **get_token(char *input)
 {
-	char	*ss;
-	int		i;
-	int		len_s;
+    char    **tab_token;
 
-	i = 0;
-	len_s = ft_strlen(s);
-	ss = (char *)malloc(sizeof(char) * len_s + 1);
-	if (ss == 0)
-		return (NULL);
-	while (s[i])
-	{
-		ss[i] = s[i];
-		i++;
-	}
-	ss[i] = '\0';
-	return (ss);
+    tab_token = all_split(input, ' ', 34);
+    return (tab_token);
 }
 
-int main(int argc, char **argv)
+
+int main(void) 
 {
-    int i;
-    char    **tab;
+    char *input;
+    char **tab_token;
     
-    i = 0;
-    tab = malloc(sizeof(char *) * argc);
-    while(i < argc)
+	input = get_input();
+    tab_token = get_token(input);
+    int i = 0;
+    while (tab_token[i])
     {
-        tab[i] = ft_strdup(argv[i]);
+        printf("[%d] %s\n", i, tab_token[i]);
         i++;
     }
+    free(input);
+    return 0;
+}
 
-    i = 0;
-    while(i < argc)
-    {
-        printf("%s\n", tab[i]);
-        i++;
-    }
+int main()
+{
+    t_list **list_token;
+	int		size_list;
+    char *input;
+
+	list_token = malloc(sizeof(t_list));
+	if (!list_token)
+	{
+		free_list(list_token);
+		return (1);
+	}
+	list_token[0] = NULL;
+    while (get_input())
+	{
+		input = get_input();
+    // tab_token = get_token(input);
+    // int i = 0;
+    // while (tab_token[i])
+    // {
+    //     printf("[%d] %s\n", i, tab_token[i]);
+    //     i++;
+    // }
+	}
+    free(input);
     return (0);
 }
-
