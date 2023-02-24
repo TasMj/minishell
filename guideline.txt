@@ -7,3 +7,25 @@
 
 1) recuperer la ligne de commande avec readline
 2) reussir a separer tous les token en fonction de tous les cas possible (quoate,...)
+    a) bien différentcier les elt de citations qd ils sont present en simple char
+        - "" preserve valeur littérale de chaque caractère. Ne peut pas conteir de
+                - `
+                - $ : Les caractères d'entrée de la chaîne entre guillemets qui sont également compris
+                entre "$(" et le ")" correspondant ne sont pas affectés par les guillemets, mais définissent
+                plutôt la commande dont la sortie remplace le "$(...)" 
+                - \
+                - @
+        - '' preserve valeur littérale de chaque caractère. Ne peut pas conteir de simple quoat
+        - Les opérateurs de redirection "<<" et "<<-" permettent tous deux de rediriger
+        les lignes contenues dans un fichier d'entrée de l'interpréteur de commandes, appelé 
+        "here-document", vers l'entrée d'une commande.
+        - \ correspond à une continuation de ligne. Doit être enlever des token si elle n'est pas cité
+        - $ introduit l'expansion des paramètres
+        
+// Token recognisation
+
+1)
+Hello Bastien j'espere que tu vas bien ! 
+Est ce que tu seras à l'école aujourd'hui entre 15h et 18h ?
+Et si ce n'est pas le cas est ce que tu aurais un petit moment pour que je t'appelle ?
+
