@@ -1,0 +1,14 @@
+
+
+
+1) recup commande avec readline
+2) mettre tous les token dans une liste chainee
+    - check si il y a un char qui est une "citation"
+    return 0 si pas du tout
+    LISTE : |  &  ;  <  >  (  )  $  `  \  "  '  <space>  <tab>  <newline>
+        - en fonction de la situation en question la considerer comme dans la
+        chaine, ou en tant qu'operateur.
+            si dans la chaine --> l'inclure dans le token
+            sinon faire la laisser en cha* ds le token mais l'enlever a la fin pour faire l'operation
+3) indexer le token (jsp si ca va etre utile)
+4) faire une fonction qui en fonction de la commande, lui attribut un "type" (une categorie)

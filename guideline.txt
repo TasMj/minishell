@@ -21,7 +21,7 @@
         "here-document", vers l'entrée d'une commande.
         - \ correspond à une continuation de ligne. Doit être enlever des token si elle n'est pas cité
         - $ introduit l'expansion des paramètres
-        
+
 // Token recognisation
 
 1)
