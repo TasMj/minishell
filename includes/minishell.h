@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/02/24 16:33:03 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/02/27 13:58:48 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,28 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+
+
+/******************************************************************************/
+/*                                  macros                                    */
+/******************************************************************************/
+
+/*Errors*/
+# define ERR_REDIR_IN_OUT "syntax error near unexpected token `newline'\n"
+# define ERR_QUOTE "+ tard return '>' plus boucle infini qui recup les input jusqu'a un ctrlD ou ctrlC"
+
+/******************************************************************************/
+/*                                  macros                                    */
+/******************************************************************************/
+
+enum token_type {
+	WORD,
+	FLAG	
+};
+
 
 /******************************************************************************/
 /*                               structures                                   */
@@ -29,7 +49,6 @@
 typedef struct s_list
 {
 	struct s_list	*premier;
-	int				content;
 	char			*type;
 	int				index;
 	struct s_list	*next;
@@ -42,14 +61,13 @@ typedef struct s_list
 /*                                fonctions                                   */
 /******************************************************************************/
 
-char	**ft_split(char *s, char c);
 size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *s);
-char	**ft_split_bracket(char *s, char c);
-char **all_split(char *s, char c, char d);
+char    *get_input(void);
+int check_args(char *str);
+int check_peer_quote(char *str);
 
-
-
+int	err_msg(int n);
 
 
 #endif

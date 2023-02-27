@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 12:45:54 by tmejri            #+#    #+#             */
-/*   Updated: 2023/02/22 17:01:05 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/02/25 21:00:15 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	*ft_memset(void *s, int c, size_t n)
+{
+	char		*ss;
+	size_t		i;
+
+	i = 0;
+	ss = (char *)s;
+	while (i < n)
+	{
+		ss[i] = (char)c;
+		i++;
+	}
+	s = (void *)ss;
+	return (s);
+}
 
 char	*ft_strdup(const char *s)
 {
@@ -40,14 +56,4 @@ size_t	ft_strlen(const char *str)
 	while (str[i])
 		i++;
 	return (i);
-}
-
-char **all_split(char *s, char c, char d)
-{
-	if (c == ' ')
-		return (ft_split(s, ' '));
-	if (d == 34)
-		return (ft_split_bracket(s, 34));
-
-	return (NULL);
 }

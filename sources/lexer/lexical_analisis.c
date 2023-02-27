@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   lexical_analyze.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/22 17:33:10 by tmejri            #+#    #+#             */
-/*   Updated: 2023/02/22 17:37:07 by tmejri           ###   ########.fr       */
+/*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
+/*   Updated: 2023/02/27 13:05:37 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_list(t_list **list)
-{
-	t_list	*to_free;
-	t_list	*iter;
+/* étapes */
 
-	iter = *list;
-	while (iter)
-	{
-		to_free = iter;
-		iter = iter->next;
-		free(to_free);
-	}
-	*list = NULL;
-	free(list);
-}
+//1 chaîne de caractères de la ligne de commande lue et stockée
+//2 elimination des caractères blancs (espace, tab, retour à la ligne)
+//3 détéction des guillemets
+//4 division en tokens
+//5 retour des tokens
