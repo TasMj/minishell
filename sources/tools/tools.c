@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 12:45:54 by tmejri            #+#    #+#             */
-/*   Updated: 2023/02/25 21:00:15 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/03 10:37:30 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,16 @@ void	*ft_memset(void *s, int c, size_t n)
 	return (s);
 }
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup_size(char *s, int size)
 {
 	char	*ss;
 	int		i;
-	int		len_s;
 
 	i = 0;
-	len_s = ft_strlen(s);
-	ss = (char *)malloc(sizeof(char) * len_s + 1);
+	ss = (char *)malloc(sizeof(char) * size + 1);
 	if (ss == 0)
 		return (NULL);
-	while (s[i])
+	while (i < size)
 	{
 		ss[i] = s[i];
 		i++;
@@ -48,9 +46,9 @@ char	*ft_strdup(const char *s)
 	return (ss);
 }
 
-size_t	ft_strlen(const char *str)
+int	ft_strlen(char *str)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (str[i])
