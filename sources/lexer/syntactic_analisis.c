@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   syntactic_analisis.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/03/03 13:01:23 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/06 15:38:47 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 /* étapes */
 /* Vérifier que la séquence d'elt lexicaux créée pdt l'analyse lexical est cohérente avec la grammaire du langage (respecte règles syntaxiques)*/
@@ -21,3 +22,18 @@
 //4 gestion des priorités: inclure étape pour gerer prio des opérateurs
 //5 transformation de l'arbre
 
+/* return 1 if the command is a WORD type*/
+int is_word(char *token)
+{
+    struct stat    buffer; //struc of a c library
+    int            check;
+    
+    check = stat()    
+    //utiliser lq fonction stat vérifier si le token correspond à un fichier ou un répertoire existant.
+}
+
+
+void    determine_type(t_list *list_token)
+{
+    
+}

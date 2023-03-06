@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/03/03 12:51:56 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/06 15:36:38 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
@@ -39,7 +41,8 @@ enum token_type {
 	WORD,
 	VAR,
 	PIPE,
-	HEREDOC	
+	HEREDOC,
+	COMMENT
 };
 
 
