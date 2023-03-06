@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/03/01 15:18:34 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/03 12:36:03 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int main(int argc, char **argv, char **env)
 	list_token[0] = NULL;
     create_token(list_token, input);
     // print_list(list_token);
-    
+    //free liste
     
     return (0);
 }

@@ -1,22 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   set_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/25 19:10:29 by tas               #+#    #+#             */
-/*   Updated: 2023/03/03 13:04:28 by tas              ###   ########.fr       */
+/*   Created: 2023/03/03 13:32:48 by tas               #+#    #+#             */
+/*   Updated: 2023/03/03 13:33:40 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-void ft_pwd(void)
-{
-    char    cwd[1024];
-    if (getcwd(cwd, sizeof(cwd)) != NULL)
-        printf("%s\n", cwd);
-    else
-        perror("getcwd() error");
-}
+//1) récup liste de var d'env
+//2) ajouter nouvelle var
+//3) supprimer var
