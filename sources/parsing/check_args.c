@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 13:17:01 by tas               #+#    #+#             */
-/*   Updated: 2023/02/25 20:40:30 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/07 14:37:57 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int check_redir_out(char c)
 
 /* check si <> ou >< ou << ou >>
 return err si <> ou ><, 2 si <<, 3 si >> */
-int check_redir_in_out(char *str)
+int check_heredoc(char *str)
 {
     int i;
 
@@ -61,7 +61,7 @@ int check_redir_in_out(char *str)
 
 int check_args(char *str)
 {
-    if (check_redir_in_out(str) == 1)
+    if (check_heredoc(str) == 1)
         return (0);
     return (0);
 }

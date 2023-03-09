@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:12:00 by tas               #+#    #+#             */
-/*   Updated: 2023/03/03 13:04:56 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/08 15:38:44 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,16 @@ void    print_list(t_list **list_token)
         printf("print: %s\n", (*list_token)->content);
         (*list_token) = (*list_token)->next;
     }
+}
+
+void	ft_lstiter(t_list *lst, void (*f)(void *))
+{
+	if (lst && f)
+	{
+		while (lst)
+		{
+			f(lst->content);
+			lst = lst->next;
+		}
+	}
 }

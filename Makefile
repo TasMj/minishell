@@ -6,7 +6,7 @@
 #    By: tas <tas@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/03/03 13:32:36 by tas              ###   ########.fr        #
+#    Updated: 2023/03/07 14:31:06 by tas              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,12 @@ INITIALISATION	= ./sources/initialisation/init_struct.c \
 
 LEXER			= ./sources/lexer/token.c ./sources/lexer/lexical_analisis.c  \
 				./sources/lexer/semantic_analisis.c ./sources/lexer/syntactic_analisis.c \
+				./sources/lexer/annex_syntactic.c \
 
 PARSING			= ./sources/parsing/check_args.c ./sources/parsing/quoting.c \
 
 TOOLS			= ./sources/tools/tools.c ./sources/tools/tools_list.c \
+				./sources/tools/ft_split.c \
 
 SRCS			= ${MAIN} ${BUILTINS} ${EXIT} ${INITIALISATION} ${LEXER} ${PARSING} ${TOOLS}
 

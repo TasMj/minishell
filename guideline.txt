@@ -15,7 +15,7 @@
                 plutôt la commande dont la sortie remplace le "$(...)" 
                 - \
                 - @
-        - '' preserve valeur littérale de chaque caractère. Ne peut pas conteir de simple quoat
+        - '' preserve valeur littérale de chaque caractère. Ne peut pas contenir de simple quoat
         - Les opérateurs de redirection "<<" et "<<-" permettent tous deux de rediriger
         les lignes contenues dans un fichier d'entrée de l'interpréteur de commandes, appelé 
         "here-document", vers l'entrée d'une commande.

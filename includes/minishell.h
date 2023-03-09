@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/03/06 15:36:38 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/03/08 15:46:36 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,23 @@
 # define ERR_REDIR_IN_OUT "syntax error near unexpected token `newline'\n"
 # define ERR_QUOTE "+ tard return '>' plus boucle infini qui recup les input jusqu'a un ctrlD ou ctrlC"
 
+/*Quotes*/
+# define QUOTE 1
+# define NO_QUOTE 0
+
+
 /******************************************************************************/
 /*                                   enum                                     */
 /******************************************************************************/
 
 enum token_type {
 	WORD,
-	VAR,
-	PIPE,
+	APPEND,
 	HEREDOC,
-	COMMENT
+	STDIN,
+	STDOUT,
+	PIPE,
+	END
 };
 
 
@@ -54,7 +61,8 @@ typedef struct s_list
 {
 	struct s_list	*premier;
 	char			*content;
-	char			*type;
+	int				type;
+	int				quote;
 	// int				index;
 	struct s_list	*next;
 }		t_list;
@@ -66,9 +74,14 @@ typedef struct s_list
 /*                                fonctions                                   */
 /******************************************************************************/
 
+/* builtin */
+int		ft_env(char **envp);
+void	ft_pwd(void);
+
 /* exit */
 int		err_msg(int n);
 void	free_list(t_list **list);
+void	free_all(char *s1, char *s2);
 
 /* lexical analisis*/
 char    *get_input(void);
@@ -77,10 +90,15 @@ void    add_list(t_list **list_token, char *stockage);
 char    *detect_token(char *stockage);
 void    create_token(t_list **list_token, char *input);
 
+/* syntactic analisis */
+void    get_type(t_list *list_token);
+int		is_word(char *token);
+int		determine_type(char *token);
+
 /* check_args */
 int		check_redir_in(char c);
 int		check_redir_out(char c);
-int		check_redir_in_out(char *str);
+int		check_heredoc(char *str);
 int		check_args(char *str);
 
 /* quoting */
@@ -100,6 +118,8 @@ void    print_list(t_list **list_token);
 void	*ft_memset(void *s, int c, size_t n);
 char	*ft_strdup_size(char *s, int size);
 int		ft_strlen(char *str);
-
+char	*ft_strjoin_mod(char *s1, char *s2, int mode);
+char	**ft_split(char const *s, char c);
+int		ft_strncmp(char *s1, char *s2, size_t n);
 
 #endif

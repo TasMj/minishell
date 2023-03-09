@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:33:10 by tmejri            #+#    #+#             */
-/*   Updated: 2023/02/27 13:58:25 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/07 14:20:53 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,10 @@ void	free_list(t_list **list)
 	}
 	*list = NULL;
 	free(list);
+}
+
+void	free_all(char *s1, char *s2)
+{
+	free(s1);
+	free(s2);
 }

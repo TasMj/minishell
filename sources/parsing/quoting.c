@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:15:52 by tmejri            #+#    #+#             */
-/*   Updated: 2023/03/03 10:36:02 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/08 14:59:47 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,13 @@ char *word_quote(char *stockage, int quote)
                 flag++;
             i++;
         }
-        start = i;
+        start = i - 1;
         while (stockage[i] != quote)
             i++;
         if(stockage[i] == quote)
             flag++;
     }
-    new = ft_strdup_size(stockage + start, (i - start));
+    new = ft_strdup_size(stockage + start, ((i + 1) - start));
+    // new = ft_strdup_size(stockage + start, (i - start)); et start = i et pas i - 1
     return (new);
 }

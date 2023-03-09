@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/03/03 10:40:15 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/07 20:35:14 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void    create_token(t_list **list_token, char *input)
             word_ready = detect_token(stockage);
             free(stockage);
             add_list(list_token, word_ready);
+            get_type(*list_token);
             (*list_token) = (*list_token)->next;
         }
         flag_quote = 0;
