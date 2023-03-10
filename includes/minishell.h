@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/03/08 15:46:36 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/10 15:59:37 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 /*Errors*/
 # define ERR_REDIR_IN_OUT "syntax error near unexpected token `newline'\n"
-# define ERR_QUOTE "+ tard return '>' plus boucle infini qui recup les input jusqu'a un ctrlD ou ctrlC"
+# define ERR_QUOTE "not handle by minishell"
 
 /*Quotes*/
 # define QUOTE 1
@@ -63,7 +63,6 @@ typedef struct s_list
 	char			*content;
 	int				type;
 	int				quote;
-	// int				index;
 	struct s_list	*next;
 }		t_list;
 

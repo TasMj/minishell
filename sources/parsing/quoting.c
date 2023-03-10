@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   quoting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:15:52 by tmejri            #+#    #+#             */
-/*   Updated: 2023/03/08 14:59:47 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/10 15:53:23 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*Return 1 if the command line contain a quote, 0 if not */
-int is_a_quoting(char c)
-{
-    if (c == '|' || c == '&' || c == ';' || c == '<' || c == '>' || c == '('
-        || c == ')' || c == '$' || c == '`')
-            return (1);
-    return (0);
-}
+// /*Return 1 if the command line contain a quote, 0 if not */
+// int is_a_quoting(char c)
+// {
+//     if (c == '|' || c == '&' || c == ';' || c == '<' || c == '>' || c == '('
+//         || c == ')' || c == '$' || c == '`')
+//             return (1);
+//     return (0);
+// }
 
 /*PB CAR NE LIS PAS LES QUOTES*/
-/* check si après la première simple quote (') on trouve la deuxième
+/* check si après la première single quote (') on trouve la deuxième
 return 0 si pas de ', 1 si un seul ', 2 si on trouve la deuxième */
 int check_pair_single_quote(char *str)
 {

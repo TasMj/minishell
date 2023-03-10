@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntactic_analisis.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/03/08 16:26:00 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/10 15:48:03 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,40 +42,15 @@ void    get_type(t_list *list_token)
 }
 
 
+
 /* création de l'arbre syntaxique */
 //placer dans un tableau
-int check_syntaxe(t_list **list_token)
-{
-    int    *operator[] = {PIPE, STDIN, APPEND, STDOUT, HEREDOC};
-    int     i;
-    int     c;
-    char    *tab_before;        
-    char    *tab_after;
-    t_list  *beginning;
+// int check_syntaxe(t_list **list_token)
+// {
+//     int    **operator[] = {WORD, PIPE, STDIN, APPEND, STDOUT, HEREDOC};
 
-    beginning = *list_token;
-    while((*list_token) != NULL)
-    {
-        i = 0;
-        c = 0;
-        while (operator[i])
-        {
-            if ((*list_token)->type == operator[i])
-            {
-                tab_before = malloc(sizeof(char*) * c + 1);
-                
-            }
-            else
-            {
-                i++;
-                c++;
-            }
-        }
-        (*list_token) = (*list_token)->next;
-    }
     
-        
-}
+// }
 
 
 

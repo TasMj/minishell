@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/03/07 21:29:33 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/10 16:08:47 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,16 @@ int main(int argc, char **argv, char **env)
     char *input;
     t_list **list_token;
 
-    input = get_input();
-    if (check_args(input) == 1)
-        return (err_msg(1));
+    while(1)
+    {
+        input = get_input();
+        if (check_args(input) == 1)
+            return (err_msg(0));
 
-    list_token = malloc(sizeof(t_list));
-	list_token[0] = NULL;
-    create_token(list_token, input);
+        list_token = malloc(sizeof(t_list));
+	    list_token[0] = NULL;
+        create_token(list_token, input);
+    }
     
     // print_list(list_token);
     //free liste

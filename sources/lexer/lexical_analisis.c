@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analisis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/03/07 20:35:14 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/10 16:07:12 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char    *get_input(void)
 {
     char* input;
 
-    input = readline("$");
+    input = readline("minishell$");
     if (input == NULL) {
         printf("Erreur de lecture de la input.\n");
         exit(EXIT_FAILURE);
@@ -54,6 +54,7 @@ char    *detect_token(char *stockage)
 {
     char *resize;
     
+    resize = NULL;
     if (check_pair_double_quote(stockage) == 0) //pas de quote
         resize = ft_strdup_size(stockage, ft_strlen(stockage));
     else if (check_pair_double_quote(stockage) == 1 || check_pair_single_quote(stockage) == 1) //cas boucle > (plus tard gerer ce cas)

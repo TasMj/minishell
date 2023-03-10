@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tas <tas@student.42.fr>                    +#+  +:+       +#+         #
+#    By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/03/07 14:31:06 by tas              ###   ########.fr        #
+#    Updated: 2023/03/10 16:01:11 by tmejri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,11 +19,7 @@ BUILTINS		= ./sources/builtins/ft_cd.c ./sources/builtins/ft_echo.c \
 				./sources/builtins/ft_export.c ./sources/builtins/ft_pwd.c \
 				./sources/builtins/ft_unset.c \
 		
-ENV				= ./sources/env/set_env.c
-				
 EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
-
-INITIALISATION	= ./sources/initialisation/init_struct.c \
 
 LEXER			= ./sources/lexer/token.c ./sources/lexer/lexical_analisis.c  \
 				./sources/lexer/semantic_analisis.c ./sources/lexer/syntactic_analisis.c \
@@ -34,7 +30,7 @@ PARSING			= ./sources/parsing/check_args.c ./sources/parsing/quoting.c \
 TOOLS			= ./sources/tools/tools.c ./sources/tools/tools_list.c \
 				./sources/tools/ft_split.c \
 
-SRCS			= ${MAIN} ${BUILTINS} ${EXIT} ${INITIALISATION} ${LEXER} ${PARSING} ${TOOLS}
+SRCS			= ${MAIN} ${BUILTINS} ${EXIT} ${LEXER} ${PARSING} ${TOOLS}
 
 OBJS			= ${SRCS:.c=.o}
 

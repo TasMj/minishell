@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 13:17:01 by tas               #+#    #+#             */
-/*   Updated: 2023/03/07 14:37:57 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/10 18:14:53 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int check_heredoc(char *str)
         {
             i++;
             if (str[i] == 62)
-                return (err_msg(0));
+                return (4);
             if (str[i] == 60)
                 return (2);
         }
@@ -49,19 +49,27 @@ int check_heredoc(char *str)
         {
             i++;
             if (str[i] == 60)
-                return (err_msg(0));
+                return (4);
             if (str[i] == 62)
                 return (3);
         }
         else
             i++;
     }
-    return (0);    
+    return (0);
 }
 
+/* check if there is a quote alone or <> */
 int check_args(char *str)
 {
-    if (check_heredoc(str) == 1)
-        return (0);
+    if (check_heredoc(str) == 4)
+        return (1);
+        // return (err_msg(0));
+    if (check_pair_single_quote(str) == 1)
+        return (1);
+        // return (err_msg(1));
+    if (check_pair_single_quote(str) == 1)
+        return (1);
+        // return (err_msg(1));
     return (0);
 }
