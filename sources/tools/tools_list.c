@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:12:00 by tas               #+#    #+#             */
-/*   Updated: 2023/03/08 15:38:44 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/12 14:25:50 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 	}
 }
 
-t_list	*ft_lstnew(t_list *new, char *input)
+t_list	*ft_lstnew(char *input)
 {
+	t_list *new;
+	
 	new = malloc(sizeof(t_list));
 	if (!new)
 		return (NULL);

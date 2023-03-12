@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/03/10 15:59:37 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/03/12 14:40:07 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 /*Errors*/
 # define ERR_REDIR_IN_OUT "syntax error near unexpected token `newline'\n"
-# define ERR_QUOTE "not handle by minishell"
+# define ERR_QUOTE "not handle by minishell\n"
 
 /*Quotes*/
 # define QUOTE 1
@@ -87,21 +87,22 @@ char    *get_input(void);
 int		is_a_separator(char c);
 void    add_list(t_list **list_token, char *stockage);
 char    *detect_token(char *stockage);
-void    create_token(t_list **list_token, char *input);
+t_list  **create_token(t_list **list_token, char *input);
 
 /* syntactic analisis */
 void    get_type(t_list *list_token);
 int		is_word(char *token);
 int		determine_type(char *token);
+void    substitute_dollar(t_list **list_token);
+int		check_dollar(char *str);
 
-/* check_args */
+/* redirections */
 int		check_redir_in(char c);
 int		check_redir_out(char c);
 int		check_heredoc(char *str);
-int		check_args(char *str);
 
 /* quoting */
-int		is_a_quoting(char c);
+int		check_pair_quote(char *str);
 int		check_pair_single_quote(char *str);
 int		check_pair_double_quote(char *str);
 char	*word_quote(char *stockage, int quote);
@@ -109,7 +110,7 @@ char	*word_quote(char *stockage, int quote);
 /* tools list*/
 t_list	*ft_lstlast(t_list *lst);
 void	ft_lstadd_back(t_list **lst, t_list *new);
-t_list	*ft_lstnew(t_list *new, char *input);
+t_list	*ft_lstnew(char *input);
 int		ft_lstsize(t_list *lst);
 void    print_list(t_list **list_token);
 

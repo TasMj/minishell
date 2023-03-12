@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+         #
+#    By: tas <tas@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/03/10 16:01:11 by tmejri           ###   ########.fr        #
+#    Updated: 2023/03/11 19:46:27 by tas              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,11 +21,11 @@ BUILTINS		= ./sources/builtins/ft_cd.c ./sources/builtins/ft_echo.c \
 		
 EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
 
-LEXER			= ./sources/lexer/token.c ./sources/lexer/lexical_analisis.c  \
+LEXER			= ./sources/lexer/create_token.c  \
 				./sources/lexer/semantic_analisis.c ./sources/lexer/syntactic_analisis.c \
 				./sources/lexer/annex_syntactic.c \
 
-PARSING			= ./sources/parsing/check_args.c ./sources/parsing/quoting.c \
+PARSING			= ./sources/parsing/redirections.c ./sources/parsing/quoting.c \
 
 TOOLS			= ./sources/tools/tools.c ./sources/tools/tools_list.c \
 				./sources/tools/ft_split.c \

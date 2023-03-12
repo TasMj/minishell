@@ -3,24 +3,95 @@
 /*                                                        :::      ::::::::   */
 /*   syntactic_analisis.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/03/10 15:48:03 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/03/12 18:01:36 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char    *remove_bracket(char *str)
+{
+    int i;
+    char *new_str;
+    
+    i = 1;
+    new_str = malloc(sizeof(char) * (ft_strlen(str) - 2));
+    while (i < ft_strlen(str) - 1)
+    {
+        new_str[i] = str[i];
+		i++;
+    }
+    new_str[i] = '\0';
+    return (new_str);
+}
 
-/* étapes */
-/* Vérifier que la séquence d'elt lexicaux créée pdt l'analyse lexical est cohérente avec la grammaire du langage (respecte règles syntaxiques)*/
+int check_dollar(char *str)
+{
+    int i;
 
-//1 création de l'arbre syntaxique: séquence d'éléments lexicaux est analysée pour créer un arbre s, qui représente la structure syntaxique de l'expression
-//2 Validation de la grammaire: arbre validé pour assurer qu'il respect regle de grammaire. ex: vérifie que les opérateurs sont utilisés correctement, instruction correctement imbriqués
-//3 detection erreurs de syntaxe
-//4 gestion des priorités: inclure étape pour gerer prio des opérateurs
-//5 transformation de l'arbre
+    i = 0;
+    while (str[i])
+    {
+        if (str[i] == '$')
+            return (1);
+        i++;
+    }
+    return (0);
+}
+
+char    *substitution(char *token)
+{
+    char    *variable;
+    
+    printf("TOKEN: %s\n", token);
+    variable = getenv(token);
+    printf("VARIABLE: %s\n", variable);
+    
+    if (!variable)
+        return(token);
+    return (variable);
+}
+
+void    substitute_dollar(t_list **list_token)
+{
+    int i = 0;
+    char **tab_dollar;
+    char    *var_substitute;
+    char    *new_content;
+    
+printf("--------------------------------------------\n");
+    
+    new_content = "";
+    
+    while ((*list_token) != NULL)
+    {
+        printf("content:       %s\n", (*list_token)->content);
+        if (check_dollar((*list_token)->content) == 1)
+        {
+            // printf("[%s]\n", remove_bracket((*list_token)->content));
+            // if ((*list_token)->content[0] == 34 || (*list_token)->content[0] == 39)
+                // tab_dollar = ft_split(remove_bracket((*list_token)->content), '$');
+            // else
+            tab_dollar = ft_split((*list_token)->content, '$');
+            while (tab_dollar[i])
+            {
+                var_substitute = substitution(tab_dollar[i]);
+                printf("var: %s\n", var_substitute);
+                new_content = ft_strjoin_mod(new_content, var_substitute, 0);
+                printf("new: %s\n", new_content);
+                i++;
+            }
+            free ((*list_token)->content);
+            (*list_token)->content = ft_strdup_size(new_content, ft_strlen(new_content));
+        }
+        printf("sub done: %s\n", (*list_token)->content);
+        (*list_token) = (*list_token)->next;
+    }
+}
+
 
 /* determine the command type*/
 void    get_type(t_list *list_token)
@@ -40,22 +111,3 @@ void    get_type(t_list *list_token)
     else if (determine_type((*list_token).content) == 6)
         (*list_token).type = END;
 }
-
-
-
-/* création de l'arbre syntaxique */
-//placer dans un tableau
-// int check_syntaxe(t_list **list_token)
-// {
-//     int    **operator[] = {WORD, PIPE, STDIN, APPEND, STDOUT, HEREDOC};
-
-    
-// }
-
-
-
-
-// une fois ordonné, donner un index
-/* check la cohérence de l'arbre */
-
-/* gestion des prios (peut etre ajouter index de prio pour l'exec)*/

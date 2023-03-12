@@ -3,33 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   quoting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:15:52 by tmejri            #+#    #+#             */
-/*   Updated: 2023/03/10 15:53:23 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/03/11 19:38:57 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// /*Return 1 if the command line contain a quote, 0 if not */
-// int is_a_quoting(char c)
-// {
-//     if (c == '|' || c == '&' || c == ';' || c == '<' || c == '>' || c == '('
-//         || c == ')' || c == '$' || c == '`')
-//             return (1);
-//     return (0);
-// }
+/* check if there is a quote alone */
+int check_pair_quote(char *str)
+{
+    int     i;
+    int     flag;
+    char    quote;
+    
+    i = 0;    
+    flag = 0;
+    while (str[i])
+    {
+        if (str[i] == 39 || str[i] == 34)
+        {
+            quote = str[i];
+            flag = 1;
+            while(str[i])
+            {
+                i++;
+                if (str[i] == quote && flag == 1)
+                {
+                    flag = 0;
+                    i++;
+                    break;
+                }
+            }
+        }
+    }
+    if (flag == 1)
+        return (1);
+    return (0);
+}
 
-/*PB CAR NE LIS PAS LES QUOTES*/
-/* check si après la première single quote (') on trouve la deuxième
-return 0 si pas de ', 1 si un seul ', 2 si on trouve la deuxième */
 int check_pair_single_quote(char *str)
 {
     int i;
     int flag;
 
-    i = 0;    
+    i = 0;
     flag = 0;
     while (str[i])
     {
@@ -75,6 +95,7 @@ int check_pair_double_quote(char *str)
     }
     return (0);
 }
+
 
 /* découpe le mot comme il faut pour les mots entre quote (conserve les espaces) */
 char *word_quote(char *stockage, int quote)

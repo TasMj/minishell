@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/03/10 16:08:47 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/03/12 14:43:36 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,15 @@ int main(int argc, char **argv, char **env)
     while(1)
     {
         input = get_input();
-        if (check_args(input) == 1)
-            return (err_msg(0));
-
-        list_token = malloc(sizeof(t_list));
-	    list_token[0] = NULL;
-        create_token(list_token, input);
+        // if (check_pair_quote(input) == 1)
+            // err_msg(1);
+        // else
+        // {
+            list_token = malloc(sizeof(t_list));
+	        list_token[0] = NULL;
+            list_token = create_token(list_token, input);
+            substitute_dollar(list_token);
+        // }
     }
     
     // print_list(list_token);
