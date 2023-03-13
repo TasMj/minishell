@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/03/13 01:24:01 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/13 11:27:06 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,10 @@ void	ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstnew(char *input);
 int		ft_lstsize(t_list *lst);
 void    print_list(t_list **list_token);
+void	ft_lstdelone(t_list *lst, void (*del)(void*));
+void del(t_list **lst, t_list *elem);
+
+
 
 /* tools */
 void	*ft_memset(void *s, int c, size_t n);

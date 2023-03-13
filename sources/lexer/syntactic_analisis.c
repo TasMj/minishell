@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/03/13 01:32:46 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/13 11:27:55 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,62 +68,98 @@ char    *substitution(char *token)
 {
     char    *variable;
     
-    printf("TOKEN: %s\n", token);
-    variable = getenv(remove_space(token));
-    if (!variable)
-        variable = getenv(token);
+    printf("TOKEN: %s   ", token + 1);
+    variable = getenv(token+ 1);
     printf("VARIABLE: %s\n", variable);
     
     if (!variable)
-        return(token);
+        return(NULL);
     return (variable);
 }
 
 void    substitute_dollar(t_list **list_token)
 {
-    int i;
-    
-    i = 0;
-    char **tab_dollar;
     char    *var_substitute;
-    char    *new_content;
     t_list  *tmp;
     
-printf("--------------------------------------------\n");
+    printf("--------------------------------------------\n");
     
-    new_content = "";
     tmp = *list_token;
-    
     while ((*list_token) != NULL)
     {
-
-        printf("content:       [%s]\n", (*list_token)->content);
+        // printf("content next: [%s]\n", (*list_token)->next->content);
         if (check_dollar((*list_token)->content) == 1)
         {
-            // printf("[%s]\n", remove_bracket((*list_token)->content));
-            // if ((*list_token)->content[0] == 34 || (*list_token)->content[0] == 39)
-                // tab_dollar = ft_split((*list_token)->content, '$');
-            // else
-            tab_dollar = ft_split(remove_bracket((*list_token)->content), '$');
-            while (tab_dollar[i])
+            if ((*list_token)->content[0] == 34 || (*list_token)->content[0] == 39)
             {
-                printf("tab: [%s]\n", tab_dollar[i]);
-                var_substitute = substitution(tab_dollar[i]);
-                printf("var: [%s]\n", var_substitute);
-                new_content = ft_strjoin_mod(new_content, var_substitute, 0);
-                printf("new: [%s]\n", new_content);
-                i++;
+                break;
+                //avec brackets
             }
-            free ((*list_token)->content);
-            (*list_token)->content = ft_strdup_size(new_content, ft_strlen(new_content));
+            else if (ft_strlen((*list_token)->content) > 1)
+            {
+                var_substitute = substitution((*list_token)->content);
+                printf("var: [%s]\n", var_substitute);
+                if (!var_substitute)
+                {
+                    ft_lstdelone((*list_token), del(*tmp, (*list_token)));
+                }
+                free ((*list_token)->content);
+                (*list_token)->content = ft_strdup_size(var_substitute, ft_strlen(var_substitute));
+            }
         }
         printf("sub done: [%s]\n", (*list_token)->content);
-        (*list_token) = (*list_token)->next;
+        // printf("first: [%s]\n", (*list_token)->premier->content);
         
+        (*list_token) = (*list_token)->next;
+
     }
-    *list_token = tmp;    
+    *list_token = tmp;  
+    
 }
 
+
+// void    substitute_dollar(t_list **list_token)
+// {
+    // int i;
+    // 
+    // i = 0;
+    // char **tab_dollar;
+    // char    *var_substitute;
+    // char    *new_content;
+    // t_list  *tmp;
+    // 
+    // printf("--------------------------------------------\n");
+    // 
+    // new_content = "";
+    // tmp = *list_token;
+    // 
+    // while ((*list_token) != NULL)
+    // {
+// 
+        // printf("content:       [%s]\n", (*list_token)->content);
+        // if (check_dollar((*list_token)->content) == 1)
+        // {
+            // tab_dollar = ft_split((*list_token)->content, '$');
+            // else
+            // tab_dollar = ft_split(remove_bracket((*list_token)->content), '$');
+            // while (tab_dollar[i])
+            // {
+                // printf("tab: [%s]\n", tab_dollar[i]);
+                // var_substitute = substitution(tab_dollar[i]);
+                // printf("var: [%s]\n", var_substitute);
+                // new_content = ft_strjoin_mod(new_content, var_substitute, 0);
+                // printf("new: [%s]\n", new_content);
+                // i++;
+            // }
+            // free ((*list_token)->content);
+            // (*list_token)->content = ft_strdup_size(new_content, ft_strlen(new_content));
+        // }
+        // printf("sub done: [%s]\n", (*list_token)->content);
+        // (*list_token) = (*list_token)->next;
+        // 
+    // }
+    // *list_token = tmp;    
+// }
 
 /* determine the command type*/
 void    get_type(t_list *list_token)
