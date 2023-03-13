@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:12:00 by tas               #+#    #+#             */
-/*   Updated: 2023/03/12 14:25:50 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/13 00:20:47 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_list	*ft_lstnew(char *input)
 	if (!new)
 		return (NULL);
 	new->content = input;
-	printf("content: %s\n", new->content);
+	printf("content: [%s]\n", new->content);
 	new->next = NULL;
     return (new);
 }
