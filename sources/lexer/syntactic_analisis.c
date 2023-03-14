@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/03/14 02:20:52 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/14 11:34:00 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,19 @@ char    *substitution(char *token)
 void    substitute_dollar(t_list **list_token)
 {
     char    *var_substitute;
+    char    *keep_var;
+    char    *new_content;
+    char    *without_dollar;
     t_list  *tmp;
+    int start;
+    int end;
+    int deb;
+    int i = 0;
     
     printf("--------------------------------------------\n");
     
     tmp = *list_token;
+    new_content = "";
     while ((*list_token) != NULL)
     {
         if (check_dollar((*list_token)->content) == 1)
@@ -98,22 +106,48 @@ void    substitute_dollar(t_list **list_token)
             }
             else if (ft_strlen((*list_token)->content) > 1)
             {
-                var_substitute = substitution((*list_token)->content);
-                printf("var: [%s]\n", var_substitute);
-                if (!var_substitute)
+    new_content = "";
+                
+                while ((*list_token)->content[i])
                 {
-                    // ft_lstdelone(list_token, (*list_token), del);
-                    //mettre une var NULL
+                    deb = i;
+                    while ((*list_token)->content[i] && (*list_token)->content[i] != '$')
+                        i++;
+                    without_dollar = ft_strdup_size((*list_token)->content + deb, (i - deb));
+                    new_content = ft_strjoin_mod(new_content, without_dollar, 2);
+
+                    printf("[i]: %c\n", (*list_token)->content[i]);
+                    if ((*list_token)->content[i] && (*list_token)->content[i] == '$' && (*list_token)->content[i + 1] == '\0')
+                    {
+                        new_content = ft_strjoin_mod(new_content, "$", 0);
+                        i++;
+                    }
+                    else
+                    {
+                        printf("la\n");
+                        start = i;
+                        i++;
+                        while ((*list_token)->content[i] != '\0' && (*list_token)->content[i] != '$')
+                            i++;
+                        end = i;
+                        keep_var = ft_strdup_size((*list_token)->content + start, (end - start));
+                        var_substitute = ft_strdup_size(substitution(keep_var), ft_strlen(substitution(keep_var)));
+                        if (!var_substitute)
+                        {
+                            // var_substitute = "";
+                            // ft_lstdelone(list_token, (*list_token), del);
+                            //mettre une var NULL
+                        }
+                        new_content = ft_strjoin_mod(new_content, var_substitute, 2);
+                        printf("keep: %s\n", var_substitute);
+                    }
                 }
                 free ((*list_token)->content);
-                (*list_token)->content = ft_strdup_size(var_substitute, ft_strlen(var_substitute));
+                (*list_token)->content = ft_strdup_size(new_content, ft_strlen(new_content));
             }
         }
         printf("sub done: [%s]\n", (*list_token)->content);
-        // printf("first: [%s]\n", (*list_token)->premier->content);
-        
         (*list_token) = (*list_token)->next;
-
     }
     *list_token = tmp;  
     
@@ -155,7 +189,7 @@ char    *sub_brackets(char *token)
                 i++;
             end = i;
             keep_var = ft_strdup_size(stockage + start, (end - start));
-            keep_var2 = ft_strdup_size(substitution(keep_var), ft_strlen(keep_var));
+            keep_var2 = ft_strdup_size(substitution(keep_var), ft_strlen(substitution(keep_var)));
             new_content = ft_strjoin_mod(new_content, keep_var2, 2);
         }
     }
