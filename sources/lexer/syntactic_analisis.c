@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntactic_analisis.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/03/14 11:34:00 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/14 18:41:49 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,9 @@
 
 char    *remove_bracket(char *str)
 {
-    // int i;
     char *new_str;
     
     new_str = ft_strdup_size(str + 1, ft_strlen(str) - 2);
-    
-    // i = 1;
-    // new_str = malloc(sizeof(char) * (ft_strlen(str) - 2) + 1);
-    // while (i < ft_strlen(str) - 1)
-    // {
-        // printf("ns: %c\n", str[i]);
-        // new_str[i] = str[i];
-		// i++;
-    // }
-    // new_str[i] = '\0';
     printf("[%s] sans brackets: [%s]\n", str, new_str);
     return (new_str);
 }
@@ -69,12 +58,14 @@ char    *substitution(char *token)
     char    *variable;
     
     printf("TOKEN: %s   ", token + 1);
-    // variable = malloc(sizeof(char) * ft_strlen(getenv(token + 1) + 1));
     variable = getenv(token + 1);
     printf("VARIABLE: %s\n", variable);
-    
     if (!variable)
-        return(NULL);
+    {
+        printf("pas de var\n");
+        variable = malloc(1);
+        variable = "";
+    }
     return (variable);
 }
 
@@ -106,8 +97,8 @@ void    substitute_dollar(t_list **list_token)
             }
             else if (ft_strlen((*list_token)->content) > 1)
             {
-    new_content = "";
-                
+                i = 0;
+                new_content = "";
                 while ((*list_token)->content[i])
                 {
                     deb = i;
@@ -115,8 +106,6 @@ void    substitute_dollar(t_list **list_token)
                         i++;
                     without_dollar = ft_strdup_size((*list_token)->content + deb, (i - deb));
                     new_content = ft_strjoin_mod(new_content, without_dollar, 2);
-
-                    printf("[i]: %c\n", (*list_token)->content[i]);
                     if ((*list_token)->content[i] && (*list_token)->content[i] == '$' && (*list_token)->content[i + 1] == '\0')
                     {
                         new_content = ft_strjoin_mod(new_content, "$", 0);
@@ -124,7 +113,6 @@ void    substitute_dollar(t_list **list_token)
                     }
                     else
                     {
-                        printf("la\n");
                         start = i;
                         i++;
                         while ((*list_token)->content[i] != '\0' && (*list_token)->content[i] != '$')
@@ -132,14 +120,7 @@ void    substitute_dollar(t_list **list_token)
                         end = i;
                         keep_var = ft_strdup_size((*list_token)->content + start, (end - start));
                         var_substitute = ft_strdup_size(substitution(keep_var), ft_strlen(substitution(keep_var)));
-                        if (!var_substitute)
-                        {
-                            // var_substitute = "";
-                            // ft_lstdelone(list_token, (*list_token), del);
-                            //mettre une var NULL
-                        }
                         new_content = ft_strjoin_mod(new_content, var_substitute, 2);
-                        printf("keep: %s\n", var_substitute);
                     }
                 }
                 free ((*list_token)->content);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/03/13 11:25:05 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/14 19:08:57 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void    add_list(t_list **list_token, char *stockage)
     t_list *to_add;
     
     to_add = ft_lstnew(stockage);
-    // (*list_token) = ft_lstnew((*list_token), stockage);
     ft_lstadd_back(list_token, to_add);
 }
 
@@ -54,13 +53,11 @@ t_list    **create_token(t_list **list_token, char *input)
     char quote;
     char *stockage;
     char *word_ready;
-    // t_list  *first;
 
     i = 0;
     start = 0;
     end = 0;
     flag = 0;
-    // first = *list_token;
     while(i < ft_strlen(input))
     {
         if (is_a_separator(input[i]) == 1)
@@ -78,18 +75,15 @@ t_list    **create_token(t_list **list_token, char *input)
                 i++;
             }
             else
-                while (!(is_a_separator(input[i])))
+                while (!(is_a_separator(input[i])) && input[i] != '\0')
                     i++;
+        printf("i: %d\n", i);
             end = i;
-            // end = i + 1;
             if (flag == 1)
                 i++;
             stockage = ft_strdup_size(input + start, (end - start));
             word_ready = ft_strdup_size(stockage, ft_strlen(stockage));
             add_list(list_token, word_ready);
-            // (*list_token)->premier = first;
-        // printf("first: [%s]\n", (*list_token)->premier->content);
-
             free(stockage);
         }
     }
