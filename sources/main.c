@@ -6,11 +6,20 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/03/14 19:10:05 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/03/14 20:01:40 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void    init_list(t_list **list_token, char *input)
+{
+    list_token = create_token(list_token, input);
+    substitute_dollar(list_token);
+    get_type(list_token);
+    remove_list_quotes(list_token);
+}
+
 
 int main(int argc, char **argv, char **env)
 {
@@ -29,12 +38,11 @@ int main(int argc, char **argv, char **env)
         // {
             list_token = malloc(sizeof(t_list));
 	        list_token[0] = NULL;
-            list_token = create_token(list_token, input);
-            substitute_dollar(list_token);
+            init_list(list_token, input);
+            print_list(list_token);
         // }
     }
     
-    // print_list(list_token);
     //free liste
     
     return (0);

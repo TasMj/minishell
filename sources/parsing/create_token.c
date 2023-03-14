@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/03/14 19:08:57 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/03/14 19:48:26 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ t_list    **create_token(t_list **list_token, char *input)
             else
                 while (!(is_a_separator(input[i])) && input[i] != '\0')
                     i++;
-        printf("i: %d\n", i);
             end = i;
             if (flag == 1)
                 i++;

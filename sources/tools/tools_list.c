@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:12:00 by tas               #+#    #+#             */
-/*   Updated: 2023/03/14 00:42:41 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/14 20:14:58 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,72 +47,25 @@ t_list	*ft_lstnew(char *input)
 	if (!new)
 		return (NULL);
 	new->content = input;
-	printf("content: [%s]\n", new->content);
+	// printf("content: [%s]\n", new->content);
 	new->next = NULL;
     return (new);
 }
 
-int	ft_lstsize(t_list *lst)
+void	print_list(t_list **list)
 {
-	int	i;
+	t_list *tmp;
+	int i;
 
 	i = 0;
-	while (lst)
+	tmp = (*list);
+	while (*list)
 	{
-		lst = lst->next;
-		i++;
+		printf("****ID Token****\n");
+		printf("content: [%s]\n", (*list)->content);
+		printf("type: [%d]\n", (*list)->type);
+		printf("****************\n");
+		(*list) = (*list)->next;
 	}
-	return (i);
+	(*list) = tmp;
 }
-
-void    print_list(t_list **list_token)
-{
-    while((*list_token)->next != NULL)
-    {
-        printf("print: %s\n", (*list_token)->content);
-        (*list_token) = (*list_token)->next;
-    }
-}
-
-void	ft_lstiter(t_list *lst, void (*f)(void *))
-{
-	if (lst && f)
-	{
-		while (lst)
-		{
-			f(lst->content);
-			lst = lst->next;
-		}
-	}
-}
-
-// void del(t_list **lst, t_list *elem)
-// {
-//     t_list *prev;
-
-//     if (!*lst || !elem)
-//         return;
-//     if (*lst == elem)
-//     {
-//         *lst = elem->next;
-//         free(elem);
-//         return;
-//     }
-//     prev = *lst;
-//     while (prev->next && prev->next != elem)
-//         prev = prev->next;
-//     if (prev->next == elem)
-//     {
-//         prev->next = elem->next;
-//         free(elem);
-//     }
-// }
-
-// void	ft_lstdelone(t_list **list, t_list *lst, void (*del)(t_list **, t_list *))
-// {
-// 	if (lst && del)
-// 	{
-// 		(*del)(list, lst->content);
-// 		free(lst);
-// 	}
-// }

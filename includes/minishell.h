@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/03/14 01:13:33 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/14 20:16:00 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,6 @@
 # define ERR_REDIR_IN_OUT "syntax error near unexpected token `newline'\n"
 # define ERR_QUOTE "not handle by minishell\n"
 
-/*Quotes*/
-# define QUOTE 1
-# define NO_QUOTE 0
-
-
 /******************************************************************************/
 /*                                   enum                                     */
 /******************************************************************************/
@@ -52,22 +47,16 @@ enum token_type {
 	END
 };
 
-
 /******************************************************************************/
 /*                               structures                                   */
 /******************************************************************************/
 
 typedef struct s_list
 {
-	struct s_list	*premier;
 	char			*content;
 	int				type;
-	int				quote;
 	struct s_list	*next;
 }		t_list;
-
-
-
 
 /******************************************************************************/
 /*                                fonctions                                   */
@@ -82,51 +71,49 @@ int		err_msg(int n);
 void	free_list(t_list **list);
 void	free_all(char *s1, char *s2);
 
-/* lexical analisis*/
+/* create token */
 char    *get_input(void);
 int		is_a_separator(char c);
 void    add_list(t_list **list_token, char *stockage);
-char    *detect_token(char *stockage);
 t_list  **create_token(t_list **list_token, char *input);
 
-/* syntactic analisis */
-void    get_type(t_list *list_token);
-int		is_word(char *token);
-int		determine_type(char *token);
-void    substitute_dollar(t_list **list_token);
-int		check_dollar(char *str);
+/* quotes */
+int		check_pair_quote(char *str);
+int		check_pair_single_quote(char *str);
+int		check_pair_double_quote(char *str);
+char	*word_quote(char *stockage, int quote);
+char    *remove_quotes(char *str);
+void    remove_list_quotes(t_list **list_token);
 
 /* redirections */
 int		check_redir_in(char c);
 int		check_redir_out(char c);
 int		check_heredoc(char *str);
+int		check_append(char *str);
 
-/* quoting */
-int		check_pair_quote(char *str);
-int		check_pair_single_quote(char *str);
-int		check_pair_double_quote(char *str);
-char	*word_quote(char *stockage, int quote);
+/* substitution */
+int		check_dollar(char *str);
+char    *remove_space(char *str);
+char    *substitution(char *token);
+void    substitute_dollar(t_list **list_token);
+char    *sub_quotes(char *token);
+
+/* type */
+int		determine_type(char *token);
+void    get_type(t_list **list_token);
 
 /* tools list*/
 t_list	*ft_lstlast(t_list *lst);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstnew(char *input);
-int		ft_lstsize(t_list *lst);
-void    print_list(t_list **list_token);
-void	ft_lstdelone(t_list *lst, void (*del)(t_list **, t_list *));
-void del(t_list **lst, t_list *elem);
-
-
+void    print_list(t_list **list);
 
 /* tools */
+char	**ft_split(char const *s, char c);
 void	*ft_memset(void *s, int c, size_t n);
 char	*ft_strdup_size(char *s, int size);
 int		ft_strlen(char *str);
 char	*ft_strjoin_mod(char *s1, char *s2, int mode);
-char	**ft_split(char const *s, char c);
 int		ft_strncmp(char *s1, char *s2, size_t n);
-
-char    *sub_brackets(char *token);
-
 
 #endif

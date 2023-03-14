@@ -1,25 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntactic_analisis.c                               :+:      :+:    :+:   */
+/*   substitution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/03/14 18:41:49 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/03/14 20:04:34 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char    *remove_bracket(char *str)
-{
-    char *new_str;
-    
-    new_str = ft_strdup_size(str + 1, ft_strlen(str) - 2);
-    printf("[%s] sans brackets: [%s]\n", str, new_str);
-    return (new_str);
-}
 
 int check_dollar(char *str)
 {
@@ -57,12 +48,9 @@ char    *substitution(char *token)
 {
     char    *variable;
     
-    printf("TOKEN: %s   ", token + 1);
     variable = getenv(token + 1);
-    printf("VARIABLE: %s\n", variable);
     if (!variable)
     {
-        printf("pas de var\n");
         variable = malloc(1);
         variable = "";
     }
@@ -81,8 +69,6 @@ void    substitute_dollar(t_list **list_token)
     int deb;
     int i = 0;
     
-    printf("--------------------------------------------\n");
-    
     tmp = *list_token;
     new_content = "";
     while ((*list_token) != NULL)
@@ -91,7 +77,7 @@ void    substitute_dollar(t_list **list_token)
         {
             if ((*list_token)->content[0] == 34 || (*list_token)->content[0] == 39)
             {
-                var_substitute = sub_brackets((*list_token)->content);
+                var_substitute = sub_quotes((*list_token)->content);
                 free((*list_token)->content);
                 (*list_token)->content = ft_strdup_size(var_substitute, ft_strlen(var_substitute));
             }
@@ -127,15 +113,14 @@ void    substitute_dollar(t_list **list_token)
                 (*list_token)->content = ft_strdup_size(new_content, ft_strlen(new_content));
             }
         }
-        printf("sub done: [%s]\n", (*list_token)->content);
+        // printf("sub done: [%s]\n", (*list_token)->content);
         (*list_token) = (*list_token)->next;
     }
     *list_token = tmp;  
     
 }
 
-
-char    *sub_brackets(char *token)
+char    *sub_quotes(char *token)
 {
     int i;
     int start;
@@ -149,7 +134,7 @@ char    *sub_brackets(char *token)
     
     i = 0;
     new_content = "";
-    stockage = remove_bracket(token);
+    stockage = remove_quotes(token);
     while (stockage[i])
     {
         deb = i;
@@ -177,40 +162,3 @@ char    *sub_brackets(char *token)
     return (new_content);
 }
 
-    
-    // tab_dollar = ft_split((*list_token)->content, '$');
-    //         else
-    //         tab_dollar = ft_split(remove_bracket((*list_token)->content), '$');
-    //         while (tab_dollar[i])
-    //         {
-    //             printf("tab: [%s]\n", tab_dollar[i]);
-    //             var_substitute = substitution(tab_dollar[i]);
-    //             printf("var: [%s]\n", var_substitute);
-    //             new_content = ft_strjoin_mod(new_content, var_substitute, 0);
-    //             printf("new: [%s]\n", new_content);
-    //             i++;
-    //         }
-    //         free ((*list_token)->content);
-    //         (*list_token)->content = ft_strdup_size(new_content, ft_strlen(new_content));
-    //     }
-    //     printf("sub done: [%s]\n", (*list_token)->content);
-        
-
-/* determine the command type*/
-void    get_type(t_list *list_token)
-{
-    if (is_word((*list_token).content) == 1) // add our own builtin
-        (*list_token).type = WORD;
-    else if (determine_type((*list_token).content) == 1)
-        (*list_token).type = HEREDOC;
-    else if (determine_type((*list_token).content) == 2)
-        (*list_token).type = APPEND;
-    else if (determine_type((*list_token).content) == 3)
-        (*list_token).type = STDIN;
-    else if (determine_type((*list_token).content) == 4)
-        (*list_token).type = STDOUT;
-    else if (determine_type((*list_token).content) == 5)
-        (*list_token).type = PIPE;
-    else if (determine_type((*list_token).content) == 6)
-        (*list_token).type = END;
-}

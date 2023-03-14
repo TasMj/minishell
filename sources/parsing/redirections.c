@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 13:17:01 by tas               #+#    #+#             */
-/*   Updated: 2023/03/11 18:54:18 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/14 19:20:58 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 /*check si il y a une redirection < in */
 int check_redir_in(char c)
 {
+    if (!c)
+        return (0);
     if (c == 60)
         return (1);
     return (0);
@@ -23,6 +25,8 @@ int check_redir_in(char c)
 /*check si il y a une redirection > out */
 int check_redir_out(char c)
 {
+    if (!c)
+        return (0);
     if (c == 62)
         return (1);
     return (0);
@@ -34,10 +38,10 @@ int check_heredoc(char *str)
     int i;
 
     i = 0;
-    if (str[i] == '<')
+    if (str[i] && str[i] == '<')
     {
         i++;
-        if (str[i] == '<')
+        if (str[i] && str[i] == '<')
             return (1);
     }
     return (0);
@@ -49,10 +53,10 @@ int check_append(char *str)
     int i;
 
     i = 0;
-    if (str[i] == '>')
+    if (str[i] && str[i] == '>')
     {
         i++;
-        if (str[i] == '>')
+        if (str[i] && str[i] == '>')
             return (1);
     }
     return (0);
