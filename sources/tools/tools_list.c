@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:12:00 by tas               #+#    #+#             */
-/*   Updated: 2023/03/13 09:38:33 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/14 00:42:41 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,33 +86,33 @@ void	ft_lstiter(t_list *lst, void (*f)(void *))
 	}
 }
 
-void del(t_list **lst, t_list *elem)
-{
-    t_list *prev;
+// void del(t_list **lst, t_list *elem)
+// {
+//     t_list *prev;
 
-    if (!*lst || !elem)
-        return;
-    if (*lst == elem)
-    {
-        *lst = elem->next;
-        free(elem);
-        return;
-    }
-    prev = *lst;
-    while (prev->next && prev->next != elem)
-        prev = prev->next;
-    if (prev->next == elem)
-    {
-        prev->next = elem->next;
-        free(elem);
-    }
-}
+//     if (!*lst || !elem)
+//         return;
+//     if (*lst == elem)
+//     {
+//         *lst = elem->next;
+//         free(elem);
+//         return;
+//     }
+//     prev = *lst;
+//     while (prev->next && prev->next != elem)
+//         prev = prev->next;
+//     if (prev->next == elem)
+//     {
+//         prev->next = elem->next;
+//         free(elem);
+//     }
+// }
 
-void	ft_lstdelone(t_list *lst, void (*del)(void*))
-{
-	if (lst && del)
-	{
-		(*del)(lst->content);
-		free(lst);
-	}
-}
+// void	ft_lstdelone(t_list **list, t_list *lst, void (*del)(t_list **, t_list *))
+// {
+// 	if (lst && del)
+// 	{
+// 		(*del)(list, lst->content);
+// 		free(lst);
+// 	}
+// }

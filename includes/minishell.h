@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/03/13 11:27:06 by tas              ###   ########.fr       */
+/*   Updated: 2023/03/14 01:13:33 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstnew(char *input);
 int		ft_lstsize(t_list *lst);
 void    print_list(t_list **list_token);
-void	ft_lstdelone(t_list *lst, void (*del)(void*));
+void	ft_lstdelone(t_list *lst, void (*del)(t_list **, t_list *));
 void del(t_list **lst, t_list *elem);
 
 
@@ -125,5 +125,8 @@ int		ft_strlen(char *str);
 char	*ft_strjoin_mod(char *s1, char *s2, int mode);
 char	**ft_split(char const *s, char c);
 int		ft_strncmp(char *s1, char *s2, size_t n);
+
+char    *sub_brackets(char *token);
+
 
 #endif
