@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/03/14 20:01:40 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/03/15 13:20:06 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,16 @@ int main(int argc, char **argv, char **env)
     while(1)
     {
         input = get_input();
-        // if (check_pair_quote(input) == 1)
-            // err_msg(1);
-        // else
-        // {
+        if (check_pair_quote(input) == 1)
+            err_msg(1);
+        else
+        {
             list_token = malloc(sizeof(t_list));
 	        list_token[0] = NULL;
             init_list(list_token, input);
             print_list(list_token);
-        // }
+        }
+        
     }
     
     //free liste

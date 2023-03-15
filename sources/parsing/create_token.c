@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/03/14 19:48:26 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/03/15 13:13:45 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char    *get_input(void)
 {
     char* input;
 
-    input = readline("minishell$>");
+    input = readline("\033[1;33mminishell$>\033[0m");
     if (input == NULL) {
         printf("Erreur de lecture de la input.\n");
         exit(EXIT_FAILURE);

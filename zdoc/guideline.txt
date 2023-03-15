@@ -1,50 +1,7 @@
-
-
-
-
-
 //parsing
 
-1) recuperer la ligne de commande avec readline
-2) reussir a separer tous les token en fonction de tous les cas possible (quoate,...)
-    a) bien différentcier les elt de citations qd ils sont present en simple char
-        - "" preserve valeur littérale de chaque caractère. Ne peut pas conteir de
-                - `
-                - $ : Les caractères d'entrée de la chaîne entre guillemets qui sont également compris
-                entre "$(" et le ")" correspondant ne sont pas affectés par les guillemets, mais définissent
-                plutôt la commande dont la sortie remplace le "$(...)" 
-                - \
-                - @
-        - '' preserve valeur littérale de chaque caractère. Ne peut pas contenir de simple quoat
-        - Les opérateurs de redirection "<<" et "<<-" permettent tous deux de rediriger
-        les lignes contenues dans un fichier d'entrée de l'interpréteur de commandes, appelé 
-        "here-document", vers l'entrée d'une commande.
-        - \ correspond à une continuation de ligne. Doit être enlever des token si elle n'est pas cité
-        - $ introduit l'expansion des paramètres
 3) voir env -i
 4) si qu'un seul mot et ce n'est pas une commande, error
-// Token recognisation
-
-//Builting (fonction a recoder)
-
-- cd 
-- pwd
-- export
-- unset
-- env
-- exit 
-
-
-
-
-
-question :
-
-- comment identifier si il y a des quotes etant donné que le shell de base le gère déjà
-
-
-
-
 
 TOKENIZATION
 
@@ -87,3 +44,25 @@ sont cohérentes sémantiquement parlant: qu'ils ont un sens et une interprétat
     //que les var sont déclarées avant leur utilisation, symboles def dans le bon espace de nom, etc
 //3 Analyse de flux de contrôle: on verifie que instructions de boucle ont des contions d'arrêt valide, instructions d'exception correctement gérée, etc
 //4 génération de code intermediaire: une fois que elt lexicaux et expression ont été verif sémantiquement, un code interm peut être généré pour faciliter l'opti et la generation du code final
+
+
+
+
+
+
+Analyse syntaxique : Cette étape consiste à analyser la commande entrée par l'utilisateur et à la diviser en éléments significatifs tels que la commande, les options et les arguments.
+
+Recherche de commande : Après avoir analysé la commande, le shell doit rechercher la commande correspondante dans le chemin d'accès (PATH) spécifié dans la variable d'environnement $PATH.
+
+Création de processus : Si le shell trouve la commande, il crée un nouveau processus fils en utilisant la fonction système fork().
+
+Redirection des entrées/sorties : Le shell peut également rediriger les entrées/sorties standard de la commande en utilisant les opérateurs de redirection tels que ">", "<", ">>" ou "|".
+
+Exécution de la commande : Le processus fils exécute la commande à l'aide de la fonction système exec() en utilisant le chemin d'accès complet de la commande.
+
+Attente de la fin de la commande : Après l'exécution de la commande, le processus père attend la fin de l'exécution du processus fils.
+
+Traitement des signaux : Pendant l'exécution de la commande, le processus peut recevoir des signaux tels que SIGINT ou SIGTERM. Le shell doit traiter ces signaux et agir en conséquence.
+
+Retour de la valeur de sortie : Enfin, le processus fils renvoie une valeur de sortie au processus père. Cette valeur est stockée dans la variable $? du shell.
+
