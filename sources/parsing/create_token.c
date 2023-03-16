@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/03/15 13:13:45 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/03/16 15:11:09 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,17 @@ char    *get_input(void)
 }
 
 /* return 1 if space or new line */
-int is_a_separator(char c)
+int is_a_space(char c)
 {
     if (c == ' ' || (c >= 9 && c <= 13))
+        return (1);
+    return (0);
+}
+
+/* return 1 if space, <, <<, >, >>, | or new line */
+int is_a_separator(char c)
+{
+    if (is_a_space(c) == 1 || c == '|' || c == '>' || c == '<' || c == '\0')
         return (1);
     return (0);
 }
@@ -60,7 +68,7 @@ t_list    **create_token(t_list **list_token, char *input)
     flag = 0;
     while(i < ft_strlen(input))
     {
-        if (is_a_separator(input[i]) == 1)
+        if (is_a_space(input[i]) == 1)
             i++;
         else
         {
@@ -75,8 +83,19 @@ t_list    **create_token(t_list **list_token, char *input)
                 i++;
             }
             else
-                while (!(is_a_separator(input[i])) && input[i] != '\0')
+            {
+                if (input[i] == '|' || input[i] == '>' || input[i] == '<')
+                {
                     i++;
+                    if (input[i] == '>' || input[i] == '<')
+                        i++;
+                }
+                else
+                {
+                    while (is_a_separator(input[i]) == 0)
+                        i++;
+                }
+            }
             end = i;
             if (flag == 1)
                 i++;

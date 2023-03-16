@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:15:52 by tmejri            #+#    #+#             */
-/*   Updated: 2023/03/15 13:22:53 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/03/16 14:53:24 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char *word_quote(char *stockage, int quote)
     new = NULL;
     while (stockage[i] && flag < 2)
     {
-        while (is_a_separator(stockage[i]) == 1 || stockage[i] == quote)
+        while (is_a_space(stockage[i]) == 1 || stockage[i] == quote)
         {
             if (stockage[i] == quote)
                 flag++;

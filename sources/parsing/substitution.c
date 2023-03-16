@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/03/16 14:32:28 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/03/16 14:53:24 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ char    *remove_space(char *str)
     char *stockage;
 
     i = 0;
-    while (is_a_separator(str[i]) == 1)
+    while (is_a_space(str[i]) == 1)
         i++;
     start = i;
-    while (is_a_separator(str[i]) == 0)
+    while (is_a_space(str[i]) == 0)
         i++;
     end = i;
     stockage = ft_strdup_size(str + start, (end - start));
@@ -82,7 +82,7 @@ void    substitute_dollar(t_list **list_token)
                 free((*list_token)->content);
                 (*list_token)->content = ft_strdup_size(var_substitute, ft_strlen(var_substitute));
             }
-            else if ((*list_token)->content[0] == 39)
+            else if ((*list_token)->content[0] == 39) //single quote
             {
                 var_substitute = remove_quotes((*list_token)->content);
                 free((*list_token)->content);
@@ -149,16 +149,16 @@ char    *sub_quotes(char *token)
             i++;
         without_dollar = ft_strdup_size(stockage + deb, (i - deb));
         new_content = ft_strjoin_mod(new_content, without_dollar, 2);
-        if (stockage[i] && stockage[i] == '$' && (is_a_separator(stockage[i + 1]) == 1 || stockage[i + 1] == '\0'))
+        if (stockage[i] && stockage[i] == '$' && (is_a_space(stockage[i + 1]) == 1 || stockage[i + 1] == '\0'))
         {
             new_content = ft_strjoin_mod(new_content, "$", 1);
             i++;
         }
-        else if (stockage[i] && stockage[i + 1] && stockage[i] == '$' && (is_a_separator(stockage[i + 1]) == 0 || stockage[i + 1] != '\0'))
+        else if (stockage[i] && stockage[i + 1] && stockage[i] == '$' && (is_a_space(stockage[i + 1]) == 0 || stockage[i + 1] != '\0'))
         {
             start = i;
             i++;
-            while (is_a_separator(stockage[i]) == 0 && stockage[i] != '\0' && stockage[i] != '$')
+            while (is_a_space(stockage[i]) == 0 && stockage[i] != '\0' && stockage[i] != '$')
                 i++;
             end = i;
             keep_var = ft_strdup_size(stockage + start, (end - start));
