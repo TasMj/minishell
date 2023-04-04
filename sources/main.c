@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/03/16 14:50:16 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/04/04 19:45:50 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,16 @@ int main(int argc, char **argv, char **env)
     while(1)
     {
         input = get_input();
-        // if (check_pair_quote(input) == 1)
-            // err_msg(1);
-        // else
-        // {
+        if (check_pair_quote(input) == 1)
+            err_msg(1);
+        else
+        {
             list_token = malloc(sizeof(t_list));
 	        list_token[0] = NULL;
             init_list(list_token, input);
-            print_list(list_token);
-        // }
+            // print_list(list_token);
+            creating_child_process(list_token, env);
+        }
         
     }
     //free liste

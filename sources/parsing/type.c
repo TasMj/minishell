@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   type.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 12:57:45 by tas               #+#    #+#             */
-/*   Updated: 2023/03/14 20:04:44 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/04/04 19:25:58 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,7 @@ void    get_type(t_list **list_token)
     tmp = *list_token;
     while ((*list_token))
     {
-        if (determine_type((*list_token)->content) == 1)
-            (*list_token)->type = HEREDOC;
-        else if (determine_type((*list_token)->content) == 2)
-            (*list_token)->type = APPEND;
-        else if (determine_type((*list_token)->content) == 3)
-            (*list_token)->type = STDIN;
-        else if (determine_type((*list_token)->content) == 4)
-            (*list_token)->type = STDOUT;
-        else if (determine_type((*list_token)->content) == 5)
-            (*list_token)->type = PIPE;
-        else if (determine_type((*list_token)->content) == 6)
-            (*list_token)->type = END;
-        else
-            (*list_token)->type = WORD;
+        (*list_token)->type = determine_type((*list_token)->content);
         (*list_token) = (*list_token)->next;
     }
     (*list_token) = tmp;

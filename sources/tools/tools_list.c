@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:12:00 by tas               #+#    #+#             */
-/*   Updated: 2023/03/14 20:14:58 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/04/03 13:29:39 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,7 @@ t_list	*ft_lstnew(char *input)
 void	print_list(t_list **list)
 {
 	t_list *tmp;
-	int i;
 
-	i = 0;
 	tmp = (*list);
 	while (*list)
 	{

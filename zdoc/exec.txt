@@ -1,0 +1,13 @@
+
+
+
+
+1) check si la première commande est une commande executable 
+2) si oui créer un nv processus fils en utilisant la fonction fork
+3) redirection des entrées sortie en fonction des opérateurs < << > >> |
+4) processus fils exec de la commande  avec execv
+5) après l'exec de la commande le processus père attend la fin de l'exec du processus fils
+6) traitement des signaux : pdt l'exec de la commande, le processus peut recevoir
+des signaux tels que SIGINT ou SIGTERM le shell doit traiter ces signaux et agir en conséquence
+7) le processus fils renvoie une valeur de sortie au processus père. valeur stockée dans la variable $? du shell
+

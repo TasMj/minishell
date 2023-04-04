@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+         #
+#    By: tas <tas@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/03/14 20:08:29 by tmejri           ###   ########.fr        #
+#    Updated: 2023/04/04 19:39:57 by tas              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,9 @@ BUILTINS		= ./sources/builtins/ft_cd.c ./sources/builtins/ft_echo.c \
 				./sources/builtins/ft_export.c ./sources/builtins/ft_pwd.c \
 				./sources/builtins/ft_unset.c \
 		
+EXEC			= ./sources/exec/path.c ./sources/exec/process.c \
+				./sources/exec/type_process.c
+
 EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
 
 PARSING			= ./sources/parsing/create_token.c ./sources/parsing/quotes.c \
@@ -28,16 +31,19 @@ PARSING			= ./sources/parsing/create_token.c ./sources/parsing/quotes.c \
 TOOLS			= ./sources/tools/ft_split.c ./sources/tools/tools_list.c \
 				 ./sources/tools/tools.c\
 
-SRCS			= ${MAIN} ${BUILTINS} ${EXIT} ${PARSING} ${TOOLS}
+SRCS			= ${MAIN} ${BUILTINS} ${EXEC} ${EXIT} ${PARSING} ${TOOLS}
 
 OBJS			= ${SRCS:.c=.o}
 
 CC				= cc
 RM				= rm -f
-CFLAGS			= -Wall -Wextra -Werror -g -I includes/
+CFLAGS			= -Wall -Wextra -Werror -g -I includes/ 
 
 
 all:			${NAME}
+
+${OBJS}: %.o: %.c
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 ${NAME}:		${OBJS}
 						${CC} ${CFLAGS} ${OBJS} -L/usr/includes -lreadline -o ${NAME}
