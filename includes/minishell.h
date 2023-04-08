@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/04/03 13:59:15 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/08 12:09:32 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_list
 {
 	char			*content;
 	int				type;
+	int				index;
 	struct s_list	*next;
 }		t_list;
 
@@ -68,6 +69,7 @@ typedef struct s_pipex
 	char	*cmd;
 	char	*path_cmd;
 	char	**token_cmd;
+	t_list	*list_token;
 }t_pipex;
 
 typedef struct s_path
@@ -140,6 +142,7 @@ char	*ft_strdup_size(char *s, int size);
 int		ft_strlen(char *str);
 char	*ft_strjoin_mod(char *s1, char *s2, int mode);
 int		ft_strncmp(char *s1, char *s2, size_t n);
+char	*ft_strjoin(char *s1, char *s2);
 
 /***** EXEC *****/
 
@@ -151,13 +154,9 @@ int		init_param(t_pipex *pipex, char *token, char **__environ, t_path p);
 char	*get_arg(char *token);
 
 /* prcess */
-int		is_executable(char *token);
 int		creating_child_process(t_list **list_token, char ** envp);
 int		child_process(t_pipex *pipex, char **__environ);
 int		extract_str(char *str);
-
-/* type process */
-int		word_process(t_list *list_token, t_pipex *pipex, char **env, t_path path);
-
+int		word_process(char *list_token, t_pipex *pipex, char **env, t_path path);
 
 #endif

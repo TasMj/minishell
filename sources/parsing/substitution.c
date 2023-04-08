@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/03/16 14:53:24 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/04/05 19:55:15 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void    substitute_dollar(t_list **list_token)
     {
         if (check_dollar((*list_token)->content) == 1)
         {
-            // if ((*list_token)->content[0] == 34 || (*list_token)->content[0] == 39)
             if ((*list_token)->content[0] == 34)
             {
                 var_substitute = sub_quotes((*list_token)->content);
@@ -168,4 +167,3 @@ char    *sub_quotes(char *token)
     }
     return (new_content);
 }
-
