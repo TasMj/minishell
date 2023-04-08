@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/04/07 12:14:09 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/08 13:01:04 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,31 +24,6 @@ char    *get_input(void)
     }
 	add_history(input);
     return input;
-}
-
-/* return 1 if space or new line */
-int is_a_space(char c)
-{
-    if (c == ' ' || (c >= 9 && c <= 13))
-        return (1);
-    return (0);
-}
-
-/* return 1 if space, <, <<, >, >>, | or new line */
-int is_a_separator(char c)
-{
-    if (is_a_space(c) == 1 || c == '|' || c == '>' || c == '<' || c == '\0')
-        return (1);
-    return (0);
-}
-
-/* add to the list, word ready without space. take words with quotes */
-void    add_list(t_list **list_token, char *stockage)
-{
-    t_list *to_add;
-    
-    to_add = ft_lstnew(stockage);
-    ft_lstadd_back(list_token, to_add);
 }
 
 /* découpe le mot en fonction de si il s'agit d'un mot simple ou entre quote (single ou double)*/

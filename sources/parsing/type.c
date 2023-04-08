@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 12:57:45 by tas               #+#    #+#             */
-/*   Updated: 2023/04/07 12:15:08 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/08 12:40:33 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,13 @@ int determine_type(char *token)
 /* determine type of each token*/
 void    get_type(t_list **list_token)
 {
-    int     index;
     t_list  *tmp;
 
-    index = 0;
     tmp = *list_token;
     while ((*list_token))
     {
         (*list_token)->type = determine_type((*list_token)->content);
-        (*list_token)->index = index;
         (*list_token) = (*list_token)->next;
-        index++;
     }
     (*list_token) = tmp;
 }

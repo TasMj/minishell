@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:12:00 by tas               #+#    #+#             */
-/*   Updated: 2023/04/08 12:08:04 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/08 13:00:55 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,13 @@ void	print_list(t_list **list)
 		(*list) = (*list)->next;
 	}
 	(*list) = tmp;
+}
+
+/* add to the list, word ready without space. take words with quotes */
+void    add_list(t_list **list_token, char *stockage)
+{
+    t_list *to_add;
+    
+    to_add = ft_lstnew(stockage);
+    ft_lstadd_back(list_token, to_add);
 }

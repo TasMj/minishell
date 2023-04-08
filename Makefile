@@ -6,7 +6,7 @@
 #    By: tas <tas@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/04/08 12:07:34 by tas              ###   ########.fr        #
+#    Updated: 2023/04/08 12:59:55 by tas              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,9 @@ PARSING			= ./sources/parsing/create_token.c ./sources/parsing/quotes.c \
 				./sources/parsing/redirections.c ./sources/parsing/substitution.c \
 				./sources/parsing/type.c \
 
-TOOLS			= ./sources/tools/ft_split.c ./sources/tools/tool_exec.c \
-				./sources/tools/tools_list.c ./sources/tools/tools.c \
+TOOLS			= ./sources/tools/ft_split.c ./sources/tools/tools_exec.c \
+				./sources/tools/tools_list.c ./sources/tools/tools_parsing.c \
+				./sources/tools/tools.c \
 
 SRCS			= ${MAIN} ${BUILTINS} ${EXEC} ${EXIT} ${PARSING} ${TOOLS}
 

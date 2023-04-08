@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/04/05 19:55:15 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/08 13:02:43 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ void    substitute_dollar(t_list **list_token)
                 (*list_token)->content = ft_strdup_size(new_content, ft_strlen(new_content));
             }
         }
-        // printf("sub done: [%s]\n", (*list_token)->content);
         (*list_token) = (*list_token)->next;
     }
     *list_token = tmp;  
