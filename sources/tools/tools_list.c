@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:12:00 by tas               #+#    #+#             */
-/*   Updated: 2023/04/08 13:00:55 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/09 12:22:23 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	print_list(t_list **list)
 		printf("****ID Token****\n");
 		printf("content: [%s]\n", (*list)->content);
 		printf("type: [%d]\n", (*list)->type);
-		printf("index: [%d]\n", (*list)->index);
 		printf("****************\n");
 		(*list) = (*list)->next;
 	}

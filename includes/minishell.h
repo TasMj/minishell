@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/04/08 13:06:27 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/09 12:36:39 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,20 @@ typedef struct s_list
 	int				index;
 	struct s_list	*next;
 }		t_list;
+
+typedef struct s_substitution
+{
+    char    *var_substitute;
+    char    *keep_var;
+    char	*keep_var2;
+    char    *new_content;
+    char    *without_dollar;
+    char	*stockage;
+    int		start;
+    int		end;
+    int		deb;
+    int		i;
+}t_substitution;
 
 typedef struct s_pipex
 {
@@ -123,7 +137,7 @@ int		check_dollar(char *str);
 char    *remove_space(char *str);
 char    *substitution(char *token);
 void    substitute_dollar(t_list **list_token);
-char    *sub_quotes(char *token);
+char    *sub_quotes(char *token, t_substitution *s);
 
 /* type */
 int		determine_type(char *token);
@@ -156,7 +170,7 @@ char	*find_path(char **env, char *token, t_path p);
 int		init_param(t_pipex *pipex, char *token, char **__environ, t_path p);
 char	*get_arg(char *token);
 
-/* prcess */
+/* process */
 int		creating_child_process(t_list **list_token, char ** envp);
 int		child_process(t_pipex *pipex, char **__environ);
 int		extract_str(char *str);
