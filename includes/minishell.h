@@ -171,7 +171,8 @@ int		init_param(t_pipex *pipex, char *token, char **__environ, t_path p);
 char	*get_arg(char *token);
 
 /* process */
-int		creating_child_process(t_list **list_token, char ** envp);
+int		creating_process(t_list **list_token, char **env);
+int		simple_exec(t_list **list_token, char **env);
 int		child_process(t_pipex *pipex, char **__environ);
 int		extract_str(char *str);
 int		word_process(char *list_token, t_pipex *pipex, char **env, t_path path);

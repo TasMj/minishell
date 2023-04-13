@@ -32,8 +32,8 @@ int word_process(char *full_token, t_pipex *pipex, char **env, t_path path)
     return (0);
 }
 
-/* if the command is executable, create a child process. If not exit */
-int creating_child_process(t_list **list_token, char ** env)
+//Exec simple sans operateurs pour l'instant
+int simple_exec(t_list **list_token, char **env)
 {
     t_pipex pipex;
     t_path  path;
@@ -57,4 +57,12 @@ int creating_child_process(t_list **list_token, char ** env)
     word_process(cmd_with_arg, &pipex, env, path);
     (*list_token) = tmp;
     return (0);
+}
+
+int creating_process(t_list **list_token, char **env)
+{
+	// if (check_pipes(list_token))
+	// 	pipes_process();
+	simple_exec(list_token, env);
+	return (0);
 }

@@ -40,7 +40,7 @@ int main(int argc, char **argv, char **env)
 	        list_token[0] = NULL;
             init_list(list_token, input);
             // print_list(list_token);
-            creating_child_process(list_token, env);
+            creating_process(list_token, env);
         }
         
     }
