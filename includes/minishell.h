@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/04/13 17:35:04 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/04/13 19:18:16 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,6 @@ typedef struct s_substitution
     int		i;
 }	t_substitution;
 
-typedef struct s_pipe
-{
-	char	**cmd1;
-	char	**cmd2;
-	int	fd[2];
-	int	pid1;
-	int	pid2;
-}	t_pipe;
-
 typedef struct s_pipex
 {
 	int		infile_fd;
@@ -104,6 +95,15 @@ typedef struct s_path
 	char	**path_split;
 }	t_path;
 
+typedef struct s_pipe
+{
+	char	**cmd1;
+	char	**cmd2;
+	int	fd[2];
+	int	pid1;
+	int	pid2;
+	struct s_path	path;
+}	t_pipe;
 
 /******************************************************************************/
 /*                                fonctions                                   */
