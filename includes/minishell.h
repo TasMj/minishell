@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/04/09 12:36:39 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/13 17:35:04 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,16 @@ typedef struct s_substitution
     int		end;
     int		deb;
     int		i;
-}t_substitution;
+}	t_substitution;
+
+typedef struct s_pipe
+{
+	char	**cmd1;
+	char	**cmd2;
+	int	fd[2];
+	int	pid1;
+	int	pid2;
+}	t_pipe;
 
 typedef struct s_pipex
 {
@@ -84,7 +93,7 @@ typedef struct s_pipex
 	char	*path_cmd;
 	char	**token_cmd;
 	t_list	*list_token;
-}t_pipex;
+}	t_pipex;
 
 typedef struct s_path
 {
@@ -93,7 +102,7 @@ typedef struct s_path
 	char	*path_with_points;
 	char	*path_without;
 	char	**path_split;
-}t_path;
+}	t_path;
 
 
 /******************************************************************************/
@@ -176,5 +185,9 @@ int		simple_exec(t_list **list_token, char **env);
 int		child_process(t_pipex *pipex, char **__environ);
 int		extract_str(char *str);
 int		word_process(char *list_token, t_pipex *pipex, char **env, t_path path);
+
+/* pipes */
+int	check_pipes(t_list **tokens);
+int	pipe_exec(t_list **tokens, char **env);
 
 #endif

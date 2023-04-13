@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:07:07 by tas               #+#    #+#             */
-/*   Updated: 2023/04/08 12:07:02 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/13 17:40:48 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int simple_exec(t_list **list_token, char **env)
 
 int creating_process(t_list **list_token, char **env)
 {
-	// if (check_pipes(list_token))
-	// 	pipes_process();
-	simple_exec(list_token, env);
+	if (check_pipes(list_token) == 1)
+		pipe_exec(list_token, env);
+	// simple_exec(list_token, env);
 	return (0);
 }
