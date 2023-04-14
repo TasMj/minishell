@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 16:08:40 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/04/13 19:19:21 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/04/14 13:54:37 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ char	**get_cmd1(t_list **tokens)
 		i++;
 		token = token->next;
 	}
+	cmd[i] = 0;
 	return (cmd);
 }
 
@@ -65,7 +66,6 @@ int	pipe_exec(t_list **tokens, char **env)
 {
 	t_pipe	p;
 	
-	(void) env;
 	p.cmd1 = get_cmd1(tokens);
 	
 	// if (pipe(p.fd) == -1)	//Creation pipe	
@@ -76,10 +76,10 @@ int	pipe_exec(t_list **tokens, char **env)
 		return (2);
 
 	if (p.pid1 == 0)		//Si child process (cmd1)
-	{
-		printf();
 		execve(find_path(env, p.cmd1[0], p.path), p.cmd1, env);
-	}
-	waitpid(p.pid1, NULL, 0);
+	else
+		waitpid(p.pid1, NULL, 0);
+
+	free_tab(p.cmd1);
 	return (0);
 }
