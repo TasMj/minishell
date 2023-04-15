@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/04/15 02:01:12 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/15 02:22:10 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ typedef struct s_substitution
     int		end;
     int		deb;
     int		i;
+	int		flag;
+	int		quote;
 }t_substitution;
 
 typedef struct s_data
