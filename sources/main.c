@@ -6,11 +6,12 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/04/09 12:45:29 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/15 19:53:53 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "heredoc.h"
 
 void    init_list(t_list **list_token, char *input)
 {

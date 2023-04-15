@@ -6,7 +6,7 @@
 #    By: tas <tas@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/04/08 12:59:55 by tas              ###   ########.fr        #
+#    Updated: 2023/04/15 19:52:21 by tas              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ BUILTINS		= ./sources/builtins/ft_cd.c ./sources/builtins/ft_echo.c \
 				./sources/builtins/ft_unset.c \
 		
 EXEC			= ./sources/exec/path.c ./sources/exec/process.c \
+				./sources/exec/heredoc.c \
 
 EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
 
