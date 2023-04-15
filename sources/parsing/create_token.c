@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/04/08 13:01:04 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/15 01:52:27 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_list    **create_token(t_list **list_token, char *input)
     int flag;
     char quote;
     char *stockage;
-    char *word_ready;
 
     i = 0;
     start = 0;
@@ -75,9 +74,8 @@ t_list    **create_token(t_list **list_token, char *input)
             if (flag == 1)
                 i++;
             stockage = ft_strdup_size(input + start, (end - start));
-            word_ready = ft_strdup_size(stockage, ft_strlen(stockage));
-            add_list(list_token, word_ready);
-            free(stockage);
+            add_list(list_token, stockage);
+            // free(stockage);
         }
     }
     return (list_token);

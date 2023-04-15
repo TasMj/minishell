@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 12:57:45 by tas               #+#    #+#             */
-/*   Updated: 2023/04/08 12:40:33 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/15 01:57:22 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int determine_type(char *token)
 {
-    if (check_heredoc(token) == 1) // rediriger une entrée stdin depuis de terminal. On peut ecrire puis entrer, etc
+    if (check_heredoc(token) == 1)
         return (1);
-    else if (check_append(token) == 1) //contenu ajouté à la fin du doc existant
+    else if (check_append(token) == 1) 
         return (2);
-    else if (check_redir_in(token[0]) == 1) //redirige l'entrée standard en provenance d'un fichier
+    else if (check_redir_in(token[0]) == 1)
         return (3);
-    else if (check_redir_out(token[0]) == 1) //remplace complètement son contenu
+    else if (check_redir_out(token[0]) == 1)
         return (4);
     else if (ft_strncmp(token, "|", 1) == 0)
         return (5);

@@ -6,43 +6,43 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:07:07 by tas               #+#    #+#             */
-/*   Updated: 2023/04/08 12:07:02 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/15 01:40:40 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* create child process */
-int	child_process(t_pipex *pipex, char **__environ)
+int	child_process(t_data *data, char **__environ)
 {
-	pipex->pid = fork();
-	if (pipex->pid < 0)
+	data->pid = fork();
+	if (data->pid < 0)
 		return (1);
-	if (pipex->pid == 0)
-		execve(pipex->path_cmd, pipex->token_cmd, __environ);
+	if (data->pid == 0)
+		execve(data->path_cmd, data->token_cmd, __environ);
 	else
-        waitpid(pipex->pid, NULL, 0);
+        waitpid(data->pid, NULL, 0);
 	return (0);
 }
 
-int word_process(char *full_token, t_pipex *pipex, char **env, t_path path)
+int word_process(char *full_token, t_data *data, char **env, t_path path)
 {
-    init_param(pipex, full_token, env, path);
-    child_process(pipex, env);
+    init_param(data, full_token, env, path);
+    child_process(data, env);
     return (0);
 }
 
-//Exec simple sans operateurs pour l'instant
+/*Exec simple sans operateurs pour l'instant*/
 int simple_exec(t_list **list_token, char **env)
 {
-    t_pipex pipex;
+    t_data data;
     t_path  path;
     t_list  *tmp;
     char    *cmd_with_arg;
     
     tmp = *list_token;
     cmd_with_arg = "";
-    ft_memset(&pipex, 0, sizeof(t_pipex));
+    ft_memset(&data, 0, sizeof(t_data));
     while ((*list_token) != NULL && (*list_token)->type == 0)
     {
         cmd_with_arg = ft_strjoin(cmd_with_arg, (*list_token)->content);
@@ -54,7 +54,7 @@ int simple_exec(t_list **list_token, char **env)
         else
             break;
     }
-    word_process(cmd_with_arg, &pipex, env, path);
+    word_process(cmd_with_arg, &data, env, path);
     (*list_token) = tmp;
     return (0);
 }
