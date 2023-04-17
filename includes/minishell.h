@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/04/13 19:18:16 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/04/17 16:17:52 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,11 @@ typedef struct s_pipe
 	struct s_path	path;
 }	t_pipe;
 
+typedef struct	s_exec
+{
+	int		fd[2];
+}	t_exec;
+
 /******************************************************************************/
 /*                                fonctions                                   */
 /******************************************************************************/
@@ -185,6 +190,9 @@ int		simple_exec(t_list **list_token, char **env);
 int		child_process(t_pipex *pipex, char **__environ);
 int		extract_str(char *str);
 int		word_process(char *list_token, t_pipex *pipex, char **env, t_path path);
+
+/* exec all */
+int   exec_all(t_list *token, char **env);
 
 /* pipes */
 int	check_pipes(t_list **tokens);
