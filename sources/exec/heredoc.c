@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:34:23 by tas               #+#    #+#             */
-/*   Updated: 2023/04/15 23:10:46 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/18 23:30:19 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int heredoc(t_list **list_token, char **env)
             h->path_cmd = find_path(env, first_cmd->content, p);
             h->token_arg = ft_split(args, ' ');
             h->delimineur = ft_strdup_size((*list_token)->next->content, ft_strlen((*list_token)->next->content));
-            heredoc_process(h);
+            heredoc_process(h, env);
         }
         (*list_token) = (*list_token)->next;
     }
@@ -81,7 +81,7 @@ int	ft_strcmp(char *s1, char *s2)
 	return (0);
 }
 
-int	heredoc_process(t_heredoc *h)
+int	heredoc_process(t_heredoc *h, char **env)
 {
     char    *stockage;
 
@@ -111,8 +111,7 @@ int	heredoc_process(t_heredoc *h)
         if (waitpid(h->pid, NULL, 0) == -1)
             exit(EXIT_FAILURE);
         dup2(h->tube[0], STDIN_FILENO);
-        char *envp[] = { NULL };
-        if (execve(h->path_cmd, h->token_arg, envp) == -1) 
+        if (execve(h->path_cmd, h->token_arg, env) == -1) 
             exit(EXIT_FAILURE);
         close(h->tube[0]);
         exit(EXIT_SUCCESS);

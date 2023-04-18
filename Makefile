@@ -6,7 +6,7 @@
 #    By: tas <tas@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/04/15 20:04:22 by tas              ###   ########.fr        #
+#    Updated: 2023/04/18 23:15:12 by tas              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ BUILTINS		= ./sources/builtins/ft_cd.c ./sources/builtins/ft_echo.c \
 		
 EXEC			= ./sources/exec/path.c ./sources/exec/process.c \
 				./sources/exec/heredoc.c ./sources/exec/stdin.c \
+				./sources/exec/stdout.c ./sources/exec/append.c \
+				./sources/exec/tools_redir.c \
 
 EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
 

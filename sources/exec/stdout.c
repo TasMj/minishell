@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stdin.c                                            :+:      :+:    :+:   */
+/*   stdout.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/15 20:03:55 by tas               #+#    #+#             */
-/*   Updated: 2023/04/18 23:15:43 by tas              ###   ########.fr       */
+/*   Created: 2023/04/18 23:06:38 by tas               #+#    #+#             */
+/*   Updated: 2023/04/18 23:32:25 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
 
-int	stdin_process(t_list **list_token, char **env)
-{
+int	stdout_process(t_list **list_token, char **env)
+{    
     t_redir     *s;
     t_list      *tmp;
     char        *c;
@@ -22,31 +22,33 @@ int	stdin_process(t_list **list_token, char **env)
     tmp = *list_token;
     s = malloc(sizeof(t_redir));
     c = malloc(sizeof(char) * 2);
-    c = "<";
+    c = ">";
 	ft_memset(s, 0, sizeof(t_redir));
     init_redir(s, list_token, env, c);
-	if ((s->fd = open(s->file_name, O_RDONLY)) == -1)
-    {
-        printf("minishell: no such file or directory: %s\n", s->file_name);
-        return (1);
-    }
-    s->pid = fork();
-    if (s->pid == -1) 
+    if (pipe(s->tube) == -1)
         exit(EXIT_FAILURE);
-	else if (s->pid == 0)
-	{
-        if (dup2(s->fd, STDIN_FILENO) == -1)
-            exit(EXIT_FAILURE);
-		close(s->fd);
-		if (execve(s->path_cmd, s->token_arg, env) == -1)
-            exit(EXIT_FAILURE);
-	}
-    else
+    s->pid = fork();
+    if (s->pid == -1)
+        exit(EXIT_FAILURE);
+    else if (s->pid == 0) 
     {
-        close(s->fd);
-        if (waitpid(s->pid, NULL, 0) == -1)
-            exit(EXIT_FAILURE);        
+        close(s->tube[0]);
+        dup2(s->tube[1], STDOUT_FILENO);
+        close(s->tube[1]);
+		if (execve(s->path_cmd, s->token_arg, env) == -1)
+            return (1);
+    } 
+    else 
+    {
+        close(s->tube[1]);
+        waitpid(s->pid, NULL, 0);
+        int fd_out = open(s->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+        dup2(s->tube[0], STDIN_FILENO);
+        dup2(fd_out, STDOUT_FILENO);
+        close(s->tube[0]);
+		if (execve(s->path_cmd, s->token_arg, env) == -1)
+            return (1);
     }
     (*list_token) = tmp;
-	return (0);
+    return 0;
 }
