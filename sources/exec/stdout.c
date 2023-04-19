@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 23:06:38 by tas               #+#    #+#             */
-/*   Updated: 2023/04/18 23:32:25 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/19 12:03:03 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	stdout_process(t_list **list_token, char **env)
     c = ">";
 	ft_memset(s, 0, sizeof(t_redir));
     init_redir(s, list_token, env, c);
+    // free(c);
     if (pipe(s->tube) == -1)
         exit(EXIT_FAILURE);
     s->pid = fork();
@@ -49,6 +50,7 @@ int	stdout_process(t_list **list_token, char **env)
 		if (execve(s->path_cmd, s->token_arg, env) == -1)
             return (1);
     }
+    free_redir(s);
     (*list_token) = tmp;
     return 0;
 }

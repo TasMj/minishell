@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:34:23 by tas               #+#    #+#             */
-/*   Updated: 2023/04/18 23:30:19 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/19 11:54:36 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,19 @@ int heredoc(t_list **list_token, char **env)
     while (*list_token)
     {
         if (check_heredoc((*list_token)->content) == 1 && (*list_token)->next == NULL)
-            return (1);
+            break;
         else if (check_heredoc((*list_token)->content) == 1)
         {
             h->path_cmd = find_path(env, first_cmd->content, p);
             h->token_arg = ft_split(args, ' ');
-            h->delimineur = ft_strdup_size((*list_token)->next->content, ft_strlen((*list_token)->next->content));
+            h->delimiteur = ft_strdup_size((*list_token)->next->content, ft_strlen((*list_token)->next->content));
+            free(args);
             heredoc_process(h, env);
         }
         (*list_token) = (*list_token)->next;
     }
+    free(args);
+    free_heredoc(h);
     (*list_token) = first_cmd;
     return (0);
 }
@@ -96,11 +99,10 @@ int	heredoc_process(t_heredoc *h, char **env)
         while (1) 
         {
             stockage = readline("heredoc> ");
-            if (ft_strcmp(stockage, h->delimineur) == 0)
+            if (ft_strcmp(stockage, h->delimiteur) == 0)
                 break;
-            if (write(h->tube[1], ft_strjoin(stockage, "\n"), ft_strlen(stockage) + 1) == -1) 
+            if (write(h->tube[1], ft_strjoin_mod(stockage, "\n", 1), ft_strlen(stockage) + 1) == -1) 
                 exit(EXIT_FAILURE);
-            free(stockage);
         }
         close(h->tube[1]);
         exit(EXIT_SUCCESS);
@@ -116,5 +118,18 @@ int	heredoc_process(t_heredoc *h, char **env)
         close(h->tube[0]);
         exit(EXIT_SUCCESS);
     }
-    return 0;
+    free_heredoc(h);
+    return (0);
+}
+
+void	free_heredoc(t_heredoc *h)
+{
+	if (h->delimiteur)
+		free(h->delimiteur);
+	if (h->cmd)
+		free(h->cmd);
+    if (h->path_cmd)
+        free(h->path_cmd);
+	// if (h->token_arg)
+		// free_tab(h->token_arg);
 }

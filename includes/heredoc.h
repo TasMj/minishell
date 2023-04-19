@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:41:00 by tas               #+#    #+#             */
-/*   Updated: 2023/04/18 23:27:46 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/19 11:37:06 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 /******************************************************************************/
 typedef struct s_heredoc
 {
-    char    *delimineur;
+    char    *delimiteur;
 	pid_t	pid;
     int     tube[2];
 	char	*cmd;
@@ -52,12 +52,14 @@ typedef struct s_redir
 char    *get_file_name(t_list **list_token, t_redir *s, char *c);
 char    *cmd_before_redir(t_list **list_token, t_redir *s);
 void    init_redir(t_redir *s, t_list **list_token, char **env, char *c);
+void	free_redir(t_redir *redir);
 
 /* heredoc */
 char    *cmd_before_heredoc(t_list **list_token, t_heredoc *h);
 int     heredoc(t_list **list_token, char **env);
 int     ft_strcmp(char *s1, char *s2);
 int     heredoc_process(t_heredoc *h, char **env);
+void	free_heredoc(t_heredoc *h);
 
 /* Redirection */
 int		stdin_process(t_list **list_token, char **env);

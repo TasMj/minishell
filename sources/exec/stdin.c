@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 20:03:55 by tas               #+#    #+#             */
-/*   Updated: 2023/04/18 23:15:43 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/19 12:02:25 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	stdin_process(t_list **list_token, char **env)
     c = "<";
 	ft_memset(s, 0, sizeof(t_redir));
     init_redir(s, list_token, env, c);
+    // free(c);
 	if ((s->fd = open(s->file_name, O_RDONLY)) == -1)
     {
         printf("minishell: no such file or directory: %s\n", s->file_name);
@@ -47,6 +48,7 @@ int	stdin_process(t_list **list_token, char **env)
         if (waitpid(s->pid, NULL, 0) == -1)
             exit(EXIT_FAILURE);        
     }
+    free_redir(s);
     (*list_token) = tmp;
 	return (0);
 }

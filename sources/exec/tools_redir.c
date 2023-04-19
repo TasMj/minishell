@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 23:12:13 by tas               #+#    #+#             */
-/*   Updated: 2023/04/18 23:12:51 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/19 11:25:31 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,14 @@ void    init_redir(t_redir *s, t_list **list_token, char **env, char *c)
     free(args);
     s->path_cmd = find_path(env, s->token_arg[0], p);
     *list_token = tmp;
+}
+
+void	free_redir(t_redir *redir)
+{
+	if (redir->cmd)
+		free(redir->cmd);
+	if (redir->file_name)
+		free(redir->path_cmd);
+	if (redir->token_arg)
+		free_tab(redir->token_arg);
 }

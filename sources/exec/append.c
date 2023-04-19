@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 21:56:40 by tas               #+#    #+#             */
-/*   Updated: 2023/04/18 23:26:09 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/19 11:25:43 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int append_process(t_list **list_token, char **env)
         close(a->fd);
         close(a->tube[0]);
     }
+    free_redir(a);
     (*list_token) = tmp;
     return 0;
 }
