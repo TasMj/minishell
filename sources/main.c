@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/04/19 12:00:28 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/21 15:18:36 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ void    init_list(t_list **list_token, char *input)
     remove_list_quotes(list_token);
 }
 
-
 int main(int argc, char **argv, char **env)
 {
     (void)argc;
     (void)argv;
     (void)env;
+
     char *input;
     t_list **list_token;
 
@@ -41,8 +41,7 @@ int main(int argc, char **argv, char **env)
 	        list_token[0] = NULL;
             init_list(list_token, input);
             // print_list(list_token);
-            // creating_process(list_token, env);
-            stdout_process(list_token, env);
+            creating_process(list_token, env);
         }
         
     }

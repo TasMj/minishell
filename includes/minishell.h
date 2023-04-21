@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/04/15 19:52:26 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/21 15:07:39 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_path
 /***** PARSING *****/
 
 /* builtin */
+int		ft_echo(void);
 int		ft_env(char **envp);
 void	ft_pwd(void);
 
@@ -158,6 +159,7 @@ int		ft_strncmp(char *s1, char *s2, size_t n);
 char	*ft_strjoin(char *s1, char *s2);
 int		is_a_space(char c);
 int		is_a_separator(char c);
+void    init_list(t_list **list_token, char *input);
 
 /***** EXEC *****/
 
