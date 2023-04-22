@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:41:00 by tas               #+#    #+#             */
-/*   Updated: 2023/04/19 11:37:06 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/23 00:16:58 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ typedef struct s_redir
 }t_redir;
 
 /******************************************************************************/
+/*                            variable globale                                */
+/******************************************************************************/
+
+extern t_list	**list_ENVI;
+
+/******************************************************************************/
 /*                                fonctions                                   */
 /******************************************************************************/
 
@@ -65,5 +71,10 @@ void	free_heredoc(t_heredoc *h);
 int		stdin_process(t_list **list_token, char **env);
 int		stdout_process(t_list **list_token, char **env);
 int		append_process(t_list **list_token, char **env);
+
+
+t_list  **get_list_env(char **env);
+t_list  **get_list_input(t_list **list_cmd);
+
 
 #endif
