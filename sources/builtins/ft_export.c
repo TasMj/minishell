@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/04/23 00:11:46 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/23 01:01:33 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,6 @@ int check_equal(char *str)
         i++;
     }
     return (0);
-}
-
-t_list  **get_list_env(char **env)
-{
-    int i;
-    t_list  **list_env;
-
-    i = 0;
-    list_env = malloc(sizeof(t_list));
-    ft_memset(list_env, 0, sizeof(t_list));
-    while (env[i] != NULL)
-    {
-        add_list(list_env, env[i]);
-        i++;
-    }
-    return (list_env);
 }
 
 t_list  **get_list_input(t_list **list_cmd)

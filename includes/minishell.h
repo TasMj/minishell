@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/04/21 15:07:39 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/23 01:05:45 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ typedef struct s_path
 
 /* builtin */
 int		ft_echo(void);
-int		ft_env(char **envp);
+int		ft_env(void);
 void	ft_pwd(void);
 
 /* exit */

@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:35 by tas               #+#    #+#             */
-/*   Updated: 2023/04/23 00:18:18 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/23 01:06:11 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,15 @@ int ft_unset()
     return (0);
 }
 
-int main(int argc, char **argv, char **__environ)
-{
-    (void)argc;
-    (void)argv;
-    (void)__environ;
-    list_ENVI = get_list_env(__environ);
-    while(1)
-    {
-        ft_unset();
-        print_list(list_ENVI);
-    }
-}
+// int main(int argc, char **argv, char **__environ)
+// {
+//     (void)argc;
+//     (void)argv;
+//     (void)__environ;
+//     list_ENVI = get_list_env(__environ);
+//     while(1)
+//     {
+//         ft_unset();
+//         print_list(list_ENVI);
+//     }
+// }
