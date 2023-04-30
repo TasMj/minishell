@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/04/23 01:01:33 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/30 13:49:29 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,13 @@
 
 t_list	**list_ENVI;
 
-
+/*TO DO
+- export simple return la list par ordre aasci
+- export a ---> a='' mais e s'affiche qu'avec export
+- si export une var qui existe déja ça la modifie
 //MODIFIER LA VAR SI ELLE EXISTE
+*/
+
 
 int check_equal(char *str)
 {
@@ -49,7 +54,7 @@ int ft_export()
     list_cmd = malloc(sizeof(t_list));
     list_cmd[0] = NULL;
     list_cmd = get_list_input(list_cmd);
-    tmp = *list_cmd;
+    tmp = *list_ENVI;
     if (ft_strncmp((*list_cmd)->content, "export", 6) == 1)
         return (1);
     else
@@ -64,7 +69,9 @@ int ft_export()
             (*list_cmd) = (*list_cmd)->next;
         }        
     }
-    *list_cmd = tmp;
+    *list_ENVI = tmp;
+    if (list_cmd)
+        free_list(list_cmd);
     return (0);
 }
 

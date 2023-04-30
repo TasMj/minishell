@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:41:00 by tas               #+#    #+#             */
-/*   Updated: 2023/04/23 00:16:58 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/30 15:42:08 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ extern t_list	**list_ENVI;
 /******************************************************************************/
 
 /* tools */
-char    *get_file_name(t_list **list_token, t_redir *s, char *c);
+char    *get_file_name(t_list **list_token, char *c);
 char    *cmd_before_redir(t_list **list_token, t_redir *s);
 void    init_redir(t_redir *s, t_list **list_token, char **env, char *c);
 void	free_redir(t_redir *redir);

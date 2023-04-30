@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:35 by tas               #+#    #+#             */
-/*   Updated: 2023/04/23 01:06:11 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/30 13:50:45 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int ft_unset()
     list_cmd = malloc(sizeof(t_list));
     list_cmd[0] = NULL;
     list_cmd = get_list_input(list_cmd);
-    tmp = *list_cmd;
+    tmp = *list_ENVI;
     if (ft_strncmp((*list_cmd)->content, "unset", 5) == 1)
         return (1);
     else
@@ -86,7 +86,9 @@ int ft_unset()
             (*list_cmd) = (*list_cmd)->next;
         }        
     }
-    *list_cmd = tmp;
+    *list_ENVI = tmp;
+    if (list_cmd)
+        free_list(list_cmd);
     return (0);
 }
 

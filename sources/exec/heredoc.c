@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:34:23 by tas               #+#    #+#             */
-/*   Updated: 2023/04/19 11:54:36 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/30 15:55:22 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ char    *cmd_before_heredoc(t_list **list_token, t_heredoc *h)
     h->cmd = "";
     while ((*list_token) && (*list_token)->type == 0)
     {
-        h->cmd = ft_strjoin(h->cmd, (*list_token)->content);
+        h->cmd = ft_strjoin_mod(h->cmd, (*list_token)->content, 0);
         if ((*list_token)->next->type == 0)
-            h->cmd = ft_strjoin(h->cmd, " ");
+            h->cmd = ft_strjoin_mod(h->cmd, " ", 1);
         (*list_token) = (*list_token)->next;
     }
     (*list_token) = tmp;
@@ -105,6 +105,7 @@ int	heredoc_process(t_heredoc *h, char **env)
                 exit(EXIT_FAILURE);
         }
         close(h->tube[1]);
+        free(stockage);
         exit(EXIT_SUCCESS);
     }
     else 
@@ -118,7 +119,6 @@ int	heredoc_process(t_heredoc *h, char **env)
         close(h->tube[0]);
         exit(EXIT_SUCCESS);
     }
-    free_heredoc(h);
     return (0);
 }
 

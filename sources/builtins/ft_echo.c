@@ -6,11 +6,16 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:09:31 by tas               #+#    #+#             */
-/*   Updated: 2023/04/21 15:18:12 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/30 13:35:43 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/* TO DO
+- enlever le break
+- voir si besoin de free stockage et si c'est ok de mettre ""
+*/
 
 int ft_echo(void)
 {
@@ -67,3 +72,13 @@ int ft_echo(void)
         free(input);
     return (0);
 }
+
+// int main(int argc, char **argv, char **env)
+// {
+//     (void)argc;
+//     (void)argv;
+//     (void)env;
+    
+//     ft_echo();
+//     return (0);
+// }

@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/04/23 01:05:45 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/30 15:40:22 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int		err_msg(int n);
 void	free_list(t_list **list);
 void	free_tab(char **tab);
 void	free_all(char *s1, char *s2);
+void	free_data(t_data *data);
 
 /* create token */
 char    *get_input(void);

@@ -6,11 +6,16 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:07:07 by tas               #+#    #+#             */
-/*   Updated: 2023/04/15 01:40:40 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/30 15:25:57 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/* TO DO
+- changer le break
+- in simple_exec : free cmd_with_args
+*/
 
 /* create child process */
 int	child_process(t_data *data, char **__environ)
@@ -48,7 +53,7 @@ int simple_exec(t_list **list_token, char **env)
         cmd_with_arg = ft_strjoin(cmd_with_arg, (*list_token)->content);
         if ((*list_token)->next != NULL)
         {
-            cmd_with_arg = ft_strjoin(cmd_with_arg, " ");
+            cmd_with_arg = ft_strjoin_mod(cmd_with_arg, " ", 1);
             (*list_token) = (*list_token)->next;
         }
         else
@@ -56,6 +61,7 @@ int simple_exec(t_list **list_token, char **env)
     }
     word_process(cmd_with_arg, &data, env, path);
     (*list_token) = tmp;
+    free_data(&data);
     return (0);
 }
 

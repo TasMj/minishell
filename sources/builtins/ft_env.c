@@ -6,13 +6,16 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:48 by tas               #+#    #+#             */
-/*   Updated: 2023/04/23 01:09:32 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/30 13:37:39 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
 
+/*TO DO
+-à ajouter direct comme ça dans le code et si pb faire un getinput et strncmp
+*/
 t_list  **get_list_env(char **env)
 {
     int i;
