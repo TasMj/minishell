@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:34:23 by tas               #+#    #+#             */
-/*   Updated: 2023/04/30 15:55:22 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/09 13:15:44 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int heredoc(t_list **list_token, char **env)
     char        *args;
     
     h = malloc(sizeof(t_heredoc));
+    ft_memset(&p, 0, sizeof(t_path));
     first_cmd = *list_token;
     args = ft_strdup_size(cmd_before_heredoc(list_token, h), ft_strlen(cmd_before_heredoc(list_token, h)));
     while (*list_token)

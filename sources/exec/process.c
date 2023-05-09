@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:07:07 by tas               #+#    #+#             */
-/*   Updated: 2023/04/30 15:25:57 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/09 13:14:20 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int simple_exec(t_list **list_token, char **env)
     tmp = *list_token;
     cmd_with_arg = "";
     ft_memset(&data, 0, sizeof(t_data));
+    ft_memset(&path, 0, sizeof(t_path));
     while ((*list_token) != NULL && (*list_token)->type == 0)
     {
         cmd_with_arg = ft_strjoin(cmd_with_arg, (*list_token)->content);

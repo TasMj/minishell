@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 23:12:13 by tas               #+#    #+#             */
-/*   Updated: 2023/04/30 21:31:10 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/09 13:16:28 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void    init_redir(t_redir *s, t_list **list_token, char **env, char *c)
     t_list      *tmp;
     
     tmp = *list_token;
+    ft_memset(&p, 0, sizeof(t_path));
     s->file_name = ft_strdup_size(get_file_name(list_token, c), ft_strlen(get_file_name(list_token, c)));
     *list_token = tmp;
     args = ft_strdup_size(cmd_before_redir(list_token, s), ft_strlen(cmd_before_redir(list_token, s)));

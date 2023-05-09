@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/04/21 14:07:38 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/09 14:00:59 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,16 @@ void    delimit_token(t_substitution *s, char *input)
 {
     if (input[s->i] == 39 || input[s->i] == 34)
     {
+        // while (input[s->i] && input[s->i] != 39 && input[s->i] != 34)
+            // s->i++;
         s->quote = input[s->i];
         s->flag = 1;
         s->i++;
         while (input[s->i] != s->quote && s->flag == 1)
             s->i++;
+        s->flag = 0;
         s->i++;
+        // printf("LA QUOTE: %c\n", input[s->i]);
     }
     else
     {
@@ -43,6 +47,12 @@ void    delimit_token(t_substitution *s, char *input)
         {
             s->i++;
             if (input[s->i] == '>' || input[s->i] == '<')
+                s->i++;
+        }
+        else if (is_a_separator(input[s->i]) == 0)
+        {
+            printf("ok\n");
+            while (input[s->i] != 39 && input[s->i] != 34)
                 s->i++;
         }
         else
