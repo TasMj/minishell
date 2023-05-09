@@ -1,158 +1,130 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exec_all.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 14:12:39 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/04/17 17:26:14 by jthuysba         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+// /* ************************************************************************** */
+// /*                                                                            */
+// /*                                                        :::      ::::::::   */
+// /*   exec_all.c                                         :+:      :+:    :+:   */
+// /*                                                    +:+ +:+         +:+     */
+// /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+// /*                                                +#+#+#+#+#+   +#+           */
+// /*   Created: 2023/04/17 14:12:39 by jthuysba          #+#    #+#             */
+// /*   Updated: 2023/05/09 14:09:16 by jthuysba         ###   ########.fr       */
+// /*                                                                            */
+// /* ************************************************************************** */
 
-#include "minishell.h"
+// #include "minishell.h"
 
-//Retourne le token avant elem
-t_list	*lst_previous(t_list *token, t_list *elem)
-{
-	if (!token->next)
-		return (NULL);
-	while (token->next != elem && token)
-		token = token->next;
-	return (token);
-}
+// //Retourne le token avant elem
+// t_list	*lst_previous(t_list *token, t_list *elem)
+// {
+// 	if (!token->next)
+// 		return (NULL);
+// 	while (token->next != elem && token)
+// 		token = token->next;
+// 	return (token);
+// }
 
-//Retourne le nombre de token avant l'operateur
-int	cmd_size(t_list *token)
-{
-	int	count;
+// //Retourne le nombre de token avant l'operateur
+// int	cmd_size(t_list *token)
+// {
+// 	int	count;
 	
-	count = 0;
-	while (token && token->type == 0)
-	{
-		count++;
-		token = token->next;
-	}
-	return (count);
-}
+// 	count = 0;
+// 	while (token && token->type == WORD)
+// 	{
+// 		count++;
+// 		token = token->next;
+// 	}
+// 	return (count);
+// }
 
-//Retourne la commande avec les args jusquau premier operateur
-char	**get_cmd(t_list *token)
-{
-	char		**cmd;
-	int		i;
+// int	last_cmd(t_list *token)
+// {
+// 	while (token)
+// 	{
+// 		if (token->type != WORD)
+// 			return (0);
+// 		token = token->next;
+// 	}
+// 	return (1);
+// }
 
-	cmd = malloc(sizeof(char *) * (cmd_size(token) + 1));
-	i = 0;
-	while (token && token->type == 0)
-	{
-		cmd[i] = ft_strdup_size(token->content, ft_strlen(token->content));
-		i++;
-		token = token->next;
-	}
-	cmd[i] = 0;
-	return (cmd);
-}
-
-//Execute la commande jusquau premier operateur
-int	exec_mid(t_list *elem, char **env, t_exec ex)
-{
-	char		**cmd;
-	pid_t		pid;
-	t_path	p;
-	(void) ex;
-
-	cmd = get_cmd(elem);
-	pid = fork();
-	if (pid == 0)
-	{
-		// dup2(STDIN_FILENO, ex.fd[0]);
-		// dup2(ex.fd[1], STDOUT_FILENO);
-		// close(ex.fd[0]);
-		// close(ex.fd[1]);
-		execve(find_path(env, cmd[0], p), cmd, env);
-	}
-	waitpid(pid, NULL, 0);
-	return (0);
-}
-
-int	exec_first(t_list *elem, char **env, t_exec ex)
-{
-	char		**cmd;
-	pid_t		pid;
-	t_path	p;
-	(void) ex;
-
-	cmd = get_cmd(elem);
-	pid = fork();
-	if (pid == 0)
-	{
-		// dup2(ex.fd[1], STDOUT_FILENO);
-		// close(ex.fd[0]);
-		// close(ex.fd[1]);
-		execve(find_path(env, cmd[0], p), cmd, env);
-	}
-	waitpid(pid, NULL, 0);
-	return (0);
-}
-
-int	exec_last(t_list *elem, char **env, t_exec ex)
-{
-	char		**cmd;
-	pid_t		pid;
-	t_path	p;
-	(void) ex;
-
-	cmd = get_cmd(elem);
-	pid = fork();
-	if (pid == 0)
-	{
-		// dup2(STDIN_FILENO, ex.fd[0]);
-		// close(ex.fd[1]);
-		// close(ex.fd[0]);
-		execve(find_path(env, cmd[0], p), cmd, env);
-	}
-	waitpid(pid, NULL, 0);
-	return (0);
-}
-
-int	last_cmd(t_list *token)
-{
-	while (token)
-	{
-		if (token->type != 0)
-			return (0);
-		token = token->next;
-	}
-	return (1);
-}
-
-void	rec_exec(t_list *token, t_list *elem, t_exec ex, char **env)
-{
-	(void) env;
+// int	exec_cmd(t_list *token, char **env, int cmd_nb, t_exec ex)
+// {
+// 	(void) cmd_nb;
+// 	(void) ex;
+// 	char	**cmd;
+// 	int	pid;
+// 	t_path	p;
 	
-	while (elem != token && elem->type == 0)
-	{
-		// printf("%s\n", elem->content);
-		elem = lst_previous(token, elem);
-	}
-	// printf("%s\n\n", elem->content);
-	if (elem != token)
-		rec_exec(token, lst_previous(token, elem), ex, env);
-	if (elem == token)							//Premiere commande
-		exec_first(elem, env, ex);
-	else if (last_cmd(elem->next) == 1)	//Derniere commande
-		exec_last(elem->next, env, ex);
-	else
-		exec_mid(elem->next, env, ex);
-}
+// 	cmd = get_cmd(token);
+// 	pid = fork();
+// 	if (pid < 0)
+// 		return (1);
+// 	if (pid == 0)
+// 	{
+// 		// if (cmd_nb == 0)									//Si premiere cmd
+// 		// {
+// 		// 	dup2(ex.fd[0][1], STDOUT_FILENO);
+// 		// 	close_all(ex);
+// 		// }
+// 		// else if (cmd_nb == ex.pipes_nb)	//Si derniere cmd
+// 		// {
+// 		// 	dup2(ex.fd[ex.pipes_nb - 1][0], STDIN_FILENO);
+// 		// 	close_all(ex);
+// 		// }
+// 		// else
+// 		// {
+// 		// 	dup2(ex.fd[cmd_nb - 1][0], STDIN_FILENO);
+// 		// 	dup2(ex.fd[cmd_nb][1], STDOUT_FILENO);
+// 		// 	close_all(ex);
+// 		// }
+// 		execve(find_path(env, cmd[0], p), cmd, env);
+// 	}
+// 	waitpid(pid, NULL, 0);
+// 	return (0);
+// }
 
-int   exec_all(t_list *token, char **env)
-{
-	(void) env;
-	t_exec	ex;
+// void	exec(t_list *token, char **env, t_exec ex)
+// {
+// 	int		cmd_nb;
 	
-	pipe(ex.fd);
-	rec_exec(token, ft_lstlast(token), ex, env);
-	return (0);
-}
+// 	cmd_nb = 0;
+	
+// 	while (token)
+// 	{
+// 		// if (last_cmd(token))
+// 		// {
+// 		// 	exec_cmd(token, env, cmd_nb, ex);
+// 		// 	return ;
+// 		// }
+		
+// 		exec_cmd(token, env, cmd_nb, ex);
+// 		cmd_nb++;
+		
+// 		while (token->type != PIPE && token)
+// 			token = token->next;
+// 		if (token->next)
+// 			token = token->next;
+// 	}
+// }
+
+// // int   exec_all(t_list *token, char **env)
+// // {
+// // 	(void) env;
+// // 	t_exec	ex;
+// // 	int		i;
+
+// // 	i = 0;
+// // 	ex.first = token;
+// // 	ex.pipes_nb = count_pipes(token);
+// // 	ex.fd = malloc(sizeof(int *) * count_pipes(token));
+// // 	while (i < count_pipes(token))
+// // 	{
+// // 		ex.fd[i] = malloc(sizeof(int) * 2);
+// // 		pipe(ex.fd[i]);
+// // 		// printf("i = %d\n", i);
+// // 		i++;
+// // 	}
+// // 	// printf("pipes_nb = %d\n", ex.pipes_nb);
+// // 	exec(token, env, ex);
+// // 	return (0);
+// // }
