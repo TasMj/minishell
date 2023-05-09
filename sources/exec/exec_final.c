@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 18:01:28 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/09 17:42:07 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/09 18:11:07 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,10 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 		return (1);
 	if (pid == 0)
 	{
+		printf("\ncmd = %s\nin = %d\nout = %d\nid = %d\n\n", cmd->cmd[0], cmd->fd_in, cmd->fd_out, cmd->id);
+		dup2(cmd->fd_in, STDIN_FILENO);
+		dup2(cmd->fd_out, STDOUT_FILENO);
+		// close_all(data, data->nb_pipes - 1);
 		execve(cmd->path, cmd->cmd, data->env);
 	}
 	waitpid(pid, NULL, 0);
@@ -190,5 +194,6 @@ int	exec_all(t_list *token, char **env)
 	setup_cmd(&data);
 	if (exec(&data))
 		return (1);
+	close_all(&data, data.nb_pipes - 1);
 	return (0);
 }
