@@ -6,7 +6,7 @@
 #    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/05/09 13:11:34 by jthuysba         ###   ########.fr        #
+#    Updated: 2023/05/15 17:43:35 by jthuysba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,10 @@ BUILTINS		= ./sources/builtins/ft_cd.c ./sources/builtins/ft_echo.c \
 				./sources/builtins/ft_export.c ./sources/builtins/ft_pwd.c \
 				./sources/builtins/ft_unset.c \
 		
-EXEC			= ./sources/exec/path.c ./sources/exec/process.c ./sources/exec/pipe_exec.c ./sources/exec/exec_final.c ./sources/exec/exec_all.c\
+EXEC			= ./sources/exec/path.c ./sources/exec/process.c \
+				./sources/exec/exec_final.c \
+				./sources/exec/clean_all.c ./sources/exec/setup_pipes_exec.c \
+				./sources/exec/setup_cmd_exec.c \
 
 EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
 

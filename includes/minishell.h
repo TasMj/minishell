@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/09 17:38:24 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/15 17:28:29 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_cmd
 	int	fd_in;
 	int	fd_out;
 	int	id;
+	int	pid;
 }	t_cmd;
 
 typedef struct s_exec
@@ -111,6 +112,7 @@ typedef struct s_exec
 	char	**env;
 	int	**fd;
 	int	nb_pipes;
+	int	nb_cmd;
 }	t_exec;
 
 
@@ -198,7 +200,20 @@ int		word_process(char *list_token, t_pipex *pipex, char **env, t_path path);
 
 /* exec all */
 int   exec_all(t_list *token, char **env);
+
+/* setup cmd */
 char	**get_cmd(t_list *token);
+void	setup_cmd(t_exec *data);
+
+/* setup pipes */
+int	count_pipes(t_list *token);
+void	setup_pipes(t_exec *data);
+int	nb_cmd(t_list *token);
+
+/* clean all */
+void	close_all(t_exec *data, int end);
+void	free_fd(t_exec *data);
+void	clean_all(t_exec *data);
 
 /* pipes */
 int	check_pipes(t_list **tokens);
