@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:48 by tas               #+#    #+#             */
-/*   Updated: 2023/04/30 13:37:39 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/16 17:40:18 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,18 @@ t_list  **get_list_env(char **env)
     return (list_env);
 }
 
-int ft_env()
+int ft_env(t_list **list_cmd)
 {
     t_list  *tmp;
+    t_list  *tmp_cmd;
 
+    tmp_cmd = *list_cmd;
+    if ((*list_cmd)->next != NULL)
+    {
+        printf("env: ‘%s’: No such file or directory\n", (*list_cmd)->next->content);
+        *list_cmd = tmp_cmd;
+        return (1);
+    }
     tmp = *list_ENVI;
     while (*list_ENVI != NULL) {
         printf("%s\n", (*list_ENVI)->content);
@@ -44,11 +52,3 @@ int ft_env()
     *list_ENVI = tmp;
     return 0;
 }
-
-// int main(int argc, char **argv, char **env)
-// {
-//     (void)argc;
-//     (void)argv;
-//     list_ENVI = get_list_env(env);
-//     ft_env();
-// }

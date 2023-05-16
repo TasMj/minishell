@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:33:10 by tmejri            #+#    #+#             */
-/*   Updated: 2023/04/30 21:30:51 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/16 17:55:35 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,3 @@ void	free_data(t_data *data)
 	if (data->token_cmd)
 		free_tab(data->token_cmd);
 }
-

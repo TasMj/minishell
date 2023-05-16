@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:35 by tas               #+#    #+#             */
-/*   Updated: 2023/04/30 13:50:45 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/16 17:41:14 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,42 +65,23 @@ void    del(char *str)
     *list_ENVI = tmp_first;
 }
 
-int ft_unset()
+int ft_unset(t_list **list_token)
 {
-    t_list  **list_cmd;
     t_list  *tmp;
     
-    list_cmd = malloc(sizeof(t_list));
-    list_cmd[0] = NULL;
-    list_cmd = get_list_input(list_cmd);
     tmp = *list_ENVI;
-    if (ft_strncmp((*list_cmd)->content, "unset", 5) == 1)
+    if (ft_strncmp((*list_token)->content, "unset", 5) == 1)
         return (1);
     else
     {
-        (*list_cmd) = (*list_cmd)->next;
-        while (*list_cmd != NULL)
+        (*list_token) = (*list_token)->next;
+        while (*list_token != NULL)
         {
-            if (check_var((*list_cmd)->content) == 1)
-                del((*list_cmd)->content);
-            (*list_cmd) = (*list_cmd)->next;
+            if (check_var((*list_token)->content) == 1)
+                del((*list_token)->content);
+            (*list_token) = (*list_token)->next;
         }        
     }
     *list_ENVI = tmp;
-    if (list_cmd)
-        free_list(list_cmd);
     return (0);
 }
-
-// int main(int argc, char **argv, char **__environ)
-// {
-//     (void)argc;
-//     (void)argv;
-//     (void)__environ;
-//     list_ENVI = get_list_env(__environ);
-//     while(1)
-//     {
-//         ft_unset();
-//         print_list(list_ENVI);
-//     }
-// }
