@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:41:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/16 17:38:52 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/16 19:04:18 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void    ctrl_c(int sigid);
 void    ctrl_d(int sigid);
 void    ctr_bs(int sigid);
 
+int		syntax_error(t_list **list_token);
 
 
 #endif
