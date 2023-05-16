@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 18:01:28 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/16 14:46:35 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/16 15:14:46 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,11 @@ int	exec(t_exec *data)
 	{
 		if (exec_cmd(&(data->cmd[i]), data) != 0)
 			return (1);
-		// exec_cmd(&(data->cmd[i]), data);
-		// close_all(data, data->nb_pipes - 1);
-		//close(3);
-		if (i == 0)
-			close(4);
-		// close(5);
-		if (i == 1)
-			close(6);
-		//close(7);
-		if (i == 2)
-			close(8);
-		//close(1);
+		if (i != data->nb_pipes)
+			close(data->cmd[i].fd_out);
 		waitpid(data->cmd[i].pid, NULL, 0);
 		i++;
 	}
-	// printf("here\n");
 	return (0);
 }
 
@@ -88,7 +77,6 @@ int	exec_all(t_list *token, char **env)
 	}
 	setup_pipes(&data);
 	setup_cmd(&data);
-	// printf(">>>>>HERE<<<<<\n");
 	if (exec(&data) == 1)
 	{
 		clean_all(&data);
