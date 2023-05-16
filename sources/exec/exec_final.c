@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 18:01:28 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/15 18:09:27 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/16 14:46:35 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 		dup2(cmd->fd_in, STDIN_FILENO);
 		dup2(cmd->fd_out, STDOUT_FILENO);
 		close_all(data, data->nb_pipes - 1);
-		printf("id = %d\ncmd = %s\n\n", cmd->id, cmd->cmd[0]);
 		execve(cmd->path, cmd->cmd, data->env);
 	}
 	// printf("here\n");
@@ -40,7 +39,17 @@ int	exec(t_exec *data)
 		if (exec_cmd(&(data->cmd[i]), data) != 0)
 			return (1);
 		// exec_cmd(&(data->cmd[i]), data);
-		printf("pid=%d for process %d\n", data->cmd[i].pid, i);
+		// close_all(data, data->nb_pipes - 1);
+		//close(3);
+		if (i == 0)
+			close(4);
+		// close(5);
+		if (i == 1)
+			close(6);
+		//close(7);
+		if (i == 2)
+			close(8);
+		//close(1);
 		waitpid(data->cmd[i].pid, NULL, 0);
 		i++;
 	}
@@ -56,6 +65,7 @@ int	single_exec(t_exec *data)
 
 	cmd = get_cmd(*data->token);
 	pid = fork();
+	ft_memset(&p, 0, sizeof(t_path));
 	if (pid < 0)
 		return (free_tab(cmd), 1);
 	if (pid == 0)

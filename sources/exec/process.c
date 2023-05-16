@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:07:07 by tas               #+#    #+#             */
-/*   Updated: 2023/05/15 18:42:22 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/16 13:23:59 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int simple_exec(t_list **list_token, char **env)
     t_list  *tmp;
     char    *cmd_with_arg;
     
+    ft_memset(&path, 0, sizeof(t_path));
     tmp = *list_token;
     cmd_with_arg = "";
     ft_memset(&pipex, 0, sizeof(t_pipex));

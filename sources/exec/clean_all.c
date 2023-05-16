@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:58:55 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/15 17:34:57 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/16 14:35:50 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,24 @@ void	free_fd(t_exec *data)
 void	close_all(t_exec *data, int end)
 {
 	int	i;
-
+	int j = 0;
 	i = 0;
+
 	while (i <= end)
 	{
+		j = 0;
+		while (j < 2)
+		{
+			// printf("fd = %d\n", data->fd[i][j]);
+			j++;
+		}
+		i++;
+	}
+	i = 0;
+
+	while (i <= end)
+	{
+
 		close(data->fd[i][0]);
 		close(data->fd[i][1]);
 		i++;

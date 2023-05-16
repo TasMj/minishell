@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:57:06 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/15 15:58:20 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/16 13:25:33 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	setup_cmd(t_exec *data)
 
 	token = *(data->token);
 	data->cmd = malloc(sizeof(t_cmd) * nb_cmd(token));
+	ft_memset(&p, 0, sizeof(t_path));
 	i = 0;
 	while (token)
 	{
