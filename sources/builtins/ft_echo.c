@@ -3,82 +3,114 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:09:31 by tas               #+#    #+#             */
-/*   Updated: 2023/04/30 13:35:43 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/16 17:40:01 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "heredoc.h"
 
 /* TO DO
-- enlever le break
-- voir si besoin de free stockage et si c'est ok de mettre ""
+- tester echo sdjfqldhfqs<lfhj
+- echo t"t" --> t t au lieu de tt
 */
 
-int ft_echo(void)
+int    to_display(t_list **list_token, t_echo *e)
 {
-    t_list  **list_cmd;
+    (*list_token) = (*list_token)->next;
+	if (ft_strncmp((*list_token)->content, "-n", 2) == 0)
+    {
+        e->flag = 1;
+        if ((*list_token)->next == NULL)
+            return (0);
+        (*list_token) = (*list_token)->next;
+    }
+    while (*list_token)
+    {
+        e->to_free = 1;
+        e->stockage = ft_strjoin(e->stockage, (*list_token)->content);
+        if ((*list_token)->next != NULL)
+            e->stockage = ft_strjoin(e->stockage, " ");
+        (*list_token) = (*list_token)->next;
+    }
+    return (0);
+}
+
+// int ft_echo(t_list **list_token)
+// {
+    // t_echo  *e;
+// 
+    // e = malloc(sizeof(t_echo));
+    // ft_memset(e, 0, sizeof(t_echo));
+    // e->flag = 0;
+    // e->to_free = 0;
+    // e->stockage = NULL;
+    // e->stockage = "";
+    // e->tmp = *list_token;
+    // while ((*list_token) != NULL)
+    // {
+		// if (ft_strncmp((*list_token)->content, "echo", 4) == 0 && (*list_token)->next != NULL)
+            // to_display(list_token, e);
+        // else
+            // (*list_token) = (*list_token)->next;
+    // }
+    // if (e->flag != 1)
+        // printf("%s\n", e->stockage);
+    // else
+        // printf("%s", e->stockage);
+    // if (e->to_free == 1)
+        // free(e->stockage);
+    // *list_token = e->tmp;
+    // return (0);
+// }
+
+
+/*LE BON*/
+int ft_echo(t_list **list_token)
+{
     t_list  *tmp;
-    char    *input;
     char    *stockage;
     int     flag;
     int     to_free;
 
     flag = 0;
     to_free = 0;
-    input = get_input();
-    list_cmd = malloc(sizeof(t_list));
-    list_cmd[0] = NULL;
-    init_list(list_cmd, input);
     stockage = NULL;
     stockage = "";
-    tmp = *list_cmd;
-    while ((*list_cmd) != NULL)
+    tmp = *list_token;
+    while ((*list_token) != NULL)
     {
-		if (ft_strncmp((*list_cmd)->content, "echo", 4) == 0 && (*list_cmd)->next != NULL)
+		if (ft_strncmp((*list_token)->content, "echo", 4) == 0 && (*list_token)->next != NULL)
         {
-            (*list_cmd) = (*list_cmd)->next;
-    		if (ft_strncmp((*list_cmd)->content, "-n", 2) == 0)
+            (*list_token) = (*list_token)->next;
+    		if (ft_strncmp((*list_token)->content, "-n", 2) == 0)
             {
                 flag = 1;
-                if ((*list_cmd)->next == NULL)
+                if ((*list_token)->next == NULL)
                     break;
-                (*list_cmd) = (*list_cmd)->next;
+                (*list_token) = (*list_token)->next;
             }
-            while (*list_cmd)
+            while (*list_token)
             {
                 to_free = 1;
-                stockage = ft_strjoin(stockage, (*list_cmd)->content);
-                if ((*list_cmd)->next != NULL)
+                stockage = ft_strjoin(stockage, (*list_token)->content);
+                if ((*list_token)->next != NULL)
                     stockage = ft_strjoin(stockage, " ");
-                (*list_cmd) = (*list_cmd)->next;
+                (*list_token) = (*list_token)->next;
             }
         }
         else
-            (*list_cmd) = (*list_cmd)->next;
+            (*list_token) = (*list_token)->next;
     }
-    (*list_cmd) = tmp;
     if (flag != 1)
         printf("%s\n", stockage);
     else
         printf("%s", stockage);
     if (to_free == 1)
         free(stockage);
-    if (list_cmd)
-        free_list(list_cmd);
-    if (input)
-        free(input);
+    *list_token = tmp;
     return (0);
 }
-
-// int main(int argc, char **argv, char **env)
-// {
-//     (void)argc;
-//     (void)argv;
-//     (void)env;
-    
-//     ft_echo();
-//     return (0);
-// }

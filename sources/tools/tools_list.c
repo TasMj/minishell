@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:12:00 by tas               #+#    #+#             */
-/*   Updated: 2023/04/23 00:19:53 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/16 17:58:27 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ void	print_list(t_list **list)
 	tmp = (*list);
 	while (*list)
 	{
-		printf("****ID Token****\n");
+		// printf("****ID Token****\n");
 		printf("content: [%s]\n", (*list)->content);
-		printf("type: [%d]\n", (*list)->type);
-		printf("****************\n");
+		// printf("type: [%d]\n", (*list)->type);
+		// printf("****************\n");
 		(*list) = (*list)->next;
 	}
 	(*list) = tmp;
@@ -74,4 +74,17 @@ void    add_list(t_list **list_token, char *stockage)
     
     to_add = ft_lstnew(stockage);
     ft_lstadd_back(list_token, to_add);
+}
+
+int	ft_lstsize(t_list *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
 }

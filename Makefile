@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
+#    By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/05/15 17:43:35 by jthuysba         ###   ########.fr        #
+#    Updated: 2023/05/16 17:56:38 by tmejri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,8 @@ BUILTINS		= ./sources/builtins/ft_cd.c ./sources/builtins/ft_echo.c \
 EXEC			= ./sources/exec/path.c ./sources/exec/process.c \
 				./sources/exec/heredoc.c ./sources/exec/stdin.c \
 				./sources/exec/stdout.c ./sources/exec/append.c \
-				./sources/exec/tools_redir.c \
-				./sources/exec/exec_final.c \
+				./sources/exec/tools_redir.c ./sources/exec/builtin.c \
+				./sources/exec/exec_final.c ./sources/exec/signal.c \
 				./sources/exec/clean_all.c ./sources/exec/setup_pipes_exec.c \
 				./sources/exec/setup_cmd_exec.c \
 
@@ -31,7 +31,7 @@ EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
 
 PARSING			= ./sources/parsing/create_token.c ./sources/parsing/quotes.c \
 				./sources/parsing/redirections.c ./sources/parsing/substitution.c \
-				./sources/parsing/type.c \
+				./sources/parsing/type.c ./sources/parsing/preparsing.c \
 
 TOOLS			= ./sources/tools/ft_split.c ./sources/tools/tools_exec.c \
 				./sources/tools/tools_list.c ./sources/tools/tools_parsing.c \

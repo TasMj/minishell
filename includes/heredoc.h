@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:41:00 by tas               #+#    #+#             */
-/*   Updated: 2023/04/30 15:42:08 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/16 17:38:52 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,14 @@ typedef struct s_redir
 
 }t_redir;
 
+typedef struct s_echo
+{
+    t_list  *tmp;
+    char    *stockage;
+    int     flag;
+    int     to_free;
+}t_echo;
+
 /******************************************************************************/
 /*                            variable globale                                */
 /******************************************************************************/
@@ -74,7 +82,14 @@ int		append_process(t_list **list_token, char **env);
 
 
 t_list  **get_list_env(char **env);
-t_list  **get_list_input(t_list **list_cmd);
+
+void    exec_builtin(t_list **list_token);
+
+/*signals*/
+void    ctrl_c(int sigid);
+void    ctrl_d(int sigid);
+void    ctr_bs(int sigid);
+
 
 
 #endif

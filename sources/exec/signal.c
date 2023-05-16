@@ -1,23 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/25 19:10:29 by tas               #+#    #+#             */
-/*   Updated: 2023/05/16 17:40:54 by tmejri           ###   ########.fr       */
+/*   Created: 2023/05/16 17:43:39 by tmejri            #+#    #+#             */
+/*   Updated: 2023/05/16 17:43:46 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "heredoc.h"
 
-void ft_pwd(void)
+
+void    ctrl_c(int sigid)
 {
-    char    cwd[1024];
-    
-    if (getcwd(cwd, sizeof(cwd)) != NULL)
-        printf("%s\n", cwd);
-    else
-        perror("getcwd() error");
+    if (sigid == SIGINT)
+    {
+        write(2, "\n", 1);
+        rl_on_new_line();
+        rl_replace_line("", 0);
+        rl_redisplay();
+    }
+}
+
+void    ctrl_d(int sigid)
+{
+    if (sigid == EOF)
+        exit(1); //mettre built in
+}
+
+void    ctr_bs(int sigid)
+{
+    if (sigid == SIGQUIT)
+        return ;
 }
