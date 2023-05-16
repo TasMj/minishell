@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 13:11:54 by tas               #+#    #+#             */
-/*   Updated: 2023/04/04 19:53:36 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/15 01:38:43 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,16 @@ char	*find_path(char **env, char *token, t_path p)
 	return (NULL);
 }
 
-int	init_param(t_pipex *pipex, char *token, char **__environ, t_path p)
+int	init_param(t_data *data, char *token, char **__environ, t_path p)
 {
-	pipex->cmd = get_command(token + extract_str(token));
-	if (!pipex->cmd)
+	data->cmd = get_command(token + extract_str(token));
+	if (!data->cmd)
 		return (err_msg(2));
-	pipex->path_cmd = find_path(__environ, get_arg(pipex->cmd), p);
-	if (!pipex->path_cmd)
+	data->path_cmd = find_path(__environ, get_arg(data->cmd), p);
+	if (!data->path_cmd)
 		return (err_msg(2));
-	pipex->token_cmd = ft_split(get_arg(token), ' ');
-	if (!pipex->token_cmd)
+	data->token_cmd = ft_split(get_arg(token), ' ');
+	if (!data->token_cmd)
 		return (err_msg(2));
 	return (0);
 }

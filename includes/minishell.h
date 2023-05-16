@@ -73,18 +73,17 @@ typedef struct s_substitution
     int		end;
     int		deb;
     int		i;
-}	t_substitution;
+	int		flag;
+	int		quote;
+}t_substitution;
 
-typedef struct s_pipex
+typedef struct s_data
 {
-	int		infile_fd;
-	int		outfile_fd;
 	pid_t	pid;
 	char	*cmd;
 	char	*path_cmd;
 	char	**token_cmd;
-	t_list	*list_token;
-}	t_pipex;
+}t_data;
 
 typedef struct s_path
 {
@@ -181,22 +180,21 @@ char	*ft_strjoin(char *s1, char *s2);
 int		is_a_space(char c);
 int		is_a_separator(char c);
 
-
 /***** EXEC *****/
 
 /* path*/
 int		try_acces(char *path, char *token);
 char	*get_command(char *token);
 char	*find_path(char **env, char *token, t_path p);
-int		init_param(t_pipex *pipex, char *token, char **__environ, t_path p);
+int		init_param(t_data *data, char *token, char **__environ, t_path p);
 char	*get_arg(char *token);
 
 /* process */
 int		creating_process(t_list **list_token, char **env);
 int		simple_exec(t_list **list_token, char **env);
-int		child_process(t_pipex *pipex, char **__environ);
+int		child_process(t_data *data, char **__environ);
 int		extract_str(char *str);
-int		word_process(char *list_token, t_pipex *pipex, char **env, t_path path);
+int		word_process(char *list_token, t_data *data, char **env, t_path path);
 
 /* exec all */
 int   exec_all(t_list *token, char **env);
