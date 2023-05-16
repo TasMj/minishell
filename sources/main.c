@@ -11,21 +11,25 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "heredoc.h"
 
 void    init_list(t_list **list_token, char *input)
 {
     list_token = create_token(list_token, input);
+    print_list(list_token);
+    
     substitute_dollar(list_token);
+
     get_type(list_token);
     remove_list_quotes(list_token);
 }
-
 
 int main(int argc, char **argv, char **env)
 {
     (void)argc;
     (void)argv;
     (void)env;
+
     char *input;
     t_list **list_token;
 

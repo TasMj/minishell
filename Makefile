@@ -20,6 +20,9 @@ BUILTINS		= ./sources/builtins/ft_cd.c ./sources/builtins/ft_echo.c \
 				./sources/builtins/ft_unset.c \
 		
 EXEC			= ./sources/exec/path.c ./sources/exec/process.c \
+				./sources/exec/heredoc.c ./sources/exec/stdin.c \
+				./sources/exec/stdout.c ./sources/exec/append.c \
+				./sources/exec/tools_redir.c \
 				./sources/exec/exec_final.c \
 				./sources/exec/clean_all.c ./sources/exec/setup_pipes_exec.c \
 				./sources/exec/setup_cmd_exec.c \

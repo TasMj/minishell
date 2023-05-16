@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:29 by tas               #+#    #+#             */
-/*   Updated: 2023/03/07 21:10:13 by tas              ###   ########.fr       */
+/*   Updated: 2023/04/30 13:47:46 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,3 +21,13 @@ void ft_pwd(void)
     else
         perror("getcwd() error");
 }
+
+// int main(int argc, char **argv, char **env)
+// {
+//     (void)argc;
+//     (void)argv;
+//     (void)env;
+    
+//     ft_pwd();
+//     return (0);
+// }

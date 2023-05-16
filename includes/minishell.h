@@ -123,7 +123,8 @@ typedef struct s_exec
 /***** PARSING *****/
 
 /* builtin */
-int		ft_env(char **envp);
+int		ft_echo(void);
+int		ft_env(void);
 void	ft_pwd(void);
 
 /* exit */
@@ -131,6 +132,7 @@ int		err_msg(int n);
 void	free_list(t_list **list);
 void	free_tab(char **tab);
 void	free_all(char *s1, char *s2);
+void	free_data(t_data *data);
 
 /* create token */
 char    *get_input(void);
@@ -179,6 +181,7 @@ int		ft_strncmp(char *s1, char *s2, size_t n);
 char	*ft_strjoin(char *s1, char *s2);
 int		is_a_space(char c);
 int		is_a_separator(char c);
+void    init_list(t_list **list_token, char *input);
 
 /***** EXEC *****/
 
