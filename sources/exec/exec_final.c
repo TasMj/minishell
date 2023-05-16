@@ -6,12 +6,13 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 18:01:28 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/16 15:14:46 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/16 16:36:35 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Exec la commande cmd avec ses fd d'entree et sortie assignes
 int	exec_cmd(t_cmd *cmd, t_exec *data)
 {
 	cmd->pid = fork();
@@ -22,7 +23,8 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 		// printf("\ncmd = %s\nin = %d\nout = %d\nid = %d\n\n", cmd->cmd[0], cmd->fd_in, cmd->fd_out, cmd->id);
 		dup2(cmd->fd_in, STDIN_FILENO);
 		dup2(cmd->fd_out, STDOUT_FILENO);
-		close_all(data, data->nb_pipes - 1);
+		if (data->nb_pipes > 0)
+			close_all(data, data->nb_pipes - 1);
 		execve(cmd->path, cmd->cmd, data->env);
 	}
 	// printf("here\n");
@@ -46,6 +48,7 @@ int	exec(t_exec *data)
 	return (0);
 }
 
+// Exec simple si pas d'operateurs
 int	single_exec(t_exec *data)
 {
 	char	**cmd;
