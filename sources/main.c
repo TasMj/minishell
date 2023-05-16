@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/04/09 12:45:29 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/16 16:33:50 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int main(int argc, char **argv, char **env)
 	        list_token[0] = NULL;
             init_list(list_token, input);
             // print_list(list_token);
-            creating_process(list_token, env);
+            if (creating_process(list_token, env) == 1)
+                break ;
         }
-        
     }
     return (0);
 }

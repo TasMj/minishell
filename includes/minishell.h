@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/04/15 02:22:10 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/15 17:28:29 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,28 @@ typedef struct s_path
 	char	*path_with_points;
 	char	*path_without;
 	char	**path_split;
-}t_path;
+}	t_path;
+
+typedef struct s_cmd
+{
+	char	**cmd;
+	char	*path;
+	int	fd_in;
+	int	fd_out;
+	int	id;
+	int	pid;
+}	t_cmd;
+
+typedef struct s_exec
+{
+	t_list	**token;
+	t_cmd		*cmd;
+	char	**env;
+	int	**fd;
+	int	nb_pipes;
+	int	nb_cmd;
+}	t_exec;
+
 
 
 /******************************************************************************/
@@ -174,5 +195,26 @@ int		simple_exec(t_list **list_token, char **env);
 int		child_process(t_data *data, char **__environ);
 int		extract_str(char *str);
 int		word_process(char *list_token, t_data *data, char **env, t_path path);
+
+/* exec all */
+int   exec_all(t_list *token, char **env);
+
+/* setup cmd */
+char	**get_cmd(t_list *token);
+void	setup_cmd(t_exec *data);
+
+/* setup pipes */
+int	count_pipes(t_list *token);
+void	setup_pipes(t_exec *data);
+int	nb_cmd(t_list *token);
+
+/* clean all */
+void	close_all(t_exec *data, int end);
+void	free_fd(t_exec *data);
+void	clean_all(t_exec *data);
+
+/* pipes */
+int	check_pipes(t_list **tokens);
+int	pipe_exec(t_list **tokens, char **env);
 
 #endif
