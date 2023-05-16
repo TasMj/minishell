@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tas <tas@student.42.fr>                    +#+  +:+       +#+         #
+#    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/04/23 00:11:14 by tas              ###   ########.fr        #
+#    Updated: 2023/05/15 17:43:35 by jthuysba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,9 @@ EXEC			= ./sources/exec/path.c ./sources/exec/process.c \
 				./sources/exec/heredoc.c ./sources/exec/stdin.c \
 				./sources/exec/stdout.c ./sources/exec/append.c \
 				./sources/exec/tools_redir.c \
+				./sources/exec/exec_final.c \
+				./sources/exec/clean_all.c ./sources/exec/setup_pipes_exec.c \
+				./sources/exec/setup_cmd_exec.c \
 
 EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
 
