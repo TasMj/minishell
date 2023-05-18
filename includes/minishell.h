@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/15 17:28:29 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/18 11:06:27 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define ERR_REDIR_IN_OUT "syntax error near unexpected token `newline'\n"
 # define ERR_QUOTE "not handle by minishell\n"
 # define ERR_CMD "command not found\n"
+# define ERR_MANY_ARG "too many arguments (WIP)\n"
 
 /******************************************************************************/
 /*                                   enum                                     */
@@ -123,9 +124,12 @@ typedef struct s_exec
 /***** PARSING *****/
 
 /* builtin */
-int		ft_echo(void);
-int		ft_env(void);
+int 	ft_echo(t_list **list_token);
+int 	ft_env(t_list **list_cmd);
 void	ft_pwd(void);
+int 	ft_unset(t_list **list_token);
+int 	ft_cd(t_list **list_token);
+int 	ft_export(t_list **list_token);
 
 /* exit */
 int		err_msg(int n);
@@ -170,6 +174,7 @@ t_list	*ft_lstlast(t_list *lst);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstnew(char *input);
 void    print_list(t_list **list);
+int		ft_lstsize(t_list *lst);
 
 /* tools */
 char	**ft_split(char const *s, char c);

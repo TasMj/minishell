@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+         #
+#    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/05/16 17:56:38 by tmejri           ###   ########.fr        #
+#    Updated: 2023/05/18 11:02:26 by jthuysba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME			= minishell
 MAIN			= ./sources/main.c
 
 BUILTINS		= ./sources/builtins/ft_cd.c ./sources/builtins/ft_echo.c \
-				./sources/builtins/ft_env.c ./sources/builtins/ft_exit.c \
+				./sources/builtins/ft_env.c \
 				./sources/builtins/ft_export.c ./sources/builtins/ft_pwd.c \
 				./sources/builtins/ft_unset.c \
 		
