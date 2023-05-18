@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 18:01:28 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/18 15:41:18 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/18 16:09:42 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,60 +25,6 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 		if (data->nb_pipes > 0)
 			close_all(data, data->nb_pipes - 1);
 		execve(cmd->path, cmd->cmd, data->env);
-	}
-	return (0);
-}
-
-int	is_word(char *tok)
-{
-	if (check_redir_in(tok[0]) == 1 || check_redir_out(tok[0]) == 1 ||
-		check_append(tok) == 1 || check_heredoc(tok) == 1)
-		return (0);
-	return (1);
-}
-
-int	size_to_op(char **cmd)
-{
-	int	i;
-
-	i = 0;
-	while (is_word(cmd[i]) == 1)
-		i++;
-	return (i);
-}
-
-char	**get_cut_cmd(char **cmd)
-{
-	char	**ex_cmd;
-	int		i;
-
-	ex_cmd = malloc(sizeof(char *) * size_to_op(cmd) + 1);
-	i = 0;
-	while (is_word(cmd[i]) == 1)
-	{
-		ex_cmd[i] = ft_strdup_size(cmd[i], ft_strlen(cmd[i]));
-		i++;
-	}
-	ex_cmd[i] = 0;
-	return (ex_cmd);
-}
-
-int	exec_stdin(t_cmd *cmd, t_exec *data)
-{
-	char	**cut_cmd;
-
-	cut_cmd = get_cut_cmd(cmd->cmd);
-	cmd->pid = fork();
-	if (cmd->pid < 0)
-		return (1);
-	if (cmd->pid == 0)
-	{
-		dup2(cmd->fd_in, STDIN_FILENO);
-		dup2(cmd->fd_out, STDOUT_FILENO);
-		close(cmd->fd_in);
-		if (data->nb_pipes > 0)
-			close_all(data, data->nb_pipes - 1);
-		execve(cmd->path, cut_cmd, data->env);
 	}
 	return (0);
 }

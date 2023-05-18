@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/18 13:20:52 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/18 16:10:02 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,10 @@ int		extract_str(char *str);
 
 /* exec all */
 int   exec_all(t_list *token, char **env);
+int	exec_stdin(t_cmd *cmd, t_exec *data);
+
+/* exec utils */
+char	**get_cut_cmd(char **cmd);
 
 /* setup cmd */
 char	**get_cmd(t_list *token);
