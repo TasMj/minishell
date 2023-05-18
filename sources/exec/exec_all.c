@@ -6,11 +6,12 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 18:01:28 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/18 23:50:49 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/19 00:07:29 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "heredoc.h"
 
 // Exec la commande cmd avec ses fd d'entree et sortie assignes
 int	exec_cmd(t_cmd *cmd, t_exec *data)
@@ -37,6 +38,8 @@ int	exec_type(t_cmd *cmd, t_exec *data)
 		exec_stdin(cmd, data);
 	else if (cmd->type == STDOUT || cmd->type == APPEND)
 		exec_stdout(cmd, data);
+	else if (cmd->type == HEREDOC)
+		heredoc(data->token, data->env);
 	return (0);
 }
 
