@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 18:01:28 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/18 16:20:44 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/18 23:50:49 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	exec_type(t_cmd *cmd, t_exec *data)
 		exec_cmd(cmd, data);
 	else if (cmd->type == STDIN)
 		exec_stdin(cmd, data);
-	else if (cmd->type == STDOUT)
+	else if (cmd->type == STDOUT || cmd->type == APPEND)
 		exec_stdout(cmd, data);
 	return (0);
 }

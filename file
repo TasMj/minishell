@@ -1,7 +1,14 @@
+Makefile
 a
 file
 includes
-Makefile
 minishell
 sources
+test
 to_fix.txt
+Makefile
+file
+includes
+minishell
+sources
+test
