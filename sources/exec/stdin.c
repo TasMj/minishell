@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stdin.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 20:03:55 by tas               #+#    #+#             */
-/*   Updated: 2023/05/16 17:44:12 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/18 15:24:48 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	stdin_process(t_list **list_token, char **env)
     {
         close(s->fd);
         if (waitpid(s->pid, NULL, 0) == -1)
-            exit(EXIT_FAILURE);        
+            exit(EXIT_FAILURE);
     }
     free_redir(s);
     free(s);

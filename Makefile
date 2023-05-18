@@ -6,7 +6,7 @@
 #    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/05/18 11:02:26 by jthuysba         ###   ########.fr        #
+#    Updated: 2023/05/18 13:21:30 by jthuysba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,18 +19,18 @@ BUILTINS		= ./sources/builtins/ft_cd.c ./sources/builtins/ft_echo.c \
 				./sources/builtins/ft_export.c ./sources/builtins/ft_pwd.c \
 				./sources/builtins/ft_unset.c \
 		
-EXEC			= ./sources/exec/path.c ./sources/exec/process.c \
+EXEC			= ./sources/exec/path.c \
 				./sources/exec/heredoc.c ./sources/exec/stdin.c \
 				./sources/exec/stdout.c ./sources/exec/append.c \
 				./sources/exec/tools_redir.c ./sources/exec/builtin.c \
-				./sources/exec/exec_final.c ./sources/exec/signal.c \
-				./sources/exec/clean_all.c ./sources/exec/setup_pipes_exec.c \
-				./sources/exec/setup_cmd_exec.c \
+				./sources/exec/exec_all.c ./sources/exec/signal.c \
+				./sources/exec/clean_all.c ./sources/exec/setup_pipes.c \
+				./sources/exec/setup_cmd.c ./sources/exec/set_fd.c \
 
 EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
 
 PARSING			= ./sources/parsing/create_token.c ./sources/parsing/quotes.c \
-				./sources/parsing/redirections.c ./sources/parsing/substitution.c \
+				./sources/parsing/check_type.c ./sources/parsing/substitution.c \
 				./sources/parsing/type.c ./sources/parsing/preparsing.c \
 
 TOOLS			= ./sources/tools/ft_split.c ./sources/tools/tools_exec.c \

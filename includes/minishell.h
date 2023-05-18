@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/18 11:06:27 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/18 13:20:52 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_list
 	int				type;
 	int				index;
 	struct s_list	*next;
-}		t_list;
+}	t_list;
 
 typedef struct s_substitution
 {
@@ -76,7 +76,7 @@ typedef struct s_substitution
     int		i;
 	int		flag;
 	int		quote;
-}t_substitution;
+}	t_substitution;
 
 typedef struct s_data
 {
@@ -84,7 +84,7 @@ typedef struct s_data
 	char	*cmd;
 	char	*path_cmd;
 	char	**token_cmd;
-}t_data;
+}	t_data;
 
 typedef struct s_path
 {
@@ -99,23 +99,22 @@ typedef struct s_cmd
 {
 	char	**cmd;
 	char	*path;
-	int	fd_in;
-	int	fd_out;
-	int	id;
-	int	pid;
+	int		fd_in;
+	int		fd_out;
+	int		id;
+	int		pid;
+	int		type;
 }	t_cmd;
 
 typedef struct s_exec
 {
 	t_list	**token;
-	t_cmd		*cmd;
+	t_cmd	*cmd;
 	char	**env;
-	int	**fd;
-	int	nb_pipes;
-	int	nb_cmd;
+	int		**fd;
+	int		nb_pipes;
+	int		nb_cmd;
 }	t_exec;
-
-
 
 /******************************************************************************/
 /*                                fonctions                                   */
@@ -198,11 +197,7 @@ int		init_param(t_data *data, char *token, char **__environ, t_path p);
 char	*get_arg(char *token);
 
 /* process */
-int		creating_process(t_list **list_token, char **env);
-int		simple_exec(t_list **list_token, char **env);
-int		child_process(t_data *data, char **__environ);
 int		extract_str(char *str);
-int		word_process(char *list_token, t_data *data, char **env, t_path path);
 
 /* exec all */
 int   exec_all(t_list *token, char **env);
@@ -212,17 +207,16 @@ char	**get_cmd(t_list *token);
 void	setup_cmd(t_exec *data);
 
 /* setup pipes */
-int	count_pipes(t_list *token);
+int		count_pipes(t_list *token);
 void	setup_pipes(t_exec *data);
-int	nb_cmd(t_list *token);
+int		nb_cmd(t_list *token);
+
+/* set fd */
+void	set_fd(t_cmd *cmd, t_exec *data);
 
 /* clean all */
 void	close_all(t_exec *data, int end);
 void	free_fd(t_exec *data);
 void	clean_all(t_exec *data);
-
-/* pipes */
-int	check_pipes(t_list **tokens);
-int	pipe_exec(t_list **tokens, char **env);
 
 #endif
