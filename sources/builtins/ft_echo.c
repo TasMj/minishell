@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:09:31 by tas               #+#    #+#             */
-/*   Updated: 2023/05/19 15:24:58 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/19 15:41:33 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int ft_echo(t_list **list_token)
             {
                 to_free = 1;
                 stockage = ft_strjoin(stockage, (*list_token)->content);
-                if ((*list_token)->next != NULL && (*list_token)->next->flag_space == 1) // &&flag_space=1
+                if ((*list_token)->next != NULL && (*list_token)->next->flag_space == 1) 
                     stockage = ft_strjoin(stockage, " ");
                 (*list_token) = (*list_token)->next;
             }

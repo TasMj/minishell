@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/19 15:35:21 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/19 15:39:49 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_list
 	char			*content;
 	int				type;
 	int				index;
+	int				flag_space;
 	struct s_list	*next;
 }	t_list;
 
@@ -75,6 +76,7 @@ typedef struct s_substitution
     int		deb;
     int		i;
 	int		flag;
+	int		flag_space;
 	int		quote;
 }	t_substitution;
 
