@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:32 by tas               #+#    #+#             */
-/*   Updated: 2023/05/19 17:49:33 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/20 00:13:35 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ int del_empty_token(t_list **list_token)
     t_list  *tmp;
 
     tmp = *list_token;
+    while (ft_strlen((*list_token)->content) == 0)
+    {
+        (*list_token) = (*list_token)->next;
+        tmp = *list_token;
+    }
     while (*list_token && (*list_token)->next->next)
     {
         if (ft_strlen((*list_token)->next->content) == 0)
@@ -44,3 +49,21 @@ int del_empty_token(t_list **list_token)
     *list_token = tmp;
     return (0);
 }
+
+// /* delet all the empty token */
+// int del_empty_token(t_list **list_token)
+// {
+    // t_list  *tmp;
+// 
+    // tmp = *list_token;
+    // while (*list_token && (*list_token)->next->next)
+    // {
+        // if (ft_strlen((*list_token)->next->content) == 0)
+            // (*list_token)->next = (*list_token)->next->next;
+        // else
+            // (*list_token) = (*list_token)->next;
+    // }
+    // *list_token = tmp;
+    // return (0);
+// }
+// 
