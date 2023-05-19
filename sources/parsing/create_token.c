@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/05/16 17:56:01 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/19 15:26:56 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,14 @@ t_list  **create_token(t_list **list_token, char *input)
     s->start = 0;
     s->end = 0;
     s->flag = 0;
+    s->flag_space = 0;
     while(s->i < ft_strlen(input))
     {
         if (is_a_space(input[s->i]) == 1)
+        {
             s->i++;
+            s->flag_space = 1;
+        }
         else
         {
             s->start = s->i;
@@ -88,7 +92,13 @@ t_list  **create_token(t_list **list_token, char *input)
             if (s->flag == 1)
                 s->i++;
             s->stockage = ft_strdup_size(input + s->start, (s->end - s->start));
-            add_list(list_token, s->stockage);
+            if (s->flag_space == 1)
+            {
+                add_list(list_token, s->stockage, 1);
+                s->flag_space = 0;
+            }
+            else
+                add_list(list_token, s->stockage, 0);
         }
     }
     return (list_token);

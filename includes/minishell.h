@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/18 16:20:32 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/19 15:24:32 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,8 @@ void    get_type(t_list **list_token);
 /* tools list*/
 t_list	*ft_lstlast(t_list *lst);
 void	ft_lstadd_back(t_list **lst, t_list *new);
-t_list	*ft_lstnew(char *input);
+t_list	*ft_lstnew(char *input, int flag_space);
+void    add_list(t_list **list_token, char *stockage, int flag_space);
 void    print_list(t_list **list);
 int		ft_lstsize(t_list *lst);
 

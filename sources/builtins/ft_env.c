@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:48 by tas               #+#    #+#             */
-/*   Updated: 2023/05/16 17:40:18 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/19 15:25:29 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_list  **get_list_env(char **env)
     ft_memset(list_env, 0, sizeof(t_list));
     while (env[i] != NULL)
     {
-        add_list(list_env, env[i]);
+        add_list(list_env, env[i], 0);
         i++;
     }
     return (list_env);

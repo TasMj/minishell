@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:09:31 by tas               #+#    #+#             */
-/*   Updated: 2023/05/16 17:40:01 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/19 15:24:58 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include "heredoc.h"
 
 /* TO DO
-- tester echo sdjfqldhfqs<lfhj
-- echo t"t" --> t t au lieu de tt
+- -n-n-n
 */
 
 int    to_display(t_list **list_token, t_echo *e)
@@ -39,36 +38,6 @@ int    to_display(t_list **list_token, t_echo *e)
     return (0);
 }
 
-// int ft_echo(t_list **list_token)
-// {
-    // t_echo  *e;
-// 
-    // e = malloc(sizeof(t_echo));
-    // ft_memset(e, 0, sizeof(t_echo));
-    // e->flag = 0;
-    // e->to_free = 0;
-    // e->stockage = NULL;
-    // e->stockage = "";
-    // e->tmp = *list_token;
-    // while ((*list_token) != NULL)
-    // {
-		// if (ft_strncmp((*list_token)->content, "echo", 4) == 0 && (*list_token)->next != NULL)
-            // to_display(list_token, e);
-        // else
-            // (*list_token) = (*list_token)->next;
-    // }
-    // if (e->flag != 1)
-        // printf("%s\n", e->stockage);
-    // else
-        // printf("%s", e->stockage);
-    // if (e->to_free == 1)
-        // free(e->stockage);
-    // *list_token = e->tmp;
-    // return (0);
-// }
-
-
-/*LE BON*/
 int ft_echo(t_list **list_token)
 {
     t_list  *tmp;
@@ -86,7 +55,7 @@ int ft_echo(t_list **list_token)
 		if (ft_strncmp((*list_token)->content, "echo", 4) == 0 && (*list_token)->next != NULL)
         {
             (*list_token) = (*list_token)->next;
-    		if (ft_strncmp((*list_token)->content, "-n", 2) == 0)
+    		if (ft_strlen((*list_token)->content) == 2 && ft_strncmp((*list_token)->content, "-n", 2) == 0)
             {
                 flag = 1;
                 if ((*list_token)->next == NULL)
@@ -97,7 +66,7 @@ int ft_echo(t_list **list_token)
             {
                 to_free = 1;
                 stockage = ft_strjoin(stockage, (*list_token)->content);
-                if ((*list_token)->next != NULL)
+                if ((*list_token)->next != NULL && (*list_token)->next->flag_space == 1) // &&flag_space=1
                     stockage = ft_strjoin(stockage, " ");
                 (*list_token) = (*list_token)->next;
             }
