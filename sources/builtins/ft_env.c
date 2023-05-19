@@ -6,16 +6,37 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:48 by tas               #+#    #+#             */
-/*   Updated: 2023/05/19 15:25:29 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/19 17:50:17 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
 
-/*TO DO
--à ajouter direct comme ça dans le code et si pb faire un getinput et strncmp
-*/
+
+// t_list  **get_list_env(char **env)
+// {
+    // int i;
+    // char    cwd[1024];
+    // t_list  **list_env;
+// 
+    // // i = 0;
+    // // list_env = malloc(sizeof(t_list));
+    // // ft_memset(list_env, 0, sizeof(t_list));
+    // // while (env[i] != NULL)
+    // // {
+        // // add_list(list_env, env[i]);
+        // // i++;
+    // }
+    // if (ft_lstsize(list_env) == 0)
+    // {
+    //     cwd = getcwd(cwd, sizeof(cwd));
+    //     add_list(list_env, ft_strjoin("PWD=", cwd));
+    //     add_list(list_env, ft_strjoin("PATH=", "/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"))
+    // }
+    // return (list_env);
+// }
+
 t_list  **get_list_env(char **env)
 {
     int i;
