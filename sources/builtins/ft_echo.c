@@ -3,37 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:09:31 by tas               #+#    #+#             */
-/*   Updated: 2023/05/19 15:41:33 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/20 00:04:03 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
 
-/* TO DO
-- -n-n-n
-*/
-
-int    to_display(t_list **list_token, t_echo *e)
+int ft_n(char *str)
 {
-    (*list_token) = (*list_token)->next;
-	if (ft_strncmp((*list_token)->content, "-n", 2) == 0)
+    int i;
+
+    i = 0;
+    if (str[i] && str[i + 1] && str[i] == '-' && str[i+1] == 'n')
     {
-        e->flag = 1;
-        if ((*list_token)->next == NULL)
-            return (0);
-        (*list_token) = (*list_token)->next;
-    }
-    while (*list_token)
-    {
-        e->to_free = 1;
-        e->stockage = ft_strjoin(e->stockage, (*list_token)->content);
-        if ((*list_token)->next != NULL)
-            e->stockage = ft_strjoin(e->stockage, " ");
-        (*list_token) = (*list_token)->next;
+        i += 2;
+        while (str[i])
+        {
+            if (str[i] != 'n')
+                return (1);
+            i++;
+        }
     }
     return (0);
 }
@@ -55,7 +48,7 @@ int ft_echo(t_list **list_token)
 		if (ft_strncmp((*list_token)->content, "echo", 4) == 0 && (*list_token)->next != NULL)
         {
             (*list_token) = (*list_token)->next;
-    		if (ft_strlen((*list_token)->content) == 2 && ft_strncmp((*list_token)->content, "-n", 2) == 0)
+    		while (ft_strncmp((*list_token)->content, "-n", 2) == 0 && ft_n((*list_token)->content) == 0)
             {
                 flag = 1;
                 if ((*list_token)->next == NULL)
