@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/19 15:24:32 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/19 15:35:21 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,6 @@ void	free_data(t_data *data);
 /* create token */
 char    *get_input(void);
 int		is_a_space(char c);
-void    add_list(t_list **list_token, char *stockage);
 t_list  **create_token(t_list **list_token, char *input);
 
 /* quotes */
