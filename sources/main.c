@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/05/19 15:42:55 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/19 17:49:15 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void    init_list(t_list **list_token, char *input)
     substitute_dollar(list_token);
     get_type(list_token);
     remove_list_quotes(list_token);
+    del_empty_token(list_token);
 }
 
 int main(int argc, char **argv, char **env)
