@@ -1,14 +1,6 @@
 Makefile
-a
 file
 includes
 minishell
 sources
-test
 to_fix.txt
-Makefile
-file
-includes
-minishell
-sources
-test
