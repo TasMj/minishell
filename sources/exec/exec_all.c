@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 18:01:28 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/21 22:40:42 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/21 23:42:42 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,19 @@
 
 char	**lst_to_tab(t_list **lst)
 {
+	t_list	*elem;
 	char	**tab;
 	int	i;
 
+	elem = *lst;
 	tab = malloc(sizeof(char *) * ft_lstsize(*lst));
 	if (!tab)
 		return (NULL);
 	i = 0;
-	while (*lst)
+	while (elem)
 	{
-		tab[i] = ft_strdup_size((*lst)->content, ft_strlen((*lst)->content));
-		*lst = (*lst)->next;
+		tab[i] = ft_strdup_size(elem->content, ft_strlen(elem->content));
+		elem = elem->next;
 		i++;
 	}
 	tab[i] = 0;
@@ -36,7 +38,7 @@ char	**lst_to_tab(t_list **lst)
 int	exec_cmd(t_cmd *cmd, t_exec *data)
 {
 	char	**tab;
-	
+
 	tab = lst_to_tab(cmd->cmd);
 	cmd->pid = fork();
 	if (cmd->pid < 0)
@@ -47,9 +49,10 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 		dup2(cmd->fd_out, STDOUT_FILENO);
 		if (data->nb_pipes > 0)
 			close_all(data, data->nb_pipes - 1);
+		if (exec_builtin(cmd->cmd) == 1)
+			return (0);
 		execve(cmd->path, tab, data->env);
 		free_tab(tab);
-		// exec(cmd, data);
 	}
 	return (0);
 }
