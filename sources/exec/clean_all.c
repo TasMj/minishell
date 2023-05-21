@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:58:55 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/18 12:16:55 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/21 22:42:27 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,33 @@ void	close_all(t_exec *data, int end)
 	}
 }
 
-void	free_cmd(t_exec *data)
-{
-	int	i;
+// void	free_cmd(t_exec *data)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < data->nb_cmd)
-	{
-		free_tab(data->cmd[i].cmd);
-		i++;
-	}
-	free(data->cmd);
-}
+// 	i = 0;
+// 	while (i < data->nb_cmd)
+// 	{
+// 		free_tab(data->cmd[i].cmd);
+// 		i++;
+// 	}
+// 	free(data->cmd);
+// }
 
 //Free toutes les struct de l'exec et close les pipes
 void	clean_all(t_exec *data)
 {
+	int	i;
+	
+	i = 0;
+	while (i < data->nb_cmd)
+	{
+		free_list(data->cmd[i].cmd);
+		i++;
+	}
 	if (data->nb_pipes > 0)
 	{
 		close_all(data, data->nb_pipes - 1);
 		free_fd(data);
 	}
-	free_cmd(data);
 }

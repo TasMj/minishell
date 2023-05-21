@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/19 15:39:49 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/21 20:48:41 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,13 +99,12 @@ typedef struct s_path
 
 typedef struct s_cmd
 {
-	char	**cmd;
+	t_list	**cmd;
 	char	*path;
 	int		fd_in;
 	int		fd_out;
 	int		id;
 	int		pid;
-	int		type;
 }	t_cmd;
 
 typedef struct s_exec
@@ -206,12 +205,11 @@ int   exec_all(t_list *token, char **env);
 int	exec_stdin(t_cmd *cmd, t_exec *data);
 int	exec_stdout(t_cmd *cmd, t_exec *data);
 
-
 /* exec utils */
 char	**get_cut_cmd(char **cmd);
 
 /* setup cmd */
-char	**get_cmd(t_list *token);
+t_list	**get_cmd(t_list *token);
 void	setup_cmd(t_exec *data);
 
 /* setup pipes */

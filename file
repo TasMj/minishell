@@ -1,6 +1,15 @@
 Makefile
 file
 includes
-minishell
+sources
+to_fix.txt
+Makefile
+file
+includes
+sources
+to_fix.txt
+Makefile
+file
+includes
 sources
 to_fix.txt
