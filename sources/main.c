@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/05/21 14:00:15 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/21 20:18:26 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int main(int argc, char **argv, char **env)
     char *input;
     t_list **list_token;
     list_ENVI = get_list_env(env);
-    while(1)
+    while (1)
     {
         signal(SIGQUIT, SIG_IGN);
         // signal(SIGINT, &ctrl_c);
