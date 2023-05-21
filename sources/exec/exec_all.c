@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 18:01:28 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/21 23:42:42 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/22 01:15:21 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,56 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 	return (0);
 }
 
-// int	exec_type(t_cmd *cmd, t_exec *data)
-// {
-// 	if (cmd->type == WORD)
-// 		exec_cmd(cmd, data);
-// 	else if (cmd->type == STDIN)
-// 		exec_stdin(cmd, data);
-// 	else if (cmd->type == STDOUT || cmd->type == APPEND)
-// 		exec_stdout(cmd, data);
-// 	else if (cmd->type == HEREDOC)
-// 		heredoc(data->token, data->env);
-// 	return (0);
-// }
+t_list	**get_trunc_cmd(t_list *tok)
+{
+	t_list	**lst;
+
+	lst = malloc(sizeof(t_list));
+	if (!lst)
+		return (NULL);
+	*lst = NULL;
+	while (tok && tok->type == WORD)
+	{
+		add_list(lst, tok->content, tok->flag_space);
+		tok = tok->next;
+	}
+	get_type(lst);
+	return (lst);
+}
+
+char	*get_file(t_list *lst)
+{
+	return (ft_lstlast(lst)->content);
+}
+
+int	exec_op(t_cmd *cmd, t_exec *data)
+{
+	(void) data;
+	
+	t_list	**trunc_cmd;
+	t_list	*elem;
+	char	*file;
+	int	fd;
+
+	trunc_cmd = get_trunc_cmd(*cmd->cmd);
+	file = get_file(*cmd->cmd);
+	elem = *cmd->cmd;
+	(void) file;
+	while (elem)
+	{
+		if (elem->type != WORD && elem->next)
+		{
+			fd = open(elem->next->content, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if (fd < 0)
+				return (1);
+			close(fd);
+		}
+		elem = elem->next;
+	}
+	free(file);
+	free_list(trunc_cmd);
+	return (0);
+}
 
 int	exec_global(t_exec *data)
 {
@@ -77,9 +115,9 @@ int	exec_global(t_exec *data)
 	i = 0;
 	while (i < data->nb_cmd)
 	{
+		// if (check_op() == 1)
+		exec_op(&(data->cmd[i]), data);
 		exec_cmd(&(data->cmd[i]), data);
-		// exec_type(&(data->cmd[i]), data)
-		
 		if (i != data->nb_pipes)
 			close(data->cmd[i].fd_out);
 		waitpid(data->cmd[i].pid, NULL, 0);
