@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/21 20:48:41 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/22 16:26:06 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,8 +193,8 @@ void    init_list(t_list **list_token, char *input);
 /* path*/
 int		try_acces(char *path, char *token);
 char	*get_command(char *token);
-char	*find_path(char **env, char *token, t_path p);
-int		init_param(t_data *data, char *token, char **__environ, t_path p);
+char	*find_path(char **env, char *token);
+int		init_param(t_data *data, char *token, char **__environ);
 char	*get_arg(char *token);
 
 /* process */
@@ -202,8 +202,8 @@ int		extract_str(char *str);
 
 /* exec all */
 int   exec_all(t_list *token, char **env);
-int	exec_stdin(t_cmd *cmd, t_exec *data);
-int	exec_stdout(t_cmd *cmd, t_exec *data);
+int	exec_op(t_cmd *cmd, t_exec *data);
+char	**lst_to_tab(t_list **lst);
 
 /* exec utils */
 char	**get_cut_cmd(char **cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 13:11:54 by tas               #+#    #+#             */
-/*   Updated: 2023/04/19 11:49:05 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/22 16:24:22 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,11 @@ char	*get_command(char *token)
 	return (cmd);
 }
 
-char	*find_path(char **env, char *token, t_path p)
+char	*find_path(char **env, char *token)
 {
+	t_path	p;
+	
+	ft_memset(&p, 0, sizeof(t_path));
 	p.i = 0;
 	p.j = 0;
 	while (env[p.i] && token)
@@ -78,12 +81,12 @@ char	*find_path(char **env, char *token, t_path p)
 	return (NULL);
 }
 
-int	init_param(t_data *data, char *token, char **__environ, t_path p)
+int	init_param(t_data *data, char *token, char **__environ)
 {
 	data->cmd = get_command(token + extract_str(token));
 	if (!data->cmd)
 		return (err_msg(2));
-	data->path_cmd = find_path(__environ, get_arg(data->cmd), p);
+	data->path_cmd = find_path(__environ, get_arg(data->cmd));
 	if (!data->path_cmd)
 		return (err_msg(2));
 	data->token_cmd = ft_split(get_arg(token), ' ');

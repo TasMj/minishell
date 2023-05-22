@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:34:23 by tas               #+#    #+#             */
-/*   Updated: 2023/05/16 17:43:02 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/22 16:22:31 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,9 @@ int heredoc(t_list **list_token, char **env)
 {
     t_heredoc   *h;
     t_list      *first_cmd;
-    t_path      p;
     char        *args;
     
     h = malloc(sizeof(t_heredoc));
-    ft_memset(&p, 0, sizeof(t_path));
     first_cmd = *list_token;
     args = ft_strdup_size(cmd_before_heredoc(list_token, h), ft_strlen(cmd_before_heredoc(list_token, h)));
     while (*list_token)
@@ -47,7 +45,7 @@ int heredoc(t_list **list_token, char **env)
             break;
         else if (check_heredoc((*list_token)->content) == 1)
         {
-            h->path_cmd = find_path(env, first_cmd->content, p);
+            h->path_cmd = find_path(env, first_cmd->content);
             h->token_arg = ft_split(args, ' ');
             h->delimiteur = ft_strdup_size((*list_token)->next->content, ft_strlen((*list_token)->next->content));
             free(args);

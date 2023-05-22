@@ -6,7 +6,7 @@
 #    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/05/18 16:08:41 by jthuysba         ###   ########.fr        #
+#    Updated: 2023/05/22 16:25:23 by jthuysba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,12 @@ BUILTINS		= ./sources/builtins/ft_cd.c ./sources/builtins/ft_echo.c \
 				./sources/builtins/ft_unset.c \
 		
 EXEC			= ./sources/exec/path.c \
-				./sources/exec/heredoc.c ./sources/exec/stdin.c \
-				./sources/exec/stdout.c ./sources/exec/append.c \
+				./sources/exec/heredoc.c ./sources/exec/exec_op.c \
 				./sources/exec/tools_redir.c ./sources/exec/builtin.c \
 				./sources/exec/exec_all.c ./sources/exec/signal.c \
 				./sources/exec/clean_all.c ./sources/exec/setup_pipes.c \
 				./sources/exec/setup_cmd.c ./sources/exec/set_fd.c \
-				./sources/exec/exec_type.c ./sources/exec/exec_utils.c \
+				./sources/exec/exec_utils.c \
 
 EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
 

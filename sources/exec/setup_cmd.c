@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:57:06 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/21 22:19:42 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/22 16:23:20 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,15 @@ void	setup_cmd(t_exec *data)
 {
 	int	i;
 	t_list	*token;
-	t_path	p;
 
 	token = *(data->token);
 	data->cmd = malloc(sizeof(t_cmd) * nb_cmd(token));
-	ft_memset(&p, 0, sizeof(t_path));
 	i = 0;
 	while (token)
 	{
 		data->cmd[i].id = i;
 		data->cmd[i].cmd = get_cmd(token);
-		data->cmd[i].path = find_path(data->env, (*data->cmd[i].cmd)->content, p);
+		data->cmd[i].path = find_path(data->env, (*data->cmd[i].cmd)->content);
 		set_fd(&(data->cmd[i]), data);
 		while (token->type != PIPE && token->next)
 			token = token->next;

@@ -6,88 +6,12 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:20:11 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/21 21:58:57 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/22 12:18:10 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
-
-// int	set_stdin(t_cmd *cmd)
-// {
-// 	int		i;
-// 	char	*file;
-// 	int		fd;
-
-// 	i = 0;
-// 	while (cmd->cmd[i][0] != '<')
-// 		i++;
-// 	if (cmd->cmd[i + 1])
-// 		i++;
-// 	else
-// 		return (1);
-// 	file = ft_strdup_size(cmd->cmd[i], ft_strlen(cmd->cmd[i]));
-// 	fd = open(file, O_RDONLY);
-// 	if (fd == -1)
-// 		return (1);
-// 	cmd->fd_in = fd;
-// 	free(file);
-// 	return (0);
-// }
-
-// int set_stdout(t_cmd *cmd)
-// {
-// 	int		i;
-// 	char	*file;
-// 	int		fd;
-
-// 	i = 0;
-// 	while (cmd->cmd[i][0] != '>')
-// 		i++;
-// 	if (cmd->cmd[i + 1])
-// 		i++;
-// 	else
-// 		return (1);
-// 	file = ft_strdup_size(cmd->cmd[i], ft_strlen(cmd->cmd[i]));
-// 	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-// 	if (fd == -1)
-// 		return (1);
-// 	cmd->fd_out = fd;
-// 	free(file);
-// 	return (0);
-// }
-
-// int set_append(t_cmd *cmd)
-// {
-// 	int		i;
-// 	char	*file;
-// 	int		fd;
-
-// 	i = 0;
-// 	while (cmd->cmd[i][0] != '>')
-// 		i++;
-// 	if (cmd->cmd[i + 1])
-// 		i++;
-// 	else
-// 		return (1);
-// 	file = ft_strdup_size(cmd->cmd[i], ft_strlen(cmd->cmd[i]));
-// 	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-// 	if (fd == -1)
-// 		return (1);
-// 	cmd->fd_out = fd;
-// 	free(file);
-// 	return (0);
-// }
-
-// void	set_op_fd(t_cmd *cmd)
-// {
-// 	if (cmd->type == STDIN)
-// 		set_stdin(cmd);
-// 	else if (cmd->type == STDOUT)
-// 		set_stdout(cmd);
-// 	else if (cmd->type == APPEND)
-// 		set_append(cmd);
-// }
 
 // Setup fd in et out pour chaque commande
 void	set_fd(t_cmd *cmd, t_exec *data)
