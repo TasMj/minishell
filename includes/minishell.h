@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/22 16:26:06 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/24 22:29:47 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ typedef struct s_path
 typedef struct s_cmd
 {
 	t_list	**cmd;
-	char	*path;
+	char		*path;
 	int		fd_in;
 	int		fd_out;
 	int		id;
@@ -210,7 +210,7 @@ char	**get_cut_cmd(char **cmd);
 
 /* setup cmd */
 t_list	**get_cmd(t_list *token);
-void	setup_cmd(t_exec *data);
+int	setup_cmd(t_cmd *cmd, t_list *token, t_exec *data);
 
 /* setup pipes */
 int		count_pipes(t_list *token);
@@ -224,5 +224,10 @@ void	set_fd(t_cmd *cmd, t_exec *data);
 void	close_all(t_exec *data, int end);
 void	free_fd(t_exec *data);
 void	clean_all(t_exec *data);
+
+/* exec god */
+int	exec_god(t_exec *data);
+t_list	**get_trunc_cmd(t_list *tok);
+
 
 #endif

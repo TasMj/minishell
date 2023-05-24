@@ -1,32 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup_pipes_exec.c                                 :+:      :+:    :+:   */
+/*   setup_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:54:54 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/18 11:24:16 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/23 21:29:19 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// Retourne le nombre de commandes
-int	nb_cmd(t_list *token)
-{
-	int	count;
-
-	count = 0;
-	while (token)
-	{
-		if (token->type == PIPE)
-			count++;
-		token = token->next;
-	}
-	count++;
-	return (count);
-}
 
 // Compte les pipes dans les token
 int	count_pipes(t_list *token)

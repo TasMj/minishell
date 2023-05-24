@@ -6,7 +6,7 @@
 #    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/05/22 16:25:23 by jthuysba         ###   ########.fr        #
+#    Updated: 2023/05/23 21:40:30 by jthuysba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,8 @@ EXEC			= ./sources/exec/path.c \
 				./sources/exec/setup_cmd.c ./sources/exec/set_fd.c \
 				./sources/exec/exec_utils.c \
 
+EXEC_GOD		= ./sources/exec_god/exec_god.c \
+
 EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
 
 PARSING			= ./sources/parsing/create_token.c ./sources/parsing/quotes.c \
@@ -37,7 +39,7 @@ TOOLS			= ./sources/tools/ft_split.c ./sources/tools/tools_exec.c \
 				./sources/tools/tools_list.c ./sources/tools/tools_parsing.c \
 				./sources/tools/tools.c \
 
-SRCS			= ${MAIN} ${BUILTINS} ${EXEC} ${EXIT} ${PARSING} ${TOOLS}
+SRCS			= ${MAIN} ${BUILTINS} ${EXEC} ${EXEC_GOD} ${EXIT} ${PARSING} ${TOOLS}
 
 OBJS			= ${SRCS:.c=.o}
 

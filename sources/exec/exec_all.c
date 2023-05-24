@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 18:01:28 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/22 16:12:05 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/23 21:41:40 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,20 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 	return (0);
 }
 
+int	check_op(t_cmd *cmd)
+{
+	t_list	*elem;
+
+	elem = *cmd->cmd;
+	while (elem)
+	{
+		if (elem->type != WORD && elem->type != PIPE)
+			return (1);
+		elem = elem->next;
+	}
+	return (0);
+}
+
 int	exec_global(t_exec *data)
 {
 	int	i;
@@ -65,9 +79,10 @@ int	exec_global(t_exec *data)
 	i = 0;
 	while (i < data->nb_cmd)
 	{
-		// if (check_op() == 1)
-		exec_op(&(data->cmd[i]), data);
-		// exec_cmd(&(data->cmd[i]), data);
+		if (check_op(&(data->cmd[i])) == 1)
+			exec_op(&(data->cmd[i]), data);
+		if (!(check_op(&(data->cmd[i])) == 1 && data->nb_pipes == 0))
+			exec_cmd(&(data->cmd[i]), data);
 		if (i != data->nb_pipes)
 			close(data->cmd[i].fd_out);
 		waitpid(data->cmd[i].pid, NULL, 0);
@@ -82,13 +97,16 @@ int	exec_all(t_list *token, char **env)
 
 	data.token = &token;
 	data.env = env;
-	setup_pipes(&data);
-	setup_cmd(&data);
-	if (exec_global(&data) == 1)
-	{
-		clean_all(&data);
-		return (1);
-	}
-	clean_all(&data);
+	// setup_pipes(&data);
+	// setup_cmd(&data);
+	// if (exec_global(&data) == 1)
+	// {
+	// 	clean_all(&data);
+	// 	return (1);
+	// }
+
+	exec_god(&data);
+
+	// clean_all(&data);
 	return (0);
 }
