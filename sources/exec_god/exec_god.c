@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 22:58:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/25 12:35:10 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:49:36 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int	setup_cmds(t_exec *data)
 		// ft_memset(&(data->cmd[i]), 0, sizeof(t_cmd));
 		data->cmd[i].id = i;
 		data->cmd[i].cmd = get_cmd(elem);
+		data->cmd[i].path = find_path(data->env, (*data->cmd[i].cmd)->content);
 		set_pipe(&(data->cmd[i]), data);
 		set_fd(&(data->cmd[i]), elem);
 		i++;
@@ -106,6 +107,9 @@ int	exec_god(t_list **token, char **env)
 	data.env = env;
 	setup_pipes(&data);
 	setup_cmds(&data);
+
+	exec_all(&data);
+	
 	close_fd(&data);
 	clean_all(&data);
 	return (0);

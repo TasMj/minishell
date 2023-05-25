@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/25 12:33:34 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:45:09 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ char	*get_arg(char *token);
 int		extract_str(char *str);
 
 /* exec all */
-int   exec_all(t_list *token, char **env);
+int	exec_all(t_exec *data);
 int	exec_op(t_cmd *cmd, t_exec *data);
 char	**lst_to_tab(t_list **lst);
 
@@ -229,6 +229,7 @@ void 	close_fd(t_exec *data);
 /* exec god */
 int	exec_god(t_list **token, char **env);
 t_list	**get_trunc_cmd(t_list *tok);
+int	exec_cmds(t_exec *data);
 
 
 #endif
