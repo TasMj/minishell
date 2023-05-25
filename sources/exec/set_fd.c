@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:04:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/25 12:04:54 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 20:49:45 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ int	set_fd(t_cmd *cmd, t_list *token)
 			set_stdin(cmd, elem);
 		else if (elem->type == APPEND)
 			set_append(cmd, elem);
+		else if (elem->type == HEREDOC)
+			cmd->heredoc = ft_strdup(elem->next->content);
 		elem = elem->next;
 	}
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/25 16:47:19 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/25 20:19:00 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ typedef struct s_cmd
 	int		fd_in;
 	int		fd_out;
 	int		id;
-	int		pid;
+	pid_t		pid;
+	char		*heredoc;
 }	t_cmd;
 
 typedef struct s_exec
@@ -180,6 +181,7 @@ int		ft_lstsize(t_list *lst);
 /* tools */
 char	**ft_split(char const *s, char c);
 void	*ft_memset(void *s, int c, size_t n);
+char	*ft_strdup(char *s);
 char	*ft_strdup_size(char *s, int size);
 int		ft_strlen(char *str);
 char	*ft_strjoin_mod(char *s1, char *s2, int mode);
