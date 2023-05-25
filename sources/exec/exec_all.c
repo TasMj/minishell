@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 18:01:28 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/23 21:41:40 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:33:54 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,25 +88,5 @@ int	exec_global(t_exec *data)
 		waitpid(data->cmd[i].pid, NULL, 0);
 		i++;
 	}
-	return (0);
-}
-
-int	exec_all(t_list *token, char **env)
-{
-	t_exec	data;
-
-	data.token = &token;
-	data.env = env;
-	// setup_pipes(&data);
-	// setup_cmd(&data);
-	// if (exec_global(&data) == 1)
-	// {
-	// 	clean_all(&data);
-	// 	return (1);
-	// }
-
-	exec_god(&data);
-
-	// clean_all(&data);
 	return (0);
 }

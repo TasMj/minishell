@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/25 12:08:43 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:33:34 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,7 @@ void	clean_all(t_exec *data);
 void 	close_fd(t_exec *data);
 
 /* exec god */
-int	exec_god(t_exec *data);
+int	exec_god(t_list **token, char **env);
 t_list	**get_trunc_cmd(t_list *tok);
 
 

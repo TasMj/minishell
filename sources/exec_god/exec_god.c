@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 22:58:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/25 12:29:52 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:35:10 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	set_pipe(t_cmd *cmd, t_exec *data)
 	}
 }
 
-int	set_cmds(t_exec *data)
+int	setup_cmds(t_exec *data)
 {
 	t_list	*elem;
 	int	i;
@@ -89,7 +89,6 @@ int	set_cmds(t_exec *data)
 		data->cmd[i].cmd = get_cmd(elem);
 		set_pipe(&(data->cmd[i]), data);
 		set_fd(&(data->cmd[i]), elem);
-		printf("in=%d\nout=%d\n", data->cmd[i].fd_in, data->cmd[i].fd_out);
 		i++;
 		while (elem && elem->type != PIPE)
 			elem = elem->next;
@@ -99,11 +98,15 @@ int	set_cmds(t_exec *data)
 	return (0);
 }
 
-int	exec_god(t_exec *data)
+int	exec_god(t_list **token, char **env)
 {
-	setup_pipes(data);
-	set_cmds(data);
-	close_fd(data);
-	clean_all(data);
+	t_exec	data;
+
+	data.token = token;
+	data.env = env;
+	setup_pipes(&data);
+	setup_cmds(&data);
+	close_fd(&data);
+	clean_all(&data);
 	return (0);
 }
