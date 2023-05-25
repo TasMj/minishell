@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:43:10 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/25 14:44:09 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/25 16:46:59 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	free_substitution(t_substitution *s)
 		free(s->new_content);
 	if (s->without_dollar)
 		free(s->without_dollar);
-	if (s->stockage)
-		free(s->stockage);
+	if (s->stock)
+		free(s->stock);
 }
 
 void	free_data(t_data *data)

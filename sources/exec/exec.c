@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 22:58:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/25 13:22:18 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:58:51 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_list	**get_cmd(t_list *token)
 	*lst = NULL;
 	while (elem && elem->type == WORD)
 	{
-		add_list(lst, elem->content, 0);
+		add_list(lst, elem->content, elem->flag_space);
 		elem = elem->next;
 	}
 	return (lst);
@@ -87,6 +87,7 @@ int	setup_cmds(t_exec *data)
 		// ft_memset(&(data->cmd[i]), 0, sizeof(t_cmd));
 		data->cmd[i].id = i;
 		data->cmd[i].cmd = get_cmd(elem);
+		// print_list(data->cmd[i].cmd);
 		data->cmd[i].path = find_path(data->env, (*data->cmd[i].cmd)->content);
 		set_pipe(&(data->cmd[i]), data);
 		set_fd(&(data->cmd[i]), elem);

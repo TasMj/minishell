@@ -6,14 +6,12 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:09:31 by tas               #+#    #+#             */
-/*   Updated: 2023/05/25 15:57:35 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/25 17:22:51 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
-
-// echo -n $USER t $fd fd
 
 int	ft_n(char *str)
 {
@@ -33,16 +31,15 @@ int	ft_n(char *str)
 	return (0);
 }
 
-void	set_echo(t_list **list_token, t_echo *e)
+int	set_echo(t_list **list_token, t_echo *e)
 {
-	if ((*list_token)->next != NULL)
-		(*list_token) = (*list_token)->next;
-	while (ft_strncmp((*list_token)->content, "-n", 2) == 0
-		&& ft_n((*list_token)->content) == 0)
+	(*list_token) = (*list_token)->next;
+	if (ft_strlen((*list_token)->content) == 2
+		&& ft_strncmp((*list_token)->content, "-n", 2) == 0)
 	{
 		e->flag = 1;
 		if ((*list_token)->next == NULL)
-			break ;
+			return (0);
 		(*list_token) = (*list_token)->next;
 	}
 	while (*list_token)
@@ -53,6 +50,7 @@ void	set_echo(t_list **list_token, t_echo *e)
 			e->stockage = ft_strjoin(e->stockage, " ");
 		(*list_token) = (*list_token)->next;
 	}
+	return (0);
 }
 
 int	ft_echo(t_list **list_token)
@@ -67,7 +65,13 @@ int	ft_echo(t_list **list_token)
 	e->stockage = "";
 	tmp = *list_token;
 	while ((*list_token) != NULL)
-		set_echo(list_token, e);
+	{
+		if (ft_strncmp((*list_token)->content, "echo", 4) == 0
+			&& (*list_token)->next != NULL)
+			set_echo(list_token, e);
+		else
+			(*list_token) = (*list_token)->next;
+	}
 	if (e->flag != 1)
 		printf("%s\n", e->stockage);
 	else

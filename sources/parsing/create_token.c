@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/05/25 15:58:43 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/25 16:46:59 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,14 @@ void	add_token(t_list **list_token, t_substitution *s, char *input)
 	s->end = s->i;
 	if (s->flag == 1)
 		s->i++;
-	s->stockage = ft_strdup_size(input + s->start, (s->end - s->start));
+	s->stock = ft_strdup_size(input + s->start, (s->end - s->start));
 	if (s->flag_space == 1)
 	{
-		add_list(list_token, s->stockage, 1);
+		add_list(list_token, s->stock, 1);
 		s->flag_space = 0;
 	}
 	else
-		add_list(list_token, s->stockage, 0);
+		add_list(list_token, s->stock, 0);
 }
 
 t_list	**create_token(t_list **list_token, char *input)

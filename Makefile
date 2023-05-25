@@ -6,7 +6,7 @@
 #    By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/05/25 14:43:47 by tmejri           ###   ########.fr        #
+#    Updated: 2023/05/25 16:48:18 by tmejri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
 PARSING			= ./sources/parsing/create_token.c ./sources/parsing/quotes.c \
 				./sources/parsing/check_type.c ./sources/parsing/substitution.c \
 				./sources/parsing/type.c ./sources/parsing/preparsing.c \
+				./sources/parsing/substitution2.c \
 
 TOOLS			= ./sources/tools/ft_split.c ./sources/tools/tools_exec.c \
 				./sources/tools/tools_list.c ./sources/tools/tools_parsing.c \
