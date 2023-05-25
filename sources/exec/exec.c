@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 22:58:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/25 15:35:44 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:41:17 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	exec(t_list **token, char **env)
 	data.token = token;
 	data.env = env;
 	if (setup_pipes(&data) != 0)
-		return (clean_all(&data) ,1);
+		return (clean_all(&data), 1);
 	
 	if (setup_cmds(&data) != 0)
 		return (clean_all(&data), 1);
