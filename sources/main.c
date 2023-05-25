@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/05/21 20:24:36 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 11:46:51 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void    init_list(t_list **list_token, char *input)
     substitute_dollar(list_token);
     get_type(list_token);
     remove_list_quotes(list_token);
-    printf("HERE\n");
     // del_empty_token(list_token);
     // print_list(list_token);
 }
@@ -44,8 +43,8 @@ int main(int argc, char **argv, char **env)
         init_list(list_token, input);
         syntax_error(list_token);
 
-        // exec_builtin(list_token);
-        exec_all(*list_token, env);
+        exec_builtin(list_token);
+        // exec_all(*list_token, env);
     }
     return (0);
 }
