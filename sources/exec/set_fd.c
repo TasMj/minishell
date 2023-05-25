@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:04:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/25 12:04:54 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 14:29:15 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	set_stdout(t_cmd *cmd, t_list *token)
 	if (cmd->fd_out < 0)
 		return (1);
 	free(file);
+	if (token->next->type == WORD)
+		return (1);
 	return (0);
 }
 
@@ -42,6 +44,8 @@ int	set_stdin(t_cmd *cmd, t_list *token)
 	if (cmd->fd_in < 0)
 		return (1);
 	free(file);
+	if (token->next->type == WORD)
+		return (1);
 	return (0);
 }
 
@@ -75,6 +79,8 @@ int	set_append(t_cmd *cmd, t_list *token)
 	if (cmd->fd_out < 0)
 		return (1);
 	free(file);
+	if (token->next->type == WORD)
+		return (1);
 	return (0);
 }
 
@@ -86,11 +92,20 @@ int	set_fd(t_cmd *cmd, t_list *token)
 	while (elem && elem->type != PIPE)
 	{
 		if (elem->type == STDOUT)
-			set_stdout(cmd, elem);
+		{
+			if (set_stdout(cmd, elem) != 0)
+				return (1);	
+		}
 		else if (elem->type == STDIN)
-			set_stdin(cmd, elem);
+		{
+			if (set_stdin(cmd, elem) != 0)
+				return (1);	
+		}
 		else if (elem->type == APPEND)
-			set_append(cmd, elem);
+		{
+			if (set_append(cmd, elem) != 0)
+				return (1);
+		}
 		elem = elem->next;
 	}
 	return (0);

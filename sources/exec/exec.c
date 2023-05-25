@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 22:58:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/25 13:22:18 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 14:55:14 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,20 @@ void	set_pipe(t_cmd *cmd, t_exec *data)
 	}
 }
 
+int	set_cmd(t_cmd *cmd, t_exec *data, t_list *elem)
+{
+	cmd->cmd = get_cmd(elem);
+	if (!cmd->cmd)
+		return (1);
+	cmd->path = find_path(data->env, (*cmd->cmd)->content);
+	if (!cmd->path)
+		return (1);
+	set_pipe(cmd, data);
+	if (set_fd(cmd, elem) != 0)
+		return (1);
+	return (0);
+}
+
 int	setup_cmds(t_exec *data)
 {
 	t_list	*elem;
@@ -84,12 +98,9 @@ int	setup_cmds(t_exec *data)
 	elem = *data->token;
 	while (elem)
 	{
-		// ft_memset(&(data->cmd[i]), 0, sizeof(t_cmd));
 		data->cmd[i].id = i;
-		data->cmd[i].cmd = get_cmd(elem);
-		data->cmd[i].path = find_path(data->env, (*data->cmd[i].cmd)->content);
-		set_pipe(&(data->cmd[i]), data);
-		set_fd(&(data->cmd[i]), elem);
+		if (set_cmd(&(data->cmd[i]), data, elem) != 0)
+			return (1);
 		i++;
 		while (elem && elem->type != PIPE)
 			elem = elem->next;
@@ -105,10 +116,14 @@ int	exec(t_list **token, char **env)
 
 	data.token = token;
 	data.env = env;
-	setup_pipes(&data);
-	setup_cmds(&data);
+	if (setup_pipes(&data) != 0)
+		return (clean_all(&data) ,1);
+	
+	if (setup_cmds(&data) != 0)
+		return (clean_all(&data), 1);
 
-	exec_all(&data);
+	if (exec_all(&data) != 0)
+		return (clean_all(&data), 1);
 	
 	clean_all(&data);
 	return (0);

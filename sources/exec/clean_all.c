@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:58:55 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/25 13:14:06 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 14:54:15 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	free_fd(t_exec *data)
 	i = 0;
 	while (i < data->nb_pipes)
 	{
-		free(data->fd[i]);
+		if (data->fd[i])
+			free(data->fd[i]);
 		i++;
 	}
 	free(data->fd);
@@ -52,7 +53,8 @@ void	clean_all(t_exec *data)
 			close(data->cmd[i].fd_in);
 		if (data->cmd[i].fd_out != STDOUT_FILENO)
 			close(data->cmd[i].fd_out);
-		free_list(data->cmd[i].cmd);
+		if (data->cmd[i].cmd != NULL)
+			free_list(data->cmd[i].cmd);
 		i++;
 	}
 	if (data->nb_pipes > 0)

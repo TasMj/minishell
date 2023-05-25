@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/25 13:22:51 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 14:48:19 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,7 @@ t_list	**get_cmd(t_list *token);
 
 /* setup pipes */
 int		count_pipes(t_list *token);
-void	setup_pipes(t_exec *data);
+int		setup_pipes(t_exec *data);
 int		nb_cmd(t_list *token);
 
 /* set fd */
@@ -220,6 +220,7 @@ int	set_fd(t_cmd *cmd, t_list *token);
 /* clean all */
 void	close_all(t_exec *data, int end);
 void	clean_all(t_exec *data);
+void	free_fd(t_exec *data);
 
 /* exec god */
 int	exec(t_list **token, char **env);
