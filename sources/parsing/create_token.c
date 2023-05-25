@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/05/25 15:05:02 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/25 15:58:43 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*get_input(void)
 	return (input);
 }
 
-void	delimit_size_operator(t_substitution *s, char *input)
+void	delimit_operator(t_substitution *s, char *input)
 {
 	if (input[s->i] == '|' || input[s->i] == '>' || input[s->i] == '<')
 	{
@@ -67,14 +67,14 @@ void	delimit_token(t_substitution *s, char *input)
 		s->i++;
 	}
 	else
-		delimit_size_operator(s, input);
+		delimit_operator(s, input);
 }
 
-void	set_token(t_list **list_token, t_substitution *s, char *input)
+void	add_token(t_list **list_token, t_substitution *s, char *input)
 {
-	// s->start = s->i;
-	// delimit_token(s, input);
-	// s->end = s->i;
+	s->start = s->i;
+	delimit_token(s, input);
+	s->end = s->i;
 	if (s->flag == 1)
 		s->i++;
 	s->stockage = ft_strdup_size(input + s->start, (s->end - s->start));
@@ -106,22 +106,7 @@ t_list	**create_token(t_list **list_token, char *input)
 			s->flag_space = 1;
 		}
 		else
-		{
-			// set_token(list_token, s, input);
-			s->start = s->i;
-			delimit_token(s, input);
-			s->end = s->i;
-			if (s->flag == 1)
-				s->i++;
-			s->stockage = ft_strdup_size(input + s->start, (s->end - s->start));
-			if (s->flag_space == 1)
-			{
-				add_list(list_token, s->stockage, 1);
-				s->flag_space = 0;
-			}
-			else
-				add_list(list_token, s->stockage, 0);
-		}
+			add_token(list_token, s, input);
 	}
 	return (list_token);
 }
