@@ -6,11 +6,12 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 22:58:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/24 23:29:21 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:11:47 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "heredoc.h"
 
 // Retourne le nombre de commandes
 int	nb_cmd(t_list *token)
@@ -48,9 +49,19 @@ t_list	**get_cmd(t_list *token)
 int	setup_cmd(t_cmd *cmd, t_list *token, t_exec *data)
 {
 	(void) data;
+	cmd->fd_in = 0;
+	cmd->fd_out = 1;
 	cmd->cmd = get_cmd(token);
+	set_fd(cmd, token);
+	printf("out=%d,in=%d\n",cmd->fd_out, cmd->fd_in);
 	// print_list(cmd->cmd);
+	// printf("\n");
 	return (0);
+}
+
+int	set_pipe(t_cmd *cmd, t_exec *data)
+{
+	
 }
 
 int	set_cmds(t_exec *data)
@@ -66,18 +77,26 @@ int	set_cmds(t_exec *data)
 	elem = *data->token;
 	while (elem)
 	{
+		// ft_memset(&(data->cmd[i]), 0, sizeof(t_cmd));
 		data->cmd[i].id = i;
 		setup_cmd(&(data->cmd[i]), elem, data);
-		while ()
+		i++;
+		while (elem && elem->type != PIPE)
+			elem = elem->next;
+		if (elem && elem->type == PIPE)
 		{
-		}	
+			set_pipe(&(data->cmd[i]), data);
+			elem = elem->next;
+		}
 	}
-	
 	return (0);
 }
 
 int	exec_god(t_exec *data)
 {
+	setup_pipes(data);
 	set_cmds(data);
+	close_fd(data);
+	clean_all(data);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/05/23 21:40:30 by jthuysba         ###   ########.fr        #
+#    Updated: 2023/05/25 12:05:21 by jthuysba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ EXEC			= ./sources/exec/path.c \
 				./sources/exec/setup_cmd.c ./sources/exec/set_fd.c \
 				./sources/exec/exec_utils.c \
 
-EXEC_GOD		= ./sources/exec_god/exec_god.c \
+EXEC_GOD		= ./sources/exec_god/exec_god.c ./sources/exec_god/set_fd.c \
 
 EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
 
