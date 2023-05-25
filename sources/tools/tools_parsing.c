@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:32 by tas               #+#    #+#             */
-/*   Updated: 2023/05/21 23:34:13 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/25 15:19:51 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ int	del_empty_token(t_list **list_token)
 	t_list	*tmp;
 
 	tmp = *list_token;
+	if (ft_lstsize(*list_token) == 1)
+	{
+		*list_token = tmp;
+		return (0);
+	}
 	while (ft_strlen((*list_token)->content) == 0)
 	{
 		(*list_token) = (*list_token)->next;
