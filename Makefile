@@ -6,7 +6,7 @@
 #    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/05/25 12:05:21 by jthuysba         ###   ########.fr        #
+#    Updated: 2023/05/25 12:15:05 by jthuysba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ EXEC			= ./sources/exec/path.c \
 				./sources/exec/tools_redir.c ./sources/exec/builtin.c \
 				./sources/exec/exec_all.c ./sources/exec/signal.c \
 				./sources/exec/clean_all.c ./sources/exec/setup_pipes.c \
-				./sources/exec/setup_cmd.c ./sources/exec/set_fd.c \
+				./sources/exec/setup_cmd.c \
 				./sources/exec/exec_utils.c \
 
 EXEC_GOD		= ./sources/exec_god/exec_god.c ./sources/exec_god/set_fd.c \
