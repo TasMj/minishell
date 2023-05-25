@@ -19,6 +19,8 @@ void    init_list(t_list **list_token, char *input)
     substitute_dollar(list_token);
     get_type(list_token);
     remove_list_quotes(list_token);
+    // del_empty_token(list_token);
+    // print_list(list_token);
 }
 
 int main(int argc, char **argv, char **env)
@@ -37,6 +39,7 @@ int main(int argc, char **argv, char **env)
         input = get_input();
         list_token = malloc(sizeof(t_list));
         list_token[0] = NULL;
+        
         init_list(list_token, input);
         syntax_error(list_token);
         exec_god(list_token, env);

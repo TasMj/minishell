@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int determine_type(char *token)
+int	determine_type(char *token)
 {
     if (check_heredoc(token) == 1)
         return (HEREDOC);
@@ -30,15 +30,15 @@ int determine_type(char *token)
 }
 
 /* determine type of each token*/
-void    get_type(t_list **list_token)
+void	get_type(t_list **list_token)
 {
-    t_list  *tmp;
+	t_list	*tmp;
 
-    tmp = *list_token;
-    while ((*list_token))
-    {
-        (*list_token)->type = determine_type((*list_token)->content);
-        (*list_token) = (*list_token)->next;
-    }
-    (*list_token) = tmp;
+	tmp = *list_token;
+	while ((*list_token))
+	{
+		(*list_token)->type = determine_type((*list_token)->content);
+		(*list_token) = (*list_token)->next;
+	}
+	(*list_token) = tmp;
 }

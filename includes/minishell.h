@@ -50,6 +50,7 @@ enum token_type {
 	END
 };
 
+
 /******************************************************************************/
 /*                               structures                                   */
 /******************************************************************************/
@@ -187,6 +188,7 @@ char	*ft_strjoin(char *s1, char *s2);
 int		is_a_space(char c);
 int		is_a_separator(char c);
 void    init_list(t_list **list_token, char *input);
+int 	del_empty_token(t_list **list_token);
 
 /***** EXEC *****/
 

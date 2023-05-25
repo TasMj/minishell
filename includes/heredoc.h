@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:41:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/21 19:38:40 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:56:58 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,12 @@ typedef struct s_echo
     int     to_free;
 }t_echo;
 
+typedef struct s_min_max
+{
+	int		min;
+	int		max;
+}t_min_max;
+
 /******************************************************************************/
 /*                            variable globale                                */
 /******************************************************************************/
@@ -92,5 +98,19 @@ void    ctr_bs(int sigid);
 
 int		syntax_error(t_list **list_token);
 
+int		count_slash(char *str);
+int		check_equal(char *str);
+char	*take_off_equal(char *str);
+int		is_in_env(char *str);
+t_list	**ft_copy_list(t_list **copy);
+int		ft_strlen_var(char *str);
+void	print_export(t_list **list);
+int		is_sorted(t_list **list);
+t_list	**sort_env(t_list **list);
+int		sort_env_ascii(void);
+int		ft_export(t_list **list_token);
+void	set_min_max(t_list **list ,t_min_max *m);
+int		is_sorted(t_list **list);
+t_list	**sort_env(t_list **list);
 
 #endif

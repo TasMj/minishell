@@ -120,4 +120,3 @@ char	*get_arg(char *token)
 	}
 	return (token + i);
 }
-

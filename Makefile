@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
+#    By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/05/25 12:44:26 by jthuysba         ###   ########.fr        #
+#    Updated: 2023/05/25 12:46:10 by tmejri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ MAIN			= ./sources/main.c
 BUILTINS		= ./sources/builtins/ft_cd.c ./sources/builtins/ft_echo.c \
 				./sources/builtins/ft_env.c \
 				./sources/builtins/ft_export.c ./sources/builtins/ft_pwd.c \
-				./sources/builtins/ft_unset.c \
+				./sources/builtins/ft_unset.c ./sources/builtins/tools_builtin.c \
+				./sources/builtins/tools_builtin2.c \
 		
 EXEC			= ./sources/exec/path.c \
 				./sources/exec/heredoc.c ./sources/exec/exec_op.c \
