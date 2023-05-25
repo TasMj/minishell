@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
+#    By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/05/25 13:25:55 by jthuysba         ###   ########.fr        #
+#    Updated: 2023/05/25 14:20:46 by tmejri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,7 @@ MAIN			= ./sources/main.c
 BUILTINS		= ./sources/builtins/ft_cd.c ./sources/builtins/ft_echo.c \
 				./sources/builtins/ft_env.c \
 				./sources/builtins/ft_export.c ./sources/builtins/ft_pwd.c \
-				./sources/builtins/ft_unset.c ./sources/builtins/tools_builtin.c \
-				./sources/builtins/tools_builtin2.c \
+				./sources/builtins/ft_unset.c \
 		
 EXEC			= ./sources/exec/path.c \
 				./sources/exec/heredoc.c \
@@ -36,7 +35,8 @@ PARSING			= ./sources/parsing/create_token.c ./sources/parsing/quotes.c \
 
 TOOLS			= ./sources/tools/ft_split.c ./sources/tools/tools_exec.c \
 				./sources/tools/tools_list.c ./sources/tools/tools_parsing.c \
-				./sources/tools/tools.c \
+				./sources/tools/tools.c ./sources/tools/tools_builtin.c \
+				./sources/tools/tools_builtin2.c\
 
 SRCS			= ${MAIN} ${BUILTINS} ${EXEC} ${EXIT} ${PARSING} ${TOOLS}
 

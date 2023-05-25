@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:35 by tas               #+#    #+#             */
-/*   Updated: 2023/05/22 00:29:19 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/25 14:18:25 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	del(char *str)
 	}
 	else
 	{
-		while ((*list_ENVI)->next != NULL && ft_strcmp(var_name((*list_ENVI)->next->content), str) == 1)
+		while ((*list_ENVI)->next != NULL
+			&& ft_strcmp(var_name((*list_ENVI)->next->content), str) == 1)
 			(*list_ENVI) = (*list_ENVI)->next;
 		tmp_next = (*list_ENVI)->next->next;
 		(*list_ENVI)->next = tmp_next;
