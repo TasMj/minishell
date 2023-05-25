@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+         #
+#    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/05/25 12:46:10 by tmejri           ###   ########.fr        #
+#    Updated: 2023/05/25 13:25:55 by jthuysba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,15 +21,12 @@ BUILTINS		= ./sources/builtins/ft_cd.c ./sources/builtins/ft_echo.c \
 				./sources/builtins/tools_builtin2.c \
 		
 EXEC			= ./sources/exec/path.c \
-				./sources/exec/heredoc.c ./sources/exec/exec_op.c \
+				./sources/exec/heredoc.c \
 				./sources/exec/tools_redir.c ./sources/exec/builtin.c \
-				./sources/exec/exec_all.c ./sources/exec/signal.c \
+				./sources/exec/signal.c \
 				./sources/exec/clean_all.c ./sources/exec/setup_pipes.c \
-				./sources/exec/setup_cmd.c \
-				./sources/exec/exec_utils.c \
-
-EXEC_GOD		= ./sources/exec_god/exec_god.c ./sources/exec_god/set_fd.c \
-				./sources/exec_god/exec_all.c
+				./sources/exec/exec_utils.c ./sources/exec/exec.c \
+				./sources/exec/set_fd.c ./sources/exec/exec_all.c \
 
 EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
 
@@ -41,7 +38,7 @@ TOOLS			= ./sources/tools/ft_split.c ./sources/tools/tools_exec.c \
 				./sources/tools/tools_list.c ./sources/tools/tools_parsing.c \
 				./sources/tools/tools.c \
 
-SRCS			= ${MAIN} ${BUILTINS} ${EXEC} ${EXEC_GOD} ${EXIT} ${PARSING} ${TOOLS}
+SRCS			= ${MAIN} ${BUILTINS} ${EXEC} ${EXIT} ${PARSING} ${TOOLS}
 
 OBJS			= ${SRCS:.c=.o}
 

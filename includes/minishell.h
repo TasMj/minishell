@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/25 12:56:46 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 13:22:51 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,15 +204,10 @@ int		extract_str(char *str);
 
 /* exec all */
 int	exec_all(t_exec *data);
-int	exec_op(t_cmd *cmd, t_exec *data);
 char	**lst_to_tab(t_list **lst);
-
-/* exec utils */
-char	**get_cut_cmd(char **cmd);
 
 /* setup cmd */
 t_list	**get_cmd(t_list *token);
-int	setup_cmd(t_cmd *cmd, t_list *token, t_exec *data);
 
 /* setup pipes */
 int		count_pipes(t_list *token);
@@ -224,13 +219,10 @@ int	set_fd(t_cmd *cmd, t_list *token);
 
 /* clean all */
 void	close_all(t_exec *data, int end);
-void	free_fd(t_exec *data);
 void	clean_all(t_exec *data);
-void 	close_fd(t_exec *data);
 
 /* exec god */
-int	exec_god(t_list **token, char **env);
-t_list	**get_trunc_cmd(t_list *tok);
+int	exec(t_list **token, char **env);
 int    exec_builtin(t_list **list_token);
 
 #endif

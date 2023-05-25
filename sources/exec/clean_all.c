@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:58:55 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/25 11:57:19 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 13:14:06 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,6 @@ void	close_all(t_exec *data, int end)
 	}
 }
 
-// void	free_cmd(t_exec *data)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < data->nb_cmd)
-// 	{
-// 		free_tab(data->cmd[i].cmd);
-// 		i++;
-// 	}
-// 	free(data->cmd);
-// }
-
 //Free toutes les struct de l'exec et close les pipes
 void	clean_all(t_exec *data)
 {
@@ -61,6 +48,10 @@ void	clean_all(t_exec *data)
 	i = 0;
 	while (i < data->nb_cmd)
 	{
+		if (data->cmd[i].fd_in != STDIN_FILENO)
+			close(data->cmd[i].fd_in);
+		if (data->cmd[i].fd_out != STDOUT_FILENO)
+			close(data->cmd[i].fd_out);
 		free_list(data->cmd[i].cmd);
 		i++;
 	}
@@ -68,20 +59,5 @@ void	clean_all(t_exec *data)
 	{
 		close_all(data, data->nb_pipes - 1);
 		free_fd(data);
-	}
-}
-
-void close_fd(t_exec *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->nb_cmd)
-	{
-		if (data->cmd[i].fd_in != 0)
-			close(data->cmd[i].fd_in);
-		if (data->cmd[i].fd_out != 1)
-			close(data->cmd[i].fd_out);
-		i++;
 	}
 }

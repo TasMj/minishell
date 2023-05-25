@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_god.c                                         :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 22:58:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/25 12:49:36 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 13:22:18 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	setup_cmds(t_exec *data)
 	return (0);
 }
 
-int	exec_god(t_list **token, char **env)
+int	exec(t_list **token, char **env)
 {
 	t_exec	data;
 
@@ -110,7 +110,6 @@ int	exec_god(t_list **token, char **env)
 
 	exec_all(&data);
 	
-	close_fd(&data);
 	clean_all(&data);
 	return (0);
 }
