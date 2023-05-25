@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 22:58:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/25 14:55:14 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 15:35:44 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_list	**get_cmd(t_list *token)
 	*lst = NULL;
 	while (elem && elem->type == WORD)
 	{
-		add_list(lst, elem->content, 0);
+		add_list(lst, elem->content, elem->flag_space);
 		elem = elem->next;
 	}
 	return (lst);
@@ -82,6 +82,8 @@ int	set_cmd(t_cmd *cmd, t_exec *data, t_list *elem)
 	set_pipe(cmd, data);
 	if (set_fd(cmd, elem) != 0)
 		return (1);
+	if (elem->type == HEREDOC)
+		cmd->heredoc = ft_strdup(elem->next->content);
 	return (0);
 }
 

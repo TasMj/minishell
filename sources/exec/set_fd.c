@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:04:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/25 14:29:15 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 15:34:37 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	set_stdout(t_cmd *cmd, t_list *token)
 {
 	char	*file;
 
-	file = ft_strdup_size(token->next->content, ft_strlen(token->next->content));
+	file = ft_strdup(token->next->content);
 	if (!file)
 		return (1);
 	if (cmd->fd_out != 1)
@@ -67,7 +67,7 @@ int	set_append(t_cmd *cmd, t_list *token)
 {
 	char	*file;
 
-	file = ft_strdup_size(token->next->content, ft_strlen(token->next->content));
+	file = ft_strdup(token->next->content);
 	if (!file)
 		return (1);
 	if (cmd->fd_out != 1)

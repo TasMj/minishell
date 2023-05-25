@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 16:06:03 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/25 13:24:36 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 15:34:18 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	**lst_to_tab(t_list **lst)
 	i = 0;
 	while (elem)
 	{
-		tab[i] = ft_strdup_size(elem->content, ft_strlen(elem->content));
+		tab[i] = ft_strdup(elem->content);
 		elem = elem->next;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:38:07 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/25 14:41:29 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 15:43:55 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 int	exec_cmd(t_cmd *cmd, t_exec *data)
 {
 	char	**tab;
+	int		tmp_fd;
 
 	tab = lst_to_tab(cmd->cmd);
 	cmd->pid = fork();
@@ -27,6 +28,14 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 		dup2(cmd->fd_out, STDOUT_FILENO);
 		if (data->nb_pipes > 0)
 			close_all(data, data->nb_pipes - 1);
+
+		if (cmd->heredoc != NULL)
+		{
+			tmp_fd = create_tmp_file();
+			dup2(tmp_fd, STDIN_FILENO);
+			close(tmp_fd);
+		}
+			
 		if (exec_builtin(cmd->cmd) == 1)
 			return (free_tab(tab), 0);
 		if (execve(cmd->path, tab, data->env) == -1)

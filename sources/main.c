@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/05/25 14:56:14 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 15:12:47 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ void    init_list(t_list **list_token, char *input)
 
 int main(int argc, char **argv, char **env)
 {
+    (void) argc;
+    (void) argv;
+    
     char *input;
     t_list **list_token;
     list_ENVI = get_list_env(env);

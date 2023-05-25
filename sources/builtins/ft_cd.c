@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/25 12:09:48 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/25 15:33:47 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_cd(t_list **list)
 	tmp = *list;
 	path = NULL;
 	if (ft_strcmp("cd", (*list)->content) == 0 && (*list)->next == NULL)
-		path = ft_strdup_size(getenv("HOME"), ft_strlen(getenv("HOME")));
+		path = ft_strdup(getenv("HOME"));
 	else if ((*list)->next && ft_strcmp((".."), (*list)->next->content) == 0)
 	{
 		if (ft_lstsize(*list) >= 3)

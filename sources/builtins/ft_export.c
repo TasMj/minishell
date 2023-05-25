@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/05/25 13:00:41 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/25 15:34:01 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_export(t_list **list_token)
             {
                 if (is_in_env(take_off_equal((*list_token)->content)) == 0)
                 {
-                    add_env = ft_strdup_size((*list_token)->content, ft_strlen((*list_token)->content));
+                    add_env = ft_strdup((*list_token)->content);
                     while ((*list_token)->next != NULL && (*list_token)->flag_space != 1)
                     {
                         printf("content: %s, %d\n", (*list_token)->content, (*list_token)->flag_space);
