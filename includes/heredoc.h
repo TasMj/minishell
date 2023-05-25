@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:41:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/25 16:49:55 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/25 17:35:52 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int	check_dollar(char *str);
 char	*remove_space(char *str);
 char	*substitution(char *token);
 void	quote_sub(t_substitution *s, t_list *list_token, int a);
+int		err_end(t_list **list_token);
 
 
 #endif

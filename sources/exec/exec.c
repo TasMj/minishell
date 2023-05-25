@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 22:58:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/25 16:58:51 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/25 17:45:32 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,6 @@ int	exec(t_list **token, char **env)
 
 	exec_all(&data);
 	
-	clean_all(&data);
+	// clean_all(&data);
 	return (0);
 }

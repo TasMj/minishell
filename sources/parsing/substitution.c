@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/05/25 16:56:00 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/25 17:27:42 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,17 @@ void	go_to_dollar(t_substitution *s, t_list *tok)
 	}
 }
 
-// void	more_dollar(t_substitution *s, t_list **list_token)
-// {
-// 	s->i = 0;
-// 	s->new_content = "";
-// 	while ((*list_token)->content[s->i])
-// 		go_to_dollar(s, (*list_token));
-// 	free((*list_token)->content);
-// 	(*list_token)->content = ft_strdup_size(s->new_content, \
-// 	ft_strlen(s->new_content));
-// 	free(s->new_content);
-// }
+void	more_dollar(t_substitution *s, t_list **list_token)
+{
+	s->i = 0;
+	s->new_content = "";
+	while ((*list_token)->content[s->i])
+		go_to_dollar(s, (*list_token));
+	free((*list_token)->content);
+	(*list_token)->content = ft_strdup_size(s->new_content, \
+	ft_strlen(s->new_content));
+	free(s->new_content);
+}
 
 void	substitute_dollar(t_list **list_token)
 {
@@ -70,17 +70,7 @@ void	substitute_dollar(t_list **list_token)
 			else if ((*list_token)->content[0] == 39)
 				quote_sub(s, (*list_token), 2);
 			else if (ft_strlen((*list_token)->content) > 1)
-			{
-				// more_dollar(s, list_token);
-				s->i = 0;
-				s->new_content = "";
-				while ((*list_token)->content[s->i])
-					go_to_dollar(s, (*list_token));
-				free((*list_token)->content);
-				(*list_token)->content = ft_strdup_size(s->new_content, \
-				ft_strlen(s->new_content));
-				free(s->new_content);
-			}
+				more_dollar(s, list_token);
 		}
 		(*list_token) = (*list_token)->next;
 	}
