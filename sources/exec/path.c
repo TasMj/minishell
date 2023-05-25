@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 13:11:54 by tas               #+#    #+#             */
-/*   Updated: 2023/05/22 16:24:22 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 14:41:54 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*get_command(char *token)
 char	*find_path(char **env, char *token)
 {
 	t_path	p;
-	
+
 	ft_memset(&p, 0, sizeof(t_path));
 	p.i = 0;
 	p.j = 0;

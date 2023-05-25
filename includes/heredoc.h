@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:41:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/25 12:56:58 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/25 14:29:23 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,7 @@ int		ft_export(t_list **list_token);
 void	set_min_max(t_list **list ,t_min_max *m);
 int		is_sorted(t_list **list);
 t_list	**sort_env(t_list **list);
+
+void	free_heredoc(t_heredoc *h);
 
 #endif

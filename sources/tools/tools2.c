@@ -1,52 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   tools2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/22 17:33:10 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/25 14:44:12 by tmejri           ###   ########.fr       */
+/*   Created: 2023/05/25 14:24:17 by tmejri            #+#    #+#             */
+/*   Updated: 2023/05/25 14:25:17 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
 
-void	free_tab(char **tab)
-{
-	int	i;
 
+int	ft_strcmp(char *s1, char *s2)
+{
+	char	*ss1;
+	char	*ss2;
+	int		i;
+
+	ss1 = s1;
+	ss2 = s2;
 	i = 0;
-	if (tab)
+	if (ft_strlen(ss1) != ft_strlen(ss2))
+		return (1);
+	else
 	{
-		while (tab[i])
+		while (i < ft_strlen(ss1))
 		{
-			free(tab[i]);
-			i++;
+			if (ss1[i] == ss2[i])
+				i++;
+			else
+				return (1);
 		}
-		free(tab);
 	}
-}
-
-void	free_list(t_list **list)
-{
-	t_list	*to_free;
-	t_list	*iter;
-
-	iter = *list;
-	while (iter)
-	{
-		to_free = iter;
-		iter = iter->next;
-		free(to_free);
-	}
-	*list = NULL;
-	free(list);
-}
-
-void	free_all(char *s1, char *s2)
-{
-	free(s1);
-	free(s2);
+	return (0);
 }
