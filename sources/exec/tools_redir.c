@@ -47,19 +47,17 @@ char	*cmd_before_redir(t_list **list_token, t_redir *s)
 
 void	init_redir(t_redir *s, t_list **list_token, char **env, char *c)
 {
-	char	*args;
-	t_path	p;
-	t_list	*tmp;
-
-	tmp = *list_token;
-	ft_memset(&p, 0, sizeof(t_path));
-	s->file_name = ft_strdup_size(get_file_name(list_token, c), ft_strlen(get_file_name(list_token, c)));
-	*list_token = tmp;
-	args = ft_strdup_size(cmd_before_redir(list_token, s), ft_strlen(cmd_before_redir(list_token, s)));
-	s->token_arg = ft_split(args, ' ');
-	free(args);
-	s->path_cmd = find_path(env, s->token_arg[0], p);
-	*list_token = tmp;
+    char        *args;
+    t_list      *tmp;
+    
+    tmp = *list_token;
+    s->file_name = ft_strdup_size(get_file_name(list_token, c), ft_strlen(get_file_name(list_token, c)));
+    *list_token = tmp;
+    args = ft_strdup_size(cmd_before_redir(list_token, s), ft_strlen(cmd_before_redir(list_token, s)));
+    s->token_arg = ft_split(args, ' ');
+    free(args);
+    s->path_cmd = find_path(env, s->token_arg[0]);
+    *list_token = tmp;
 }
 
 void	free_redir(t_redir *redir)

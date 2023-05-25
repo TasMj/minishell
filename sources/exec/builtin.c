@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:42:19 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/19 15:48:46 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/21 23:42:20 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
 
-void    exec_builtin(t_list **list_token)
+int    exec_builtin(t_list **list_token)
 {
     t_list  *tmp;
 
     if (!list_token || ft_lstsize(*list_token) == 0)
-        return ;
+        return (-1);
     tmp = *list_token;
     if (ft_strncmp((*list_token)->content, "cd", 2) == 0)
         ft_cd(list_token);
@@ -34,5 +34,8 @@ void    exec_builtin(t_list **list_token)
         ft_pwd();
     else if (ft_strncmp((*list_token)->content, "unset", 5) == 0)
         ft_unset(list_token);
+    else
+        return (0);
     *list_token = tmp;
+    return (1);
 }

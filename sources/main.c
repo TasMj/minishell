@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/05/25 11:46:51 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/25 12:33:16 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ int main(int argc, char **argv, char **env)
         
         init_list(list_token, input);
         syntax_error(list_token);
-
-        exec_builtin(list_token);
-        // exec_all(*list_token, env);
+        exec_god(list_token, env);
     }
     return (0);
 }

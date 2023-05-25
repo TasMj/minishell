@@ -1,3 +1,0 @@
--Probleme de parsing "grep *l" ne marche pas -> * lu comme mauvais caractere je pense
--CTRL+D 
--exit

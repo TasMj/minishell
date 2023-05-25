@@ -21,13 +21,15 @@ BUILTINS		= ./sources/builtins/ft_cd.c ./sources/builtins/ft_echo.c \
 				./sources/builtins/tools_builtin2.c \
 		
 EXEC			= ./sources/exec/path.c \
-				./sources/exec/heredoc.c ./sources/exec/stdin.c \
-				./sources/exec/stdout.c ./sources/exec/append.c \
+				./sources/exec/heredoc.c ./sources/exec/exec_op.c \
 				./sources/exec/tools_redir.c ./sources/exec/builtin.c \
 				./sources/exec/exec_all.c ./sources/exec/signal.c \
 				./sources/exec/clean_all.c ./sources/exec/setup_pipes.c \
-				./sources/exec/setup_cmd.c ./sources/exec/set_fd.c \
-				./sources/exec/exec_type.c ./sources/exec/exec_utils.c \
+				./sources/exec/setup_cmd.c \
+				./sources/exec/exec_utils.c \
+
+EXEC_GOD		= ./sources/exec_god/exec_god.c ./sources/exec_god/set_fd.c \
+				./sources/exec_god/exec_all.c
 
 EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
 
@@ -39,7 +41,7 @@ TOOLS			= ./sources/tools/ft_split.c ./sources/tools/tools_exec.c \
 				./sources/tools/tools_list.c ./sources/tools/tools_parsing.c \
 				./sources/tools/tools.c \
 
-SRCS			= ${MAIN} ${BUILTINS} ${EXEC} ${EXIT} ${PARSING} ${TOOLS}
+SRCS			= ${MAIN} ${BUILTINS} ${EXEC} ${EXEC_GOD} ${EXIT} ${PARSING} ${TOOLS}
 
 OBJS			= ${SRCS:.c=.o}
 

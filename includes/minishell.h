@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/25 12:12:05 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/25 12:56:46 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,12 @@ typedef struct s_path
 
 typedef struct s_cmd
 {
-	char	**cmd;
-	char	*path;
+	t_list	**cmd;
+	char		*path;
 	int		fd_in;
 	int		fd_out;
 	int		id;
 	int		pid;
-	int		type;
 }	t_cmd;
 
 typedef struct s_exec
@@ -196,25 +195,24 @@ int 	del_empty_token(t_list **list_token);
 /* path*/
 int		try_acces(char *path, char *token);
 char	*get_command(char *token);
-char	*find_path(char **env, char *token, t_path p);
-int		init_param(t_data *data, char *token, char **__environ, t_path p);
+char	*find_path(char **env, char *token);
+int		init_param(t_data *data, char *token, char **__environ);
 char	*get_arg(char *token);
 
 /* process */
 int		extract_str(char *str);
 
 /* exec all */
-int   exec_all(t_list *token, char **env);
-int	exec_stdin(t_cmd *cmd, t_exec *data);
-int	exec_stdout(t_cmd *cmd, t_exec *data);
-
+int	exec_all(t_exec *data);
+int	exec_op(t_cmd *cmd, t_exec *data);
+char	**lst_to_tab(t_list **lst);
 
 /* exec utils */
 char	**get_cut_cmd(char **cmd);
 
 /* setup cmd */
-char	**get_cmd(t_list *token);
-void	setup_cmd(t_exec *data);
+t_list	**get_cmd(t_list *token);
+int	setup_cmd(t_cmd *cmd, t_list *token, t_exec *data);
 
 /* setup pipes */
 int		count_pipes(t_list *token);
@@ -222,11 +220,17 @@ void	setup_pipes(t_exec *data);
 int		nb_cmd(t_list *token);
 
 /* set fd */
-void	set_fd(t_cmd *cmd, t_exec *data);
+int	set_fd(t_cmd *cmd, t_list *token);
 
 /* clean all */
 void	close_all(t_exec *data, int end);
 void	free_fd(t_exec *data);
 void	clean_all(t_exec *data);
+void 	close_fd(t_exec *data);
+
+/* exec god */
+int	exec_god(t_list **token, char **env);
+t_list	**get_trunc_cmd(t_list *tok);
+int    exec_builtin(t_list **list_token);
 
 #endif

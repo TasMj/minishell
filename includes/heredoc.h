@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:41:00 by tas               #+#    #+#             */
 /*   Updated: 2023/05/25 12:56:58 by tmejri           ###   ########.fr       */
@@ -89,7 +89,7 @@ int		append_process(t_list **list_token, char **env);
 
 t_list  **get_list_env(char **env);
 
-void    exec_builtin(t_list **list_token);
+int    exec_builtin(t_list **list_token);
 
 /*signals*/
 void    ctrl_c(int sigid);

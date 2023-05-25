@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_type.c                                        :+:      :+:    :+:   */
+/*   exec_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/18 16:02:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/18 16:19:58 by jthuysba         ###   ########.fr       */
+/*   Created: 2023/05/25 12:38:07 by jthuysba          #+#    #+#             */
+/*   Updated: 2023/05/25 12:56:11 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_stdin(t_cmd *cmd, t_exec *data)
+// Exec la commande cmd avec ses fd d'entree et sortie assignes
+int	exec_cmd(t_cmd *cmd, t_exec *data)
 {
-	char	**cut_cmd;
+	char	**tab;
 
-	cut_cmd = get_cut_cmd(cmd->cmd);
+	tab = lst_to_tab(cmd->cmd);
 	cmd->pid = fork();
 	if (cmd->pid < 0)
 		return (1);
@@ -24,30 +25,28 @@ int	exec_stdin(t_cmd *cmd, t_exec *data)
 	{
 		dup2(cmd->fd_in, STDIN_FILENO);
 		dup2(cmd->fd_out, STDOUT_FILENO);
-		close(cmd->fd_in);
 		if (data->nb_pipes > 0)
 			close_all(data, data->nb_pipes - 1);
-		execve(cmd->path, cut_cmd, data->env);
+		if (exec_builtin(cmd->cmd) == 1)
+			return (0);
+		execve(cmd->path, tab, data->env);
+		free_tab(tab);
 	}
 	return (0);
 }
 
-int	exec_stdout(t_cmd *cmd, t_exec *data)
+int	exec_all(t_exec *data)
 {
-	char	**cut_cmd;
+	int	i;
 
-	cut_cmd = get_cut_cmd(cmd->cmd);
-	cmd->pid = fork();
-	if (cmd->pid < 0)
-		return (1);
-	if (cmd->pid == 0)
+	i = 0;
+	while (i < data->nb_cmd)
 	{
-		dup2(cmd->fd_in, STDIN_FILENO);
-		dup2(cmd->fd_out, STDOUT_FILENO);
-		close(cmd->fd_out);
-		if (data->nb_pipes > 0)
-			close_all(data, data->nb_pipes - 1);
-		execve(cmd->path, cut_cmd, data->env);
+		exec_cmd(&(data->cmd[i]), data);
+		if (i != data->nb_pipes)
+			close(data->fd[i][1]);
+		waitpid(data->cmd[i].pid, NULL, 0);
+		i++;
 	}
 	return (0);
 }

@@ -2,6 +2,8 @@
     "files.associations": {
         "minishell.h": "c",
         "history.h": "c",
+        "compare": "c",
+        "type_traits": "c",
         "heredoc.h": "c"
     }
 }

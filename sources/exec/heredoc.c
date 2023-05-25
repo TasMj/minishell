@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:34:23 by tas               #+#    #+#             */
-/*   Updated: 2023/05/22 00:24:32 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/22 16:22:31 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,33 +32,31 @@ char	*cmd_before_heredoc(t_list **list_token, t_heredoc *h)
 
 int	heredoc(t_list **list_token, char **env)
 {
-	t_heredoc	*h;
-	t_list		*first_cmd;
-	t_path		p;
-	char		*args;
-
-	h = malloc(sizeof(t_heredoc));
-	ft_memset(&p, 0, sizeof(t_path));
-	first_cmd = *list_token;
-	args = ft_strdup_size(cmd_before_heredoc(list_token, h), ft_strlen(cmd_before_heredoc(list_token, h)));
-	while (*list_token)
-	{
-		if (check_heredoc((*list_token)->content) == 1 && (*list_token)->next == NULL)
-			break;
-		else if (check_heredoc((*list_token)->content) == 1)
-		{
-			h->path_cmd = find_path(env, first_cmd->content, p);
-			h->token_arg = ft_split(args, ' ');
-			h->delimiteur = ft_strdup_size((*list_token)->next->content, ft_strlen((*list_token)->next->content));
-			free(args);
-			heredoc_process(h, env);
-		}
-		(*list_token) = (*list_token)->next;
-	}
-	free(args);
-	free_heredoc(h);
-	(*list_token) = first_cmd;
-	return (0);
+    t_heredoc   *h;
+    t_list      *first_cmd;
+    char        *args;
+    
+    h = malloc(sizeof(t_heredoc));
+    first_cmd = *list_token;
+    args = ft_strdup_size(cmd_before_heredoc(list_token, h), ft_strlen(cmd_before_heredoc(list_token, h)));
+    while (*list_token)
+    {
+        if (check_heredoc((*list_token)->content) == 1 && (*list_token)->next == NULL)
+            break;
+        else if (check_heredoc((*list_token)->content) == 1)
+        {
+            h->path_cmd = find_path(env, first_cmd->content);
+            h->token_arg = ft_split(args, ' ');
+            h->delimiteur = ft_strdup_size((*list_token)->next->content, ft_strlen((*list_token)->next->content));
+            free(args);
+            heredoc_process(h, env);
+        }
+        (*list_token) = (*list_token)->next;
+    }
+    free(args);
+    free_heredoc(h);
+    (*list_token) = first_cmd;
+    return (0);
 }
 
 int	ft_strcmp(char *s1, char *s2)
