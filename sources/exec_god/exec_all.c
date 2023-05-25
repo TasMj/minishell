@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:38:07 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/25 12:53:41 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:56:11 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 		dup2(cmd->fd_out, STDOUT_FILENO);
 		if (data->nb_pipes > 0)
 			close_all(data, data->nb_pipes - 1);
-		// if (exec_builtin(cmd->cmd) == 1)
-		// 	return (0);
+		if (exec_builtin(cmd->cmd) == 1)
+			return (0);
 		execve(cmd->path, tab, data->env);
 		free_tab(tab);
 	}
