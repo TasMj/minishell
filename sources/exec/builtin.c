@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:42:19 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/26 17:15:34 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/26 19:43:46 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 int	exec_builtin(t_list **list_token)
 {
+	(void) list_token;
 	t_list	*tmp;
 
 	if (!list_token || ft_lstsize(*list_token) == 0)
@@ -37,5 +38,6 @@ int	exec_builtin(t_list **list_token)
 	else
 		return (1);
 	*list_token = tmp;
+	// printf("bultin\n");
 	return (0);
 }

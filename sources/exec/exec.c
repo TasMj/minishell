@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 22:58:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/26 17:39:49 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/26 19:43:16 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,14 +110,14 @@ int	setup_cmds(t_exec *data)
 int	exec(t_list **token, t_list **env)
 {
 	t_exec	data;
-
+	
 	data.token = token;
 	data.env = lst_to_tab(env);
 	setup_pipes(&data);
 	setup_cmds(&data);
 
 	exec_all(&data);
-	
+
 	clean_all(&data);
 	return (0);
 }

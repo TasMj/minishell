@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:38:07 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/26 17:57:40 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/26 20:06:22 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,37 +84,40 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 		if (is_heredoc(cmd) == 1)
 		{
 			heredoc(cmd->cmd, data->env);
-			return (0);
+			exit(0);
 		}
 		if (is_path(cmd) == 1)
 		{
 			if (execve((*cmd->cmd)->content, cmd->tab, data->env) < 0)
-				return (1);
+				exit(1);
 		}
 		if (execve(cmd->path, cmd->tab, data->env) < 0)
-			return (1);
+			exit(1);
 	}
 	return (0);
 }
 
 int	handle_builtin(t_cmd *cmd, t_exec *data)
 {
-	cmd->pid = fork();
-	if (cmd->pid < 0)
-		return (1);
-	if (cmd->pid == 0)
-	{
-		dup2(cmd->fd_in, STDIN_FILENO);
-		dup2(cmd->fd_out, STDOUT_FILENO);
-		if (data->nb_pipes > 0)
-			close_all(data, data->nb_pipes - 1);
-		if (is_heredoc(cmd) == 1)
-		{
-			heredoc(cmd->cmd, data->env);
-			return (0);
-		}
-		exec_builtin(cmd->cmd);
-	}
+	int	tmp_in;
+	int	tmp_out;
+
+	tmp_in = dup(STDIN_FILENO);
+	tmp_out = dup(STDOUT_FILENO);
+	dup2(cmd->fd_in, STDIN_FILENO);
+	dup2(cmd->fd_out, STDOUT_FILENO);
+	if (data->nb_pipes > 0)
+		close_all(data, data->nb_pipes - 1);
+	// if (is_heredoc(cmd) == 1)
+	// {
+	// 	heredoc(cmd->cmd, data->env);
+	// 	exit(0);
+	// }
+	exec_builtin(cmd->cmd);
+	dup2(tmp_in, STDIN_FILENO);
+	dup2(tmp_out, STDOUT_FILENO);
+	close(tmp_in);
+	close(tmp_out);
 	return (0);
 }
 
@@ -126,9 +129,13 @@ int	exec_all(t_exec *data)
 	while (i < data->nb_cmd)
 	{
 		if (is_builtin(data->cmd[i].cmd) == 1)
+		{
 			handle_builtin(&data->cmd[i], data);
+		}
 		else
+		{
 			exec_cmd(&(data->cmd[i]), data);
+		}
 		if (i != data->nb_pipes && data->nb_pipes > 0)
 			close(data->fd[i][1]);
 		waitpid(data->cmd[i].pid, NULL, 0);
