@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:08:46 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/26 13:02:48 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 16:02:42 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ char	*after_equal(char *str)
 	i = 0;
 	while (str[i] && str[i] != '=')
 		i++;
-	// printf("charly\n");
 	if (str[i] && str[i] == '=')
 		i++;
 	start = i;
@@ -88,8 +87,6 @@ int	is_in_env(char *str)
 	*g_list_env = tmp;
 	return (0);
 }
-
-
 
 t_list	**ft_copy_list(t_list **copy)
 {

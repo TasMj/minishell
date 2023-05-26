@@ -6,13 +6,12 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:24:17 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/25 14:25:17 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 16:16:01 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
-
 
 int	ft_strcmp(char *s1, char *s2)
 {

@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:15:52 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/26 15:55:57 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 16:22:19 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	check_pair_double_quote(char *str)
 	return (0);
 }
 
-/* découpe le mot comme il faut pour les mots entre quote (conserve les espaces) */
+/* découpe le mot comme il faut pour les mots entre quote */
 char	*word_quote(char *stockage, int quote)
 {
 	int		i;
@@ -146,12 +146,13 @@ void	remove_list_quotes(t_list **list_token)
 	while (*list_token)
 	{
 		if ((check_pair_double_quote((*list_token)->content) == 2
-			|| check_pair_single_quote((*list_token)->content) == 2)
+				|| check_pair_single_quote((*list_token)->content) == 2)
 			&& (*list_token)->flag_quote != 1)
 		{
 			stockage = remove_quotes((*list_token)->content);
 			free((*list_token)->content);
-			(*list_token)->content = ft_strdup_size(stockage, ft_strlen(stockage));
+			(*list_token)->content = \
+			ft_strdup_size(stockage, ft_strlen(stockage));
 		}
 		(*list_token) = (*list_token)->next;
 	}

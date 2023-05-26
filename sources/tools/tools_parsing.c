@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:32 by tas               #+#    #+#             */
-/*   Updated: 2023/05/26 14:31:22 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 16:14:17 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,32 +29,32 @@ int	is_a_separator(char c)
 	return (0);
 }
 
-void    remove_empty_tokens(t_list **list)
+void	remove_empty_tokens(t_list **list)
 {
-    char    *str;
-    t_list    *to_free;
-    t_list    *temp;
+	char		*str;
+	t_list		*to_free;
+	t_list		*temp;
 
-    while (*list && !((*list)->content)[0])
-    {
-        to_free = *list;
-        *list = (*list)->next;
-        free(to_free->content);
-        free(to_free);
-    }
-    temp = *list;
-    while (temp && temp->next)
-    {
-        str = temp->next->content;
-        if (!str[0])
-        {
-            to_free = temp->next;
-            temp->next = temp->next->next;
-            free(to_free->content);
-            free(to_free);
-        }
-        temp = temp->next;
-    }
+	while (*list && !((*list)->content)[0])
+	{
+		to_free = *list;
+		*list = (*list)->next;
+		free(to_free->content);
+		free(to_free);
+	}
+	temp = *list;
+	while (temp && temp->next)
+	{
+		str = temp->next->content;
+		if (!str[0])
+		{
+			to_free = temp->next;
+			temp->next = temp->next->next;
+			free(to_free->content);
+			free(to_free);
+		}
+		temp = temp->next;
+	}
 }
 
 char	*return_var_env(char *str)
@@ -67,7 +67,8 @@ char	*return_var_env(char *str)
 	{
 		if (ft_strcmp(str, take_off_equal((*g_list_env)->content)) == 0)
 		{
-			var = ft_strdup_size(after_equal((*g_list_env)->content), ft_strlen(after_equal((*g_list_env)->content)));
+			var = ft_strdup_size(after_equal((*g_list_env)->content), \
+			ft_strlen(after_equal((*g_list_env)->content)));
 			*g_list_env = tmp;
 			return (var);
 		}
