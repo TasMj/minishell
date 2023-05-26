@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/25 16:47:19 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 13:22:55 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define ERR_QUOTE "not handle by minishell\n"
 # define ERR_CMD "command not found\n"
 # define ERR_MANY_ARG "too many arguments (WIP)\n"
+# define ERR_HOME "HOME not set\n"
 
 /******************************************************************************/
 /*                                   enum                                     */
@@ -49,7 +50,6 @@ enum token_type {
 	PIPE,
 	END
 };
-
 
 /******************************************************************************/
 /*                               structures                                   */
@@ -222,7 +222,7 @@ void	close_all(t_exec *data, int end);
 void	clean_all(t_exec *data);
 
 /* exec god */
-int	exec(t_list **token, char **env);
+int	exec(t_list **token, t_list **env);
 int    exec_builtin(t_list **list_token);
 
 #endif

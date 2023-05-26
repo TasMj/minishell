@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:08:46 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/26 11:47:50 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 13:02:48 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,25 @@ char	*take_off_equal(char *str)
 	return (var);
 }
 
+char	*after_equal(char *str)
+{
+	int		i;
+	int		start;
+	char	*var;
+
+	i = 0;
+	while (str[i] && str[i] != '=')
+		i++;
+	// printf("charly\n");
+	if (str[i] && str[i] == '=')
+		i++;
+	start = i;
+	while (str[i])
+		i++;
+	var = ft_strdup_size(str + start, (i - start));
+	return (var);
+}
+
 int	is_in_env(char *str)
 {
 	t_list	*tmp;
@@ -69,6 +88,8 @@ int	is_in_env(char *str)
 	*g_list_env = tmp;
 	return (0);
 }
+
+
 
 t_list	**ft_copy_list(t_list **copy)
 {

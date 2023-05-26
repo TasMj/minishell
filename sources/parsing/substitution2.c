@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:47:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/25 16:49:03 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 12:51:34 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ char	*remove_space(char *str)
 char	*substitution(char *token)
 {
 	char	*variable;
-
-	variable = getenv(token + 1);
+	
+	variable = NULL;
+	if (is_in_env(token + 1))
+		variable = return_var_env(token + 1);
 	if (!variable)
 	{
 		variable = malloc(1);
