@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 12:45:54 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/16 17:58:53 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/25 20:18:43 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,24 @@ void	*ft_memset(void *s, int c, size_t n)
 	}
 	s = (void *)ss;
 	return (s);
+}
+
+char	*ft_strdup(char *s)
+{
+	size_t	i;
+	char	*dest;
+
+	i = 0;
+	dest = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!dest)
+		return (NULL);
+	while (s[i])
+	{
+		dest[i] = s[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }
 
 char	*ft_strdup_size(char *s, int size)

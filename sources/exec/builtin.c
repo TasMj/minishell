@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:42:19 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/26 16:56:57 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 17:15:34 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	exec_builtin(t_list **list_token)
 	else if (ft_strlen((*list_token)->content) == 5 && ft_strncmp((*list_token)->content, "unset", 5) == 0)
 		ft_unset(list_token);
 	else
-		return (0);
+		return (1);
 	*list_token = tmp;
-	return (1);
+	return (0);
 }

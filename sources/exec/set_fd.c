@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:04:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/25 12:04:54 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/26 13:12:33 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,29 @@ int	set_append(t_cmd *cmd, t_list *token)
 	return (0);
 }
 
+t_list	**get_heredoc_cmd(t_cmd *cmd, t_list *token)
+{
+	t_list	**lst;
+	t_list	*elem;
+
+	lst = malloc(sizeof(t_list));
+	if (!lst)
+		return (NULL);
+	*lst = NULL;
+	elem = *cmd->cmd;
+	while (elem)
+	{
+		add_list(lst, elem->content, elem->flag_space);
+		elem = elem->next;
+	}
+	elem = token;
+	add_list(lst, elem->content, elem->flag_space);
+	elem = elem->next;
+	add_list(lst, elem->content, elem->flag_space);
+	get_type(lst);
+	return (lst);
+}
+
 int	set_fd(t_cmd *cmd, t_list *token)
 {
 	t_list	*elem;
@@ -91,6 +114,8 @@ int	set_fd(t_cmd *cmd, t_list *token)
 			set_stdin(cmd, elem);
 		else if (elem->type == APPEND)
 			set_append(cmd, elem);
+		else if (elem->type == HEREDOC)
+			cmd->cmd = get_heredoc_cmd(cmd, elem);
 		elem = elem->next;
 	}
 	return (0);
