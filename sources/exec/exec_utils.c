@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 16:06:03 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/25 13:24:36 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/26 13:30:16 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	**lst_to_tab(t_list **lst)
 	int	i;
 
 	elem = *lst;
-	tab = malloc(sizeof(char *) * ft_lstsize(*lst));
+	tab = malloc(sizeof(char *) * (ft_lstsize(*lst) + 1));
 	if (!tab)
 		return (NULL);
 	i = 0;

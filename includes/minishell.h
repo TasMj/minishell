@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/25 20:19:00 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/26 13:02:47 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ typedef struct s_cmd
 	int		id;
 	pid_t		pid;
 	char		*heredoc;
+	struct s_exec	*data;
+	char	**tab;
 }	t_cmd;
 
 typedef struct s_exec
@@ -218,6 +220,7 @@ int		nb_cmd(t_list *token);
 
 /* set fd */
 int	set_fd(t_cmd *cmd, t_list *token);
+int	handle_heredoc(t_cmd *cmd, t_list *token);
 
 /* clean all */
 void	close_all(t_exec *data, int end);

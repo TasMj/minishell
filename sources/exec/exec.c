@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 22:58:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/25 20:45:11 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/26 14:49:13 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ int	nb_cmd(t_list *token)
 {
 	int	count;
 
-	count = 1;
+	count = 0;
+	if (token->type == WORD)
+		count++;
 	while (token)
 	{
 		if (token->type == PIPE)
@@ -94,6 +96,7 @@ int	setup_cmds(t_exec *data)
 	while (elem)
 	{
 		data->cmd[i].id = i;
+		data->cmd[i].data = data;
 		set_cmd(&data->cmd[i], data, elem);
 		i++;
 		while (elem && elem->type != PIPE)
@@ -113,8 +116,8 @@ int	exec(t_list **token, char **env)
 	setup_pipes(&data);
 	setup_cmds(&data);
 
-	// exec_all(&data);
+	exec_all(&data);
 	
-	// clean_all(&data);
+	clean_all(&data);
 	return (0);
 }
