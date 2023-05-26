@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:38:07 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/26 14:47:56 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/26 16:46:37 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,20 @@ int	is_heredoc(t_cmd *cmd)
 	return (0);
 }
 
+int	is_path(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	while ((*cmd->cmd)->content[i])
+	{
+		if ((*cmd->cmd)->content[i] == '/')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 // Exec la commande cmd avec ses fd d'entree et sortie assignes
 int	exec_cmd(t_cmd *cmd, t_exec *data)
 {
@@ -36,13 +50,11 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 		return (1);
 	if (cmd->pid == 0)
 	{
-		print_list(cmd->cmd);
+		// print_list(cmd->cmd);
 		dup2(cmd->fd_in, STDIN_FILENO);
 		dup2(cmd->fd_out, STDOUT_FILENO);
-		// if (data->nb_pipes > 0)
-		// 	close_all(data, data->nb_pipes - 1);
-		close(3);
-		close(4);
+		if (data->nb_pipes > 0)
+			close_all(data, data->nb_pipes - 1);
 		if (exec_builtin(cmd->cmd) == 1)
 			return (0);
 		if (is_heredoc(cmd) == 1)
@@ -50,7 +62,13 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 			heredoc(cmd->cmd, data->env);
 			return (0);
 		}
-		execve(cmd->path, cmd->tab, data->env);
+		if (is_path(cmd) == 1)
+		{
+			if (execve((*cmd->cmd)->content, cmd->tab, data->env) < 0)
+				return (1);
+		}
+		if (execve(cmd->path, cmd->tab, data->env) < 0)
+			return (1);
 	}
 	return (0);
 }
@@ -67,8 +85,6 @@ int	exec_all(t_exec *data)
 		exec_cmd(&(data->cmd[i]), data);
 		if (i != data->nb_pipes && data->nb_pipes > 0)
 			close(data->fd[i][1]);
-		close(3);
-		close(4);
 		waitpid(data->cmd[i].pid, NULL, 0);
 		free_tab(data->cmd[i].tab);
 		i++;
