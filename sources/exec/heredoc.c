@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:34:23 by tas               #+#    #+#             */
-/*   Updated: 2023/05/25 14:41:20 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 17:10:41 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,14 @@ int	parent_process(t_heredoc *h, char **env)
 	exit(EXIT_SUCCESS);
 }
 
+void
+ft_putstr_fd(char *str, int fd)
+{
+	if (!str)
+		return ;
+	(void)write(fd, str, ft_strlen(str));
+}
+
 int	heredoc_process(t_heredoc *h, char **env)
 {
 	char	*stockage;
@@ -90,9 +98,14 @@ int	heredoc_process(t_heredoc *h, char **env)
 			stockage = readline("heredoc> ");
 			if (ft_strcmp(stockage, h->delimiteur) == 0)
 				break ;
-			if (write(h->tube[1], ft_strjoin_mod(stockage, "\n", 1), \
-			ft_strlen(stockage) + 1) == -1)
-				exit(EXIT_FAILURE);
+			else
+			{
+				ft_putstr_fd(stockage, h->tube[1]);
+				ft_putstr_fd("\n", h->tube[1]);
+			}
+			// else if (write(h->tube[1], ft_strjoin_mod(stockage, "\n", 1), \
+			// ft_strlen(stockage) + 1) == -1)
+			// 	exit(EXIT_FAILURE);
 		}
 		close(h->tube[1]);
 		free(stockage);
