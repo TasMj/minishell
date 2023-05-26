@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:15:52 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/25 11:28:46 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 15:55:57 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,9 @@ void	remove_list_quotes(t_list **list_token)
 	tmp = (*list_token);
 	while (*list_token)
 	{
-		if (check_pair_double_quote((*list_token)->content) == 2
+		if ((check_pair_double_quote((*list_token)->content) == 2
 			|| check_pair_single_quote((*list_token)->content) == 2)
+			&& (*list_token)->flag_quote != 1)
 		{
 			stockage = remove_quotes((*list_token)->content);
 			free((*list_token)->content);

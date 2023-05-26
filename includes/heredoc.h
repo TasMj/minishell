@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:41:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/26 12:55:57 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 15:50:00 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,6 @@ int     ft_strcmp(char *s1, char *s2);
 int     heredoc_process(t_heredoc *h, char **env);
 void	free_heredoc(t_heredoc *h);
 
-/* Redirection */
-int		stdin_process(t_list **list_token, char **env);
-int		stdout_process(t_list **list_token, char **env);
-int		append_process(t_list **list_token, char **env);
-
 
 t_list  **get_list_env(char **env);
 
@@ -117,11 +112,12 @@ void	free_heredoc(t_heredoc *h);
 
 int		check_dollar(char *str);
 char	*remove_space(char *str);
-char	*substitution(char *token);
 void	quote_sub(t_substitution *s, t_list *list_token, int a);
-int		err_end(t_list **list_token);
 char	*return_var_env(char *str);
 char	*after_equal(char *str);
+void    remove_empty_tokens(t_list **list);
+int err_quote(t_list **list_token);
+char	*remove_quote_end(t_substitution *s);
 
 
 #endif

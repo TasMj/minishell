@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/26 13:22:55 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 15:52:25 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_list
 	int				type;
 	int				index;
 	int				flag_space;
+	int				flag_quote;
 	struct s_list	*next;
 }	t_list;
 
@@ -78,6 +79,7 @@ typedef struct s_substitution
     int		i;
 	int		flag;
 	int		flag_space;
+	int		flag_keep_quote;
 	int		quote;
 }	t_substitution;
 
@@ -187,8 +189,7 @@ int		ft_strncmp(char *s1, char *s2, size_t n);
 char	*ft_strjoin(char *s1, char *s2);
 int		is_a_space(char c);
 int		is_a_separator(char c);
-void    init_list(t_list **list_token, char *input);
-int 	del_empty_token(t_list **list_token);
+int    init_list(t_list **list_token, char *input);
 
 /***** EXEC *****/
 

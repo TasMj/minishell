@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/05/25 16:46:59 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 14:35:40 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	delimit_token(t_substitution *s, char *input)
 		s->quote = input[s->i];
 		s->flag = 1;
 		s->i++;
-		while (input[s->i] != s->quote && s->flag == 1)
+		while (input[s->i] && input[s->i] != s->quote && s->flag == 1)
 			s->i++;
 		s->flag = 0;
 		s->i++;

@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:56:18 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/26 13:54:19 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 14:52:33 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,9 @@
 int	syntax_error(t_list **list_token)
 {
 	t_list	*tmp;
-	
 	tmp = *list_token;
 	if (!list_token || ft_lstsize(*list_token) == 0)
 		return (0);
-	while (*list_token)
-	{
-		if (check_pair_quote((*list_token)->content) == 1)
-		{
-			*list_token = tmp;
-			return(err_msg(1));
-		}
-		(*list_token) = (*list_token)->next;
-	}
-	*list_token = tmp;
 	if (ft_lstsize(*list_token) == 1)
 	{
 		if (ft_strcmp((*list_token)->content, "<") == 0
@@ -44,4 +33,22 @@ int	syntax_error(t_list **list_token)
 			|| ft_lstlast(*list_token)->type == PIPE)
 				return (err_msg(0));
 	return (2);
+}
+
+int err_quote(t_list **list_token)
+{
+    t_list *tmp;
+
+    tmp= *list_token;
+    while (*list_token)
+	{
+		if (check_pair_quote((*list_token)->content) == 1)
+		{
+			*list_token = tmp;
+			return(err_msg(1));
+		}
+		(*list_token) = (*list_token)->next;
+	}
+	*list_token = tmp;
+    return (0);
 }

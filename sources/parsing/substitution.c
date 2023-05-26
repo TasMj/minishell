@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/05/25 17:27:42 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 15:57:15 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	substitute_dollar(t_list **list_token)
 		(*list_token) = (*list_token)->next;
 	}
 	*list_token = tmp;
+
 }
 
 char	*sub_quotes(char *token, t_substitution *s)
@@ -99,6 +100,7 @@ char	*sub_quotes(char *token, t_substitution *s)
 			&& (is_a_space(s->stock[s->i + 1]) == 0
 				|| s->stock[s->i + 1] != '\0'))
 		{
+	// printf("new: [%s]\n", s->new_content);
 			s->start = s->i;
 			s->i++;
 			while (is_a_space(s->stock[s->i]) == 0
@@ -107,10 +109,13 @@ char	*sub_quotes(char *token, t_substitution *s)
 			s->end = s->i;
 			s->keep_var = ft_strdup_size(s->stock + s->start, \
 			(s->end - s->start));
-			s->keep_var2 = ft_strdup_size(substitution(s->keep_var), \
-			ft_strlen(substitution(s->keep_var)));
+	// printf("keep: [%s]\n", remove_quote_end(s));
+			s->keep_var2 = ft_strdup_size(remove_quote_end(s), \
+			ft_strlen(remove_quote_end(s)));
+	// printf("keep2: [%s]\n", s->keep_var2);
 			s->new_content = ft_strjoin_mod(s->new_content, s->keep_var2, 2);
 		}
 	}
+	// printf("flag: %d\n", s->flag_keep_quote);
 	return (s->new_content);
 }

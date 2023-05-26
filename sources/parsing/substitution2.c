@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:47:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/26 12:51:34 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 15:52:43 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,20 @@ void	quote_sub(t_substitution *s, t_list *list_token, int a)
 	free(list_token->content);
 	list_token->content = ft_strdup_size(s->var_substitute, \
 	ft_strlen(s->var_substitute));
+	list_token->flag_quote = 1;
+}
+
+char	*remove_quote_end(t_substitution *s)
+{
+	int		i;
+	char	*var_modif;
+
+	i = 0;
+	while (s->keep_var[i] != 39 && s->keep_var[i] != 34)
+		i++;
+	if (i != ft_strlen(s->keep_var))
+		s->flag_keep_quote = 1;
+	var_modif = substitution(ft_strdup_size(s->keep_var, i));
+	var_modif = ft_strjoin(var_modif, s->keep_var + i);
+	return (var_modif);
 }
