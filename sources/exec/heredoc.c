@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:34:23 by tas               #+#    #+#             */
-/*   Updated: 2023/05/26 17:10:41 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/26 23:42:04 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	heredoc_process(t_heredoc *h, char **env)
 				ft_putstr_fd(stockage, h->tube[1]);
 				ft_putstr_fd("\n", h->tube[1]);
 			}
-			// else if (write(h->tube[1], ft_strjoin_mod(stockage, "\n", 1), \
+			// else if (write(h->tube[1], ft_strjoin_mod(stockage, "\n", 1), 
 			// ft_strlen(stockage) + 1) == -1)
 			// 	exit(EXIT_FAILURE);
 		}

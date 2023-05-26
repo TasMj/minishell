@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preparsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:56:18 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/26 16:20:27 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 23:42:39 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 int	syntax_error(t_list **list_token)
 {
-	t_list	*tmp;
-
-	tmp = *list_token;
+	// t_list	*tmp;
+// 
+	// tmp = *list_token;
 	if (!list_token || ft_lstsize(*list_token) == 0)
 		return (0);
 	if (ft_lstsize(*list_token) == 1)
