@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:09:31 by tas               #+#    #+#             */
-/*   Updated: 2023/05/25 17:59:22 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 11:46:06 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ int	ft_n(char *str)
 int	set_echo(t_list **list_token, t_echo *e)
 {
 	(*list_token) = (*list_token)->next;
-	if (ft_strlen((*list_token)->content) == 2
-		&& ft_strncmp((*list_token)->content, "-n", 2) == 0 && (ft_n((*list_token)->content) == 0))
+	if (ft_strlen((*list_token)->content) >= 2
+		&& ft_strncmp((*list_token)->content, "-n", 2) == 0
+		&& (ft_n((*list_token)->content) == 0))
 	{
-		// while ((*list_token))
-		// {
-		// 	if (ft_strlen((*list_token)->content) == 2&& ft_strncmp((*list_token)->content, "-n", 2) == 0 && (ft_n((*list_token)->content) == 0))
-		// 		(*list_token) = (*list_token)->next;
-		// }
+		while (ft_strlen((*list_token)->next->content) >= 2
+			&& ft_strncmp((*list_token)->next->content, "-n", 2) == 0
+			&& (ft_n((*list_token)->next->content) == 0))
+			(*list_token) = (*list_token)->next;
 		e->flag = 1;
 		if ((*list_token)->next == NULL)
 			return (0);

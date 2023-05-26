@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:35 by tas               #+#    #+#             */
-/*   Updated: 2023/05/25 14:18:25 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 11:47:50 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,17 @@ int	check_var(char *str)
 {
 	t_list	*tmp;
 
-	tmp = *list_ENVI;
-	while (*list_ENVI)
+	tmp = *g_list_env;
+	while (*g_list_env)
 	{
-		if (ft_strcmp(var_name((*list_ENVI)->content), str) == 0)
+		if (ft_strcmp(var_name((*g_list_env)->content), str) == 0)
 		{
-			*list_ENVI = tmp;
+			*g_list_env = tmp;
 			return (1);
 		}
-		(*list_ENVI) = (*list_ENVI)->next;
+		(*g_list_env) = (*g_list_env)->next;
 	}
-	*list_ENVI = tmp;
+	*g_list_env = tmp;
 	return (0);
 }
 
@@ -48,28 +48,28 @@ void	del(char *str)
 	t_list	*tmp_first;
 	t_list	*tmp_next;
 
-	tmp_first = *list_ENVI;
-	if (ft_strcmp(var_name((*list_ENVI)->content), str) == 0)
+	tmp_first = *g_list_env;
+	if (ft_strcmp(var_name((*g_list_env)->content), str) == 0)
 	{
-		(*list_ENVI) = (*list_ENVI)->next;
-		tmp_first = *list_ENVI;
+		(*g_list_env) = (*g_list_env)->next;
+		tmp_first = *g_list_env;
 	}
 	else
 	{
-		while ((*list_ENVI)->next != NULL
-			&& ft_strcmp(var_name((*list_ENVI)->next->content), str) == 1)
-			(*list_ENVI) = (*list_ENVI)->next;
-		tmp_next = (*list_ENVI)->next->next;
-		(*list_ENVI)->next = tmp_next;
+		while ((*g_list_env)->next != NULL
+			&& ft_strcmp(var_name((*g_list_env)->next->content), str) == 1)
+			(*g_list_env) = (*g_list_env)->next;
+		tmp_next = (*g_list_env)->next->next;
+		(*g_list_env)->next = tmp_next;
 	}
-	*list_ENVI = tmp_first;
+	*g_list_env = tmp_first;
 }
 
 int	ft_unset(t_list **list_token)
 {
 	t_list	*tmp;
 
-	tmp = *list_ENVI;
+	tmp = *g_list_env;
 	if (ft_strncmp((*list_token)->content, "unset", 5) == 1)
 		return (1);
 	else
@@ -82,6 +82,6 @@ int	ft_unset(t_list **list_token)
 			(*list_token) = (*list_token)->next;
 		}
 	}
-	*list_ENVI = tmp;
+	*g_list_env = tmp;
 	return (0);
 }

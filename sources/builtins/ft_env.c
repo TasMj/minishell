@@ -6,44 +6,29 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:48 by tas               #+#    #+#             */
-/*   Updated: 2023/05/25 12:38:27 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 12:22:12 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
 
-// t_list  **get_list_env(char **env)
-// {
-    // int i;
-    // char    cwd[1024];
-    // t_list  **list_env;
-// 
-    // // i = 0;
-    // // list_env = malloc(sizeof(t_list));
-    // // ft_memset(list_env, 0, sizeof(t_list));
-    // // while (env[i] != NULL)
-    // // {
-        // // add_list(list_env, env[i]);
-        // // i++;
-    // }
-    // if (ft_lstsize(list_env) == 0)
-    // {
-    //     cwd = getcwd(cwd, sizeof(cwd));
-    //     add_list(list_env, ft_strjoin("PWD=", cwd));
-    //     add_list(list_env, ft_strjoin("PATH=", "/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"))
-    // }
-    // return (list_env);
-// }
-
 t_list	**get_list_env(char **env)
 {
 	int		i;
 	t_list	**list_env;
+	char	cwd[100];
 
 	i = 0;
 	list_env = malloc(sizeof(t_list));
 	ft_memset(list_env, 0, sizeof(t_list));
+	if (env[0] == NULL)
+	{
+		getcwd(cwd, sizeof(cwd));
+		add_list(list_env, ft_strjoin("PWD=", cwd), 0);
+		add_list(list_env, ft_strdup_size("_=/usr/bin/env", 14), 0);
+		return (list_env);
+	}
 	while (env[i] != NULL)
 	{
 		add_list(list_env, env[i], 0);
@@ -64,12 +49,12 @@ int	ft_env(t_list **l)
 		*l = tmp_cmd;
 		return (1);
 	}
-	tmp = *list_ENVI;
-	while (*list_ENVI != NULL)
+	tmp = *g_list_env;
+	while (*g_list_env != NULL)
 	{
-		printf("%s\n", (*list_ENVI)->content);
-		(*list_ENVI) = (*list_ENVI)->next;
+		printf("%s\n", (*g_list_env)->content);
+		(*g_list_env) = (*g_list_env)->next;
 	}
-	*list_ENVI = tmp;
+	*g_list_env = tmp;
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:38:07 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/25 12:56:11 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/26 11:43:48 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 int	exec_cmd(t_cmd *cmd, t_exec *data)
 {
 	char	**tab;
-
+	if (exec_builtin(cmd->cmd) == 1)
+		return (0);
 	tab = lst_to_tab(cmd->cmd);
 	cmd->pid = fork();
 	if (cmd->pid < 0)
