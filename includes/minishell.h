@@ -35,6 +35,8 @@
 # define ERR_QUOTE "not handle by minishell\n"
 # define ERR_CMD "command not found\n"
 # define ERR_MANY_ARG "too many arguments (WIP)\n"
+# define ERR_HOME "HOME not set\n"
+# define ERR_EXPORT "not a valid identifier\n"
 
 /******************************************************************************/
 /*                                   enum                                     */
@@ -50,7 +52,6 @@ enum token_type {
 	END
 };
 
-
 /******************************************************************************/
 /*                               structures                                   */
 /******************************************************************************/
@@ -61,6 +62,7 @@ typedef struct s_list
 	int				type;
 	int				index;
 	int				flag_space;
+	int				flag_quote;
 	struct s_list	*next;
 }	t_list;
 
@@ -78,6 +80,7 @@ typedef struct s_substitution
     int		i;
 	int		flag;
 	int		flag_space;
+	int		flag_keep_quote;
 	int		quote;
 }	t_substitution;
 
@@ -191,8 +194,7 @@ int		ft_strncmp(char *s1, char *s2, size_t n);
 char	*ft_strjoin(char *s1, char *s2);
 int		is_a_space(char c);
 int		is_a_separator(char c);
-void    init_list(t_list **list_token, char *input);
-int 	del_empty_token(t_list **list_token);
+int    init_list(t_list **list_token, char *input);
 
 /***** EXEC *****/
 
@@ -227,7 +229,7 @@ void	close_all(t_exec *data, int end);
 void	clean_all(t_exec *data);
 
 /* exec god */
-int	exec(t_list **token, char **env);
+int	exec(t_list **token, t_list **env);
 int    exec_builtin(t_list **list_token);
 
 #endif

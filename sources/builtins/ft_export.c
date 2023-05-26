@@ -6,14 +6,14 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/05/25 14:18:09 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 17:37:22 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
 
-t_list	**list_ENVI;
+t_list	**g_list_env;
 
 int	sort_env_ascii(void)
 {
@@ -37,30 +37,32 @@ int	add_var_env(t_list **token, t_list *tmp)
 		(*token) = (*token)->next;
 		add_env = ft_strjoin_mod(add_env, (*token)->content, 0);
 	}
-	add_list(list_ENVI, add_env, 0);
-	*list_ENVI = tmp;
+	if (ft_isalpha(take_off_equal(add_env)) == 0)
+		return (err_msg(5));
+	add_list(g_list_env, add_env, 0);
+	*g_list_env = tmp;
 	return (0);
 }
 
 int	modify_var(t_list **token, t_list *tmp)
 {
-	while (*list_ENVI)
+	while (*g_list_env)
 	{
-		if (ft_strcmp(take_off_equal((*list_ENVI)->content), \
+		if (ft_strcmp(take_off_equal((*g_list_env)->content), \
 		take_off_equal((*token)->content)) == 1)
-			(*list_ENVI) = (*list_ENVI)->next;
-		else if (ft_strcmp(take_off_equal((*list_ENVI)->content), \
+			(*g_list_env) = (*g_list_env)->next;
+		else if (ft_strcmp(take_off_equal((*g_list_env)->content), \
 		take_off_equal((*token)->content)) == 0)
 		{
-			(*list_ENVI)->content = ft_strdup_size((*token)->content, \
+			(*g_list_env)->content = ft_strdup_size((*token)->content, \
 			ft_strlen((*token)->content));
 			while ((*token)->next != NULL && (*token)->next->flag_space != 1)
 			{
 				(*token) = (*token)->next;
-				(*list_ENVI)->content = ft_strjoin_mod((*list_ENVI)->content, \
+				(*g_list_env)->content = ft_strjoin_mod((*g_list_env)->content, \
 				(*token)->content, 0);
 			}
-			*list_ENVI = tmp;
+			*g_list_env = tmp;
 			return (1);
 		}
 	}
@@ -71,7 +73,7 @@ int	ft_export(t_list **list_token)
 {
 	t_list	*tmp;
 
-	tmp = *list_ENVI;
+	tmp = *g_list_env;
 	if (ft_lstsize(*list_token) == 1)
 		sort_env_ascii();
 	else
@@ -92,6 +94,6 @@ int	ft_export(t_list **list_token)
 			(*list_token) = (*list_token)->next;
 		}
 	}
-	*list_ENVI = tmp;
+	*g_list_env = tmp;
 	return (0);
 }

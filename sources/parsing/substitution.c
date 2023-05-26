@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/05/25 17:27:42 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 17:21:12 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ void	substitute_dollar(t_list **list_token)
 		if (check_dollar((*list_token)->content) == 1)
 		{
 			if ((*list_token)->content[0] == 34)
+			{
+				
 				quote_sub(s, (*list_token), 1);
+			}
 			else if ((*list_token)->content[0] == 39)
 				quote_sub(s, (*list_token), 2);
 			else if (ft_strlen((*list_token)->content) > 1)
@@ -107,8 +110,8 @@ char	*sub_quotes(char *token, t_substitution *s)
 			s->end = s->i;
 			s->keep_var = ft_strdup_size(s->stock + s->start, \
 			(s->end - s->start));
-			s->keep_var2 = ft_strdup_size(substitution(s->keep_var), \
-			ft_strlen(substitution(s->keep_var)));
+			s->keep_var2 = ft_strdup_size(remove_quote_end(s), \
+			ft_strlen(remove_quote_end(s)));
 			s->new_content = ft_strjoin_mod(s->new_content, s->keep_var2, 2);
 		}
 	}

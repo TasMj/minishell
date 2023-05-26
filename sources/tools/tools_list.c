@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:12:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/21 19:46:57 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/26 16:12:35 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,16 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 
 t_list	*ft_lstnew(char *input, int flag_space)
 {
-	t_list *new;
-	
+	t_list	*new;
+
 	new = malloc(sizeof(t_list));
-   ft_memset(new, 0, sizeof(t_list));
+	ft_memset(new, 0, sizeof(t_list));
 	if (!new)
 		return (NULL);
 	new->content = input;
 	new->flag_space = flag_space;
 	new->next = NULL;
-  return (new);
+	return (new);
 }
 
 void	print_list(t_list **list)

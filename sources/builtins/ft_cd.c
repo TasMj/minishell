@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/25 12:09:48 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 16:58:19 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char	*get_previous_dir(char *str)
 
 	i = 0;
 	slash = count_slash(str);
+	if (count_slash(str) == 0)
+		return (str);
 	while (str[i] && slash > 0)
 	{
 		if (str[i] == '/')
@@ -77,8 +79,13 @@ int	ft_cd(t_list **list)
 
 	tmp = *list;
 	path = NULL;
-	if (ft_strcmp("cd", (*list)->content) == 0 && (*list)->next == NULL)
-		path = ft_strdup_size(getenv("HOME"), ft_strlen(getenv("HOME")));
+	if (ft_strcmp("cd", (*list)->content) == 0 && (*list)->next == NULL && is_in_env("HOME") == 1)
+		path = ft_strdup_size(return_var_env("HOME"), ft_strlen(return_var_env("HOME")));
+	else if (ft_strcmp("cd", (*list)->content) == 0 && (*list)->next == NULL && is_in_env("HOME") == 0)
+	{
+		*list = tmp;
+		return (err_msg(4));
+	}
 	else if ((*list)->next && ft_strcmp((".."), (*list)->next->content) == 0)
 	{
 		if (ft_lstsize(*list) >= 3)

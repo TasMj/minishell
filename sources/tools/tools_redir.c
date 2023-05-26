@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 23:12:13 by tas               #+#    #+#             */
-/*   Updated: 2023/05/22 00:17:23 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/26 16:15:17 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ char	*get_file_name(t_list **list_token, char *c)
 	tmp = *list_token;
 	while ((*list_token) != NULL)
 	{
-		if (ft_strcmp((*list_token)->content, c) == 0 && (*list_token)->next != NULL)
+		if (ft_strcmp((*list_token)->content, c) == 0
+			&& (*list_token)->next != NULL)
 			return ((*list_token)->next->content);
 		(*list_token) = (*list_token)->next;
 	}
@@ -47,17 +48,19 @@ char	*cmd_before_redir(t_list **list_token, t_redir *s)
 
 void	init_redir(t_redir *s, t_list **list_token, char **env, char *c)
 {
-    char        *args;
-    t_list      *tmp;
-    
-    tmp = *list_token;
-    s->file_name = ft_strdup_size(get_file_name(list_token, c), ft_strlen(get_file_name(list_token, c)));
-    *list_token = tmp;
-    args = ft_strdup_size(cmd_before_redir(list_token, s), ft_strlen(cmd_before_redir(list_token, s)));
-    s->token_arg = ft_split(args, ' ');
-    free(args);
-    s->path_cmd = find_path(env, s->token_arg[0]);
-    *list_token = tmp;
+	char		*args;
+	t_list		*tmp;
+
+	tmp = *list_token;
+	s->file_name = ft_strdup_size(get_file_name(list_token, c), \
+	ft_strlen(get_file_name(list_token, c)));
+	*list_token = tmp;
+	args = ft_strdup_size(cmd_before_redir(list_token, s), \
+	ft_strlen(cmd_before_redir(list_token, s)));
+	s->token_arg = ft_split(args, ' ');
+	free(args);
+	s->path_cmd = find_path(env, s->token_arg[0]);
+	*list_token = tmp;
 }
 
 void	free_redir(t_redir *redir)

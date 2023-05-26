@@ -107,12 +107,12 @@ int	setup_cmds(t_exec *data)
 	return (0);
 }
 
-int	exec(t_list **token, char **env)
+int	exec(t_list **token, t_list **env)
 {
 	t_exec	data;
 
 	data.token = token;
-	data.env = env;
+	data.env = lst_to_tab(env);
 	setup_pipes(&data);
 	setup_cmds(&data);
 

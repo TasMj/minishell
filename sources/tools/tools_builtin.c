@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:08:46 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/25 12:40:04 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 16:45:20 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,27 +55,48 @@ char	*take_off_equal(char *str)
 	return (var);
 }
 
+char	*after_equal(char *str)
+{
+	int		i;
+	int		start;
+	char	*var;
+
+	i = 0;
+	while (str[i] && str[i] != '=')
+		i++;
+	if (str[i] && str[i] == '=')
+		i++;
+	start = i;
+	while (str[i])
+		i++;
+	var = ft_strdup_size(str + start, (i - start));
+	return (var);
+}
+
 int	is_in_env(char *str)
 {
 	t_list	*tmp;
 
-	tmp = *list_ENVI;
-	while (*list_ENVI)
+	tmp = *g_list_env;
+	while (*g_list_env)
 	{
-		if (ft_strcmp(str, take_off_equal((*list_ENVI)->content)) == 0)
+		if (ft_strcmp(str, take_off_equal((*g_list_env)->content)) == 0)
+		{
+			*g_list_env = tmp;
 			return (1);
-		(*list_ENVI) = (*list_ENVI)->next;
+		}
+		(*g_list_env) = (*g_list_env)->next;
 	}
-	*list_ENVI = tmp;
+	*g_list_env = tmp;
 	return (0);
 }
 
 t_list	**ft_copy_list(t_list **copy)
 {
-	while (*list_ENVI)
+	while (*g_list_env)
 	{
-		add_list(copy, (*list_ENVI)->content, 0);
-		(*list_ENVI) = (*list_ENVI)->next;
+		add_list(copy, (*g_list_env)->content, 0);
+		(*g_list_env) = (*g_list_env)->next;
 	}
 	return (copy);
 }
