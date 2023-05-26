@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:38:07 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/26 20:06:22 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 20:39:26 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,17 +100,18 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 int	handle_builtin(t_cmd *cmd, t_exec *data)
 {
 	int	tmp_in;
-	int	tmp_out;
+	int	tmp_out;	printf("in=%d\nout=%d\n", cmd->fd_in, cmd->fd_out);
 
 	tmp_in = dup(STDIN_FILENO);
 	tmp_out = dup(STDOUT_FILENO);
+	// printf("in=%d\nout=%d\n", cmd->fd_in, cmd->fd_out);
 	dup2(cmd->fd_in, STDIN_FILENO);
 	dup2(cmd->fd_out, STDOUT_FILENO);
 	if (data->nb_pipes > 0)
 		close_all(data, data->nb_pipes - 1);
 	// if (is_heredoc(cmd) == 1)
 	// {
-	// 	heredoc(cmd->cmd, data->env);
+	// 	heredoc(cmd->cmd, data->env);.
 	// 	exit(0);
 	// }
 	exec_builtin(cmd->cmd);
@@ -118,6 +119,22 @@ int	handle_builtin(t_cmd *cmd, t_exec *data)
 	dup2(tmp_out, STDOUT_FILENO);
 	close(tmp_in);
 	close(tmp_out);
+	return (0);
+}
+
+int	fork_builtin(t_cmd *cmd, t_exec *data)
+{
+	cmd->pid= fork();
+	if (cmd->pid < 0)
+		return (1);
+	if (cmd->pid == 0)
+	{
+		dup2(cmd->fd_in, STDIN_FILENO);
+		dup2(cmd->fd_out, STDOUT_FILENO);
+		close_all(data, data->nb_pipes - 1);
+		exec_builtin(cmd->cmd);
+		exit(1);
+	}
 	return (0);
 }
 
@@ -130,12 +147,13 @@ int	exec_all(t_exec *data)
 	{
 		if (is_builtin(data->cmd[i].cmd) == 1)
 		{
-			handle_builtin(&data->cmd[i], data);
+			if (data->nb_cmd == 1)
+				handle_builtin(&data->cmd[i], data);
+			else
+				fork_builtin(&data->cmd[i], data);
 		}
 		else
-		{
 			exec_cmd(&(data->cmd[i]), data);
-		}
 		if (i != data->nb_pipes && data->nb_pipes > 0)
 			close(data->fd[i][1]);
 		waitpid(data->cmd[i].pid, NULL, 0);
