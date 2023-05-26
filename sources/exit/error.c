@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 13:28:23 by tas               #+#    #+#             */
-/*   Updated: 2023/05/26 13:23:40 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 17:27:06 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,7 @@ int	err_msg(int n)
 		write(2, ERR_MANY_ARG, ft_strlen(ERR_MANY_ARG));
 	else if (n == 4)
 		write(2, ERR_HOME, ft_strlen(ERR_HOME));
+	else if (n == 5)
+		write(2, ERR_EXPORT, ft_strlen(ERR_EXPORT));
 	return (1);
 }

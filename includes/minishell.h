@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/26 15:52:25 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 17:26:23 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define ERR_CMD "command not found\n"
 # define ERR_MANY_ARG "too many arguments (WIP)\n"
 # define ERR_HOME "HOME not set\n"
+# define ERR_EXPORT "not a valid identifier\n"
 
 /******************************************************************************/
 /*                                   enum                                     */

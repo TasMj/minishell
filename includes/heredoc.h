@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:41:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/26 15:50:00 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 17:32:58 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ char	*after_equal(char *str);
 void    remove_empty_tokens(t_list **list);
 int err_quote(t_list **list_token);
 char	*remove_quote_end(t_substitution *s);
+int	ft_isalpha(char *str);
 
 
 #endif

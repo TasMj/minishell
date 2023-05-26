@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:41:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/26 16:11:39 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 17:31:05 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,4 +105,18 @@ t_list	**sort_env(t_list **list)
 	}
 	*list = tmp;
 	return (list);
+}
+
+int	ft_isalpha(char *str)
+{
+	int i;
+	
+	i = 0;
+	while (str[i])
+	{
+		if ((str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= 'a' && str[i] <= 'z'))
+			return (1);
+		i++;
+	}
+	return (0);
 }
