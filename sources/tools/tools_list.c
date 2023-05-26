@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:12:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/26 12:37:52 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 13:45:32 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,18 @@ t_list	*ft_lstnew(char *input, int flag_space)
   return (new);
 }
 
-// void	print_list(t_list **list)
-// {
-// 	t_list	*tmp;
+void	print_list(t_list **list)
+{
+	t_list	*tmp;
 
-// 	tmp = (*list);
-// 	while (*list)
-// 	{
-// 		printf("content: [%s]\n", (*list)->content);
-// 		(*list) = (*list)->next;
-// 	}
-// 	(*list) = tmp;
-// }
+	tmp = (*list);
+	while (*list)
+	{
+		printf("content: [%s]\n", (*list)->content);
+		(*list) = (*list)->next;
+	}
+	(*list) = tmp;
+}
 
 /* add to the list, word ready without space. take words with quotes */
 void	add_list(t_list **list_token, char *stockage, int flag_space)

@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:32 by tas               #+#    #+#             */
-/*   Updated: 2023/05/26 13:21:59 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/26 14:07:12 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ int	del_empty_token(t_list **list_token)
 	t_list	*tmp;
 
 	tmp = *list_token;
+	if (ft_lstsize(*list_token) == 1 && ft_strlen((*list_token)->content) == 0)
+	{
+		(*list_token) = (*list_token)->next;
+		tmp = *list_token;
+	}
 	if (ft_lstsize(*list_token) == 1)
 	{
 		*list_token = tmp;
@@ -52,6 +57,8 @@ int	del_empty_token(t_list **list_token)
 		else
 			(*list_token) = (*list_token)->next;
 	}
+	if (ft_strlen((*list_token)->next->content) == 0 && (*list_token)->next->next == NULL)
+		(*list_token)->next = NULL;
 	*list_token = tmp;
 	return (0);
 }
