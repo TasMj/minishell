@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:41:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/28 00:51:20 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 00:53:11 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ char	*remove_quote_end(t_substitution *s);
 int	ft_isalpha(char *str);
 int	set_old_path(char	*path);
 void	free_substitution(t_substitution *s);
+int	check_list_equal(t_list **list);
 
 
 #endif

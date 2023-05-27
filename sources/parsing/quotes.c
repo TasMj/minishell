@@ -6,9 +6,12 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:15:52 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/28 00:47:47 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 00:57:54 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
+#include "heredoc.h"
 
 int	check_pair_quote(char *str)
 {

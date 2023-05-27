@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:38:07 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/28 00:43:26 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 00:57:04 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 			close_all(data, data->nb_pipes - 1);
 		if (is_heredoc(cmd) == 1)
 		{
-			heredoc(cmd->cmd, data->env);
+			heredoc(cmd->cmd, data->env, cmd);
 			exit(0);
 		}
 		if (is_path(cmd) == 1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_fd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:04:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/27 22:58:44 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/28 00:56:14 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int	set_stdin(t_cmd *cmd, t_list *token)
 	if (file_exists(file) == 0)
 	{
 		free(file);
-		return (err_msg());
+		printf("minishell: %s: No such file or directory\n", file);
+		return (1);
 	}
 	cmd->fd_in = open(file, O_RDONLY);
 	if (cmd->fd_in < 0)
