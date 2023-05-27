@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:34:23 by tas               #+#    #+#             */
-/*   Updated: 2023/05/27 11:51:38 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/27 19:37:17 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*cmd_before_heredoc(t_list **list_token, t_heredoc *h)
 	return (h->cmd);
 }
 
-int	heredoc(t_list **token, char **env)
+int	heredoc(t_list **token, char **env, t_cmd *cmd)
 {
 	t_heredoc	*h;
 	t_list		*first_cmd;
@@ -51,7 +51,7 @@ int	heredoc(t_list **token, char **env)
 			h->delimiteur = ft_strdup_size((*token)->next->content, \
 			ft_strlen((*token)->next->content));
 			free(args);
-			heredoc_process(h, env);
+			heredoc_process(h, env, cmd);
 		}
 		(*token) = (*token)->next;
 	}
@@ -61,16 +61,26 @@ int	heredoc(t_list **token, char **env)
 	return (0);
 }
 
-int	parent_process(t_heredoc *h, char **env)
+int	parent_process(t_heredoc *h, char **env, t_cmd *cmd)
 {
 	close(h->tube[1]);
 	if (waitpid(h->pid, NULL, 0) == -1)
-		exit(EXIT_FAILURE);
+		return (1);
+
+	// if (cmd->fd_in != STDIN_FILENO)
+	// 	dup2(cmd->fd_in, STDIN_FILENO);
+	// else
 	dup2(h->tube[0], STDIN_FILENO);
+	
+	dup2(3, STDOUT_FILENO);
+
+	// dup2(cmd->fd_out, STDOUT_FILENO);
+	close(cmd->fd_out);
+	close(cmd->fd_in);
 	if (execve(h->path_cmd, h->token_arg, env) == -1)
-		exit(EXIT_FAILURE);
+		return (1);
 	close(h->tube[0]);
-	exit(EXIT_SUCCESS);
+	return (1);
 }
 
 void ft_putstr_fd(char *str, int fd)
@@ -80,17 +90,20 @@ void ft_putstr_fd(char *str, int fd)
 	(void)write(fd, str, ft_strlen(str));
 }
 
-int	heredoc_process(t_heredoc *h, char **env)
+int	heredoc_process(t_heredoc *h, char **env, t_cmd *cmd)
 {
 	char	*stockage;
 
 	if (pipe(h->tube) == -1)
-		exit(EXIT_FAILURE);
+		return (1);
 	h->pid = fork();
 	if (h->pid == -1)
-		exit(EXIT_FAILURE);
+		return (1);
 	if (h->pid == 0)
 	{
+		close(cmd->fd_out);//fd_out
+		close(cmd->tmp_in);//tmp_in
+		close(cmd->tmp_out);//tmp_out
 		close(h->tube[0]);
 		while (1)
 		{
@@ -108,9 +121,9 @@ int	heredoc_process(t_heredoc *h, char **env)
 		}
 		close(h->tube[1]);
 		free(stockage);
-		exit(EXIT_SUCCESS);
+		// exit(EXIT_SUCCESS);
 	}
 	else
-		parent_process(h, env);
+		parent_process(h, env, cmd);
 	return (0);
 }

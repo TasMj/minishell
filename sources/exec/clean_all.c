@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 15:58:55 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/26 14:14:32 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/27 15:56:15 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	free_fd(t_exec *data)
 void	close_all(t_exec *data, int end)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i <= end)
 	{
@@ -44,7 +44,7 @@ void	close_all(t_exec *data, int end)
 void	clean_all(t_exec *data)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < data->nb_cmd)
 	{

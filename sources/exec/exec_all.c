@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:38:07 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/27 12:01:17 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/27 19:45:05 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,6 @@ int	is_path(t_cmd *cmd)
 	return (0);
 }
 
-int	is_builtin(t_list **cmd)
-{
-	if (ft_strncmp((*cmd)->content, "cd", 2) == 0)
-		return (1);
-	else if (ft_strncmp((*cmd)->content, "echo", 4) == 0)
-		return (1);
-	else if (ft_strncmp((*cmd)->content, "env", 3) == 0)
-		return (1);
-	else if (ft_strncmp((*cmd)->content, "exit", 4) == 0)
-		return (1);
-	else if (ft_strncmp((*cmd)->content, "export", 6) == 0)
-		return (1);
-	else if (ft_strncmp((*cmd)->content, "pwd", 3) == 0)
-		return (1);
-	else if (ft_strncmp((*cmd)->content, "unset", 5) == 0)
-		return (1);
-	return (0);
-}
-
 // Exec la commande cmd avec ses fd d'entree et sortie assignes
 int	exec_cmd(t_cmd *cmd, t_exec *data)
 {
@@ -75,7 +56,7 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 			close_all(data, data->nb_pipes - 1);
 		if (is_heredoc(cmd) == 1)
 		{
-			heredoc(cmd->cmd, data->env);
+			heredoc(cmd->cmd, data->env, cmd);
 			exit(0);
 		}
 		if (is_path(cmd) == 1)
@@ -89,43 +70,20 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 	return (0);
 }
 
-int	simple_builtin(t_cmd *cmd, t_exec *data)
+int	redirect_heredoc(t_cmd *cmd, t_exec *data)
 {
-	int	tmp_in;
-	int	tmp_out;
-
-	tmp_in = dup(STDIN_FILENO);
-	tmp_out = dup(STDOUT_FILENO);
-	dup2(cmd->fd_in, STDIN_FILENO);
-	dup2(cmd->fd_out, STDOUT_FILENO);
+	cmd->tmp_in = dup(STDIN_FILENO);
+	cmd->tmp_out = dup(STDOUT_FILENO);
+	// dup2(cmd->fd_in, STDIN_FILENO);
+	// dup2(cmd->fd_out, STDOUT_FILENO);
 	if (data->nb_pipes > 0)
 		close_all(data, data->nb_pipes - 1);
-	if (is_heredoc(cmd) == 1)
-	{
-		heredoc(cmd->cmd, data->env);
-		return (0);
-	}
-	exec_builtin(cmd->cmd);
-	dup2(tmp_in, STDIN_FILENO);
-	dup2(tmp_out, STDOUT_FILENO);
-	close(tmp_in);
-	close(tmp_out);
-	return (0);
-}
-
-int	fork_builtin(t_cmd *cmd, t_exec *data)
-{
-	cmd->pid= fork();
-	if (cmd->pid < 0)
-		return (1);
-	if (cmd->pid == 0)
-	{
-		dup2(cmd->fd_in, STDIN_FILENO);
-		dup2(cmd->fd_out, STDOUT_FILENO);
-		close_all(data, data->nb_pipes - 1);
-		exec_builtin(cmd->cmd);
-		exit(1);
-	}
+	heredoc(cmd->cmd, data->env, cmd);
+	close(3);
+	dup2(cmd->tmp_in, STDIN_FILENO);
+	dup2(cmd->tmp_out, STDOUT_FILENO);
+	close(cmd->tmp_in);
+	close(cmd->tmp_out);
 	return (0);
 }
 
@@ -144,10 +102,21 @@ int	exec_all(t_exec *data)
 				fork_builtin(&data->cmd[i], data);
 		}
 		else
-			exec_cmd(&(data->cmd[i]), data);
-		if (i != data->nb_pipes && data->nb_pipes > 0)
-			close(data->fd[i][1]);
-		if (data->cmd[i].pid)
+		{
+			if ((data->cmd[i].fd_out != STDOUT_FILENO 
+			|| data->cmd[i].fd_in != STDIN_FILENO)
+			&& is_heredoc(&data->cmd[i]) == 1)
+				redirect_heredoc(&data->cmd[i], data);
+			else
+				exec_cmd(&(data->cmd[i]), data);
+		}
+		i++;
+	}
+	i = 0;
+	while (i < data->nb_cmd)
+	{
+		close_all(data, data->nb_pipes - 1);
+		if (data->cmd[i].pid != -1)
 			waitpid(data->cmd[i].pid, NULL, 0);
 		if (is_builtin(data->cmd[i].cmd) == 0)
 			free_tab(data->cmd[i].tab);

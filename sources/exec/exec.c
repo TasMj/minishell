@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 22:58:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/26 19:43:16 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/27 17:30:32 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,9 @@ int	setup_cmds(t_exec *data)
 	{
 		data->cmd[i].id = i;
 		data->cmd[i].data = data;
+		data->cmd[i].pid = -1;
+		data->cmd[i].tmp_in = 0;
+		data->cmd[i].tmp_out = 0;
 		set_cmd(&data->cmd[i], data, elem);
 		i++;
 		while (elem && elem->type != PIPE)

@@ -6,7 +6,7 @@
 #    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/05/26 12:55:02 by jthuysba         ###   ########.fr        #
+#    Updated: 2023/05/27 15:59:13 by jthuysba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ EXEC			= ./sources/exec/path.c \
 				./sources/exec/clean_all.c ./sources/exec/setup_pipes.c \
 				./sources/exec/exec_utils.c ./sources/exec/exec.c \
 				./sources/exec/set_fd.c ./sources/exec/exec_all.c \
+				./sources/exec/handle_builtin.c \
 
 EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
 				./sources/exit/free_struct.c

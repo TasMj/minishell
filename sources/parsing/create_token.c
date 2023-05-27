@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/05/26 19:44:38 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/27 12:37:58 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,15 @@
 char	*get_input(void)
 {
 	char	*input;
-	char	cwd[1024];
+	// char	cwd[1024];
 	char	*prompt;
-// 
-	prompt = ft_strdup_size(getcwd(cwd, sizeof(cwd)) + 5, \
-	ft_strlen(getcwd(cwd, sizeof(cwd)) + 5));
-	prompt = ft_strjoin_mod("\033[1;33m", prompt, 0);
-	prompt = ft_strjoin_mod(prompt, "\033[0m", 0);
-	prompt = ft_strjoin_mod(prompt, "$> ", 0);
+
+	prompt = ft_strdup("\033[1;36mmini<3\033[0m ");
+	// prompt = ft_strdup_size(getcwd(cwd, sizeof(cwd)) + 5, \
+	// ft_strlen(getcwd(cwd, sizeof(cwd)) + 5));
+	// prompt = ft_strjoin_mod("\033[1;33m", prompt, 0);
+	// prompt = ft_strjoin_mod(prompt, "\033[0m", 0);
+	// prompt = ft_strjoin_mod(prompt, "$> ", 0);
 	input = readline(prompt);
 	free(prompt);
 	if (input == NULL)

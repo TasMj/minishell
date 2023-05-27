@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:41:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/26 23:57:24 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/27 17:39:39 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ void	free_redir(t_redir *redir);
 
 /* heredoc */
 char    *cmd_before_heredoc(t_list **list_token, t_heredoc *h);
-int     heredoc(t_list **list_token, char **env);
+int		heredoc(t_list **token, char **env, t_cmd *cmd);
 int     ft_strcmp(char *s1, char *s2);
-int     heredoc_process(t_heredoc *h, char **env);
+int		heredoc_process(t_heredoc *h, char **env, t_cmd *cmd);
 void	free_heredoc(t_heredoc *h);
 
 
