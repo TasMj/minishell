@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:15:52 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/26 16:22:19 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/27 13:05:18 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ void	remove_list_quotes(t_list **list_token)
 			free((*list_token)->content);
 			(*list_token)->content = \
 			ft_strdup_size(stockage, ft_strlen(stockage));
+			free(stockage);
 		}
 		(*list_token) = (*list_token)->next;
 	}

@@ -6,11 +6,12 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/05/26 19:44:38 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/27 12:37:52 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "heredoc.h"
 
 /* read and stock input */
 char	*get_input(void)
@@ -18,7 +19,7 @@ char	*get_input(void)
 	char	*input;
 	char	cwd[1024];
 	char	*prompt;
-// 
+
 	prompt = ft_strdup_size(getcwd(cwd, sizeof(cwd)) + 5, \
 	ft_strlen(getcwd(cwd, sizeof(cwd)) + 5));
 	prompt = ft_strjoin_mod("\033[1;33m", prompt, 0);
@@ -93,11 +94,6 @@ t_list	**create_token(t_list **list_token, char *input)
 
 	s = malloc(sizeof(t_substitution));
 	ft_memset(s, 0, sizeof(t_substitution));
-	s->i = 0;
-	s->start = 0;
-	s->end = 0;
-	s->flag = 0;
-	s->flag_space = 0;
 	while (s->i < ft_strlen(input))
 	{
 		if (is_a_space(input[s->i]) == 1)
@@ -108,5 +104,6 @@ t_list	**create_token(t_list **list_token, char *input)
 		else
 			add_token(list_token, s, input);
 	}
+	// free_substitution(s); echo a "b" 'c' $USER jsd
 	return (list_token);
 }

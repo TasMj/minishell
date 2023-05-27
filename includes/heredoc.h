@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:41:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/26 23:57:24 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/27 12:26:23 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ int err_quote(t_list **list_token);
 char	*remove_quote_end(t_substitution *s);
 int	ft_isalpha(char *str);
 int	set_old_path(char	*path);
+void	free_substitution(t_substitution *s);
 
 
 #endif

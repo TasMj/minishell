@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/05/26 19:13:55 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/27 12:24:55 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ int    init_list(t_list **list_token, char *input)
     err_quote(list_token);
     remove_list_quotes(list_token);
     remove_empty_tokens(list_token);
+    
+    print_list(list_token);
+    
     return (0);
 }
 
