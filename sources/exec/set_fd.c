@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:04:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/26 13:12:33 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/27 22:58:44 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,22 @@ int	set_stdout(t_cmd *cmd, t_list *token)
 	return (0);
 }
 
+int file_exists(const char *filename)
+{
+    FILE *file = fopen(filename, "r");
+    if (file != NULL)
+	{
+        // Le fichier existe
+        fclose(file); // Ferme le fichier
+        return (1);
+    }
+	else
+	{
+        // Le fichier n'existe pas
+        return (0);
+    }
+}
+
 int	set_stdin(t_cmd *cmd, t_list *token)
 {
 	char	*file;
@@ -38,6 +54,11 @@ int	set_stdin(t_cmd *cmd, t_list *token)
 		return (1);
 	if (cmd->fd_in != 0)
 		close(cmd->fd_in);
+	if (file_exists(file) == 0)
+	{
+		free(file);
+		return (err_msg());
+	}
 	cmd->fd_in = open(file, O_RDONLY);
 	if (cmd->fd_in < 0)
 		return (1);

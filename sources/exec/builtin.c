@@ -3,40 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:42:19 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/27 00:03:56 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/27 12:06:22 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
 
-int	exec_builtin(t_list **list_token)
+int	exec_builtin(t_list **lst)
 {
-	(void) list_token;
 	t_list	*tmp;
 
-	if (!list_token || ft_lstsize(*list_token) == 0)
+	if (!lst || ft_lstsize(*lst) == 0)
 		return (-1);
-	tmp = *list_token;
-	if (ft_strlen((*list_token)->content) == 2 && ft_strncmp((*list_token)->content, "cd", 2) == 0)
-		ft_cd(list_token);
-	else if (ft_strlen((*list_token)->content) == 4 && ft_strncmp((*list_token)->content, "echo", 4) == 0)
-		ft_echo(list_token);
-	else if (ft_strlen((*list_token)->content) == 3 &&ft_strncmp((*list_token)->content, "env", 3) == 0)
-		ft_env(list_token);
-	else if (ft_strlen((*list_token)->content) == 4 && ft_strncmp((*list_token)->content, "exit", 4) == 0)
+	tmp = *lst;
+	if (ft_strlen((*lst)->content) == 2 && ft_strncmp((*lst)->content, "cd", 2) == 0)
+		ft_cd(lst);
+	else if (ft_strlen((*lst)->content) == 4 && ft_strncmp((*lst)->content, "echo", 4) == 0)
+		ft_echo(lst);
+	else if (ft_strlen((*lst)->content) == 3 && ft_strncmp((*lst)->content, "env", 3) == 0)
+		ft_env(lst);
+	else if (ft_strlen((*lst)->content) == 4 && ft_strncmp((*lst)->content, "exit", 4) == 0)
 		exit(1);
-	else if (ft_strlen((*list_token)->content) == 6 &&ft_strncmp((*list_token)->content, "export", 6) == 0)
-		ft_export(list_token);
-	else if (ft_strlen((*list_token)->content) == 3 && ft_strncmp((*list_token)->content, "pwd", 3) == 0)
+	else if (ft_strlen((*lst)->content) == 6 && ft_strncmp((*lst)->content, "export", 6) == 0)
+		ft_export(lst);
+	else if (ft_strlen((*lst)->content) == 3 && ft_strncmp((*lst)->content, "pwd", 3) == 0)
 		ft_pwd();
-	else if (ft_strlen((*list_token)->content) == 5 && ft_strncmp((*list_token)->content, "unset", 5) == 0)
-		ft_unset(list_token);
+	else if (ft_strlen((*lst)->content) == 5 && ft_strncmp((*lst)->content, "unset", 5) == 0)
+		ft_unset(lst);
 	else
 		return (1);
-	*list_token = tmp;
+	*lst = tmp;
 	return (0);
 }

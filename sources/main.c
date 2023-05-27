@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/05/27 12:24:55 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/27 13:58:56 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int main(int argc, char **argv, char **env)
     while (1)
     {
         signal(SIGQUIT, SIG_IGN);
-        // signal(SIGINT, &ctrl_c);
+        signal(SIGINT, &ctrl_c);
         input = get_input();
         list_token = malloc(sizeof(t_list));
         list_token[0] = NULL;

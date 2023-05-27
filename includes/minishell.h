@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/26 13:02:47 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/27 17:17:33 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ typedef struct s_cmd
 	char		*heredoc;
 	struct s_exec	*data;
 	char	**tab;
+	int	tmp_in;
+	int	tmp_out;
 }	t_cmd;
 
 typedef struct s_exec
@@ -123,6 +125,12 @@ typedef struct s_exec
 	int		nb_pipes;
 	int		nb_cmd;
 }	t_exec;
+
+typedef struct s_minishell
+{
+	t_list	**token;
+	t_exec *ex_data;
+}	t_minishell;
 
 /******************************************************************************/
 /*                                fonctions                                   */
@@ -137,6 +145,7 @@ void	ft_pwd(void);
 int 	ft_unset(t_list **list_token);
 int 	ft_cd(t_list **list_token);
 int 	ft_export(t_list **list_token);
+void	ft_exit(void);
 
 /* exit */
 int		err_msg(int n);
@@ -211,6 +220,7 @@ int		extract_str(char *str);
 /* exec all */
 int	exec_all(t_exec *data);
 char	**lst_to_tab(t_list **lst);
+int	is_heredoc(t_cmd *cmd);
 
 /* setup cmd */
 t_list	**get_cmd(t_list *token);
@@ -222,14 +232,18 @@ int		nb_cmd(t_list *token);
 
 /* set fd */
 int	set_fd(t_cmd *cmd, t_list *token);
-int	handle_heredoc(t_cmd *cmd, t_list *token);
 
 /* clean all */
 void	close_all(t_exec *data, int end);
 void	clean_all(t_exec *data);
 
 /* exec god */
-int	exec(t_list **token, t_list **env);
-int    exec_builtin(t_list **list_token);
+int		exec(t_list **token, t_list **env);
+int		exec_builtin(t_list **list_token);
+
+/* exec builtins */
+int	fork_builtin(t_cmd *cmd, t_exec *data);
+int	simple_builtin(t_cmd *cmd, t_exec *data);
+int	is_builtin(t_list **cmd);
 
 #endif
