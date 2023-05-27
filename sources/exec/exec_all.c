@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:38:07 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/26 20:39:26 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/27 12:01:17 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,10 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 		return (1);
 	if (cmd->pid == 0)
 	{
-		// print_list(cmd->cmd);
 		dup2(cmd->fd_in, STDIN_FILENO);
 		dup2(cmd->fd_out, STDOUT_FILENO);
 		if (data->nb_pipes > 0)
 			close_all(data, data->nb_pipes - 1);
-
-		// if (is_builtin(cmd->cmd) == 1)
-		// {
-		// 	exec_builtin(cmd->cmd);
-		// 	return (0);
-		// }
-
 		if (is_heredoc(cmd) == 1)
 		{
 			heredoc(cmd->cmd, data->env);
@@ -97,23 +89,22 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 	return (0);
 }
 
-int	handle_builtin(t_cmd *cmd, t_exec *data)
+int	simple_builtin(t_cmd *cmd, t_exec *data)
 {
 	int	tmp_in;
-	int	tmp_out;	printf("in=%d\nout=%d\n", cmd->fd_in, cmd->fd_out);
+	int	tmp_out;
 
 	tmp_in = dup(STDIN_FILENO);
 	tmp_out = dup(STDOUT_FILENO);
-	// printf("in=%d\nout=%d\n", cmd->fd_in, cmd->fd_out);
 	dup2(cmd->fd_in, STDIN_FILENO);
 	dup2(cmd->fd_out, STDOUT_FILENO);
 	if (data->nb_pipes > 0)
 		close_all(data, data->nb_pipes - 1);
-	// if (is_heredoc(cmd) == 1)
-	// {
-	// 	heredoc(cmd->cmd, data->env);.
-	// 	exit(0);
-	// }
+	if (is_heredoc(cmd) == 1)
+	{
+		heredoc(cmd->cmd, data->env);
+		return (0);
+	}
 	exec_builtin(cmd->cmd);
 	dup2(tmp_in, STDIN_FILENO);
 	dup2(tmp_out, STDOUT_FILENO);
@@ -148,7 +139,7 @@ int	exec_all(t_exec *data)
 		if (is_builtin(data->cmd[i].cmd) == 1)
 		{
 			if (data->nb_cmd == 1)
-				handle_builtin(&data->cmd[i], data);
+				simple_builtin(&data->cmd[i], data);
 			else
 				fork_builtin(&data->cmd[i], data);
 		}
@@ -156,7 +147,8 @@ int	exec_all(t_exec *data)
 			exec_cmd(&(data->cmd[i]), data);
 		if (i != data->nb_pipes && data->nb_pipes > 0)
 			close(data->fd[i][1]);
-		waitpid(data->cmd[i].pid, NULL, 0);
+		if (data->cmd[i].pid)
+			waitpid(data->cmd[i].pid, NULL, 0);
 		if (is_builtin(data->cmd[i].cmd) == 0)
 			free_tab(data->cmd[i].tab);
 		i++;
