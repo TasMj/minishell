@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:41:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/27 16:46:57 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 00:48:53 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,10 @@ int	is_sorted(t_list **list)
 
 void	swap_in_list(t_list **list, t_list *tmp, char *tmp1, char *tmp2)
 {
-	tmp1 = ft_strdup_size((*list)->content, ft_strlen((*list)->content));
-	tmp2 = ft_strdup_size((*list)->next->content, \
-	ft_strlen((*list)->next->content));
-	(*list)->content = ft_strdup_size(tmp2, ft_strlen(tmp2));
-	(*list)->next->content = ft_strdup_size(tmp1, ft_strlen(tmp1));
+	tmp1 = ft_strdup((*list)->content); //
+	tmp2 = ft_strdup((*list)->next->content); //
+	(*list)->content = ft_strdup(tmp2); //
+	(*list)->next->content = ft_strdup(tmp1); //
 	free(tmp1);
 	free(tmp2);
 	*list = tmp;
@@ -109,12 +108,13 @@ t_list	**sort_env(t_list **list)
 
 int	ft_isalpha(char *str)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (str[i])
 	{
-		if ((str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= 'a' && str[i] <= 'z'))
+		if ((str[i] >= 'A' && str[i] <= 'Z')
+			|| (str[i] >= 'a' && str[i] <= 'z'))
 			i++;
 		else
 			return (1);

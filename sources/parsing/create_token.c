@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/05/27 12:37:58 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/28 00:47:22 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@
 char	*get_input(void)
 {
 	char	*input;
-	// char	cwd[1024];
+	char	cwd[1024];
 	char	*prompt;
 
-	prompt = ft_strdup_size(getcwd(cwd, sizeof(cwd)) + 5, \
-	ft_strlen(getcwd(cwd, sizeof(cwd)) + 5));
+	prompt = ft_strdup(getcwd(cwd, sizeof(cwd))); //
 	prompt = ft_strjoin_mod("\033[1;33m", prompt, 0);
 	prompt = ft_strjoin_mod(prompt, "\033[0m", 0);
 	prompt = ft_strjoin_mod(prompt, "$> ", 0);

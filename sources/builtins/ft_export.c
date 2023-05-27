@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/05/27 17:25:15 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 00:41:47 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,32 +28,33 @@ int	sort_env_ascii(void)
 	return (0);
 }
 
-int	add_var_env(t_list **token, t_list *tmp)
+int	add_var_env(char *stock, t_list *tmp)
 {
 	char	*add_env;
 	char	*copy;
+	(void)tmp;
 
-	add_env = ft_strdup_size((*token)->content, ft_strlen((*token)->content));
-	while ((*token)->next != NULL && (*token)->next->flag_space != 1)
-	{
-		(*token) = (*token)->next;
-		add_env = ft_strjoin_mod(add_env, (*token)->content, 0);
-	}
+	add_env = ft_strdup(stock);
 	copy = ft_strdup(add_env);
-	if (ft_isalpha(take_off_equal(copy)) == 1)
+	if (ft_isalpha(del_equal(copy)) == 1)
 	{
-		// free(add_env);
 		free(copy);
 		return (err_msg(5));
 	}
 	add_list(g_list_env, add_env, 0);
-	*g_list_env = tmp;
 	free(copy);
-	// free(add_env);
 	return (0);
 }
 
-int	modify_var(t_list **token, t_list *tmp)
+void	modif(char *copy_token, char *copy_env, t_list *tmp)
+{
+	(*g_list_env)->content = ft_strdup(copy_token);
+	*g_list_env = tmp;
+	free(copy_token);
+	free(copy_env);
+}
+
+int	modify_var(char *stock, t_list *tmp)
 {
 	char	*copy_env;
 	char	*copy_token;
@@ -61,25 +62,15 @@ int	modify_var(t_list **token, t_list *tmp)
 	while (*g_list_env)
 	{
 		copy_env = ft_strdup((*g_list_env)->content);
-		copy_token = ft_strdup((*token)->content);
-		if (ft_strcmp(take_off_equal(copy_env), take_off_equal(copy_token)) == 1)
+		copy_token = ft_strdup(stock);
+		if (ft_strcmp(del_equal(copy_env), del_equal(copy_token)) == 1)
 		{
 			free(copy_env);
 			(*g_list_env) = (*g_list_env)->next;
 		}
-		else if (ft_strcmp(take_off_equal(copy_env), take_off_equal(copy_token)) == 0)
+		else if (ft_strcmp(del_equal(copy_env), del_equal(copy_token)) == 0)
 		{
-			(*g_list_env)->content = ft_strdup_size((*token)->content, \
-			ft_strlen((*token)->content));
-			while ((*token)->next != NULL && (*token)->next->flag_space != 1)
-			{
-				(*token) = (*token)->next;
-				(*g_list_env)->content = ft_strjoin_mod((*g_list_env)->content, \
-				(*token)->content, 0);
-			}
-			*g_list_env = tmp;
-			free(copy_token);
-			free(copy_env);
+			modif(copy_token, copy_env, tmp);
 			return (1);
 		}
 	}
@@ -90,8 +81,8 @@ int	modify_var(t_list **token, t_list *tmp)
 int	ft_export(t_list **list_token)
 {
 	t_list	*tmp;
-	char	*copy;
-
+	char	*stock;
+	
 	tmp = *g_list_env;
 	if (ft_lstsize(*list_token) == 1)
 		sort_env_ascii();
@@ -99,19 +90,26 @@ int	ft_export(t_list **list_token)
 	{
 		while (*list_token != NULL)
 		{
+			if (check_list_equal(list_token) != 1)
+				return (0);
 			(*list_token) = (*list_token)->next;
-			copy = ft_strdup((*list_token)->content);
-			if (check_equal((*list_token)->content) == 1)
-			{
-				if (is_in_env(take_off_equal(copy)) == 0)
-					return (add_var_env(list_token, tmp));
-				else if (modify_var(list_token, tmp) == 1)
+			stock = ft_strdup((*list_token)->content);
+			(*list_token) = (*list_token)->next;
+				
+				while (*list_token && (*list_token)->content[0] != '=' && (*list_token)->flag_space == 0)
 				{
-					free(copy);
-					return (0);
+					if (*list_token && ft_strlen((*list_token)->content) == 0)
+						(*list_token) = (*list_token)->next;
+					else
+					{
+						stock = ft_strjoin(stock, (*list_token)->content);
+						(*list_token) = (*list_token)->next;
+					}
 				}
-			}
-			free(copy);
+				if (is_in_env(del_equal(stock)) == 0)
+					return (add_var_env(stock, tmp));
+				else if (modify_var(stock, tmp) == 1)
+					return (0);
 			(*list_token) = (*list_token)->next;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/27 13:52:56 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 00:40:56 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ int	set_old_path(char *path)
 {
 	t_list	*tmp;
 	char	*copy_env;
-	
+
 	if (is_in_env("OLDPWD") == 0)
 		return (1);
 	tmp = *g_list_env;
 	while (*g_list_env)
 	{
 		copy_env = ft_strdup((*g_list_env)->content);
-		if (ft_strcmp(take_off_equal(copy_env), "OLDPWD") == 1)
+		if (ft_strcmp(del_equal(copy_env), "OLDPWD") == 1)
 			(*g_list_env) = (*g_list_env)->next;
-		else if (ft_strcmp(take_off_equal(copy_env), "OLDPWD") == 0)
+		else if (ft_strcmp(del_equal(copy_env), "OLDPWD") == 0)
 		{
 			(*g_list_env)->content = ft_strjoin("OLDPWD=", path);
 			*g_list_env = tmp;
@@ -37,6 +37,7 @@ int	set_old_path(char *path)
 	}
 	return (0);
 }
+
 /* check if directory and not file */
 int	is_dir(char *path)
 {
@@ -89,7 +90,7 @@ char	*set_path(char *path, t_list **list)
 	int		size;
 
 	size = ft_strlen(getcwd(cwd, sizeof(cwd)));
-	path = ft_strdup_size((getcwd(cwd, sizeof(cwd))), size);
+	path = ft_strdup((getcwd(cwd, sizeof(cwd))));//
 	path = ft_strjoin(path, "/");
 	path = ft_strjoin(path, (*list)->next->content);
 	return (path);
@@ -105,28 +106,21 @@ int	ft_cd(t_list **list)
 	path = NULL;
 	set_old_path(getcwd(cwd, sizeof(cwd)));
 	if (ft_strcmp("cd", (*list)->content) == 0 && (*list)->next == NULL && is_in_env("HOME") == 1)
-		path = ft_strdup_size(return_var_env("HOME"), ft_strlen(return_var_env("HOME")));
+		path = ft_strdup(get_venv("HOME"));
 	else if (ft_strcmp("cd", (*list)->content) == 0 && (*list)->next == NULL && is_in_env("HOME") == 0)
 	{
 		*list = tmp;
 		return (err_msg(4));
 	}
 	else if ((*list)->next && ft_strcmp((".."), (*list)->next->content) == 0)
-	{
-		if (ft_lstsize(*list) >= 3)
-			return (err_msg(3));
 		path = get_previous_dir(getcwd(cwd, sizeof(cwd)));
-	}
-	else
-	{
-		if (ft_lstsize(*list) > 2)
-			return (err_msg(3));
+	else if (ft_lstsize(*list) <= 2)
 		path = set_path(path, list);
-	}
+	else
+		return (err_msg(3));
 	if (err_cd(list, path) == 1)
 		return (1);
 	free(path);
 	*list = tmp;
 	return (0);
 }
-

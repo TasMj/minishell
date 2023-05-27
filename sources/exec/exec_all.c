@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:38:07 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/27 22:34:37 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/28 00:43:26 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,55 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 			close_all(data, data->nb_pipes - 1);
 		if (is_heredoc(cmd) == 1)
 		{
-			heredoc(cmd->cmd, data->env, cmd);
-			// exit(0);
-			return (0);
+			heredoc(cmd->cmd, data->env);
+			exit(0);
 		}
 		if (is_path(cmd) == 1)
 		{
+			if (access((*cmd->cmd)->content, F_OK | X_OK) != 0)
+			{
+				printf("minishell: %s: Not a directory\n", (*cmd->cmd)->content);
+				return (1);
+			}
 			if (execve((*cmd->cmd)->content, cmd->tab, data->env) < 0)
 				exit(1);
 		}
+		if (cmd->path == NULL)
+			return (err_msg(2));
 		if (execve(cmd->path, cmd->tab, data->env) < 0)
-			exit(1);
+				exit(1);
 	}
 	return (0);
 }
+
+// int	exec_cmd(t_cmd *cmd, t_exec *data)
+// {
+// 	cmd->tab = lst_to_tab(cmd->cmd);
+// 	cmd->pid = fork();
+// 	if (cmd->pid < 0)
+// 		return (1);
+// 	if (cmd->pid == 0)
+// 	{
+// 		dup2(cmd->fd_in, STDIN_FILENO);
+// 		dup2(cmd->fd_out, STDOUT_FILENO);
+// 		if (data->nb_pipes > 0)
+// 			close_all(data, data->nb_pipes - 1);
+// 		if (is_heredoc(cmd) == 1)
+// 		{
+// 			heredoc(cmd->cmd, data->env, cmd);
+// 			// exit(0);
+// 			return (0);
+// 		}
+// 		if (is_path(cmd) == 1)
+// 		{
+// 			if (execve((*cmd->cmd)->content, cmd->tab, data->env) < 0)
+// 				exit(1);
+// 		}
+// 		if (execve(cmd->path, cmd->tab, data->env) < 0)
+// 			exit(1);
+// 	}
+// 	return (0);
+// }
 
 int	redirect_heredoc(t_cmd *cmd, t_exec *data)
 {

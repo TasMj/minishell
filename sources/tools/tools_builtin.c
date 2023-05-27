@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:08:46 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/27 17:28:18 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 00:48:39 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,23 @@ int	count_slash(char *str)
 	return (counter);
 }
 
+int	check_list_equal(t_list **list)
+{
+	t_list	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = *list;
+	while (*list)
+	{
+		if (check_equal((*list)->content) == 1)
+			i++;
+		(*list) = (*list)->next;
+	}
+	*list = tmp;
+	return (i);
+}
+
 int	check_equal(char *str)
 {
 	int	i;
@@ -43,7 +60,7 @@ int	check_equal(char *str)
 	return (0);
 }
 
-char	*take_off_equal(char *str)
+char	*del_equal(char *str)
 {
 	int		i;
 	char	*var;
@@ -82,7 +99,7 @@ int	is_in_env(char *str)
 	while (*g_list_env)
 	{
 		copy = ft_strdup((*g_list_env)->content);
-		if (ft_strcmp(str, take_off_equal(copy)) == 0)
+		if (ft_strcmp(str, del_equal(copy)) == 0)
 		{
 			free(copy);
 			*g_list_env = tmp;

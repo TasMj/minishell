@@ -6,40 +6,35 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:15:52 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/27 13:05:18 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 00:47:47 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-/* check if there is a quote alone */
 int	check_pair_quote(char *str)
 {
-	int		i;
-	int		flag;
-	char	quote;
+	t_substitution	s;
 
-	i = 0;
-	flag = 0;
-	while (str[i])
+	s.i = 0;
+	s.flag = 0;
+	while (str[s.i])
 	{
-		if (str[i] == 39 || str[i] == 34)
+		if (str[s.i] == 39 || str[s.i] == 34)
 		{
-			quote = str[i];
-			flag = 1;
-			while (str[i])
+			s.quote = str[s.i];
+			s.flag = 1;
+			while (str[s.i])
 			{
-				i++;
-				if (str[i] == quote && flag == 1)
+				s.i++;
+				if (str[s.i] == s.quote && s.flag == 1)
 				{
-					flag = 0;
+					s.flag = 0;
 					break ;
 				}
 			}
 		}
-		i++;
+		s.i++;
 	}
-	if (flag == 1)
+	if (s.flag == 1)
 		return (1);
 	return (0);
 }
@@ -152,7 +147,7 @@ void	remove_list_quotes(t_list **list_token)
 			stockage = remove_quotes((*list_token)->content);
 			free((*list_token)->content);
 			(*list_token)->content = \
-			ft_strdup_size(stockage, ft_strlen(stockage));
+			ft_strdup(stockage); //
 			free(stockage);
 		}
 		(*list_token) = (*list_token)->next;

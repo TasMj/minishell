@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/27 17:17:33 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/28 00:40:18 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,5 +245,8 @@ int		exec_builtin(t_list **list_token);
 int	fork_builtin(t_cmd *cmd, t_exec *data);
 int	simple_builtin(t_cmd *cmd, t_exec *data);
 int	is_builtin(t_list **cmd);
+
+char	*del_equal(char *str);
+
 
 #endif

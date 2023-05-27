@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:32 by tas               #+#    #+#             */
-/*   Updated: 2023/05/27 17:31:14 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 00:49:17 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	remove_empty_tokens(t_list **list)
 	}
 }
 
-char	*return_var_env(char *str)
+char	*get_venv(char *str)
 {
 	t_list	*tmp;
 	char	*var;
@@ -67,10 +67,9 @@ char	*return_var_env(char *str)
 	while (*g_list_env)
 	{
 		copy_env = ft_strdup((*g_list_env)->content);
-		if (ft_strcmp(str, take_off_equal(copy_env)) == 0)
+		if (ft_strcmp(str, del_equal(copy_env)) == 0)
 		{
-			var = ft_strdup_size(after_equal((*g_list_env)->content), \
-			ft_strlen(after_equal((*g_list_env)->content)));
+			var = ft_strdup(after_equal((*g_list_env)->content)); //
 			*g_list_env = tmp;
 			free(copy_env);
 			return (var);

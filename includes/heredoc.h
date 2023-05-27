@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:41:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/27 17:39:39 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/28 00:51:20 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	free_heredoc(t_heredoc *h);
 int		check_dollar(char *str);
 char	*remove_space(char *str);
 void	quote_sub(t_substitution *s, t_list *list_token, int a);
-char	*return_var_env(char *str);
+char	*get_venv(char *str);
 char	*after_equal(char *str);
 void    remove_empty_tokens(t_list **list);
 int err_quote(t_list **list_token);
