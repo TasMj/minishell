@@ -3,16 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/27 00:07:31 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/27 13:52:56 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
 
+int	set_old_path(char *path)
+{
+	t_list	*tmp;
+	char	*copy_env;
+	
+	if (is_in_env("OLDPWD") == 0)
+		return (1);
+	tmp = *g_list_env;
+	while (*g_list_env)
+	{
+		copy_env = ft_strdup((*g_list_env)->content);
+		if (ft_strcmp(take_off_equal(copy_env), "OLDPWD") == 1)
+			(*g_list_env) = (*g_list_env)->next;
+		else if (ft_strcmp(take_off_equal(copy_env), "OLDPWD") == 0)
+		{
+			(*g_list_env)->content = ft_strjoin("OLDPWD=", path);
+			*g_list_env = tmp;
+			free(copy_env);
+			return (0);
+		}
+		free(copy_env);
+	}
+	return (0);
+}
 /* check if directory and not file */
 int	is_dir(char *path)
 {
@@ -79,7 +103,6 @@ int	ft_cd(t_list **list)
 
 	tmp = *list;
 	path = NULL;
-	
 	set_old_path(getcwd(cwd, sizeof(cwd)));
 	if (ft_strcmp("cd", (*list)->content) == 0 && (*list)->next == NULL && is_in_env("HOME") == 1)
 		path = ft_strdup_size(return_var_env("HOME"), ft_strlen(return_var_env("HOME")));
@@ -107,25 +130,3 @@ int	ft_cd(t_list **list)
 	return (0);
 }
 
-int	set_old_path(char *path)
-{
-	t_list	*tmp;
-	
-	if (is_in_env("OLDPWD") == 0)
-		return (1);
-	tmp = *g_list_env;
-	while (*g_list_env)
-	{
-		if (ft_strcmp(take_off_equal((*g_list_env)->content), \
-		"OLDPWD") == 1)
-			(*g_list_env) = (*g_list_env)->next;
-		else if (ft_strcmp(take_off_equal((*g_list_env)->content), \
-		"OLDPWD") == 0)
-		{
-			(*g_list_env)->content = ft_strjoin("OLDPWD=", path);
-			*g_list_env = tmp;
-			return (0);
-		}
-	}
-	return (0);
-}

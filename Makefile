@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
+#    By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/05/26 12:55:02 by jthuysba         ###   ########.fr        #
+#    Updated: 2023/05/27 12:13:00 by tmejri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ OBJS			= ${SRCS:.c=.o}
 CC				= cc
 RM				= rm -f
 CFLAGS			= -Wall -Wextra -Werror -g -I includes/ 
+SUPP			= printf "{\n    leak readline\n    Memcheck:Leak\n    ...\n    fun:readline\n}\n{\n    leak add_history\n   Memcheck:Leak\n    ...\n    fun:add_history\n}" > ignore_leak.supp
 
 
 all:			${NAME}
@@ -57,13 +58,18 @@ ${OBJS}: %.o: %.c
 
 ${NAME}:		${OBJS}
 						${CC} ${CFLAGS} ${OBJS} -L/usr/includes -lreadline -o ${NAME}
+						${SUPP}
 
 clean:
 						${RM} ${OBJS}
 
 fclean:			clean
 						${RM} ${NAME}
+						${RM} ignore_leak.supp
 
 re:				fclean ${NAME}
+
+ms	: all
+		valgrind --suppressions=ignore_leak.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes -s ./minishell
 
 .PHONY:			all clean fclean re

@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:09:31 by tas               #+#    #+#             */
-/*   Updated: 2023/05/26 19:07:00 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/27 13:13:02 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ int	ft_echo(t_list **list_token)
 
 	e = malloc(sizeof(t_echo));
 	ft_memset(e, 0, sizeof(t_echo));
-	e->flag = 0;
-	e->to_free = 0;
 	e->stockage = "";
 	tmp = *list_token;
 	while ((*list_token) != NULL)
@@ -84,5 +82,6 @@ int	ft_echo(t_list **list_token)
 	if (e->to_free == 1)
 		free(e->stockage);
 	*list_token = tmp;
+	free(e);
 	return (0);
 }

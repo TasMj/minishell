@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:08:46 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/26 16:45:20 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/27 17:28:18 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,19 @@ char	*after_equal(char *str)
 int	is_in_env(char *str)
 {
 	t_list	*tmp;
+	char	*copy;
 
 	tmp = *g_list_env;
 	while (*g_list_env)
 	{
-		if (ft_strcmp(str, take_off_equal((*g_list_env)->content)) == 0)
+		copy = ft_strdup((*g_list_env)->content);
+		if (ft_strcmp(str, take_off_equal(copy)) == 0)
 		{
+			free(copy);
 			*g_list_env = tmp;
 			return (1);
 		}
+		free(copy);
 		(*g_list_env) = (*g_list_env)->next;
 	}
 	*g_list_env = tmp;

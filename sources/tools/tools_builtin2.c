@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:41:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/26 17:31:05 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/27 16:46:57 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,9 @@ int	ft_isalpha(char *str)
 	while (str[i])
 	{
 		if ((str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= 'a' && str[i] <= 'z'))
+			i++;
+		else
 			return (1);
-		i++;
 	}
 	return (0);
 }
