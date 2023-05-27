@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:34:23 by tas               #+#    #+#             */
-/*   Updated: 2023/05/26 23:42:04 by tas              ###   ########.fr       */
+/*   Updated: 2023/05/27 11:51:38 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,7 @@ int	parent_process(t_heredoc *h, char **env)
 	exit(EXIT_SUCCESS);
 }
 
-void
-ft_putstr_fd(char *str, int fd)
+void ft_putstr_fd(char *str, int fd)
 {
 	if (!str)
 		return ;
