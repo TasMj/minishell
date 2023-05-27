@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:38:07 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/27 19:45:05 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/27 22:34:37 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 		if (is_heredoc(cmd) == 1)
 		{
 			heredoc(cmd->cmd, data->env, cmd);
-			exit(0);
+			// exit(0);
+			return (0);
 		}
 		if (is_path(cmd) == 1)
 		{
@@ -72,18 +73,20 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 
 int	redirect_heredoc(t_cmd *cmd, t_exec *data)
 {
-	cmd->tmp_in = dup(STDIN_FILENO);
-	cmd->tmp_out = dup(STDOUT_FILENO);
+	// cmd->tmp_in = dup(STDIN_FILENO);
+	// cmd->tmp_out = dup(STDOUT_FILENO);
 	// dup2(cmd->fd_in, STDIN_FILENO);
 	// dup2(cmd->fd_out, STDOUT_FILENO);
-	if (data->nb_pipes > 0)
-		close_all(data, data->nb_pipes - 1);
+	// if (data->nb_pipes > 0)
+	// 	close_all(data, data->nb_pipes - 1);
 	heredoc(cmd->cmd, data->env, cmd);
-	close(3);
-	dup2(cmd->tmp_in, STDIN_FILENO);
-	dup2(cmd->tmp_out, STDOUT_FILENO);
-	close(cmd->tmp_in);
-	close(cmd->tmp_out);
+	printf("ghjk\n");
+	close(cmd->fd_out);
+	close(cmd->fd_in);
+	// dup2(cmd->tmp_in, STDIN_FILENO);
+	// dup2(cmd->tmp_out, STDOUT_FILENO);
+	// close(cmd->tmp_in);
+	// close(cmd->tmp_out);
 	return (0);
 }
 
@@ -106,7 +109,10 @@ int	exec_all(t_exec *data)
 			if ((data->cmd[i].fd_out != STDOUT_FILENO 
 			|| data->cmd[i].fd_in != STDIN_FILENO)
 			&& is_heredoc(&data->cmd[i]) == 1)
+			{
+				printf("here\n");
 				redirect_heredoc(&data->cmd[i], data);
+			}
 			else
 				exec_cmd(&(data->cmd[i]), data);
 		}

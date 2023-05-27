@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:34:23 by tas               #+#    #+#             */
-/*   Updated: 2023/05/27 19:37:17 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/27 22:45:26 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,23 @@ int	parent_process(t_heredoc *h, char **env, t_cmd *cmd)
 	close(h->tube[1]);
 	if (waitpid(h->pid, NULL, 0) == -1)
 		return (1);
+	if (cmd->fd_in != STDIN_FILENO)
+		dup2(cmd->fd_in, STDIN_FILENO);
+	else
+		dup2(h->tube[0], STDIN_FILENO);
+	dup2(cmd->fd_out, STDOUT_FILENO);
 
-	// if (cmd->fd_in != STDIN_FILENO)
-	// 	dup2(cmd->fd_in, STDIN_FILENO);
-	// else
-	dup2(h->tube[0], STDIN_FILENO);
-	
-	dup2(3, STDOUT_FILENO);
-
-	// dup2(cmd->fd_out, STDOUT_FILENO);
-	close(cmd->fd_out);
-	close(cmd->fd_in);
+	// h->pid = fork();
+	// if (!h->pid)
+	// 	return (1);
+	// if (h->pid == 0)
+	// {
+	// 	if (execve(h->path_cmd, h->token_arg, env) == -1)
+	// 		return (1);
+	// }
+	// waitpid(h->pid, NULL, 0);
 	if (execve(h->path_cmd, h->token_arg, env) == -1)
-		return (1);
-	close(h->tube[0]);
+			return (1);
 	return (1);
 }
 
@@ -101,10 +104,8 @@ int	heredoc_process(t_heredoc *h, char **env, t_cmd *cmd)
 		return (1);
 	if (h->pid == 0)
 	{
-		close(cmd->fd_out);//fd_out
-		close(cmd->tmp_in);//tmp_in
-		close(cmd->tmp_out);//tmp_out
 		close(h->tube[0]);
+		printf("here\n");
 		while (1)
 		{
 			stockage = readline("heredoc> ");
@@ -115,15 +116,18 @@ int	heredoc_process(t_heredoc *h, char **env, t_cmd *cmd)
 				ft_putstr_fd(stockage, h->tube[1]);
 				ft_putstr_fd("\n", h->tube[1]);
 			}
-			// else if (write(h->tube[1], ft_strjoin_mod(stockage, "\n", 1), 
-			// ft_strlen(stockage) + 1) == -1)
-			// 	exit(EXIT_FAILURE);
 		}
 		close(h->tube[1]);
+		close(cmd->fd_out);
+		// close(cmd->tmp_in);
+		// close(cmd->tmp_out);
 		free(stockage);
-		// exit(EXIT_SUCCESS);
+		// return (1);
+		exit(EXIT_SUCCESS);
 	}
 	else
+	{
 		parent_process(h, env, cmd);
+	}
 	return (0);
 }
