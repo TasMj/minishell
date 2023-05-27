@@ -120,6 +120,7 @@ int err_quote(t_list **list_token);
 char	*remove_quote_end(t_substitution *s);
 int	ft_isalpha(char *str);
 int	set_old_path(char	*path);
+void	free_substitution(t_substitution *s);
 
 
 #endif

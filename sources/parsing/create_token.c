@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "heredoc.h"
 
 /* read and stock input */
 char	*get_input(void)
@@ -19,12 +20,11 @@ char	*get_input(void)
 	// char	cwd[1024];
 	char	*prompt;
 
-	prompt = ft_strdup("\033[1;36mmini<3\033[0m ");
-	// prompt = ft_strdup_size(getcwd(cwd, sizeof(cwd)) + 5, \
-	// ft_strlen(getcwd(cwd, sizeof(cwd)) + 5));
-	// prompt = ft_strjoin_mod("\033[1;33m", prompt, 0);
-	// prompt = ft_strjoin_mod(prompt, "\033[0m", 0);
-	// prompt = ft_strjoin_mod(prompt, "$> ", 0);
+	prompt = ft_strdup_size(getcwd(cwd, sizeof(cwd)) + 5, \
+	ft_strlen(getcwd(cwd, sizeof(cwd)) + 5));
+	prompt = ft_strjoin_mod("\033[1;33m", prompt, 0);
+	prompt = ft_strjoin_mod(prompt, "\033[0m", 0);
+	prompt = ft_strjoin_mod(prompt, "$> ", 0);
 	input = readline(prompt);
 	free(prompt);
 	if (input == NULL)
@@ -94,11 +94,6 @@ t_list	**create_token(t_list **list_token, char *input)
 
 	s = malloc(sizeof(t_substitution));
 	ft_memset(s, 0, sizeof(t_substitution));
-	s->i = 0;
-	s->start = 0;
-	s->end = 0;
-	s->flag = 0;
-	s->flag_space = 0;
 	while (s->i < ft_strlen(input))
 	{
 		if (is_a_space(input[s->i]) == 1)
@@ -109,5 +104,6 @@ t_list	**create_token(t_list **list_token, char *input)
 		else
 			add_token(list_token, s, input);
 	}
+	// free_substitution(s); echo a "b" 'c' $USER jsd
 	return (list_token);
 }

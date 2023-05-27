@@ -21,6 +21,9 @@ int    init_list(t_list **list_token, char *input)
     err_quote(list_token);
     remove_list_quotes(list_token);
     remove_empty_tokens(list_token);
+    
+    print_list(list_token);
+    
     return (0);
 }
 
