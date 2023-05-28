@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/28 13:44:20 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 15:04:52 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@
 # define ERR_MANY_ARG "too many arguments (WIP)\n"
 # define ERR_HOME "HOME not set\n"
 # define ERR_EXPORT "not a valid identifier\n"
+
+/*error code*/
+# define CMD_NOT_FOUND 127
+# define SYNTAX 258
+# define EXEC_FAILED 130
+# define EXIT_EXEC 0
+# define DIR_FILE 1
 
 /******************************************************************************/
 /*                                   enum                                     */
@@ -130,6 +137,7 @@ typedef struct s_minishell
 {
 	t_list	**token;
 	t_exec *ex_data;
+	int		code_err;
 }	t_minishell;
 
 /******************************************************************************/

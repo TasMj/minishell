@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 13:02:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/28 01:56:30 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 15:16:33 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,11 @@ void    ft_putstr_fd2(char *s, int fd)
 
 void    ft_exit(t_list **lst)
 {
+    // (void)lst;
+    // exit(1);
     t_list    *tmp;
     int        i;
-
+// 
     i = 0;
     tmp = *lst;
     if (ft_lstsize(*lst) == 1)

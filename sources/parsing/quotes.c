@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:15:52 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/28 00:57:54 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 16:39:14 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void	remove_list_quotes(t_list **list_token)
 	t_list	*tmp;
 	char	*stockage;
 
-	tmp = (*list_token);
+	tmp = *list_token;
 	while (*list_token)
 	{
 		if ((check_pair_double_quote((*list_token)->content) == 2
@@ -149,8 +149,7 @@ void	remove_list_quotes(t_list **list_token)
 		{
 			stockage = remove_quotes((*list_token)->content);
 			free((*list_token)->content);
-			(*list_token)->content = \
-			ft_strdup(stockage); //
+			(*list_token)->content = ft_strdup(stockage);
 			free(stockage);
 		}
 		(*list_token) = (*list_token)->next;

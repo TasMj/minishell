@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:38:07 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/28 00:57:04 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 14:49:41 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	exec_cmd(t_cmd *cmd, t_exec *data)
 				exit(1);
 		}
 		if (cmd->path == NULL)
-			return (err_msg(2));
+			return (err_msg(127));
 		if (execve(cmd->path, cmd->tab, data->env) < 0)
 				exit(1);
 	}

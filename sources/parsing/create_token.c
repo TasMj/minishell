@@ -6,28 +6,28 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/05/28 02:41:02 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 16:00:41 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
 
-/* read and stock input */
 char	*get_input(void)
 {
 	char	*input;
 	char	cwd[1024];
 	char	*prompt;
 
-	prompt = ft_strdup(getcwd(cwd, sizeof(cwd))); //
-	prompt = ft_strjoin_mod("\033[1;33m", prompt, 0);
-	prompt = ft_strjoin_mod(prompt, "\033[0m", 0);
-	prompt = ft_strjoin_mod(prompt, "$> ", 0);
+	prompt = ft_strdup(getcwd(cwd, sizeof(cwd)));
+	prompt = ft_strjoin_mod("\033[1;33m", prompt, 2);
+	prompt = ft_strjoin_mod(prompt, "\033[0m", 1);
+	prompt = ft_strjoin_mod(prompt, "$> ", 1);
 	input = readline(prompt);
 	free(prompt);
 	if (input == NULL)
 	{
+		free(input);
 		write(1, "exit\n", 5);	
 		exit(EXIT_FAILURE);
 	}
@@ -106,6 +106,6 @@ t_list	**create_token(t_list **list_token, char *input)
 		else
 			add_token(list_token, s, input);
 	}
-	// free_substitution(s); echo a "b" 'c' $USER jsd
+	free(s);
 	return (list_token);
 }
