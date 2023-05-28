@@ -13,24 +13,6 @@
 // #include "minishell.h"
 // #include "heredoc.h"
 
-// t_list	**get_cmd(t_list *token)
-// {
-// 	t_list	**lst;
-// 	t_list	*elem;
-
-// 	elem = token;
-// 	lst = malloc(sizeof(t_list));
-// 	if (!lst)
-// 		return (NULL);
-// 	*lst = NULL;
-// 	while (elem && elem->type == WORD)
-// 	{
-// 		add_list(lst, elem->content, elem->flag_space);
-// 		elem = elem->next;
-// 	}
-// 	return (lst);
-// }
-
 // // Setup fd in et out pour chaque commande
 // void	set_pipe(t_cmd *cmd, t_exec *data)
 // {
