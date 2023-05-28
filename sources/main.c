@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/05/28 15:40:12 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/28 19:51:54 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int    init_list(t_list **list_token, char *input)
     remove_list_quotes(list_token);
     remove_empty_tokens(list_token);
     reunite_token(list_token);
-    // print_list(list_token);
+    print_list(list_token);
     return (0);
 }
 
@@ -34,7 +34,6 @@ int main(int argc, char **argv, char **env)
     t_minishell data;
 
     g_list_env = get_list_env(env);
-   
     while (1)
     {
         signal(SIGQUIT, &ctrl_d);
@@ -51,9 +50,12 @@ int main(int argc, char **argv, char **env)
                 // exec(list_token, g_list_env);
             }
         }
+        free_list_token_content(data.token);
         free_list(data.token);
         free(data.input);
     }
+    free_list_token_content(g_list_env);
     free_list(g_list_env);
+    printf("sortie\n");
     return (0);
 }

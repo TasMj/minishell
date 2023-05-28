@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/05/28 00:48:06 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 16:36:16 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,12 @@ void	go_to_dollar(t_substitution *s, t_list *tok)
 		s->end = s->i;
 		s->keep_var = ft_strdup_size(tok->content + s->start, \
 		(s->end - s->start));
-		s->var_substitute = ft_strdup(substitution(s->keep_var)); //
+		s->var_substitute = ft_strdup(substitution(s->keep_var));
 		s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 0);
+		free(s->var_substitute);
+		free(s->keep_var);
 	}
+	free(s->without_dollar);
 }
 
 void	more_dollar(t_substitution *s, t_list **list_token)
@@ -47,7 +50,7 @@ void	more_dollar(t_substitution *s, t_list **list_token)
 	while ((*list_token)->content[s->i])
 		go_to_dollar(s, (*list_token));
 	free((*list_token)->content);
-	(*list_token)->content = ft_strdup(s->new_content); //
+	(*list_token)->content = ft_strdup(s->new_content);
 	free(s->new_content);
 }
 
@@ -96,8 +99,10 @@ void	delimit_sub(t_substitution *s)
 		s->end = s->i;
 		s->keep_var = ft_strdup_size(s->stock + s->start, \
 		(s->end - s->start));
-		s->keep_var2 = ft_strdup(remove_quote_end(s)); //
+		s->keep_var2 = ft_strdup(remove_quote_end(s));
 		s->new_content = ft_strjoin_mod(s->new_content, s->keep_var2, 0);
+		free(s->keep_var);
+		free(s->keep_var2);
 	}
 }
 
@@ -115,5 +120,6 @@ char	*sub_quotes(char *token, t_substitution *s)
 		s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 0);
 		delimit_sub(s);
 	}
+	free(s->stock);
 	return (s->new_content);
 }

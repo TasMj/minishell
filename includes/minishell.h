@@ -6,6 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
+/*   Updated: 2023/05/28 20:05:49 by tmejri           ###   ########.fr       */
 /*   Updated: 2023/05/28 19:59:39 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -37,6 +38,13 @@
 # define ERR_MANY_ARG "too many arguments (WIP)\n"
 # define ERR_HOME "HOME not set\n"
 # define ERR_EXPORT "not a valid identifier\n"
+
+/*error code*/
+# define CMD_NOT_FOUND 127
+# define SYNTAX 258
+# define EXEC_FAILED 130
+# define EXIT_EXEC 0
+# define DIR_FILE 1
 
 /******************************************************************************/
 /*                                   enum                                     */
@@ -133,6 +141,7 @@ typedef struct s_minishell
 {
 	char	*input;
 	t_list	**token;
+	int		code_err;
 	struct s_xek	*x;
 }	t_minishell;
 
@@ -252,7 +261,8 @@ int	is_builtin(t_list **cmd);
 
 char	*del_equal(char *str);
 void    reunite_token(t_list **list_token);
-
+void    free_list_token_content(t_list **list_token);
+void	free_exit(t_list **list);
 
 
 /* we exec */
