@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
 /*   Updated: 2023/05/28 19:51:54 by tmejri           ###   ########.fr       */
@@ -31,26 +31,28 @@ int main(int argc, char **argv, char **env)
 {
     (void)argc;
     (void)argv;
-    char *input;
-    
-    t_list **list_token;
+    t_minishell data;
+
     g_list_env = get_list_env(env);
     while (1)
     {
         signal(SIGQUIT, &ctrl_d);
         signal(SIGINT, &ctrl_c);
-        input = get_input();
-        list_token = malloc(sizeof(t_list));
-        list_token[0] = NULL;
+        data.input = get_input();
+        data.token = malloc(sizeof(t_list));
+        *data.token = NULL;
+
         if (init_list(list_token, input) == 0)
         {
-            if (syntax_error(list_token) == 2)
-                exec_builtin(list_token);
+            if (syntax_error(data.token) == 2)
+            {
+                we_exec(&data);
                 // exec(list_token, g_list_env);
+            }
         }
-        free_list_token_content(list_token);
-        free_list(list_token);
-        free(input);
+        free_list_token_content(data.token);
+        free_list(data.token);
+        free(data.input);
     }
     free_list_token_content(g_list_env);
     free_list(g_list_env);
