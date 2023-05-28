@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/28 00:54:42 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 01:56:17 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void	ft_pwd(void);
 int 	ft_unset(t_list **list_token);
 int 	ft_cd(t_list **list_token);
 int 	ft_export(t_list **list_token);
-void	ft_exit(void);
+void	ft_exit(t_list **lst);
 
 /* exit */
 int		err_msg(int n);

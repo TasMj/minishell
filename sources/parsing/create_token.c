@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/05/28 00:47:22 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 02:41:02 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ char	*get_input(void)
 	input = readline(prompt);
 	free(prompt);
 	if (input == NULL)
+	{
+		write(1, "exit\n", 5);	
 		exit(EXIT_FAILURE);
+	}
 	else
 		add_history(input);
 	return (input);

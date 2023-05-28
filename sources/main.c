@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/05/28 00:46:11 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 02:41:18 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int main(int argc, char **argv, char **env)
     char *input;
     t_list **list_token;
     g_list_env = get_list_env(env);
+    signal(SIGQUIT, &ctrl_d);
+    signal(SIGINT, &ctrl_c);
     while (1)
     {
-        signal(SIGQUIT, SIG_IGN);
-        signal(SIGINT, &ctrl_c);
         input = get_input();
         list_token = malloc(sizeof(t_list));
         list_token[0] = NULL;

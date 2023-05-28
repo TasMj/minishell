@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:43:39 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/25 14:26:18 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 02:37:29 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,12 @@ void	ctrl_c(int sigid)
 
 void	ctrl_d(int sigid)
 {
+	printf("d\n");
 	if (sigid == EOF)
-		exit(1); //mettre built in
+	{
+		write(1, "exit\n", 5);
+		exit(1);
+	}
 }
 
 void	ctr_bs(int sigid)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:42:19 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/27 12:06:22 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/28 01:58:11 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	exec_builtin(t_list **lst)
 	else if (ft_strlen((*lst)->content) == 3 && ft_strncmp((*lst)->content, "env", 3) == 0)
 		ft_env(lst);
 	else if (ft_strlen((*lst)->content) == 4 && ft_strncmp((*lst)->content, "exit", 4) == 0)
-		exit(1);
+		ft_exit(lst);
 	else if (ft_strlen((*lst)->content) == 6 && ft_strncmp((*lst)->content, "export", 6) == 0)
 		ft_export(lst);
 	else if (ft_strlen((*lst)->content) == 3 && ft_strncmp((*lst)->content, "pwd", 3) == 0)

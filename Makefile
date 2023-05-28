@@ -6,7 +6,7 @@
 #    By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/05/27 15:59:13 by jthuysba         ###   ########.fr        #
+#    Updated: 2023/05/28 01:55:52 by tmejri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME			= minishell
 MAIN			= ./sources/main.c
 
 BUILTINS		= ./sources/builtins/ft_cd.c ./sources/builtins/ft_echo.c \
-				./sources/builtins/ft_env.c \
+				./sources/builtins/ft_env.c ./sources/builtins/ft_exit.c \
 				./sources/builtins/ft_export.c ./sources/builtins/ft_pwd.c \
 				./sources/builtins/ft_unset.c \
 		
