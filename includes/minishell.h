@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/28 01:56:17 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 16:32:36 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,35 +101,38 @@ typedef struct s_path
 	char	**path_split;
 }	t_path;
 
-typedef struct s_cmd
-{
-	t_list	**cmd;
-	char		*path;
-	int		fd_in;
-	int		fd_out;
-	int		id;
-	pid_t		pid;
-	char		*heredoc;
-	struct s_exec	*data;
-	char	**tab;
-	int	tmp_in;
-	int	tmp_out;
-}	t_cmd;
-
 typedef struct s_exec
 {
 	t_list	**token;
-	t_cmd	*cmd;
+	// t_cmd	*cmd;
 	char	**env;
 	int		**fd;
 	int		nb_pipes;
 	int		nb_cmd;
 }	t_exec;
 
+typedef struct s_cmd
+{
+	int		id;
+	t_list	**token;
+	t_list	**cmd;
+	char	**tab;
+	char	*path;
+	int		*redir;
+	char	**file;
+}	t_cmd;
+
+typedef struct s_xek
+{
+	t_cmd	*cmd;
+	int		nb_cmd;
+}	t_xek;
+
 typedef struct s_minishell
 {
+	char	*input;
 	t_list	**token;
-	t_exec *ex_data;
+	struct s_xek	*x;
 }	t_minishell;
 
 /******************************************************************************/
@@ -247,6 +250,14 @@ int	simple_builtin(t_cmd *cmd, t_exec *data);
 int	is_builtin(t_list **cmd);
 
 char	*del_equal(char *str);
+
+
+
+/* we exec */
+int	we_exec(t_minishell *data);
+int	prep_cmd(t_minishell *data);
+int	nb_cmd(t_list *token);
+void	set_to_zero(t_xek *x);
 
 
 #endif

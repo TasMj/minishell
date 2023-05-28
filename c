@@ -1,0 +1,13 @@
+a
+a.out
+b
+c
+file
+ignore_leak.supp
+includes
+Makefile
+minishell
+moha
+out
+sources
+test

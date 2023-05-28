@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+         #
+#    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/05/28 01:55:52 by tmejri           ###   ########.fr        #
+#    Updated: 2023/05/28 16:33:01 by jthuysba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,9 @@ EXEC			= ./sources/exec/path.c \
 				./sources/exec/set_fd.c ./sources/exec/exec_all.c \
 				./sources/exec/handle_builtin.c \
 
+WE_EXEC			= ./sources/we_exec/exec.c ./sources/we_exec/prep_cmd.c \
+				./sources/we_exec/utils.c
+
 EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
 				./sources/exit/free_struct.c
 
@@ -42,7 +45,7 @@ TOOLS			= ./sources/tools/ft_split.c ./sources/tools/tools_exec.c \
 				./sources/tools/tools_builtin2.c ./sources/tools/tools2.c \
 				./sources/tools/tools_redir.c 
 
-SRCS			= ${MAIN} ${BUILTINS} ${EXEC} ${EXIT} ${PARSING} ${TOOLS}
+SRCS			= ${MAIN} ${BUILTINS} ${EXEC} ${WE_EXEC} ${EXIT} ${PARSING} ${TOOLS}
 
 OBJS			= ${SRCS:.c=.o}
 
