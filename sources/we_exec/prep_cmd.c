@@ -6,11 +6,12 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/28 17:28:46 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/28 19:59:00 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "heredoc.h"
 
 /* On clone les token jusqua un pipe ou la fin
 -> {cat < file} */
@@ -53,11 +54,48 @@ t_list	**clone_to_op(t_list *token)
 	return (lst);
 }
 
+/* Enregistre les redirections avec leur type et leur file associes
+-> cat < file */
+int	handle_redir(t_cmd *cmd, t_list *elem)
+{
+	int	i;
+
+	cmd->nb_redir = nb_redir(*(cmd->token));
+	cmd->redir = malloc(sizeof(int) * cmd->nb_redir);
+	if (!cmd->redir)
+		return (1);
+	cmd->file = malloc(sizeof(char *) * cmd->nb_redir + 1);
+	if (!cmd->file)
+		return (1);
+	i = 0;
+	while (elem)
+	{
+		if (elem->type != WORD)
+		{
+			cmd->redir[i] = elem->type;
+			cmd->file[i] = ft_strdup(elem->next->content);
+			if (!cmd->file[i])
+				return (1);
+			i++;
+		}
+		elem = elem->next;
+	}
+	return (0);
+}
+
 int	fill_cmd(t_cmd *cmd)
 {
+	char	**tab;
+
+	/* On attribue a cmd la commande sans les op */
 	cmd->cmd = clone_to_op(*(cmd->token));
-	print_list(cmd->cmd);
-	printf("\n");
+
+	tab = lst_to_tab(g_list_env);
+	cmd->path = find_path(tab, (*cmd->cmd)->content);
+	free(tab);
+
+	handle_redir(cmd, *(cmd->token));
+	
 	return (0);
 }
 

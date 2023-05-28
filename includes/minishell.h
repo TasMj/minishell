@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/28 16:32:36 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/28 19:59:39 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ typedef struct s_cmd
 	char	*path;
 	int		*redir;
 	char	**file;
+	int		nb_redir;
 }	t_cmd;
 
 typedef struct s_xek
@@ -254,10 +255,11 @@ char	*del_equal(char *str);
 
 
 /* we exec */
-int	we_exec(t_minishell *data);
-int	prep_cmd(t_minishell *data);
-int	nb_cmd(t_list *token);
+int		we_exec(t_minishell *data);
+int		prep_cmd(t_minishell *data);
+int		nb_cmd(t_list *token);
 void	set_to_zero(t_xek *x);
+int		nb_redir(t_list	*elem);
 
 
 #endif
