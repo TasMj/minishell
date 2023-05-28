@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:09:31 by tas               #+#    #+#             */
-/*   Updated: 2023/05/27 13:13:02 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 13:48:00 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	set_echo(t_list **list_token, t_echo *e)
 		&& ft_strncmp((*list_token)->content, "-n", 2) == 0
 		&& (ft_n((*list_token)->content) == 0))
 	{
-		while (ft_strlen((*list_token)->next->content) >= 2
+		while ((*list_token)->next && ft_strlen((*list_token)->next->content) >= 2
 			&& ft_strncmp((*list_token)->next->content, "-n", 2) == 0
 			&& (ft_n((*list_token)->next->content) == 0))
 			(*list_token) = (*list_token)->next;
@@ -51,7 +51,7 @@ int	set_echo(t_list **list_token, t_echo *e)
 	{
 		e->to_free = 1;
 		e->stockage = ft_strjoin(e->stockage, (*list_token)->content);
-		if ((*list_token)->next != NULL && (*list_token)->next->flag_space == 1)
+		if ((*list_token)->next != NULL)
 			e->stockage = ft_strjoin(e->stockage, " ");
 		(*list_token) = (*list_token)->next;
 	}

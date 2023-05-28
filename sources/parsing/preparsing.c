@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:56:18 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/27 13:06:41 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 13:44:08 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,23 @@ int	err_quote(t_list **list_token)
 	}
 	*list_token = tmp;
 	return (0);
+}
+
+void    reunite_token(t_list **list_token)
+{
+    t_list  *tmp;
+    
+    tmp = *list_token;
+    while (*list_token && (*list_token)->next)
+    {
+        if ((*list_token)->next->flag_space == 0)
+        {
+            (*list_token)->content = ft_strjoin((*list_token)->content, (*list_token)->next->content);
+            (*list_token)->flag_space = (*list_token)->next->flag_space;
+            (*list_token)->next = (*list_token)->next->next;
+        }
+        else
+            (*list_token) = (*list_token)->next;
+    }
+    *list_token = tmp;
 }

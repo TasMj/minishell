@@ -22,6 +22,8 @@ int    init_list(t_list **list_token, char *input)
         return (1);
     remove_list_quotes(list_token);
     remove_empty_tokens(list_token);
+    reunite_token(list_token);
+    // print_list(list_token);
     return (0);
 }
 
@@ -32,14 +34,16 @@ int main(int argc, char **argv, char **env)
     t_minishell data;
 
     g_list_env = get_list_env(env);
-    signal(SIGQUIT, &ctrl_d);
-    signal(SIGINT, &ctrl_c);
+   
     while (1)
     {
+        signal(SIGQUIT, &ctrl_d);
+        signal(SIGINT, &ctrl_c);
         data.input = get_input();
         data.token = malloc(sizeof(t_list));
         *data.token = NULL;
-        if (init_list(data.token, data.input) == 0)//on peut changer les args pour prendre que data
+
+        if (init_list(list_token, input) == 0)
         {
             if (syntax_error(data.token) == 2)
             {

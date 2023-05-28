@@ -251,6 +251,7 @@ int	simple_builtin(t_cmd *cmd, t_exec *data);
 int	is_builtin(t_list **cmd);
 
 char	*del_equal(char *str);
+void    reunite_token(t_list **list_token);
 
 
 
