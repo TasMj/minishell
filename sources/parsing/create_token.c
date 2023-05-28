@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/05/28 16:00:41 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 20:30:41 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ char	*get_input(void)
 	if (input == NULL)
 	{
 		free(input);
-		write(1, "exit\n", 5);	
+		write(1, "exit\n", 5);
+		free_list(g_list_env);
 		exit(EXIT_FAILURE);
 	}
 	else

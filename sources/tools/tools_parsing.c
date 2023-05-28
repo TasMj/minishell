@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:32 by tas               #+#    #+#             */
-/*   Updated: 2023/05/28 00:49:17 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 20:03:56 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ char	*get_venv(char *str)
 	tmp = *g_list_env;
 	while (*g_list_env)
 	{
-		copy_env = ft_strdup((*g_list_env)->content);
-		if (ft_strcmp(str, del_equal(copy_env)) == 0)
+		copy_env = del_equal((*g_list_env)->content);
+		if (ft_strcmp(str, copy_env) == 0)
 		{
-			var = ft_strdup(after_equal((*g_list_env)->content)); //
+			var = after_equal((*g_list_env)->content);
 			*g_list_env = tmp;
 			free(copy_env);
 			return (var);

@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/28 15:04:52 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 20:05:49 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,6 +256,7 @@ int	is_builtin(t_list **cmd);
 
 char	*del_equal(char *str);
 void    reunite_token(t_list **list_token);
-
+void    free_list_token_content(t_list **list_token);
+void	free_exit(t_list **list);
 
 #endif

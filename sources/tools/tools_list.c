@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:12:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/28 13:51:08 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 19:16:27 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	add_list(t_list **list_token, char *stockage, int flag_space)
 
 	to_add = ft_lstnew(stockage, flag_space);
 	ft_lstadd_back(list_token, to_add);
+	// print_list(list_token);
 }
 
 int	ft_lstsize(t_list *lst)

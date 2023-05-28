@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:33:10 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/25 14:44:12 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 20:31:17 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,22 @@ void	free_tab(char **tab)
 	}
 }
 
+void    free_list_token_content(t_list **list_token)
+{
+    t_list *tmp;
+
+    if (!list_token)
+        return ;
+    tmp = (*list_token);
+    while (tmp)
+    {
+		// printf("free g_list %p\n", tmp->content);
+		// printf("free g_list %s\n", tmp->content);
+        free(tmp->content);
+        tmp = tmp->next;
+    }
+}
+
 void	free_list(t_list **list)
 {
 	t_list	*to_free;
@@ -49,4 +65,12 @@ void	free_all(char *s1, char *s2)
 {
 	free(s1);
 	free(s2);
+}
+
+void	free_exit(t_list **list)
+{
+	free_list_token_content(list);
+	free_list(list);
+	free_list_token_content(g_list_env);
+	free_list(g_list_env);
 }

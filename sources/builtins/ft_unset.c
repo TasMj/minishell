@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:35 by tas               #+#    #+#             */
-/*   Updated: 2023/05/26 11:47:50 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 19:20:43 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,19 @@ char	*var_name(char *str)
 int	check_var(char *str)
 {
 	t_list	*tmp;
-
+	char	*var;
+	
 	tmp = *g_list_env;
 	while (*g_list_env)
 	{
-		if (ft_strcmp(var_name((*g_list_env)->content), str) == 0)
+		var = var_name((*g_list_env)->content);
+		if (ft_strcmp(var, str) == 0)
 		{
 			*g_list_env = tmp;
+			free(var);
 			return (1);
 		}
+		free(var);
 		(*g_list_env) = (*g_list_env)->next;
 	}
 	*g_list_env = tmp;
@@ -47,22 +51,24 @@ void	del(char *str)
 {
 	t_list	*tmp_first;
 	t_list	*tmp_next;
+	char	*var;
 
 	tmp_first = *g_list_env;
-	if (ft_strcmp(var_name((*g_list_env)->content), str) == 0)
+	var = var_name((*g_list_env)->content);
+	if (ft_strcmp(var, str) == 0)
 	{
 		(*g_list_env) = (*g_list_env)->next;
 		tmp_first = *g_list_env;
 	}
 	else
 	{
-		while ((*g_list_env)->next != NULL
-			&& ft_strcmp(var_name((*g_list_env)->next->content), str) == 1)
+		while ((*g_list_env)->next != NULL && ft_strcmp(var, str) == 1)
 			(*g_list_env) = (*g_list_env)->next;
 		tmp_next = (*g_list_env)->next->next;
 		(*g_list_env)->next = tmp_next;
 	}
 	*g_list_env = tmp_first;
+	free(var);
 }
 
 int	ft_unset(t_list **list_token)

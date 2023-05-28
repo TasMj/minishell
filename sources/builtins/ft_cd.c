@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/28 00:40:56 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/28 20:17:55 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,14 @@ int	set_old_path(char *path)
 	tmp = *g_list_env;
 	while (*g_list_env)
 	{
-		copy_env = ft_strdup((*g_list_env)->content);
-		if (ft_strcmp(del_equal(copy_env), "OLDPWD") == 1)
+		copy_env = del_equal((*g_list_env)->content);
+		if (ft_strcmp(copy_env, "OLDPWD") == 1)
 			(*g_list_env) = (*g_list_env)->next;
-		else if (ft_strcmp(del_equal(copy_env), "OLDPWD") == 0)
+		else if (ft_strcmp(copy_env, "OLDPWD") == 0)
 		{
-			(*g_list_env)->content = ft_strjoin("OLDPWD=", path);
+			// free((*g_list_env)->content);
+			// (*g_list_env)->content = ft_strdup("OLDPWD=");
+			(*g_list_env)->content = ft_strjoin_mod("OLDPWD=", path, 0);
 			*g_list_env = tmp;
 			free(copy_env);
 			return (0);
@@ -117,7 +119,10 @@ int	ft_cd(t_list **list)
 	else if (ft_lstsize(*list) <= 2)
 		path = set_path(path, list);
 	else
+	{
+		*list = tmp;
 		return (err_msg(3));
+	}
 	if (err_cd(list, path) == 1)
 		return (1);
 	free(path);
