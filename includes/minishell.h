@@ -6,10 +6,10 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/28 20:05:49 by tmejri           ###   ########.fr       */
-/*   Updated: 2023/05/28 19:59:39 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/30 00:35:28 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -133,8 +133,9 @@ typedef struct s_cmd
 
 typedef struct s_xek
 {
-	t_cmd	*cmd;
+	t_cmd		*cmd;
 	int		nb_cmd;
+	int		pipe[2];
 }	t_xek;
 
 typedef struct s_minishell
@@ -271,6 +272,7 @@ int		prep_cmd(t_minishell *data);
 int		nb_cmd(t_list *token);
 void	set_to_zero(t_xek *x);
 int		nb_redir(t_list	*elem);
-
+int	has_slash(t_cmd *cmd);
+char	**lst_to_tab(t_list **lst);
 
 #endif

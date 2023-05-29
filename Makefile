@@ -6,7 +6,7 @@
 #    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/05/28 16:33:01 by jthuysba         ###   ########.fr        #
+#    Updated: 2023/05/30 00:17:25 by jthuysba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,13 @@ BUILTINS		= ./sources/builtins/ft_cd.c ./sources/builtins/ft_echo.c \
 				./sources/builtins/ft_unset.c \
 		
 EXEC			= ./sources/exec/path.c \
-				./sources/exec/heredoc.c \
 				./sources/exec/builtin.c \
 				./sources/exec/signal.c \
-				./sources/exec/clean_all.c ./sources/exec/setup_pipes.c \
-				./sources/exec/exec_utils.c ./sources/exec/exec.c \
-				./sources/exec/set_fd.c ./sources/exec/exec_all.c \
-				./sources/exec/handle_builtin.c \
+				# ./sources/exec/clean_all.c ./sources/exec/setup_pipes.c \
+				# ./sources/exec/exec_utils.c ./sources/exec/exec.c \
+				# ./sources/exec/set_fd.c ./sources/exec/exec_all.c \
+				# ./sources/exec/handle_builtin.c \
+				# ./sources/exec/heredoc.c \
 
 WE_EXEC			= ./sources/we_exec/exec.c ./sources/we_exec/prep_cmd.c \
 				./sources/we_exec/utils.c

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/05/28 19:51:54 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/30 00:12:54 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int main(int argc, char **argv, char **env)
         data.token = malloc(sizeof(t_list));
         *data.token = NULL;
 
-        if (init_list(list_token, input) == 0)
+        if (init_list(data.token, data.input) == 0)
         {
             if (syntax_error(data.token) == 2)
             {

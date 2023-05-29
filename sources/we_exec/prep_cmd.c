@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/28 19:59:00 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/30 00:25:35 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,45 @@ int	handle_redir(t_cmd *cmd, t_list *elem)
 	return (0);
 }
 
-int	fill_cmd(t_cmd *cmd)
+/* Verifie si la commande est valide 
+ex : ls -> OK, jules -> not found */
+int	check_cmd(t_cmd *cmd)
 {
 	char	**tab;
-
-	/* On attribue a cmd la commande sans les op */
-	cmd->cmd = clone_to_op(*(cmd->token));
-
+	
+	/* Si la commande est un path */
+	if (has_slash(cmd) == 1)
+	{
+		/* On check si la path est valide si oui on return 0 */
+		if (access((*cmd->cmd)->content, F_OK | X_OK) != -1)
+			return (0);
+		/* Sinon on return 1 et message d'erreur */
+		printf("minishell: %s: no such file or directory\n", (*cmd->cmd)->content);
+		//WIP => free all
+		return (1);
+	}
+	/* Sinon ex : ls -a, cat ou jules */
 	tab = lst_to_tab(g_list_env);
 	cmd->path = find_path(tab, (*cmd->cmd)->content);
-	free(tab);
+	if (!cmd->path)
+	{
+		/* Si la commande n'est pas valide on retourne une erreur */
+		printf("minishell: %s: command not found\n", (*cmd->cmd)->content);
+		//WIP => free all
+		free_tab(tab);
+		return (1);
+	}
+	free_tab(tab);
+	return (0);
+}
+
+/* Init tous les param de chaque cmd */
+int	fill_cmd(t_cmd *cmd)
+{
+	/* On attribue a cmd la commande sans les op */
+	cmd->cmd = clone_to_op(*(cmd->token));
+	if (check_cmd(cmd) != 0)
+		return (1);
 
 	handle_redir(cmd, *(cmd->token));
 	

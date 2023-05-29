@@ -6,11 +6,33 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:30:38 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/28 19:59:16 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/30 00:19:08 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/* Converti les token d'une liste en char ** */
+char	**lst_to_tab(t_list **lst)
+{
+	t_list	*elem;
+	char	**tab;
+	int	i;
+
+	elem = *lst;
+	tab = malloc(sizeof(char *) * (ft_lstsize(*lst) + 1));
+	if (!tab)
+		return (NULL);
+	i = 0;
+	while (elem)
+	{
+		tab[i] = ft_strdup_size(elem->content, ft_strlen(elem->content));
+		elem = elem->next;
+		i++;
+	}
+	tab[i] = 0;
+	return (tab);
+}
 
 /* Retourne le nombre de commandes */
 int	nb_cmd(t_list *token)
@@ -56,4 +78,19 @@ int	nb_redir(t_list	*elem)
 		elem = elem->next;
 	}
 	return (count);
+}
+
+/* Check si la commande a un slash et est donc un path
+ex : /bin/ls, /jules */
+int	has_slash(t_cmd *cmd)
+{
+	int	i;
+	i = 0;
+	while ((*cmd->cmd)->content[i])
+	{
+		if ((*cmd->cmd)->content[i] == '/')
+			return (1);
+		i++;
+	}
+	return (0);
 }
