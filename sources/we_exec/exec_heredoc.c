@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:10:27 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/30 22:01:29 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/30 22:06:23 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	get_delims(t_minishell *data)
 	while (elem)
 	{
 		/* Quand on trouve un heredoc on recup le delim
-		et on ouvre la pipe dans laquelle on va ecrire*/
+		et on ouvre la pipe dans laquelle on va ecrire */
 		if (elem->type == HEREDOC)
 		{
 			data->x->hdoc[i].delim = ft_strdup(elem->next->content);
@@ -54,7 +54,8 @@ int	get_delims(t_minishell *data)
 	return (0);
 }
 
-void ft_putstr_fd(char *str, int fd)
+/* Ecrit str dans fd (avec un \n) */
+void write_in_fd(char *str, int fd)
 {
 	if (!str)
 		return ;
@@ -62,6 +63,7 @@ void ft_putstr_fd(char *str, int fd)
 	write(fd, "\n", 1);
 }
 
+/* Ouvre l'ecriture du heredoc */
 int	write_in_hdoc(t_hdoc *hdoc)
 {
 	char	*input;
@@ -69,9 +71,11 @@ int	write_in_hdoc(t_hdoc *hdoc)
 	while (1)
 	{
 		input = readline("> ");
+		/* Si l'input est le delimiteur on arrete d'ecrire dans le hdoc */
 		if (!input || ft_strncmp(input, hdoc->delim, ft_strlen(input)) == 0)
 			break ;
-		ft_putstr_fd(input, hdoc->hd_pipe[1]);
+		/* Sinon on ecrit le input dans la pipe d'ecriture du heredoc */
+		write_in_fd(input, hdoc->hd_pipe[1]);
 		free(input);
 	}
 	close(hdoc->hd_pipe[0]);
@@ -87,6 +91,7 @@ int	heredoc_child(t_xek *x)
 	i = 0;
 	while (i < x->nb_hdoc)
 	{
+		/* Tant qu'on a des hdoc on les ouvrent et on ecrit dedans un par un */
 		write_in_hdoc(&(x->hdoc[i]));
 		i++;
 	}
