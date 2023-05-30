@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 01:58:38 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/30 02:18:19 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/30 13:11:27 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void free_cmd(t_cmd *cmd)
 {
 	free_list(cmd->token);
 	free_list(cmd->cmd);
+	if (cmd->tab)
+		free_tab(cmd->tab);
 	if (cmd->nb_redir > 0)
 		free_tab(cmd->file);
 	if (cmd->redir)
@@ -35,4 +37,6 @@ void	destroy_all(t_xek *x)
 		i++;
 	}
 	free(x->cmd);
+	close(x->pipe[0]);
+	close(x->pipe[1]);
 }

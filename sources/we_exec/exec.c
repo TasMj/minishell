@@ -9,26 +9,94 @@
 /*   Updated: 2023/05/30 01:18:40 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
+#include "heredoc.h"
 
-int	launch_process(t_xek *x)
+/* Redirige l'entree et/ou la sortie d'une commande vers une pipe */
+void	dup_pipe(t_cmd *cmd, t_xek *x)
+{
+	if (x->nb_cmd == 1)
+		return ;
+	else if (cmd->id == 0)
+		dup2(x->pipe[1], STDOUT_FILENO);
+	else if (cmd->id == x->nb_cmd - 1)
+		dup2(x->pipe[0], STDIN_FILENO);
+	else
+	{
+		dup2(x->pipe[1], STDOUT_FILENO);
+		dup2(x->pipe[0], STDIN_FILENO);
+	}
+	close(x->pipe[0]);
+	close(x->pipe[1]);
+	return ;
+}
+
+/* On ouvre nos fichiers et on redirige selon le type en ecrasant la pipe */
+int	open_n_dup(t_cmd *cmd)
 {
 	int	i;
+	int	fd;
 
 	i = 0;
-	while (i < x->nb_cmd)
+	while (cmd->file[i])
 	{
-		x->cmd[i].pid = fork();
-		if (x->cmd[i].pid < 0)
-			return (1);
-		if (x->cmd[i].pid == 0)
-		{
-			printf("Hello from process %d\n", i);
-			return (0);
-		}
+		/* Selon le type de redir on ouvre le file differement */
+		if (cmd->redir[i] == STDOUT)
+			fd = open(cmd->file[i], O_CREAT | O_TRUNC | O_RDWR, 0666);
+		else if (cmd->redir[i] == APPEND)
+			fd = open(cmd->file[i], O_CREAT | O_APPEND | O_RDWR, 0666);
+		else if (cmd->redir[i] == STDIN)
+			fd = open(cmd->file[i], O_RDONLY);
+		//WIP HEREDOC
+		if (fd == -1)
+			exit(1);//WIP ERROR
+
+		if (cmd->redir[i] == STDOUT || cmd->redir[i] == APPEND)
+			dup2(fd, STDOUT_FILENO);
+		else if (cmd->redir[i] == STDIN) //WIP HEREDOC
+			dup2(fd, STDIN_FILENO);
+		close(fd);
 		i++;
 	}
+	return (1);
+}
+
+int	exec_it(t_cmd *cmd)
+{
+	char	**env;
+
+	env = lst_to_tab(g_list_env);
+	if (has_slash(cmd) == 1)
+	{
+		if (execve((*cmd->cmd)->content, cmd->tab, env) != 0)
+			return (1);
+		printf("executed !");
+		exit (0);
+	}
+	else
+	{
+		if (execve(cmd->path, cmd->tab, env) != 0)
+			return (1);
+		printf("executed !");
+		exit (0);
+	}
+	return (0);
+}
+
+/* On lance un process pour chaque commande */
+int	launch_process(t_cmd *cmd, t_xek *x)
+{
+		cmd->pid = fork();
+		if (cmd->pid < 0)
+			return (1);
+		if (cmd->pid == 0)
+		{
+			dup_pipe(cmd, x);
+			open_n_dup(cmd);
+			if (exec_it(cmd) != 0)
+				exit(1);
+			exit(0);
+		}
 	return (0);
 }
 
@@ -37,13 +105,19 @@ int	go_exec(t_xek *x)
 {
 	int	i;
 
+	/* On initialise la pipe qui va nous servir a communiquer entre les process */
 	if (pipe(x->pipe) < 0)
 		return (1);
 	
-	launch_process(x);
-
-
+	/* On lance un process pour chaque commande */
 	i = 0;
+	while (i< x->nb_cmd)
+	{
+		launch_process(&(x->cmd[i]), x);
+		i++;
+	}
+	i = 0;
+	close(x->pipe[1]);
 	while (i < x->nb_cmd)
 	{
 		waitpid(x->cmd[i].pid, NULL, 0);
