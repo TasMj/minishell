@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/30 13:37:06 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:48:32 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,7 @@ typedef struct s_xek
 {
 	t_cmd		*cmd;
 	int		nb_cmd;
-	int		pipe[2];
-	int		prev_pipe[2];
+	int		**pipe;
 }	t_xek;
 
 typedef struct s_minishell
@@ -250,8 +249,6 @@ int		nb_cmd(t_list *token);
 /* set fd */
 int	set_fd(t_cmd *cmd, t_list *token);
 
-/* clean all */
-void	close_all(t_exec *data, int end);
 void	clean_all(t_exec *data);
 
 /* exec god */
@@ -278,5 +275,8 @@ int		nb_redir(t_list	*elem);
 int	has_slash(t_cmd *cmd);
 char	**lst_to_tab(t_list **lst);
 void	destroy_all(t_xek *x);
+int	open_pipes(t_minishell *data);
+void	close_all(t_xek *x);
+// void	close_writing(t_xek *x);
 
 #endif

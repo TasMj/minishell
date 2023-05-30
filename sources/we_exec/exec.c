@@ -9,6 +9,7 @@
 /*   Updated: 2023/05/30 01:18:40 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 #include "heredoc.h"
 
@@ -18,20 +19,17 @@ void	dup_pipe(t_cmd *cmd, t_xek *x)
 	if (x->nb_cmd == 1)
 		return ;
 	if (cmd->id == 0)
-		dup2(x->pipe[1], STDOUT_FILENO);
+		dup2(x->pipe[0][1], STDOUT_FILENO);
 	else if (cmd->id == x->nb_cmd - 1)
 	{
-		dup2(x->prev_pipe[0], STDIN_FILENO);
+		dup2(x->pipe[x->nb_cmd - 2][0], STDIN_FILENO);
 	}
 	else
 	{
-		dup2(x->prev_pipe[0], STDIN_FILENO);
-		dup2(x->pipe[1], STDOUT_FILENO);
+		dup2(x->pipe[cmd->id - 1][0], STDIN_FILENO);
+		dup2(x->pipe[cmd->id][1], STDOUT_FILENO);
 	}
-	close(x->pipe[0]);
-	close(x->pipe[1]);
-	close(x->prev_pipe[0]);
-	close(x->prev_pipe[1]);
+	close_all(x);
 	return ;
 }
 
@@ -41,9 +39,9 @@ int	open_n_dup(t_cmd *cmd)
 	int	i;
 	int	fd;
 
-	i = 0;
 	if (cmd->nb_redir == 0)
 		return (0);
+	i = 0;
 	while (cmd->file[i])
 	{
 		/* Selon le type de redir on ouvre le file differement */
@@ -56,7 +54,6 @@ int	open_n_dup(t_cmd *cmd)
 		//WIP HEREDOC
 		if (fd == -1)
 			exit(1);//WIP ERROR
-
 		if (cmd->redir[i] == STDOUT || cmd->redir[i] == APPEND)
 			dup2(fd, STDOUT_FILENO);
 		else if (cmd->redir[i] == STDIN) //WIP HEREDOC
@@ -90,17 +87,17 @@ int	exec_it(t_cmd *cmd)
 /* On lance un process pour chaque commande */
 int	launch_process(t_cmd *cmd, t_xek *x)
 {
-		cmd->pid = fork();
-		if (cmd->pid < 0)
-			return (1);
-		if (cmd->pid == 0)
-		{
-			dup_pipe(cmd, x);
-			open_n_dup(cmd);
-			if (exec_it(cmd) != 0)
-				exit(1);
-			exit(0);
-		}
+	cmd->pid = fork();
+	if (cmd->pid < 0)
+		return (1);
+	if (cmd->pid == 0)
+	{
+		dup_pipe(cmd, x);
+		open_n_dup(cmd);
+		if (exec_it(cmd) != 0)
+			exit(1);
+		exit(0);
+	}
 	return (0);
 }
 
@@ -108,12 +105,6 @@ int	launch_process(t_cmd *cmd, t_xek *x)
 int	go_exec(t_xek *x)
 {
 	int	i;
-
-	/* On initialise la pipe qui va nous servir a communiquer entre les process */
-	if (pipe(x->pipe) < 0)
-		return (1);
-	if (pipe(x->prev_pipe) < 0)
-		return (1);
 	
 	/* On lance un process pour chaque commande */
 	i = 0;
@@ -122,16 +113,13 @@ int	go_exec(t_xek *x)
 		launch_process(&(x->cmd[i]), x);
 		i++;
 	}
-	// close(x->pipe[0]);
-	// close(x->pipe[1]);
+	close_all(x);
 	i = 0;
 	while (i < x->nb_cmd)
 	{
 		waitpid(x->cmd[i].pid, NULL, 0);
 		i++;
 	}
-	// close(x->prev_pipe[0]);
-	// close(x->prev_pipe[1]);
 	return (0);
 }
 
@@ -142,7 +130,7 @@ int	we_exec(t_minishell *data)
 	data->x = malloc(sizeof(t_xek));
 
 	prep_cmd(data);
-
+	open_pipes(data);
 	go_exec(data->x);
 
 	destroy_all(data->x);

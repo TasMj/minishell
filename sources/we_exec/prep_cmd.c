@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/30 13:41:15 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/30 19:14:27 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,23 +66,27 @@ int	handle_redir(t_cmd *cmd, t_list *elem)
 	cmd->redir = malloc(sizeof(int) * cmd->nb_redir);
 	if (!cmd->redir)
 		return (1);
-	cmd->file = malloc(sizeof(char *) * cmd->nb_redir + 1);
+	cmd->file = malloc(sizeof(char *) * (cmd->nb_redir + 1));
 	if (!cmd->file)
 		return (1);
+	ft_memset(cmd->file, 0, sizeof(char) * cmd->nb_redir);
 	i = 0;
 	while (elem)
 	{
 		if (elem->type != WORD)
 		{
 			cmd->redir[i] = elem->type;
-			cmd->file[i] = ft_strdup(elem->next->content);
+			if (elem->next)
+				cmd->file[i] = ft_strdup(elem->next->content);
+			else
+				return (1);//WIP
 			if (!cmd->file[i])
 				return (1);
 			i++;
 		}
 		elem = elem->next;
 	}
-	cmd->file[i] = 0;
+	// cmd->file[i] = ft_strdup(NULL);
 	return (0);
 }
 
@@ -139,10 +143,9 @@ int	prep_cmd(t_minishell *data)
 	-> 1 pipe => 2 commandes */
 	data->x->nb_cmd = nb_cmd(*data->token);
 	data->x->cmd = malloc(sizeof(t_cmd) * data->x->nb_cmd);
-	if (!data->x)
+	if (!data->x->cmd)
 		return (1);
 	set_to_zero(data->x);
-	
 	elem = *(data->token);
 	i = 0;
 	while (elem)
