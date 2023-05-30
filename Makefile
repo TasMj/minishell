@@ -6,7 +6,7 @@
 #    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/05/30 18:22:40 by jthuysba         ###   ########.fr        #
+#    Updated: 2023/05/30 21:00:47 by jthuysba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ EXEC			= ./sources/exec/path.c \
 
 WE_EXEC			= ./sources/we_exec/exec.c ./sources/we_exec/prep_cmd.c \
 				./sources/we_exec/utils.c ./sources/we_exec/destroy_all.c \
-				./sources/we_exec/open_pipes.c \
+				./sources/we_exec/open_pipes.c ./sources/we_exec/handle_redir.c \
+				./sources/we_exec/child_process.c ./sources/we_exec/exec_heredoc.c \
 
 EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
 				./sources/exit/free_struct.c

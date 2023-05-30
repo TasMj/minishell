@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:34:23 by tas               #+#    #+#             */
-/*   Updated: 2023/05/30 00:14:28 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/30 21:52:47 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,6 @@ int	parent_process(t_heredoc *h, char **env, t_cmd *cmd)
 	if (execve(h->path_cmd, h->token_arg, env) == -1)
 			return (1);
 	return (1);
-}
-
-void ft_putstr_fd(char *str, int fd)
-{
-	if (!str)
-		return ;
-	(void)write(fd, str, ft_strlen(str));
 }
 
 int	heredoc_process(t_heredoc *h, char **env, t_cmd *cmd)

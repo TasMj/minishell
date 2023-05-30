@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:30:38 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/30 13:45:16 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/30 19:53:00 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,22 +63,6 @@ void	set_to_zero(t_xek *x)
 		x->cmd[i].tab_env = 0;
 		i++;
 	}
-}
-
-/* Compte le nombres de redir dans le token de cmd
--> {cat < file} => 1 redir */
-int	nb_redir(t_list	*elem)
-{
-	int	count;
-
-	count = 0;
-	while (elem)
-	{
-		if (elem->type != WORD)
-			count++;
-		elem = elem->next;
-	}
-	return (count);
 }
 
 /* Check si la commande a un slash et est donc un path
