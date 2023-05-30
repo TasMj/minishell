@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/30 13:04:48 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/30 13:41:15 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	handle_redir(t_cmd *cmd, t_list *elem)
 	int	i;
 
 	cmd->nb_redir = nb_redir(*(cmd->token));
+	if (cmd->nb_redir == 0)
+		return (0);
 	cmd->redir = malloc(sizeof(int) * cmd->nb_redir);
 	if (!cmd->redir)
 		return (1);

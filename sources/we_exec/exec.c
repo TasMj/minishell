@@ -17,17 +17,21 @@ void	dup_pipe(t_cmd *cmd, t_xek *x)
 {
 	if (x->nb_cmd == 1)
 		return ;
-	else if (cmd->id == 0)
+	if (cmd->id == 0)
 		dup2(x->pipe[1], STDOUT_FILENO);
 	else if (cmd->id == x->nb_cmd - 1)
-		dup2(x->pipe[0], STDIN_FILENO);
+	{
+		dup2(x->prev_pipe[0], STDIN_FILENO);
+	}
 	else
 	{
+		dup2(x->prev_pipe[0], STDIN_FILENO);
 		dup2(x->pipe[1], STDOUT_FILENO);
-		dup2(x->pipe[0], STDIN_FILENO);
 	}
 	close(x->pipe[0]);
 	close(x->pipe[1]);
+	close(x->prev_pipe[0]);
+	close(x->prev_pipe[1]);
 	return ;
 }
 
@@ -38,6 +42,8 @@ int	open_n_dup(t_cmd *cmd)
 	int	fd;
 
 	i = 0;
+	if (cmd->nb_redir == 0)
+		return (0);
 	while (cmd->file[i])
 	{
 		/* Selon le type de redir on ouvre le file differement */
@@ -63,19 +69,17 @@ int	open_n_dup(t_cmd *cmd)
 
 int	exec_it(t_cmd *cmd)
 {
-	char	**env;
-
-	env = lst_to_tab(g_list_env);
+	cmd->tab_env = lst_to_tab(g_list_env);
 	if (has_slash(cmd) == 1)
 	{
-		if (execve((*cmd->cmd)->content, cmd->tab, env) != 0)
+		if (execve((*cmd->cmd)->content, cmd->tab, cmd->tab_env) != 0)
 			return (1);
 		printf("executed !");
 		exit (0);
 	}
 	else
 	{
-		if (execve(cmd->path, cmd->tab, env) != 0)
+		if (execve(cmd->path, cmd->tab, cmd->tab_env) != 0)
 			return (1);
 		printf("executed !");
 		exit (0);
@@ -108,6 +112,8 @@ int	go_exec(t_xek *x)
 	/* On initialise la pipe qui va nous servir a communiquer entre les process */
 	if (pipe(x->pipe) < 0)
 		return (1);
+	if (pipe(x->prev_pipe) < 0)
+		return (1);
 	
 	/* On lance un process pour chaque commande */
 	i = 0;
@@ -116,13 +122,16 @@ int	go_exec(t_xek *x)
 		launch_process(&(x->cmd[i]), x);
 		i++;
 	}
+	// close(x->pipe[0]);
+	// close(x->pipe[1]);
 	i = 0;
-	close(x->pipe[1]);
 	while (i < x->nb_cmd)
 	{
 		waitpid(x->cmd[i].pid, NULL, 0);
 		i++;
 	}
+	// close(x->prev_pipe[0]);
+	// close(x->prev_pipe[1]);
 	return (0);
 }
 

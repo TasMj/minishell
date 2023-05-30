@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:30:38 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/30 00:19:08 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/30 13:45:16 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	set_to_zero(t_xek *x)
 	while (i < x->nb_cmd)
 	{
 		ft_memset(&(x->cmd[i]), 0, sizeof(t_cmd));
+		x->cmd[i].tab_env = 0;
 		i++;
 	}
 }

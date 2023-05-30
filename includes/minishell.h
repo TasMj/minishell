@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/30 02:09:15 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/30 13:37:06 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ typedef struct s_cmd
 	char	**file;
 	int		nb_redir;
 	pid_t		pid;
+	char	**tab_env;
 }	t_cmd;
 
 typedef struct s_xek
@@ -137,6 +138,7 @@ typedef struct s_xek
 	t_cmd		*cmd;
 	int		nb_cmd;
 	int		pipe[2];
+	int		prev_pipe[2];
 }	t_xek;
 
 typedef struct s_minishell
