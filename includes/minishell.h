@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/30 00:35:28 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/30 02:09:15 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ typedef struct s_cmd
 	int		*redir;
 	char	**file;
 	int		nb_redir;
+	pid_t		pid;
 }	t_cmd;
 
 typedef struct s_xek
@@ -274,5 +275,6 @@ void	set_to_zero(t_xek *x);
 int		nb_redir(t_list	*elem);
 int	has_slash(t_cmd *cmd);
 char	**lst_to_tab(t_list **lst);
+void	destroy_all(t_xek *x);
 
 #endif

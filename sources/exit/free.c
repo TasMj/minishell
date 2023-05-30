@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:33:10 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/28 20:31:17 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/30 02:15:55 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	free_tab(char **tab)
 	int	i;
 
 	i = 0;
-	if (tab)
+	if (tab[i])
 	{
 		while (tab[i])
 		{
@@ -50,14 +50,17 @@ void	free_list(t_list **list)
 	t_list	*to_free;
 	t_list	*iter;
 
-	iter = *list;
-	while (iter)
+	if (*list)
 	{
-		to_free = iter;
-		iter = iter->next;
-		free(to_free);
+		iter = *list;
+		while (iter)
+		{
+			to_free = iter;
+			iter = iter->next;
+			free(to_free);
+		}
+		*list = NULL;
 	}
-	*list = NULL;
 	free(list);
 }
 

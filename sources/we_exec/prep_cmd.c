@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/30 00:25:35 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/30 02:07:50 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ int	handle_redir(t_cmd *cmd, t_list *elem)
 ex : ls -> OK, jules -> not found */
 int	check_cmd(t_cmd *cmd)
 {
-	char	**tab;
-	
 	/* Si la commande est un path */
 	if (has_slash(cmd) == 1)
 	{
@@ -101,17 +99,17 @@ int	check_cmd(t_cmd *cmd)
 		return (1);
 	}
 	/* Sinon ex : ls -a, cat ou jules */
-	tab = lst_to_tab(g_list_env);
-	cmd->path = find_path(tab, (*cmd->cmd)->content);
+	cmd->tab = lst_to_tab(g_list_env);
+	cmd->path = find_path(cmd->tab, (*cmd->cmd)->content);
 	if (!cmd->path)
 	{
 		/* Si la commande n'est pas valide on retourne une erreur */
 		printf("minishell: %s: command not found\n", (*cmd->cmd)->content);
 		//WIP => free all
-		free_tab(tab);
+		free_tab(cmd->tab);
 		return (1);
 	}
-	free_tab(tab);
+	free_tab(cmd->tab);
 	return (0);
 }
 
