@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:10:27 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/30 22:06:23 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/31 22:08:40 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,12 @@ int	heredoc_child(t_xek *x)
 	{
 		/* Tant qu'on a des hdoc on les ouvrent et on ecrit dedans un par un */
 		write_in_hdoc(&(x->hdoc[i]));
+		i++;
+	}
+	i = 0;
+	while (i < x->nb_hdoc)
+	{
+		free(x->hdoc[i].delim);
 		i++;
 	}
 	exit(0);

@@ -22,7 +22,7 @@ int	launch_process(t_cmd *cmd, t_xek *x)
 	if (cmd->pid == 0)
 	{
 		dup_pipe(cmd, x);
-		open_n_dup(cmd);
+		open_n_dup(cmd, x);
 		if (exec_it(cmd) != 0)
 			exit(1);
 		exit(0);
