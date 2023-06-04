@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 19:56:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/31 23:21:10 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/04 14:19:51 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,15 @@ void	dup_pipe(t_cmd *cmd, t_xek *x)
 	return ;
 }
 
-int	grab_hdoc_pipe()
-{
+// int	grab_hdoc_pipe()
+// {
 	
-}
+// }
 
 /* On ouvre nos fichiers et on redirige selon le type en ecrasant la pipe */
 int	open_n_dup(t_cmd *cmd, t_xek *x)
 {
+	(void) x;
 	int	i;
 	int	fd;
 
@@ -56,8 +57,8 @@ int	open_n_dup(t_cmd *cmd, t_xek *x)
 			fd = open(cmd->file[i], O_CREAT | O_APPEND | O_RDWR, 0666);
 		else if (cmd->redir[i] == STDIN)
 			fd = open(cmd->file[i], O_RDONLY);
-		else if (cmd->redir[i] == HEREDOC)
-			fd = grab_hdoc_pipe(x);
+		// else if (cmd->redir[i] == HEREDOC)
+		// 	fd = grab_hdoc_pipe(x);
 		if (fd == -1)
 			exit(1);//WIP ERROR
 		if (cmd->redir[i] == STDOUT || cmd->redir[i] == APPEND)

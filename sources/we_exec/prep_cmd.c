@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/30 19:52:47 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/04 14:44:58 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int	prep_cmd(t_minishell *data)
 	/* On compte les commandes en fonction des pipes
 	-> 1 pipe => 2 commandes */
 	data->x->nb_cmd = nb_cmd(*data->token);
+	if (data->x->nb_cmd == 0)
+		return (0);
 	data->x->cmd = malloc(sizeof(t_cmd) * data->x->nb_cmd);
 	if (!data->x->cmd)
 		return (1);
