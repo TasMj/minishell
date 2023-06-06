@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:10:27 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/04 14:45:30 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/06 19:17:30 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,20 +107,31 @@ int	heredoc_child(t_xek *x)
 int	exec_heredoc(t_minishell *data)
 {
 	pid_t	pid;
+	int	i;
 	
 	data->x->nb_hdoc = nb_hdoc(data);
 	if (data->x->nb_hdoc == 0)
 		return (0);
+	data->x->hdoc_index = 0;
 	/* On alloue un t_hdoc pour chaque hdoc */
 	data->x->hdoc = malloc(sizeof(t_heredoc) * data->x->nb_hdoc);
 	if (!data->x->hdoc)
 		return (1);
 	get_delims(data);
-	
+	i = 0;
 	/* On cree un process dans lequel on va ouvrir tous les hdoc un par un */
 	pid = fork();
 	if (pid == 0)
 		heredoc_child(data->x);
+	else
+	{
+		/* On ferme toutes les entrees d'ecritures des hdoc, on en aura plus besoin */
+		while (i < data->x->nb_hdoc)
+		{
+			close(data->x->hdoc[i].hd_pipe[1]);
+			i++;
+		}
+	}
 	waitpid(pid, NULL, 0);
 	return (0);
 }

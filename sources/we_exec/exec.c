@@ -64,7 +64,7 @@ int	we_exec(t_minishell *data)
 
 	exec_heredoc(data);
 
-	// go_exec(data->x);
+	go_exec(data->x);
 
 	// destroy_all(data->x);
 

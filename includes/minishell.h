@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/31 23:20:02 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:17:49 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ typedef struct s_xek
 	int			**pipe;
 	int			nb_hdoc;
 	t_hdoc	*hdoc;
+	int		hdoc_index;
 }	t_xek;
 
 typedef struct s_minishell
