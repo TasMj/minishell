@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:09:31 by tas               #+#    #+#             */
-/*   Updated: 2023/06/06 12:47:19 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/10 16:44:45 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,15 @@ int	set_echo(t_list **list_token, t_echo *e)
 		e->to_free = 1;
 		e->stockage = ft_strjoin(e->stockage, (*list_token)->content);
 		if ((*list_token)->next != NULL)
+			(*list_token) = (*list_token)->next;
+		else
+			return (0);
+		while (*list_token)
+		{
 			e->stockage = ft_strjoin_mod(e->stockage, " ", 1);
-		(*list_token) = (*list_token)->next;
+			e->stockage = ft_strjoin_mod(e->stockage, (*list_token)->content, 1);
+			(*list_token) = (*list_token)->next;
+		}
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/06/10 15:06:52 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/10 15:50:48 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,10 @@
 int    init_list(t_list **list_token, char *input)
 {
     list_token = create_token(list_token, input);
-
     if (err_quote(list_token) == 1)
         return (1);
     substitute_dollar(list_token);
     get_type(list_token);
-    // if (err_quote(list_token) == 1)
-        // return (1);
     remove_list_quotes(list_token);
     remove_empty_tokens(list_token);
     reunite_token(list_token);
