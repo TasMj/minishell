@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preparsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:56:18 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/28 16:41:21 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/10 19:13:33 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,41 @@ int	err_quote(t_list **list_token)
 	return (0);
 }
 
-void    reunite_token(t_list **list_token)
+// void    reunite_token(t_list **list_token)
+// {
+    // t_list  *tmp;
+    // 
+    // tmp = *list_token;
+    // while (*list_token && (*list_token)->next)
+    // {
+        // if ((*list_token)->next->flag_space == 0)
+        // {
+            // (*list_token)->content = ft_strjoin_mod((*list_token)->content, (*list_token)->next->content, 3);
+            // (*list_token)->flag_space = (*list_token)->next->flag_space;
+            // (*list_token)->next = (*list_token)->next->next;
+        // }
+        // else
+            // (*list_token) = (*list_token)->next;
+    // }
+    // *list_token = tmp;
+// }
+
+void reunite_token(t_list **list_token)
 {
-    t_list  *tmp;
+    t_list *tmp;
     
     tmp = *list_token;
     while (*list_token && (*list_token)->next)
     {
         if ((*list_token)->next->flag_space == 0)
         {
-            (*list_token)->content = ft_strjoin_mod((*list_token)->content, (*list_token)->next->content, 3);
-            (*list_token)->flag_space = (*list_token)->next->flag_space;
-            (*list_token)->next = (*list_token)->next->next;
+            t_list *next_token = (*list_token)->next;
+            
+            (*list_token)->content = ft_strjoin_mod((*list_token)->content, next_token->content, 1);
+            (*list_token)->flag_space = next_token->flag_space;
+            (*list_token)->next = next_token->next;
+            free(next_token->content);
+            free(next_token);
         }
         else
             (*list_token) = (*list_token)->next;
