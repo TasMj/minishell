@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:33:10 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/28 20:31:17 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/06 13:02:17 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void    free_list_token_content(t_list **list_token)
     {
 		// printf("free g_list %p\n", tmp->content);
 		// printf("free g_list %s\n", tmp->content);
-        free(tmp->content);
+		free(tmp->content);
         tmp = tmp->next;
     }
 }

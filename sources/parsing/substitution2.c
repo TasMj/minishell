@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitution2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:47:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/28 16:09:22 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/06 13:05:27 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,18 @@ char	*remove_quote_end(t_substitution *s)
 {
 	int		i;
 	char	*var_modif;
+	char *tmp;
 
 	i = 0;
 	while (s->keep_var[i] && s->keep_var[i] != 39 && s->keep_var[i] != 34)
 		i++;
 	if (i != ft_strlen(s->keep_var))
 		s->flag_keep_quote = 1;
-	var_modif = substitution(ft_strdup_size(s->keep_var, i));
-	var_modif = ft_strjoin(var_modif, s->keep_var + i);
+	// var_modif = substitution(ft_strdup_size(s->keep_var, i));
+	tmp = ft_strdup_size(s->keep_var, i);
+	var_modif = substitution(tmp);
+	free(tmp);
+	// var_modif = ft_strjoin(var_modif, s->keep_var + i);
+	var_modif = ft_strjoin_mod(var_modif, s->keep_var + i, 1);
 	return (var_modif);
 }

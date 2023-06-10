@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:09:31 by tas               #+#    #+#             */
-/*   Updated: 2023/05/28 13:48:00 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/06 12:47:19 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	set_echo(t_list **list_token, t_echo *e)
 		e->to_free = 1;
 		e->stockage = ft_strjoin(e->stockage, (*list_token)->content);
 		if ((*list_token)->next != NULL)
-			e->stockage = ft_strjoin(e->stockage, " ");
+			e->stockage = ft_strjoin_mod(e->stockage, " ", 1);
 		(*list_token) = (*list_token)->next;
 	}
 	return (0);
