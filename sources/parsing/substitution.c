@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/06/10 14:26:47 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/10 15:19:48 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,9 @@ void	go_to_dollar(t_substitution *s, t_list *tok)
 		s->end = s->i;
 		s->keep_var = ft_strdup_size(tok->content + s->start, \
 		(s->end - s->start));
-		// s->var_substitute = ft_strdup(substitution(s->keep_var));
 		s->var_substitute = substitution(s->keep_var);
-		s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 0);
-		// free(s->var_substitute);
+		if (ft_strlen(s->var_substitute) != 0)
+			s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
 		free(s->keep_var);
 	}
 	free(s->without_dollar);
@@ -67,10 +66,7 @@ void	substitute_dollar(t_list **list_token)
 		if (check_dollar((*list_token)->content) == 1)
 		{
 			if ((*list_token)->content[0] == 34)
-			{
 				quote_sub(s, (*list_token), 1);
-				
-			}
 			else if ((*list_token)->content[0] == 39)
 				quote_sub(s, (*list_token), 2);
 			else if (ft_strlen((*list_token)->content) > 1)
@@ -102,12 +98,10 @@ void	delimit_sub(t_substitution *s)
 		s->end = s->i;
 		s->keep_var = ft_strdup_size(s->stock + s->start, \
 		(s->end - s->start));
-		// s->keep_var2 = ft_strdup(remove_quote_end(s));
 		s->keep_var2 = remove_quote_end(s);
 		if (ft_strlen(s->keep_var2) != 0)
 			s->new_content = ft_strjoin_mod(s->new_content, s->keep_var2, 3); //
 		free(s->keep_var);
-		// free(s->keep_var2);
 	}
 }
 

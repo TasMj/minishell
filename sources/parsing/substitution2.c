@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:47:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/10 14:26:25 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/10 15:21:59 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,7 @@ char	*substitution(char *token)
 	if (is_in_env(token + 1))
 		variable = get_venv(token + 1);
 	if (!variable)
-	{
-		variable = malloc(1);
 		variable = "";
-	}
 	return (variable);
 }
 
