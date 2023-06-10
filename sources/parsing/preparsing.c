@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:56:18 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/10 19:13:33 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/10 19:18:49 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,25 +52,6 @@ int	err_quote(t_list **list_token)
 	*list_token = tmp;
 	return (0);
 }
-
-// void    reunite_token(t_list **list_token)
-// {
-    // t_list  *tmp;
-    // 
-    // tmp = *list_token;
-    // while (*list_token && (*list_token)->next)
-    // {
-        // if ((*list_token)->next->flag_space == 0)
-        // {
-            // (*list_token)->content = ft_strjoin_mod((*list_token)->content, (*list_token)->next->content, 3);
-            // (*list_token)->flag_space = (*list_token)->next->flag_space;
-            // (*list_token)->next = (*list_token)->next->next;
-        // }
-        // else
-            // (*list_token) = (*list_token)->next;
-    // }
-    // *list_token = tmp;
-// }
 
 void reunite_token(t_list **list_token)
 {

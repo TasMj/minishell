@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/06/10 14:47:55 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/10 19:46:38 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	set_old_path(char *path)
 			(*g_list_env) = (*g_list_env)->next;
 		else if (ft_strcmp(copy_env, "OLDPWD") == 0)
 		{
+			// free((*g_list_env)->content);
 			(*g_list_env)->content = ft_strjoin("OLDPWD=", path);
 			*g_list_env = tmp;
 			free(copy_env);
