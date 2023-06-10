@@ -38,7 +38,7 @@
 
 // 	h = malloc(sizeof(t_heredoc));
 // 	first_cmd = *token;
-// 	args = ft_strdup_size(cmd_before_heredoc(token, h), \
+// 	args = ft_strdup_size(cmd_before_heredoc(token, h), 
 // 	ft_strlen(cmd_before_heredoc(token, h)));
 // 	while (*token)
 // 	{
@@ -48,7 +48,7 @@
 // 		{
 // 			h->path_cmd = find_path(env, first_cmd->content);
 // 			h->token_arg = ft_split(args, ' ');
-// 			h->delimiteur = ft_strdup_size((*token)->next->content, \
+// 			h->delimiteur = ft_strdup_size((*token)->next->content, 
 // 			ft_strlen((*token)->next->content));
 // 			free(args);
 // 			heredoc_process(h, env, cmd);
