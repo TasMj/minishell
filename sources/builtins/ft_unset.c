@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:35 by tas               #+#    #+#             */
-/*   Updated: 2023/06/10 13:26:23 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/10 13:32:30 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,7 @@ void	del(char *str)
 
 	var = var_name((*g_list_env)->content);
 	if (ft_strcmp(var, str) == 0)
-	{
 		tmp_first = (*g_list_env)->next;
-		// *g_list_env = tmp_first;
-	}
 	else
 	{
 		tmp_first = *g_list_env;
@@ -83,23 +80,12 @@ void	del(char *str)
 
 int	ft_unset(t_list **list_token)
 {
-	// t_list	*tmp;
-
-	// tmp = *g_list_env;
-	// if (ft_strncmp((*list_token)->content, "unset", 5) == 1)
-		// return (1);
-	// else
-	// {
+	(*list_token) = (*list_token)->next;
+	while (*list_token != NULL)
+	{
+		if (check_var((*list_token)->content) == 1)
+			del((*list_token)->content);
 		(*list_token) = (*list_token)->next;
-		while (*list_token != NULL)
-		{
-			if (check_var((*list_token)->content) == 1)
-			{
-				del((*list_token)->content);
-			}
-			(*list_token) = (*list_token)->next;
-		}
-	// }
-	// *g_list_env = tmp;
+	}
 	return (0);
 }

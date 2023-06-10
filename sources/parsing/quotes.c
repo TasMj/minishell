@@ -3,15 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 16:15:52 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/28 16:39:14 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/10 13:57:18 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
+
+// int check_pair_quote(char *str)
+// {
+// 	t_substitution s;
+// 	s.i = 0;
+// 	s.flag = 0;
+// 	int quote_count = 0; // Compteur de citations ouvertes
+
+// 	while (str[s.i])
+// 	{
+// 		if (str[s.i] == 39 || str[s.i] == 34)
+// 		{
+// 			s.quote = str[s.i];
+// 			s.flag = 1;
+// 			quote_count++; // Incrémenter le compteur de citations ouvertes
+// 			while (str[s.i])
+// 			{
+// 				s.i++;
+// 				if (str[s.i] == s.quote && s.flag == 1)
+// 				{
+// 					s.flag = 0;
+// 					quote_count++; // Décrémenter le compteur de citations ouvertes
+// 					break;
+// 				}
+// 			}
+// 		}
+// 		s.i++;
+// 	}
+
+// 	if (s.flag == 1 || quote_count == 1)
+// 		return 1; // Retourner 1 si une citation est ouverte ou si le compteur de citations n'est pas revenu à zéro
+// 	return 0; // Retourner 0 si toutes les citations sont correctement appariées
+// }
 
 int	check_pair_quote(char *str)
 {

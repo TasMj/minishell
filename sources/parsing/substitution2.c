@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:47:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/06 13:05:27 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/10 14:26:25 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ char	*substitution(char *token)
 void	quote_sub(t_substitution *s, t_list *list_token, int a)
 {
 	if (a == 1)
+	{
+		
 		s->var_substitute = sub_quotes(list_token->content, s);
+	}
 	else if (a == 2)
 		s->var_substitute = remove_quotes(list_token->content);
 	free(list_token->content);
@@ -76,7 +79,7 @@ char	*remove_quote_end(t_substitution *s)
 {
 	int		i;
 	char	*var_modif;
-	char *tmp;
+	char	*tmp;
 
 	i = 0;
 	while (s->keep_var[i] && s->keep_var[i] != 39 && s->keep_var[i] != 34)
@@ -88,6 +91,8 @@ char	*remove_quote_end(t_substitution *s)
 	var_modif = substitution(tmp);
 	free(tmp);
 	// var_modif = ft_strjoin(var_modif, s->keep_var + i);
-	var_modif = ft_strjoin_mod(var_modif, s->keep_var + i, 1);
+	
+	if (ft_strlen(var_modif) != 0)
+		var_modif = ft_strjoin_mod(var_modif, s->keep_var + i, 1);
 	return (var_modif);
 }

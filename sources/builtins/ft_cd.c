@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/06/06 12:15:48 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/10 13:31:27 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,7 @@ int	err_cd(t_list **list, char *path)
 char	*set_path(char *path, t_list **list)
 {
 	char	cwd[1024];
-	// int		size;
 
-	// size = ft_strlen(getcwd(cwd, sizeof(cwd)));
 	path = ft_strdup((getcwd(cwd, sizeof(cwd))));//
 	path = ft_strjoin(path, "/");
 	path = ft_strjoin(path, (*list)->next->content);

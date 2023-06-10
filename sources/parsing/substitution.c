@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/06/06 12:43:01 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/10 14:26:47 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	substitute_dollar(t_list **list_token)
 {
 	t_substitution	*s;
 	t_list			*tmp;
-
 	s = malloc(sizeof(t_substitution));
 	tmp = *list_token;
 	s->new_content = "";
@@ -68,7 +67,10 @@ void	substitute_dollar(t_list **list_token)
 		if (check_dollar((*list_token)->content) == 1)
 		{
 			if ((*list_token)->content[0] == 34)
+			{
 				quote_sub(s, (*list_token), 1);
+				
+			}
 			else if ((*list_token)->content[0] == 39)
 				quote_sub(s, (*list_token), 2);
 			else if (ft_strlen((*list_token)->content) > 1)
@@ -102,7 +104,8 @@ void	delimit_sub(t_substitution *s)
 		(s->end - s->start));
 		// s->keep_var2 = ft_strdup(remove_quote_end(s));
 		s->keep_var2 = remove_quote_end(s);
-		s->new_content = ft_strjoin_mod(s->new_content, s->keep_var2, 3); //
+		if (ft_strlen(s->keep_var2) != 0)
+			s->new_content = ft_strjoin_mod(s->new_content, s->keep_var2, 3); //
 		free(s->keep_var);
 		// free(s->keep_var2);
 	}
