@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroy_all.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 01:58:38 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/30 18:48:21 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:33:54 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,37 @@ void	close_all(t_xek *x)
 
 void free_cmd(t_cmd *cmd)
 {
-	free_list(cmd->token);
-	free_list(cmd->cmd);
+	if (cmd->token)
+		free_list(cmd->token);
+	if (cmd->cmd)
+		free_list(cmd->cmd);
 	if (cmd->tab)
 		free_tab(cmd->tab);
 	if (cmd->tab_env)
 		free_tab(cmd->tab_env);
 	if (cmd->nb_redir > 0)
 		free_tab(cmd->file);
-	if (cmd->redir)
+	if (cmd->nb_redir > 0)
 		free(cmd->redir);
 	if (cmd->path)
 		free(cmd->path);
 }
 
-void	destroy_all(t_xek *x)
+int	free_pipes(t_xek *x)
+{
+	int	i;
+
+	i = 0;
+	while (i < x->nb_cmd - 1)
+	{
+		free(x->pipe[i]);
+		i++;
+	}
+	free(x->pipe);
+	return (0);
+}
+
+void	destroy_exec(t_xek *x)
 {
 	int	i;
 
@@ -64,6 +80,8 @@ void	destroy_all(t_xek *x)
 		free_cmd(&(x->cmd[i]));
 		i++;
 	}
-	close_all(x);
+	free_pipes(x);
+	// close_all(x);
 	free(x->cmd);
+	free(x);
 }

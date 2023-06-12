@@ -57,6 +57,7 @@ int	go_exec(t_xek *x)
 int	we_exec(t_minishell *data)
 {
 	data->x = malloc(sizeof(t_xek));
+	ft_memset(data->x, 0, sizeof(t_xek));
 
 	prep_cmd(data);
 
@@ -64,9 +65,9 @@ int	we_exec(t_minishell *data)
 
 	exec_heredoc(data);
 
-	// go_exec(data->x);
+	go_exec(data->x);
 
-	// destroy_all(data->x);
+	destroy_exec(data->x);
 
 	return (0);
 }

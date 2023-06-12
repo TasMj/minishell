@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/06/12 18:53:47 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:23:47 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int main(int argc, char **argv, char **env)
     t_minishell data;
 
     g_list_env = get_list_env(env);
+    ft_memset(&data, 0, sizeof(t_minishell));
     while (1)
     {
         signal(SIGQUIT, &ctrl_d);
@@ -46,8 +47,8 @@ int main(int argc, char **argv, char **env)
         {
             if (syntax_error(data.token) == 2)
             {
-                exec_builtin(data.token);
-                // we_exec(&data);
+                // exec_builtin(data.token);
+                we_exec(&data);
                 // exec(list_token, g_list_env);
             }
         }
@@ -57,6 +58,6 @@ int main(int argc, char **argv, char **env)
     }
     free_list_token_content(g_list_env);
     free_list(g_list_env);
-    printf("sortie\n");
+    // printf("sortie\n");
     return (0);
 }
