@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_builtin2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:41:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/28 00:48:53 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/10 18:25:38 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,44 +65,44 @@ int	is_sorted(t_list **list)
 	{
 		set_min_max(list, m);
 		if (ft_strncmp((*list)->content, (*list)->next->content, m->min) > 0)
+		{
+			free(m);
 			return (1);
+		}
 		(*list) = (*list)->next;
 	}
+	free(m);
 	*list = tmp;
 	return (0);
 }
 
-void	swap_in_list(t_list **list, t_list *tmp, char *tmp1, char *tmp2)
+void swap_in_list(t_list **list, t_list *tmp)
 {
-	tmp1 = ft_strdup((*list)->content); //
-	tmp2 = ft_strdup((*list)->next->content); //
-	(*list)->content = ft_strdup(tmp2); //
-	(*list)->next->content = ft_strdup(tmp1); //
-	free(tmp1);
-	free(tmp2);
-	*list = tmp;
+    char *tmp_content;
+	
+	tmp_content = (*list)->content;
+    (*list)->content = (*list)->next->content;
+    (*list)->next->content = tmp_content;
+    *list = tmp;
 }
 
 t_list	**sort_env(t_list **list)
 {
 	t_list		*tmp;
-	char		*tmp1;
-	char		*tmp2;
 	t_min_max	*m;
 
 	m = malloc(sizeof(t_min_max));
 	ft_memset(m, 0, sizeof(t_min_max));
 	tmp = *list;
-	tmp1 = NULL;
-	tmp2 = NULL;
 	while (is_sorted(list) == 1)
 	{
 		set_min_max(list, m);
 		if (ft_strncmp((*list)->content, (*list)->next->content, m->min) > 0)
-			swap_in_list(list, tmp, tmp1, tmp2);
+			swap_in_list(list, tmp);
 		(*list) = (*list)->next;
 	}
 	*list = tmp;
+	free(m);
 	return (list);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/05/30 01:03:18 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/12 18:53:47 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 int    init_list(t_list **list_token, char *input)
 {
     list_token = create_token(list_token, input);
-    substitute_dollar(list_token);
-    get_type(list_token);
     if (err_quote(list_token) == 1)
         return (1);
+    substitute_dollar(list_token);
+    get_type(list_token);
     remove_list_quotes(list_token);
     remove_empty_tokens(list_token);
     reunite_token(list_token);
@@ -46,7 +46,8 @@ int main(int argc, char **argv, char **env)
         {
             if (syntax_error(data.token) == 2)
             {
-                we_exec(&data);
+                exec_builtin(data.token);
+                // we_exec(&data);
                 // exec(list_token, g_list_env);
             }
         }
