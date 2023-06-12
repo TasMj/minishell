@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tas <tas@student.42.fr>                    +#+  +:+       +#+         #
+#    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/06/10 13:34:38 by tas              ###   ########.fr        #
+#    Updated: 2023/06/12 18:49:56 by jthuysba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,16 +20,18 @@ BUILTINS		= ./sources/builtins/ft_cd.c ./sources/builtins/ft_echo.c \
 				./sources/builtins/ft_unset.c \
 		
 EXEC			= ./sources/exec/path.c \
-				./sources/exec/heredoc.c \
 				./sources/exec/builtin.c \
 				./sources/exec/signal.c \
-				./sources/exec/clean_all.c ./sources/exec/setup_pipes.c \
-				./sources/exec/exec_utils.c ./sources/exec/exec.c \
-				./sources/exec/set_fd.c ./sources/exec/exec_all.c \
-				./sources/exec/handle_builtin.c \
+				# ./sources/exec/clean_all.c ./sources/exec/setup_pipes.c \
+				# ./sources/exec/exec_utils.c ./sources/exec/exec.c \
+				# ./sources/exec/set_fd.c ./sources/exec/exec_all.c \
+				# ./sources/exec/handle_builtin.c \
+				# ./sources/exec/heredoc.c \
 
-# WE_EXEC			= ./sources/we_exec/exec.c ./sources/we_exec/prep_cmd.c \
-				# ./sources/we_exec/utils.c
+WE_EXEC			= ./sources/we_exec/exec.c ./sources/we_exec/prep_cmd.c \
+				./sources/we_exec/utils.c ./sources/we_exec/destroy_all.c \
+				./sources/we_exec/open_pipes.c ./sources/we_exec/handle_redir.c \
+				./sources/we_exec/child_process.c ./sources/we_exec/exec_heredoc.c \
 
 EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
 				./sources/exit/free_struct.c

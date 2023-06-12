@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:41:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/28 02:10:43 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/30 22:00:48 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_heredoc
 	char	*cmd;
 	char	*path_cmd;
 	char	**token_arg;
-}t_heredoc;
+} t_heredoc;
 
 typedef struct s_redir
 {
@@ -70,9 +70,9 @@ extern t_list	**g_list_env;
 
 /* tools */
 char    *get_file_name(t_list **list_token, char *c);
-char    *cmd_before_redir(t_list **list_token, t_redir *s);
-void    init_redir(t_redir *s, t_list **list_token, char **env, char *c);
-void	free_redir(t_redir *redir);
+// char    *cmd_before_redir(t_list **list_token, t_redir *s);
+// void    init_redir(t_redir *s, t_list **list_token, char **env, char *c);
+// void	free_redir(t_redir *redir);
 
 /* heredoc */
 char    *cmd_before_heredoc(t_list **list_token, t_heredoc *h);
@@ -104,7 +104,7 @@ int		is_sorted(t_list **list);
 t_list	**sort_env(t_list **list);
 int		sort_env_ascii(void);
 int		ft_export(t_list **list_token);
-void	set_min_max(t_list **list ,t_min_max *m);
+// void	set_min_max(t_list **list ,t_min_max *m);
 int		is_sorted(t_list **list);
 t_list	**sort_env(t_list **list);
 

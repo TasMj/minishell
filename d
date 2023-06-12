@@ -1,0 +1,10 @@
+a
+b
+c
+d
+file
+ignore_leak.supp
+includes
+Makefile
+minishell
+sources

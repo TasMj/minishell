@@ -6,10 +6,10 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/28 20:05:49 by tmejri           ###   ########.fr       */
-/*   Updated: 2023/05/28 19:59:39 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/05/31 23:20:02 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -129,21 +129,33 @@ typedef struct s_cmd
 	int		*redir;
 	char	**file;
 	int		nb_redir;
+	pid_t	pid;
+	char	**tab_env;
 }	t_cmd;
+
+typedef struct	s_hdoc
+{
+	char	*delim;
+	int		hd_pipe[2];
+}	t_hdoc;
 
 typedef struct s_xek
 {
-	t_cmd	*cmd;
-	int		nb_cmd;
+	t_cmd		*cmd;
+	int			nb_cmd;
+	int			**pipe;
+	int			nb_hdoc;
+	t_hdoc	*hdoc;
 }	t_xek;
 
 typedef struct s_minishell
 {
-	char	*input;
-	t_list	**token;
-	int		code_err;
+	char			*input;
+	t_list			**token;
+	int				code_err;
 	struct s_xek	*x;
 }	t_minishell;
+
 
 /******************************************************************************/
 /*                                fonctions                                   */
@@ -217,6 +229,7 @@ char	*ft_strjoin(char *s1, char *s2);
 int		is_a_space(char c);
 int		is_a_separator(char c);
 int    init_list(t_list **list_token, char *input);
+void	*ft_calloc(size_t n, size_t size);
 
 /***** EXEC *****/
 
@@ -246,8 +259,6 @@ int		nb_cmd(t_list *token);
 /* set fd */
 int	set_fd(t_cmd *cmd, t_list *token);
 
-/* clean all */
-void	close_all(t_exec *data, int end);
 void	clean_all(t_exec *data);
 
 /* exec god */
@@ -270,7 +281,16 @@ int		we_exec(t_minishell *data);
 int		prep_cmd(t_minishell *data);
 int		nb_cmd(t_list *token);
 void	set_to_zero(t_xek *x);
-int		nb_redir(t_list	*elem);
-
+int		has_slash(t_cmd *cmd);
+char	**lst_to_tab(t_list **lst);
+void	destroy_all(t_xek *x);
+int		open_pipes(t_minishell *data);
+void	close_all(t_xek *x);
+// void	close_writing(t_xek *x);
+int		handle_redir(t_cmd *cmd, t_list *elem);
+int		exec_it(t_cmd *cmd);
+int		open_n_dup(t_cmd *cmd, t_xek *x);
+void	dup_pipe(t_cmd *cmd, t_xek *x);
+int		exec_heredoc(t_minishell *data);
 
 #endif

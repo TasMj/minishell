@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:38:07 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/28 14:49:41 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/05/29 23:59:31 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,6 @@
 // 		if (elem->type == HEREDOC)
 // 			return (1);
 // 		elem = elem->next;
-// 	}
-// 	return (0);
-// }
-
-// int	is_path(t_cmd *cmd)
-// {
-// 	int	i;
-// 	i = 0;
-// 	while ((*cmd->cmd)->content[i])
-// 	{
-// 		if ((*cmd->cmd)->content[i] == '/')
-// 			return (1);
-// 		i++;
 // 	}
 // 	return (0);
 // }
