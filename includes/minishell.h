@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/05 17:17:49 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:19:41 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,7 +284,7 @@ int		nb_cmd(t_list *token);
 void	set_to_zero(t_xek *x);
 int		has_slash(t_cmd *cmd);
 char	**lst_to_tab(t_list **lst);
-void	destroy_all(t_xek *x);
+void	destroy_exec(t_xek *x);
 int		open_pipes(t_minishell *data);
 void	close_all(t_xek *x);
 // void	close_writing(t_xek *x);

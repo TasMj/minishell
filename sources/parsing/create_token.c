@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/05/30 18:44:45 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/12 18:53:31 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ char	*get_input(void)
 	{
 		free(input);
 		write(1, "exit\n", 5);
-		free_list(g_list_env);
+		// free_list_token_content(g_list_env);
+		// free_list(g_list_env);
 		exit(EXIT_FAILURE);
 	}
 	else

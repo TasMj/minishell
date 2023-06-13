@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/30 00:13:30 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/12 18:52:11 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ int	set_old_path(char *path)
 		else if (ft_strcmp(copy_env, "OLDPWD") == 0)
 		{
 			// free((*g_list_env)->content);
-			// (*g_list_env)->content = ft_strdup("OLDPWD=");
-			(*g_list_env)->content = ft_strjoin_mod("OLDPWD=", path, 0);
+			(*g_list_env)->content = ft_strjoin("OLDPWD=", path);
 			*g_list_env = tmp;
 			free(copy_env);
 			return (0);
@@ -89,12 +88,10 @@ int	err_cd(t_list **list, char *path)
 char	*set_path(char *path, t_list **list)
 {
 	char	cwd[1024];
-	// int		size;
 
-	// size = ft_strlen(getcwd(cwd, sizeof(cwd)));
-	path = ft_strdup((getcwd(cwd, sizeof(cwd))));//
-	path = ft_strjoin(path, "/");
-	path = ft_strjoin(path, (*list)->next->content);
+	path = ft_strdup((getcwd(cwd, sizeof(cwd))));
+	path = ft_strjoin_mod(path, "/", 1);
+	path = ft_strjoin_mod(path, (*list)->next->content, 1);
 	return (path);
 }
 
@@ -106,9 +103,10 @@ int	ft_cd(t_list **list)
 
 	tmp = *list;
 	path = NULL;
-	set_old_path(getcwd(cwd, sizeof(cwd)));
+	char *old_path = getcwd(cwd, sizeof(cwd));
+	set_old_path(old_path);
 	if (ft_strcmp("cd", (*list)->content) == 0 && (*list)->next == NULL && is_in_env("HOME") == 1)
-		path = ft_strdup(get_venv("HOME"));
+		path = get_venv("HOME");
 	else if (ft_strcmp("cd", (*list)->content) == 0 && (*list)->next == NULL && is_in_env("HOME") == 0)
 	{
 		*list = tmp;

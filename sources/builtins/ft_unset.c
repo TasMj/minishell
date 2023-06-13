@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:35 by tas               #+#    #+#             */
-/*   Updated: 2023/05/28 19:20:43 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/10 13:32:30 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,27 @@ void	del(char *str)
 {
 	t_list	*tmp_first;
 	t_list	*tmp_next;
+	t_list	*var_before;
 	char	*var;
 
-	tmp_first = *g_list_env;
 	var = var_name((*g_list_env)->content);
 	if (ft_strcmp(var, str) == 0)
-	{
-		(*g_list_env) = (*g_list_env)->next;
-		tmp_first = *g_list_env;
-	}
+		tmp_first = (*g_list_env)->next;
 	else
 	{
+		tmp_first = *g_list_env;
 		while ((*g_list_env)->next != NULL && ft_strcmp(var, str) == 1)
+		{
+			var_before = (*g_list_env);
 			(*g_list_env) = (*g_list_env)->next;
-		tmp_next = (*g_list_env)->next->next;
+			free(var);
+			var = var_name((*g_list_env)->content);
+		}
+		(*g_list_env) = var_before;
+		if ((*g_list_env)->next->next != NULL )
+			tmp_next = (*g_list_env)->next->next;
+		else
+			tmp_next = NULL;
 		(*g_list_env)->next = tmp_next;
 	}
 	*g_list_env = tmp_first;
@@ -73,21 +80,12 @@ void	del(char *str)
 
 int	ft_unset(t_list **list_token)
 {
-	t_list	*tmp;
-
-	tmp = *g_list_env;
-	if (ft_strncmp((*list_token)->content, "unset", 5) == 1)
-		return (1);
-	else
+	(*list_token) = (*list_token)->next;
+	while (*list_token != NULL)
 	{
+		if (check_var((*list_token)->content) == 1)
+			del((*list_token)->content);
 		(*list_token) = (*list_token)->next;
-		while (*list_token != NULL)
-		{
-			if (check_var((*list_token)->content) == 1)
-				del((*list_token)->content);
-			(*list_token) = (*list_token)->next;
-		}
 	}
-	*g_list_env = tmp;
 	return (0);
 }
