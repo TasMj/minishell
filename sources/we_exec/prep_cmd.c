@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/04 14:44:58 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/19 18:09:23 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,9 @@ int	fill_cmd(t_cmd *cmd)
 	cmd->tab = lst_to_tab(cmd->cmd);
 	cmd->pid = 0;
 	handle_redir(cmd, *(cmd->token));
+
+	// free(cmd->tab);
+	
 	return (0);
 }
 

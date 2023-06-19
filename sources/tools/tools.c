@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 12:45:54 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/28 18:19:22 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/19 17:12:35 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*ft_strdup_size(char *s, int size)
 	int		i;
 
 	i = 0;
-	ss = (char *)malloc(sizeof(char) * size + 1);
+	ss = (char *)malloc(sizeof(char) * (size + 1));
 	if (ss == 0)
 		return (NULL);
 	while (i < size)

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:10:27 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/19 15:50:21 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/19 17:50:17 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ int	write_in_hdoc(t_hdoc *hdoc)
 		input = readline("> ");
 		/* Si l'input est le delimiteur on arrete d'ecrire dans le hdoc */
 		if (!input || ft_strcmp(input, hdoc->delim) == 0)
+		{
+			free(input);
 			break ;
+		}
 		/* Sinon on ecrit le input dans la pipe d'ecriture du heredoc */
 		write_in_fd(input, hdoc->hd_pipe[1]);
 		free(input);
@@ -95,12 +98,6 @@ int	heredoc_child(t_xek *x)
 		write_in_hdoc(&(x->hdoc[i]));
 		i++;
 	}
-	// i = 0;
-	// while (i < x->nb_hdoc)
-	// {
-	// 	free(x->hdoc[i].delim);
-	// 	i++;
-	// }
 	exit(0);
 }
 
@@ -128,10 +125,9 @@ int	exec_heredoc(t_minishell *data)
 	i = 0;
 	while (i < data->x->nb_hdoc)
 	{
+		free(data->x->hdoc[i].delim);
 		close(data->x->hdoc[i].hd_pipe[1]);
 		i++;
 	}
-	
-	
 	return (0);
 }
