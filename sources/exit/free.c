@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:33:10 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/12 18:53:13 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/19 15:48:14 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,19 @@ void	free_all(char *s1, char *s2)
 	free(s2);
 }
 
-void	free_exit(t_list **list)
+// void	free_exit(t_list **list)
+// {
+	// free_list_token_content(list);
+	// free_list(list);
+	// free_list_token_content(g_list_env);
+	// free_list(g_list_env);
+// }
+
+void	free_end(t_minishell *data)
 {
-	free_list_token_content(list);
-	free_list(list);
+	free_list_token_content(data->token);
+    free_list(data->token);
+    free(data->	input);
 	free_list_token_content(g_list_env);
 	free_list(g_list_env);
 }

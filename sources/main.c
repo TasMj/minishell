@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/06/12 19:23:47 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/19 16:01:05 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,12 @@ int main(int argc, char **argv, char **env)
         data.input = get_input();
         data.token = malloc(sizeof(t_list));
         *data.token = NULL;
-
         if (init_list(data.token, data.input) == 0)
         {
             if (syntax_error(data.token) == 2)
             {
-                // exec_builtin(data.token);
-                we_exec(&data);
+                exec_builtin(data.token);
+                // we_exec(&data);
                 // exec(list_token, g_list_env);
             }
         }
@@ -58,6 +57,5 @@ int main(int argc, char **argv, char **env)
     }
     free_list_token_content(g_list_env);
     free_list(g_list_env);
-    // printf("sortie\n");
     return (0);
 }
