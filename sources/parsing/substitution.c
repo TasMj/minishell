@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/06/10 19:56:29 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/19 18:52:26 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	go_to_dollar(t_substitution *s, t_list *tok)
 void	more_dollar(t_substitution *s, t_list **list_token)
 {
 	s->i = 0;
-	s->new_content = "";
 	while ((*list_token)->content[s->i])
 		go_to_dollar(s, (*list_token));
 	free((*list_token)->content);
@@ -83,7 +82,7 @@ void	delimit_sub(t_substitution *s)
 	if (s->stock[s->i] && s->stock[s->i] == '$' && \
 		(is_a_space(s->stock[s->i + 1]) == 1 || s->stock[s->i + 1] == '\0'))
 	{
-		s->new_content = ft_strjoin_mod(s->new_content, "$", 1); //
+		s->new_content = ft_strjoin_mod(s->new_content, "$", 1);
 		s->i++;
 	}
 	else if (s->stock[s->i] && s->stock[s->i + 1] && s->stock[s->i] == '$'
@@ -108,7 +107,6 @@ void	delimit_sub(t_substitution *s)
 char	*sub_quotes(char *token, t_substitution *s)
 {
 	s->i = 0;
-	s->new_content = "";
 	s->stock = remove_quotes(token);
 	while (s->stock[s->i])
 	{
@@ -116,7 +114,11 @@ char	*sub_quotes(char *token, t_substitution *s)
 		while (s->stock[s->i] && s->stock[s->i] != '$')
 			s->i++;
 		s->without_dollar = ft_strdup_size(s->stock + s->deb, (s->i - s->deb));
-		s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 2);
+		// if (!ft_strcmp(s->new_content, ""))
+		if (ft_strlen(s->new_content) == 0)
+			s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 2);
+		else
+			s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 3);
 		delimit_sub(s);
 	}
 	free(s->stock);

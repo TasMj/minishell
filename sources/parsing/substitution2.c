@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitution2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:47:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/10 15:21:59 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/19 18:52:04 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ char	*substitution(char *token)
 void	quote_sub(t_substitution *s, t_list *list_token, int a)
 {
 	if (a == 1)
-	{
-		
 		s->var_substitute = sub_quotes(list_token->content, s);
-	}
 	else if (a == 2)
 		s->var_substitute = remove_quotes(list_token->content);
 	free(list_token->content);
@@ -83,12 +80,9 @@ char	*remove_quote_end(t_substitution *s)
 		i++;
 	if (i != ft_strlen(s->keep_var))
 		s->flag_keep_quote = 1;
-	// var_modif = substitution(ft_strdup_size(s->keep_var, i));
 	tmp = ft_strdup_size(s->keep_var, i);
 	var_modif = substitution(tmp);
 	free(tmp);
-	// var_modif = ft_strjoin(var_modif, s->keep_var + i);
-	
 	if (ft_strlen(var_modif) != 0)
 		var_modif = ft_strjoin_mod(var_modif, s->keep_var + i, 1);
 	return (var_modif);
