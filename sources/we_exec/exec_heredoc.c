@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:10:27 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/04 14:45:30 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/19 15:50:21 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,12 @@ int	heredoc_child(t_xek *x)
 int	exec_heredoc(t_minishell *data)
 {
 	pid_t	pid;
+	int		i;
 	
 	data->x->nb_hdoc = nb_hdoc(data);
 	if (data->x->nb_hdoc == 0)
 		return (0);
+	data->x->hdoc_index = 0;
 	/* On alloue un t_hdoc pour chaque hdoc */
 	data->x->hdoc = malloc(sizeof(t_heredoc) * data->x->nb_hdoc);
 	if (!data->x->hdoc)
@@ -122,5 +124,14 @@ int	exec_heredoc(t_minishell *data)
 	if (pid == 0)
 		heredoc_child(data->x);
 	waitpid(pid, NULL, 0);
+	
+	i = 0;
+	while (i < data->x->nb_hdoc)
+	{
+		close(data->x->hdoc[i].hd_pipe[1]);
+		i++;
+	}
+	
+	
 	return (0);
 }

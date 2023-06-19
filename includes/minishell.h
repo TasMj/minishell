@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/12 19:19:41 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/19 15:37:49 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,8 @@ typedef struct s_xek
 	int			nb_cmd;
 	int			**pipe;
 	int			nb_hdoc;
-	t_hdoc	*hdoc;
+	t_hdoc		*hdoc;
+	int			hdoc_index;
 }	t_xek;
 
 typedef struct s_minishell

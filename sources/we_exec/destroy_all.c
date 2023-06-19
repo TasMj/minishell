@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroy_all.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 01:58:38 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/12 19:33:54 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/19 15:54:40 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ void free_cmd(t_cmd *cmd)
 		free_tab(cmd->tab);
 	if (cmd->tab_env)
 		free_tab(cmd->tab_env);
-	if (cmd->nb_redir > 0)
+	if (cmd->file)
 		free_tab(cmd->file);
-	if (cmd->nb_redir > 0)
+	if (cmd->redir)
 		free(cmd->redir);
 	if (cmd->path)
 		free(cmd->path);
