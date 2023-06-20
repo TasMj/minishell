@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:09:31 by tas               #+#    #+#             */
-/*   Updated: 2023/06/10 16:44:45 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/20 15:09:11 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
+
+//echo cat<<EOF cat << EOF
 
 int	ft_n(char *str)
 {
