@@ -37,7 +37,7 @@ int	go_exec(t_xek *x)
 	
 	/* On lance un process pour chaque commande */
 	i = 0;
-	while (i< x->nb_cmd)
+	while (i < x->nb_cmd)
 	{
 		launch_process(&(x->cmd[i]), x);
 		i++;

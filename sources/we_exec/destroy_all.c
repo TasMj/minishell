@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroy_all.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 01:58:38 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/12 19:33:54 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/20 15:20:52 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ void	close_all(t_xek *x)
 		close(x->pipe[i][1]);
 		i++;
 	}
+	i = 0;
+	while (i < x->nb_hdoc)
+	{
+		close(x->hdoc[i].hd_pipe[0]);
+		i++;
+	}
 }
 
 void free_cmd(t_cmd *cmd)
@@ -45,15 +51,19 @@ void free_cmd(t_cmd *cmd)
 	if (cmd->cmd)
 		free_list(cmd->cmd);
 	if (cmd->tab)
+	{
 		free_tab(cmd->tab);
+	}
 	if (cmd->tab_env)
 		free_tab(cmd->tab_env);
-	if (cmd->nb_redir > 0)
+	if (cmd->file)
 		free_tab(cmd->file);
-	if (cmd->nb_redir > 0)
+	if (cmd->redir)
 		free(cmd->redir);
 	if (cmd->path)
+	{
 		free(cmd->path);
+	}
 }
 
 int	free_pipes(t_xek *x)
@@ -81,7 +91,8 @@ void	destroy_exec(t_xek *x)
 		i++;
 	}
 	free_pipes(x);
-	// close_all(x);
+	close_all(x);
+	free(x->hdoc);
 	free(x->cmd);
 	free(x);
 }

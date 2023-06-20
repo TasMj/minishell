@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 19:52:27 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/12 19:44:53 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/19 17:12:07 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	handle_redir(t_cmd *cmd, t_list *elem)
 		}
 		elem = elem->next;
 	}
+	cmd->file[i] = 0;
 	// cmd->file[i] = ft_strdup(NULL);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/04 14:44:58 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:18:01 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	check_cmd(t_cmd *cmd)
 	/* Sinon ex : ls -a, cat ou jules */
 	cmd->tab = lst_to_tab(g_list_env);
 	cmd->path = find_path(cmd->tab, (*cmd->cmd)->content);
+	printf("hello adress %p:\n", &cmd->path);
 	if (!cmd->path)
 	{
 		/* Si la commande n'est pas valide on retourne une erreur */
@@ -94,6 +95,9 @@ int	fill_cmd(t_cmd *cmd)
 	cmd->tab = lst_to_tab(cmd->cmd);
 	cmd->pid = 0;
 	handle_redir(cmd, *(cmd->token));
+
+	// free(cmd->tab);
+	
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:10:27 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/04 14:45:30 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:45:04 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,11 @@ int	write_in_hdoc(t_hdoc *hdoc)
 		input = readline("> ");
 		/* Si l'input est le delimiteur on arrete d'ecrire dans le hdoc */
 		if (!input || ft_strcmp(input, hdoc->delim) == 0)
+		{
+			free(hdoc->delim);
+			free(input);
 			break ;
+		}
 		/* Sinon on ecrit le input dans la pipe d'ecriture du heredoc */
 		write_in_fd(input, hdoc->hd_pipe[1]);
 		free(input);
@@ -95,22 +99,20 @@ int	heredoc_child(t_xek *x)
 		write_in_hdoc(&(x->hdoc[i]));
 		i++;
 	}
-	// i = 0;
-	// while (i < x->nb_hdoc)
-	// {
-	// 	free(x->hdoc[i].delim);
-	// 	i++;
-	// }
+
+	// METTRE ft_exit()
 	exit(0);
 }
 
 int	exec_heredoc(t_minishell *data)
 {
 	pid_t	pid;
+	int		i;
 	
 	data->x->nb_hdoc = nb_hdoc(data);
 	if (data->x->nb_hdoc == 0)
 		return (0);
+	data->x->hdoc_index = 0;
 	/* On alloue un t_hdoc pour chaque hdoc */
 	data->x->hdoc = malloc(sizeof(t_heredoc) * data->x->nb_hdoc);
 	if (!data->x->hdoc)
@@ -122,5 +124,13 @@ int	exec_heredoc(t_minishell *data)
 	if (pid == 0)
 		heredoc_child(data->x);
 	waitpid(pid, NULL, 0);
+	
+	i = 0;
+	while (i < data->x->nb_hdoc)
+	{
+		free(data->x->hdoc[i].delim);
+		close(data->x->hdoc[i].hd_pipe[1]);
+		i++;
+	}
 	return (0);
 }
