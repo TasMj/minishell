@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/06/10 19:56:29 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/20 14:41:29 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	go_to_dollar(t_substitution *s, t_list *tok)
 	while (tok->content[s->i] && tok->content[s->i] != '$')
 		s->i++;
 	s->without_dollar = ft_strdup_size(tok->content + s->deb, (s->i - s->deb));
-	s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 0);
+	s->new_content = ft_strdup(s->without_dollar);
+	// s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 0);
 	if (tok->content[s->i] && tok->content[s->i] == '$'
 		&& tok->content[s->i + 1] == '\0')
 	{
@@ -46,7 +47,6 @@ void	go_to_dollar(t_substitution *s, t_list *tok)
 void	more_dollar(t_substitution *s, t_list **list_token)
 {
 	s->i = 0;
-	s->new_content = "";
 	while ((*list_token)->content[s->i])
 		go_to_dollar(s, (*list_token));
 	free((*list_token)->content);
@@ -83,7 +83,7 @@ void	delimit_sub(t_substitution *s)
 	if (s->stock[s->i] && s->stock[s->i] == '$' && \
 		(is_a_space(s->stock[s->i + 1]) == 1 || s->stock[s->i + 1] == '\0'))
 	{
-		s->new_content = ft_strjoin_mod(s->new_content, "$", 1); //
+		s->new_content = ft_strjoin_mod(s->new_content, "$", 1);
 		s->i++;
 	}
 	else if (s->stock[s->i] && s->stock[s->i + 1] && s->stock[s->i] == '$'
@@ -96,11 +96,10 @@ void	delimit_sub(t_substitution *s)
 			&& s->stock[s->i] != '\0' && s->stock[s->i] != '$')
 			s->i++;
 		s->end = s->i;
-		s->keep_var = ft_strdup_size(s->stock + s->start, \
-		(s->end - s->start));
+		s->keep_var = ft_strdup_size(s->stock + s->start, (s->end - s->start));
 		s->keep_var2 = remove_quote_end(s);
 		if (ft_strlen(s->keep_var2) != 0)
-			s->new_content = ft_strjoin_mod(s->new_content, s->keep_var2, 3); //
+			s->new_content = ft_strjoin_mod(s->new_content, s->keep_var2, 3);
 		free(s->keep_var);
 	}
 }
@@ -108,7 +107,6 @@ void	delimit_sub(t_substitution *s)
 char	*sub_quotes(char *token, t_substitution *s)
 {
 	s->i = 0;
-	s->new_content = "";
 	s->stock = remove_quotes(token);
 	while (s->stock[s->i])
 	{
@@ -116,7 +114,15 @@ char	*sub_quotes(char *token, t_substitution *s)
 		while (s->stock[s->i] && s->stock[s->i] != '$')
 			s->i++;
 		s->without_dollar = ft_strdup_size(s->stock + s->deb, (s->i - s->deb));
-		s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 2);
+		// if (!ft_strcmp(s->new_content, ""))
+		if (ft_strlen(s->new_content) == 0)
+		{
+			// s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 2);
+			s->new_content = ft_strdup(s->without_dollar);
+			free(s->without_dollar);
+		}
+		else
+			s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 3);
 		delimit_sub(s);
 	}
 	free(s->stock);

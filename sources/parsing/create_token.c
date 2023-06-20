@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/06/12 18:53:31 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:03:56 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,21 @@
 char	*get_input(void)
 {
 	char	*input;
-	// char	cwd[1024];
+	char	cwd[1024];
 	char	*prompt;
 
-	// prompt = ft_strdup(getcwd(cwd, sizeof(cwd)));
-	// prompt = ft_strjoin_mod("\033[1;33m", prompt, 2);
-	// prompt = ft_strjoin_mod(prompt, "\033[0m", 1);
-	// prompt = ft_strjoin_mod(prompt, "$> ", 1);
-	prompt = ft_strdup("\033[1;32m$> \033[0m");
+	prompt = ft_strdup(getcwd(cwd, sizeof(cwd)));
+	prompt = ft_strjoin_mod("\033[1;33m", prompt, 2);
+	prompt = ft_strjoin_mod(prompt, "\033[0m", 1);
+	prompt = ft_strjoin_mod(prompt, "$> ", 1);
+	// prompt = ft_strdup("\033[1;32m$> \033[0m");
 	input = readline(prompt);
 	free(prompt);
 	if (input == NULL)
 	{
 		free(input);
-		write(1, "exit\n", 5);
-		// free_list_token_content(g_list_env);
-		// free_list(g_list_env);
+		write(1, "exit from get_input\n", 21);
+		free_list(g_list_env);
 		exit(EXIT_FAILURE);
 	}
 	else

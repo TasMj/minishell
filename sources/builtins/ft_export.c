@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/05/28 20:31:05 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/20 15:43:50 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,13 @@ int	add_var_env(char *stock, t_list *tmp)
 	if (ft_isalpha(copy) == 1)
 	{
 		free(copy);
+		free(stock);
 		return (err_msg(5));
 	}
 	add_list(g_list_env, stock, 0);
 	free(copy);
+	free(stock);
+	
 	return (0);
 }
 
@@ -110,8 +113,11 @@ int	ft_export(t_list **list_token)
 				free(stock);
 				return (0);
 			}
-			free(copy);
-			free(stock);
+			else
+			{
+				free(copy);
+				free(stock);
+			}
 			(*list_token) = (*list_token)->next;
 		}
 	}

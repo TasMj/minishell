@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/06/12 18:52:11 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:24:52 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,13 @@ int	set_old_path(char *path)
 			(*g_list_env) = (*g_list_env)->next;
 		else if (ft_strcmp(copy_env, "OLDPWD") == 0)
 		{
-			// free((*g_list_env)->content);
+			printf("ptr: %p gle: \n", (*g_list_env)->content);
+			free((*g_list_env)->content);
+			printf("ptr: %p gle 2:\n", (*g_list_env)->content);
+			
 			(*g_list_env)->content = ft_strjoin("OLDPWD=", path);
+			printf("ptr: %p gle 3:\n", (*g_list_env)->content);
+			
 			*g_list_env = tmp;
 			free(copy_env);
 			return (0);

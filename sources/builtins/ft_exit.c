@@ -6,11 +6,12 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 13:02:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/28 16:44:21 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/19 16:18:00 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "heredoc.h"
 
 long long	ft_atoi(const char *nptr)
 {
@@ -59,18 +60,27 @@ void    ft_exit(t_list **lst)
     if (ft_lstsize(*lst) == 1)
     {
         ft_putstr_fd2("exit\n", 2);
+        free_list_token_content(lst);
+        free_list(lst);
+        free_list(g_list_env);
         exit(0);
     }
     if (ft_lstsize(*lst) > 2)
     {
         ft_putstr_fd2("exit\n", 2);
         ft_putstr_fd2("minishell: exit: too many arguments\n", 2);
+        free_list_token_content(lst);
+        free_list(lst);
+        free_list(g_list_env);
         exit(1);
     }
     if (ft_lstsize(*lst) == 2)
     {
         i = ft_atoi((*lst)->next->content);
         ft_putstr_fd2("exit\n", 2);
+        free_list_token_content(lst);
+        free_list(lst);
+        free_list(g_list_env);
         exit(i);
     }
     *lst = tmp;

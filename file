@@ -1,6 +1,0 @@
-file
-ignore_leak.supp
-includes
-Makefile
-minishell
-sources
