@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/19 15:37:49 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:36:41 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,5 +293,6 @@ int		exec_it(t_cmd *cmd);
 int		open_n_dup(t_cmd *cmd, t_xek *x);
 void	dup_pipe(t_cmd *cmd, t_xek *x);
 int		exec_heredoc(t_minishell *data);
+void free_cmd(t_cmd *cmd);
 
 #endif

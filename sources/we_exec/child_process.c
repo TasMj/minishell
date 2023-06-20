@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 19:56:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/19 16:01:13 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:23:53 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	dup_pipe(t_cmd *cmd, t_xek *x)
 /* On ouvre nos fichiers et on redirige selon le type en ecrasant la pipe */
 int	open_n_dup(t_cmd *cmd, t_xek *x)
 {
-	(void) x;
 	int	i;
 	int	fd;
 
@@ -71,6 +70,10 @@ int	open_n_dup(t_cmd *cmd, t_xek *x)
 
 int	exec_it(t_cmd *cmd)
 {
+	// if (is_builtin(cmd) == 1)
+	// {
+	// 	exec_builtin();
+	// }
 	cmd->tab_env = lst_to_tab(g_list_env);
 	if (has_slash(cmd) == 1)
 	{

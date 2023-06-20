@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:10:27 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/19 17:50:17 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:45:04 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	write_in_hdoc(t_hdoc *hdoc)
 		/* Si l'input est le delimiteur on arrete d'ecrire dans le hdoc */
 		if (!input || ft_strcmp(input, hdoc->delim) == 0)
 		{
+			free(hdoc->delim);
 			free(input);
 			break ;
 		}
@@ -98,6 +99,8 @@ int	heredoc_child(t_xek *x)
 		write_in_hdoc(&(x->hdoc[i]));
 		i++;
 	}
+
+	// METTRE ft_exit()
 	exit(0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:33:10 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/19 17:29:27 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:38:13 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,12 @@ void	free_tab(char **tab)
 	int	i;
 
 	i = 0;
-	if (tab[i] != NULL)
+	while (tab[i])
 	{
-		while (tab[i])
-		{
-			free(tab[i]);
-			i++;
-		}
-		free(tab);
+		free(tab[i]);
+		i++;
 	}
+	free(tab);
 }
 
 void    free_list_token_content(t_list **list_token)
