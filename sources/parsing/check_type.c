@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_type.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 13:17:01 by tas               #+#    #+#             */
-/*   Updated: 2023/05/21 23:36:34 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/20 14:53:38 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,22 @@ int	check_append(char *str)
 		i++;
 		if (str[i] && str[i] == '>')
 			return (1);
+	}
+	return (0);
+}
+
+int is_redir(char *str)
+{
+	if (ft_strlen(str) == 1)
+	{
+		if (ft_strncmp(str, "|", 1) == 0 || ft_strncmp(str, "<", 1) == 0
+			|| ft_strncmp(str, ">", 1) == 0)
+				return (1);
+	}
+	if (ft_strlen(str) == 2)
+	{
+		if (ft_strncmp(str, "<<", 1) == 0 || ft_strncmp(str, ">>", 1) == 0)
+				return (1);
 	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:41:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/30 22:00:48 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/20 14:50:15 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ int	ft_isalpha(char *str);
 int	set_old_path(char	*path);
 void	free_substitution(t_substitution *s);
 int	check_list_equal(t_list **list);
+int is_redir(char *str);
 
 
 #endif

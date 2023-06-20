@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preparsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:56:18 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/10 19:18:49 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/20 15:04:02 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,17 @@ int	err_quote(t_list **list_token)
 void reunite_token(t_list **list_token)
 {
     t_list *tmp;
-    
+    int		flag_redir;
+	
+	flag_redir = 0;
     tmp = *list_token;
     while (*list_token && (*list_token)->next)
     {
-        if ((*list_token)->next->flag_space == 0)
+		if (is_redir((*list_token)->content) == 1)
+            (*list_token) = (*list_token)->next;
+        else if (((*list_token)->next->flag_space == 0 && is_redir((*list_token)->next->content) == 0))
         {
             t_list *next_token = (*list_token)->next;
-            
             (*list_token)->content = ft_strjoin_mod((*list_token)->content, next_token->content, 1);
             (*list_token)->flag_space = next_token->flag_space;
             (*list_token)->next = next_token->next;
