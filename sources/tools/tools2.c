@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:24:17 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/12 19:45:33 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/22 19:11:33 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,54 @@ int	ft_strcmp(char *s1, char *s2)
 		}
 	}
 	return (0);
+}
+
+static size_t	nbr_len(long int n)
+{
+	size_t		i;
+	long int	nb;
+
+	nb = n;
+	i = 1;
+	if (nb < 0)
+		nb *= -1;
+	while (nb > 9)
+	{
+		nb = nb / 10;
+		i++;
+	}
+	return (i);
+}
+
+static void	put_nbr(char *str, long int n, size_t i)
+{
+	if (i > 0)
+		put_nbr(str, n / 10, --i);
+	str[i] = (n % 10) + '0';
+}
+
+char	*ft_itoa(int n)
+{
+	size_t		len;
+	long int	nb;
+	char		*str;
+	int			neg;
+
+	nb = n;
+	len = 0;
+	neg = 0;
+	if (nb < 0)
+		len++;
+	len += nbr_len(nb);
+	str = malloc(sizeof(char) * (len + 1));
+	ft_memset(str, 0, len + 1);
+	if (nb < 0)
+	{
+		neg = 1;
+		nb = nb * (-1);
+	}
+	put_nbr(str, nb, len);
+	if (neg)
+		str[0] = '-';
+	return (str);
 }

@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/06/20 15:33:12 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/22 23:14:26 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
 
-int    init_list(t_list **list_token, char *input)
+int    init_list(t_minishell *data)
 {
-    list_token = create_token(list_token, input);
-    if (err_quote(list_token) == 1)
+    data->token = create_token(data->token, data->input);
+    if (err_quote(data->token) == 1)
         return (1);
-    substitute_dollar(list_token);
-    get_type(list_token);
-    remove_list_quotes(list_token);
-    remove_empty_tokens(list_token);
-    reunite_token(list_token);
-    // print_list(list_token);
+    substitute_dollar(data);
+    // print_list(data->token);
+    get_type(data->token);
+    remove_list_quotes(data->token);
+    remove_empty_tokens(data->token);
+    reunite_token(data->token);
     return (0);
 }
 
@@ -37,17 +37,17 @@ int main(int argc, char **argv, char **env)
     ft_memset(&data, 0, sizeof(t_minishell));
     while (1)
     {
-        signal(SIGQUIT, &ctrl_d);
-        signal(SIGINT, &ctrl_c);
+        // signal(SIGQUIT, &ctrl_d);
+        signal(SIGINT, ctrl_c);
         data.input = get_input();
         data.token = malloc(sizeof(t_list));
         *data.token = NULL;
-        if (init_list(data.token, data.input) == 0)
+        if (init_list(&data) == 0)
         {
             if (syntax_error(data.token) == 2)
             {
-                exec_builtin(data.token);
-                // we_exec(&data);
+                // exec_builtin(&data);
+                we_exec(&data);
                 // exec(list_token, g_list_env);
             }
         }

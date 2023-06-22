@@ -13,25 +13,6 @@
 // #include "minishell.h"
 // #include "heredoc.h"
 
-// int	is_builtin(t_list **cmd)
-// {
-// 	if (ft_strncmp((*cmd)->content, "cd", 2) == 0)
-// 		return (1);
-// 	else if (ft_strncmp((*cmd)->content, "echo", 4) == 0)
-// 		return (1);
-// 	else if (ft_strncmp((*cmd)->content, "env", 3) == 0)
-// 		return (1);
-// 	else if (ft_strncmp((*cmd)->content, "exit", 4) == 0)
-// 		return (1);
-// 	else if (ft_strncmp((*cmd)->content, "export", 6) == 0)
-// 		return (1);
-// 	else if (ft_strncmp((*cmd)->content, "pwd", 3) == 0)
-// 		return (1);
-// 	else if (ft_strncmp((*cmd)->content, "unset", 5) == 0)
-// 		return (1);
-// 	return (0);
-// }
-
 // int	simple_builtin(t_cmd *cmd, t_exec *data)
 // {
 // 	int	tmp_in;

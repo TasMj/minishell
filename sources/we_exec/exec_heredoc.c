@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:10:27 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/20 15:45:04 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/22 17:47:19 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,20 +88,22 @@ int	write_in_hdoc(t_hdoc *hdoc)
 }
 
 /* Child process dans lequel on va remplir le heredoc */
-int	heredoc_child(t_xek *x)
+int	heredoc_child(t_minishell *data)
 {
 	int	i;
 	
 	i = 0;
-	while (i < x->nb_hdoc)
+	while (i < data->x->nb_hdoc)
 	{
 		/* Tant qu'on a des hdoc on les ouvrent et on ecrit dedans un par un */
-		write_in_hdoc(&(x->hdoc[i]));
+		write_in_hdoc(&(data->x->hdoc[i]));
 		i++;
 	}
 
 	// METTRE ft_exit()
-	exit(0);
+	// exit(0);
+	ft_exit(data);
+	return (0);
 }
 
 int	exec_heredoc(t_minishell *data)
@@ -122,7 +124,7 @@ int	exec_heredoc(t_minishell *data)
 	/* On cree un process dans lequel on va ouvrir tous les hdoc un par un */
 	pid = fork();
 	if (pid == 0)
-		heredoc_child(data->x);
+		heredoc_child(data);
 	waitpid(pid, NULL, 0);
 	
 	i = 0;

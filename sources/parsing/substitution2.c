@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitution2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:47:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/20 14:33:50 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/22 22:00:57 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,31 +45,33 @@ char	*remove_space(char *str)
 	return (stockage);
 }
 
-char	*substitution(char *token)
+char	*substitution(t_minishell *data, char *token)
 {
 	char	*variable;
 
 	variable = NULL;
-	if (is_in_env(token + 1))
+	if ((ft_strlen(token) == 2) && ft_strcmp(token, "$?") == 0)
+		variable = ft_itoa(data->code_err);
+	else if (is_in_env(token + 1))
 		variable = get_venv(token + 1);
-	if (!variable)
+	else if (!variable)
 		variable = "";
 	return (variable);
 }
 
-void	quote_sub(t_substitution *s, t_list *list_token, int a)
+void	quote_sub(t_substitution *s, int a, t_minishell *data)
 {
 	if (a == 1)
-		s->var_substitute = sub_quotes(list_token->content, s);
+		s->var_substitute = sub_quotes((*data->token)->content, s, data);
 	else if (a == 2)
-		s->var_substitute = remove_quotes(list_token->content);
-	free(list_token->content);
-	list_token->content = ft_strdup(s->var_substitute);
-	list_token->flag_quote = 1;
+		s->var_substitute = remove_quotes((*data->token)->content);
+	free((*data->token)->content);
+	(*data->token)->content = ft_strdup(s->var_substitute);
+	(*data->token)->flag_quote = 1;
 	free(s->var_substitute);
 }
 
-char	*remove_quote_end(t_substitution *s)
+char	*remove_quote_end(t_substitution *s, t_minishell *data)
 {
 	int		i;
 	char	*var_modif;
@@ -81,7 +83,7 @@ char	*remove_quote_end(t_substitution *s)
 	if (i != ft_strlen(s->keep_var))
 		s->flag_keep_quote = 1;
 	tmp = ft_strdup_size(s->keep_var, i);
-	var_modif = substitution(tmp);
+	var_modif = substitution(data, tmp);
 	free(tmp);
 	if (ft_strlen(var_modif) != 0)
 		var_modif = ft_strjoin_mod(var_modif, s->keep_var + i, 1);

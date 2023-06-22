@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/20 15:36:41 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/22 23:14:35 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ typedef struct s_cmd
 	int		nb_redir;
 	pid_t	pid;
 	char	**tab_env;
+	struct s_minishell *data;
 }	t_cmd;
 
 typedef struct	s_hdoc
@@ -171,7 +172,7 @@ void	ft_pwd(void);
 int 	ft_unset(t_list **list_token);
 int 	ft_cd(t_list **list_token);
 int 	ft_export(t_list **list_token);
-void	ft_exit(t_list **lst);
+void	ft_exit(t_minishell *data);
 
 /* exit */
 int		err_msg(int n);
@@ -202,9 +203,9 @@ int		check_append(char *str);
 /* substitution */
 int		check_dollar(char *str);
 char    *remove_space(char *str);
-char    *substitution(char *token);
-void    substitute_dollar(t_list **list_token);
-char    *sub_quotes(char *token, t_substitution *s);
+char    *substitution(t_minishell *data, char *token);
+void    substitute_dollar(t_minishell *data);
+char    *sub_quotes(char *token, t_substitution *s, t_minishell *data);
 
 /* type */
 int		determine_type(char *token);
@@ -229,7 +230,7 @@ int		ft_strncmp(char *s1, char *s2, size_t n);
 char	*ft_strjoin(char *s1, char *s2);
 int		is_a_space(char c);
 int		is_a_separator(char c);
-int    init_list(t_list **list_token, char *input);
+int    init_list(t_minishell *data);
 void	*ft_calloc(size_t n, size_t size);
 
 /***** EXEC *****/
@@ -264,12 +265,12 @@ void	clean_all(t_exec *data);
 
 /* exec god */
 int		exec(t_list **token, t_list **env);
-int		exec_builtin(t_list **list_token);
+int	exec_builtin(t_cmd *cmd, t_minishell *data);
 
 /* exec builtins */
 int	fork_builtin(t_cmd *cmd, t_exec *data);
 int	simple_builtin(t_cmd *cmd, t_exec *data);
-int	is_builtin(t_list **cmd);
+int	is_builtin(t_cmd *cmd);
 
 char	*del_equal(char *str);
 void    reunite_token(t_list **list_token);
@@ -294,5 +295,8 @@ int		open_n_dup(t_cmd *cmd, t_xek *x);
 void	dup_pipe(t_cmd *cmd, t_xek *x);
 int		exec_heredoc(t_minishell *data);
 void free_cmd(t_cmd *cmd);
+
+char	*ft_itoa(int n);
+
 
 #endif

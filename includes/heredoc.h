@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:41:00 by tas               #+#    #+#             */
-/*   Updated: 2023/06/20 15:58:00 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/22 20:26:30 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	free_heredoc(t_heredoc *h);
 
 t_list  **get_list_env(char **env);
 
-int    exec_builtin(t_list **list_token);
+int	exec_builtin(t_cmd *cmd, t_minishell *data);
 
 /*signals*/
 void    ctrl_c(int sigid);
@@ -113,17 +113,20 @@ void	free_heredoc(t_heredoc *h);
 
 int		check_dollar(char *str);
 char	*remove_space(char *str);
-void	quote_sub(t_substitution *s, t_list *list_token, int a);
+void	quote_sub(t_substitution *s, int a, t_minishell *data);
 char	*get_venv(char *str);
 char	*after_equal(char *str);
 void    remove_empty_tokens(t_list **list);
 int err_quote(t_list **list_token);
-char	*remove_quote_end(t_substitution *s);
+char	*remove_quote_end(t_substitution *s, t_minishell *data);
 int	ft_isalpha(char *str);
 int	set_old_path(char	*path);
 void	free_substitution(t_substitution *s);
 int	check_list_equal(t_list **list);
 int is_redir(char *str);
+long long	ft_atoi(const char *nptr);
+
+
 
 
 #endif
