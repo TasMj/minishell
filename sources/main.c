@@ -6,24 +6,24 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/06/20 16:01:54 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/22 19:23:53 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
 
-int    init_list(t_list **list_token, char *input)
+int    init_list(t_minishell *data)
 {
-    list_token = create_token(list_token, input);
-    if (err_quote(list_token) == 1)
+    data->token = create_token(data->token, data->input);
+    if (err_quote(data->token) == 1)
         return (1);
-    substitute_dollar(list_token);
-    get_type(list_token);
-    remove_list_quotes(list_token);
-    remove_empty_tokens(list_token);
-    reunite_token(list_token);
-    // print_list(list_token);
+    substitute_dollar(data);
+    get_type(data->token);
+    remove_list_quotes(data->token);
+    remove_empty_tokens(data->token);
+    reunite_token(data->token);
+    // print_list(data->token);
     return (0);
 }
 
@@ -42,11 +42,11 @@ int main(int argc, char **argv, char **env)
         data.input = get_input();
         data.token = malloc(sizeof(t_list));
         *data.token = NULL;
-        if (init_list(data.token, data.input) == 0)
+        if (init_list(&data) == 0)
         {
             if (syntax_error(data.token) == 2)
             {
-                // exec_builtin(data.token);
+                // exec_builtin(&data);
                 we_exec(&data);
                 // exec(list_token, g_list_env);
             }

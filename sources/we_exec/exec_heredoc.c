@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:10:27 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/20 16:08:02 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/22 17:47:19 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,7 @@ int	heredoc_child(t_minishell *data)
 
 	// METTRE ft_exit()
 	// exit(0);
-	destroy_exec(data->x);
-	ft_exit(data->token);
+	ft_exit(data);
 	return (0);
 }
 

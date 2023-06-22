@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   substitution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/06/20 14:41:29 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/22 19:08:20 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
 
-void	go_to_dollar(t_substitution *s, t_list *tok)
+void	go_to_dollar(t_substitution *s, t_list *tok, t_minishell *data)
 {
 	s->deb = s->i;
 	while (tok->content[s->i] && tok->content[s->i] != '$')
@@ -36,7 +36,7 @@ void	go_to_dollar(t_substitution *s, t_list *tok)
 		s->end = s->i;
 		s->keep_var = ft_strdup_size(tok->content + s->start, \
 		(s->end - s->start));
-		s->var_substitute = substitution(s->keep_var);
+		s->var_substitute = substitution(data, s->keep_var);
 		if (ft_strlen(s->var_substitute) != 0)
 			s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
 		free(s->keep_var);
@@ -44,41 +44,41 @@ void	go_to_dollar(t_substitution *s, t_list *tok)
 	free(s->without_dollar);
 }
 
-void	more_dollar(t_substitution *s, t_list **list_token)
+void	more_dollar(t_substitution *s, t_minishell *data)
 {
 	s->i = 0;
-	while ((*list_token)->content[s->i])
-		go_to_dollar(s, (*list_token));
-	free((*list_token)->content);
-	(*list_token)->content = ft_strdup(s->new_content);
+	while ((*data->token)->content[s->i])
+		go_to_dollar(s, (*data->token), data);
+	free((*data->token)->content);
+	(*data->token)->content = ft_strdup(s->new_content);
 	free(s->new_content);
 }
 
-void	substitute_dollar(t_list **list_token)
+void	substitute_dollar(t_minishell *data)
 {
 	t_substitution	*s;
 	t_list			*tmp;
 	s = malloc(sizeof(t_substitution));
-	tmp = *list_token;
+	tmp = *data->token;
 	s->new_content = "";
-	while ((*list_token) != NULL)
+	while ((*data->token) != NULL)
 	{
-		if (check_dollar((*list_token)->content) == 1)
+		if (check_dollar((*data->token)->content) == 1)
 		{
-			if ((*list_token)->content[0] == 34)
-				quote_sub(s, (*list_token), 1);
-			else if ((*list_token)->content[0] == 39)
-				quote_sub(s, (*list_token), 2);
-			else if (ft_strlen((*list_token)->content) > 1)
-				more_dollar(s, list_token);
+			if ((*data->token)->content[0] == 34)
+				quote_sub(s, 1, data);
+			else if ((*data->token)->content[0] == 39)
+				quote_sub(s, 2, data);
+			else if (ft_strlen((*data->token)->content) > 1)
+				more_dollar(s, data);
 		}
-		(*list_token) = (*list_token)->next;
+		(*data->token) = (*data->token)->next;
 	}
-	*list_token = tmp;
+	(*data->token) = tmp;
 	free(s);
 }
 
-void	delimit_sub(t_substitution *s)
+void	delimit_sub(t_substitution *s, t_minishell *data)
 {
 	if (s->stock[s->i] && s->stock[s->i] == '$' && \
 		(is_a_space(s->stock[s->i + 1]) == 1 || s->stock[s->i + 1] == '\0'))
@@ -97,14 +97,14 @@ void	delimit_sub(t_substitution *s)
 			s->i++;
 		s->end = s->i;
 		s->keep_var = ft_strdup_size(s->stock + s->start, (s->end - s->start));
-		s->keep_var2 = remove_quote_end(s);
+		s->keep_var2 = remove_quote_end(s, data);
 		if (ft_strlen(s->keep_var2) != 0)
 			s->new_content = ft_strjoin_mod(s->new_content, s->keep_var2, 3);
 		free(s->keep_var);
 	}
 }
 
-char	*sub_quotes(char *token, t_substitution *s)
+char	*sub_quotes(char *token, t_substitution *s, t_minishell *data)
 {
 	s->i = 0;
 	s->stock = remove_quotes(token);
@@ -123,7 +123,7 @@ char	*sub_quotes(char *token, t_substitution *s)
 		}
 		else
 			s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 3);
-		delimit_sub(s);
+		delimit_sub(s, data);
 	}
 	free(s->stock);
 	return (s->new_content);

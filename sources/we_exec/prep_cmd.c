@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/22 17:20:25 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:37:17 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	check_cmd(t_cmd *cmd)
 			return (0);
 		/* Sinon on return 1 et message d'erreur */
 		printf("minishell: %s: no such file or directory\n", (*cmd->cmd)->content);
+		cmd->data->code_err = 127;
 		return (1);
 	}
 	/* Sinon ex : ls -a, cat ou jules */
@@ -75,6 +76,7 @@ int	check_cmd(t_cmd *cmd)
 	{
 		/* Si la commande n'est pas valide on retourne une erreur */
 		printf("minishell: %s: command not found\n", (*cmd->cmd)->content);
+		cmd->data->code_err = 127;
 		return (1);
 	}
 	free_tab(cmd->tab);
@@ -91,7 +93,6 @@ int	fill_cmd(t_cmd *cmd)
 	cmd->tab = lst_to_tab(cmd->cmd);
 	cmd->pid = 0;
 	handle_redir(cmd, *(cmd->token));
-
 	// free(cmd->tab);
 	
 	return (0);
@@ -117,6 +118,7 @@ int	prep_cmd(t_minishell *data)
 	while (elem)
 	{
 		/* On initialise tous les param de chaque cmd */
+		data->x->cmd[i].data = data;
 		data->x->cmd[i].id = i;
 		data->x->cmd[i].token = clone_to_pipe(elem);
 		if (fill_cmd(&(data->x->cmd[i])) != 0)

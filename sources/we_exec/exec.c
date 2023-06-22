@@ -34,6 +34,7 @@ int	launch_process(t_cmd *cmd, t_xek *x)
 int	go_exec(t_xek *x)
 {
 	int	i;
+	int	ret;
 	
 	/* On lance un process pour chaque commande */
 	i = 0;
@@ -46,7 +47,16 @@ int	go_exec(t_xek *x)
 	i = 0;
 	while (i < x->nb_cmd)
 	{
-		waitpid(x->cmd[i].pid, NULL, 0);
+		waitpid(x->cmd[i].pid, &ret, WUNTRACED);
+		if (WIFEXITED(ret))
+		{
+			x->cmd->data->code_err = WEXITSTATUS(ret);
+		}
+		else
+		{
+			x->cmd->data->code_err = WTERMSIG(ret) + 128;
+			//WIP
+		}
 		i++;
 	}
 	return (0);

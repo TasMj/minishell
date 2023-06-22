@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:42:19 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/10 13:22:51 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/22 17:48:48 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
 
-int	exec_builtin(t_list **lst)
+int	exec_builtin(t_minishell *data)
 {
 	t_list	*tmp;
+	t_list	**lst;
 
+	lst = data->token;
 	if (!lst || ft_lstsize(*lst) == 0)
 		return (-1);
 	tmp = *lst;
@@ -27,7 +29,7 @@ int	exec_builtin(t_list **lst)
 	else if (ft_strlen((*lst)->content) == 3 && ft_strncmp((*lst)->content, "env", 3) == 0)
 		ft_env(lst);
 	else if (ft_strlen((*lst)->content) == 4 && ft_strncmp((*lst)->content, "exit", 4) == 0)
-		ft_exit(lst);
+		ft_exit(data);
 	else if (ft_strlen((*lst)->content) == 6 && ft_strncmp((*lst)->content, "export", 6) == 0)
 		ft_export(lst);
 	else if (ft_strlen((*lst)->content) == 3 && ft_strncmp((*lst)->content, "pwd", 3) == 0)
