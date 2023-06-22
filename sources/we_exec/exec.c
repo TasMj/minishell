@@ -54,8 +54,12 @@ int	go_exec(t_xek *x)
 		}
 		else
 		{
+
 			x->cmd->data->code_err = WTERMSIG(ret) + 128;
-			//WIP
+			if (x->cmd->data->code_err == 139)
+				printf("Segmentation Fault BOOM !\n");
+			else
+				printf("Interrupted with signal %d\n", x->cmd->data->code_err);
 		}
 		i++;
 	}
