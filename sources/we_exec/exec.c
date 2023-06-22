@@ -59,7 +59,12 @@ int	we_exec(t_minishell *data)
 	data->x = malloc(sizeof(t_xek));
 	ft_memset(data->x, 0, sizeof(t_xek));
 
-	prep_cmd(data);
+	if (prep_cmd(data) != 0)
+	{
+		destroy_exec(data->x);
+		// free_all();
+		return (1);
+	}
 
 	open_pipes(data);
 

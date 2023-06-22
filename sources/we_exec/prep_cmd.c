@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/20 16:11:33 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/22 17:20:25 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int	check_cmd(t_cmd *cmd)
 			return (0);
 		/* Sinon on return 1 et message d'erreur */
 		printf("minishell: %s: no such file or directory\n", (*cmd->cmd)->content);
-		//WIP => free all
 		return (1);
 	}
 	/* Sinon ex : ls -a, cat ou jules */
@@ -76,8 +75,6 @@ int	check_cmd(t_cmd *cmd)
 	{
 		/* Si la commande n'est pas valide on retourne une erreur */
 		printf("minishell: %s: command not found\n", (*cmd->cmd)->content);
-		//WIP => free all
-		free_tab(cmd->tab);
 		return (1);
 	}
 	free_tab(cmd->tab);
@@ -122,8 +119,8 @@ int	prep_cmd(t_minishell *data)
 		/* On initialise tous les param de chaque cmd */
 		data->x->cmd[i].id = i;
 		data->x->cmd[i].token = clone_to_pipe(elem);
-		fill_cmd(&(data->x->cmd[i]));
-
+		if (fill_cmd(&(data->x->cmd[i])) != 0)
+			return (1);
 		while (elem && elem->type != PIPE)
 			elem = elem->next;
 		if (elem && elem->type == PIPE)
