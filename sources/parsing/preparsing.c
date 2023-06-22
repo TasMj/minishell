@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preparsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:56:18 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/20 15:04:02 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/22 12:56:41 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ int	err_quote(t_list **list_token)
 void reunite_token(t_list **list_token)
 {
     t_list *tmp;
-    int		flag_redir;
+   //  int		flag_redir;
 	
-	flag_redir = 0;
+	// flag_redir = 0;
     tmp = *list_token;
     while (*list_token && (*list_token)->next)
     {
