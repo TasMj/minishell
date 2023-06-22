@@ -6,23 +6,27 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/06/22 19:08:20 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/22 22:27:20 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
 
-void	go_to_dollar(t_substitution *s, t_list *tok, t_minishell *data)
+void	go_to_dollar(t_substitution *s, t_minishell *data)
 {
+	// int i;
+	
+	// i = 0;
 	s->deb = s->i;
-	while (tok->content[s->i] && tok->content[s->i] != '$')
+	while ((*data->token)->content[s->i] && (*data->token)->content[s->i] != '$')
 		s->i++;
-	s->without_dollar = ft_strdup_size(tok->content + s->deb, (s->i - s->deb));
-	s->new_content = ft_strdup(s->without_dollar);
-	// s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 0);
-	if (tok->content[s->i] && tok->content[s->i] == '$'
-		&& tok->content[s->i + 1] == '\0')
+	s->without_dollar = ft_strdup_size((*data->token)->content + s->deb, (s->i - s->deb));
+	// if(i == 0)
+		// s->new_content = ft_strdup(s->without_dollar);
+	// else
+	s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 1);
+	if ((*data->token)->content[s->i] && (*data->token)->content[s->i] == '$' && (*data->token)->content[s->i + 1] == '\0')
 	{
 		s->new_content = ft_strjoin_mod(s->new_content, "$", 0);
 		s->i++;
@@ -31,10 +35,10 @@ void	go_to_dollar(t_substitution *s, t_list *tok, t_minishell *data)
 	{
 		s->start = s->i;
 		s->i++;
-		while (tok->content[s->i] != '\0' && tok->content[s->i] != '$')
+		while ((*data->token)->content[s->i] != '\0' && (*data->token)->content[s->i] != '$')
 			s->i++;
 		s->end = s->i;
-		s->keep_var = ft_strdup_size(tok->content + s->start, \
+		s->keep_var = ft_strdup_size((*data->token)->content + s->start, \
 		(s->end - s->start));
 		s->var_substitute = substitution(data, s->keep_var);
 		if (ft_strlen(s->var_substitute) != 0)
@@ -42,13 +46,14 @@ void	go_to_dollar(t_substitution *s, t_list *tok, t_minishell *data)
 		free(s->keep_var);
 	}
 	free(s->without_dollar);
+	// i++;
 }
 
 void	more_dollar(t_substitution *s, t_minishell *data)
 {
 	s->i = 0;
 	while ((*data->token)->content[s->i])
-		go_to_dollar(s, (*data->token), data);
+		go_to_dollar(s, data);
 	free((*data->token)->content);
 	(*data->token)->content = ft_strdup(s->new_content);
 	free(s->new_content);

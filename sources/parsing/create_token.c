@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/06/22 17:30:35 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/22 23:15:02 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_input(void)
 	if (input == NULL)
 	{
 		free(input);
-		write(1, "exit from get_input\n", 21);
+		write(1, "exit\n", 5);
 		free_list(g_list_env);
 		exit(EXIT_FAILURE);
 	}

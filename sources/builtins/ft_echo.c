@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:09:31 by tas               #+#    #+#             */
-/*   Updated: 2023/06/22 20:30:16 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/22 21:55:34 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	ft_echo(t_list **list_token)
 			(*list_token) = (*list_token)->next;
 	}
 	if (e->flag != 1)
-		printf("caca%s\n", e->stockage);
+		printf("%s\n", e->stockage);
 	else
 		printf("%s", e->stockage);
 	if (e->to_free == 1)

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/06/22 19:23:53 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/22 23:14:26 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int    init_list(t_minishell *data)
     if (err_quote(data->token) == 1)
         return (1);
     substitute_dollar(data);
+    // print_list(data->token);
     get_type(data->token);
     remove_list_quotes(data->token);
     remove_empty_tokens(data->token);
     reunite_token(data->token);
-    // print_list(data->token);
     return (0);
 }
 
@@ -37,8 +37,8 @@ int main(int argc, char **argv, char **env)
     ft_memset(&data, 0, sizeof(t_minishell));
     while (1)
     {
-        signal(SIGQUIT, &ctrl_d);
-        signal(SIGINT, &ctrl_c);
+        // signal(SIGQUIT, &ctrl_d);
+        signal(SIGINT, ctrl_c);
         data.input = get_input();
         data.token = malloc(sizeof(t_list));
         *data.token = NULL;
