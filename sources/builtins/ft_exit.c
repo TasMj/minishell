@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 13:02:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/22 20:11:19 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/22 20:53:53 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,15 @@ long long	ft_atoi(const char *nptr)
 	return (res * sign);
 }
 
-void    ft_putstr_fd(char *s, int fd)
-{
-    int        i;
+// void    ft_putstr_fd(char *s, int fd)
+// {
+//     int        i;
 
-    i = 0;
-    if (s != NULL)
-        while (s[i])
-            write(fd, &s[i++], 1);
-}
+//     i = 0;
+//     if (s != NULL)
+//         while (s[i])
+//             write(fd, &s[i++], 1);
+// }
 
 void    ft_exit(t_minishell *data)
 {

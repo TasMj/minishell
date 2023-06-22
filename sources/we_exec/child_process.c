@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 19:56:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/20 15:23:53 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/22 21:01:38 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,47 @@ int	open_n_dup(t_cmd *cmd, t_xek *x)
 	return (1);
 }
 
+int	is_builtin(t_cmd *cmd)
+{
+
+	if (ft_strncmp((*cmd->cmd)->content, "cd", 2) == 0)
+		return (1);
+	else if (ft_strncmp((*cmd->cmd)->content, "echo", 4) == 0)
+		return (1);
+	else if (ft_strncmp((*cmd->cmd)->content, "env", 3) == 0)
+		return (1);
+	else if (ft_strncmp((*cmd->cmd)->content, "exit", 4) == 0)
+		return (1);
+	else if (ft_strncmp((*cmd->cmd)->content, "export", 6) == 0)
+		return (1);
+	else if (ft_strncmp((*cmd->cmd)->content, "pwd", 3) == 0)
+		return (1);
+	else if (ft_strncmp((*cmd->cmd)->content, "unset", 5) == 0)
+		return (1);
+	return (0);
+}
+
+void    ft_putstr_fd(char *s, int fd)
+{
+    int        i;
+
+    i = 0;
+    if (s != NULL)
+        while (s[i])
+            write(fd, &s[i++], 1);
+}
+
 int	exec_it(t_cmd *cmd)
 {
-	// if (is_builtin(cmd) == 1)
-	// {
-	// 	exec_builtin();
-	// }
+	if (!cmd->path && is_builtin(cmd) == 0)
+	{
+		ft_exit(cmd->data);
+	}
+	if (is_builtin(cmd) == 1)
+	{
+		exec_builtin(cmd, cmd->data);
+		ft_exit(cmd->data);
+	}
 	cmd->tab_env = lst_to_tab(g_list_env);
 	if (has_slash(cmd) == 1)
 	{

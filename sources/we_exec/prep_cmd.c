@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/22 18:37:17 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/22 21:05:27 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	check_cmd(t_cmd *cmd)
 	/* Sinon ex : ls -a, cat ou jules */
 	cmd->tab = lst_to_tab(g_list_env);
 	cmd->path = find_path(cmd->tab, (*cmd->cmd)->content);
-	if (!cmd->path)
+	if (!cmd->path && is_builtin(cmd) == 0)
 	{
 		/* Si la commande n'est pas valide on retourne une erreur */
 		printf("minishell: %s: command not found\n", (*cmd->cmd)->content);
@@ -121,7 +121,7 @@ int	prep_cmd(t_minishell *data)
 		data->x->cmd[i].data = data;
 		data->x->cmd[i].id = i;
 		data->x->cmd[i].token = clone_to_pipe(elem);
-		if (fill_cmd(&(data->x->cmd[i])) != 0)
+		if (fill_cmd(&(data->x->cmd[i])) == 1 && data->x->cmd[i].id != 0)
 			return (1);
 		while (elem && elem->type != PIPE)
 			elem = elem->next;

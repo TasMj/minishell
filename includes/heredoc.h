@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:41:00 by tas               #+#    #+#             */
-/*   Updated: 2023/06/22 19:10:46 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/22 20:26:30 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	free_heredoc(t_heredoc *h);
 
 t_list  **get_list_env(char **env);
 
-int    exec_builtin(t_minishell *data);
+int	exec_builtin(t_cmd *cmd, t_minishell *data);
 
 /*signals*/
 void    ctrl_c(int sigid);

@@ -6,38 +6,39 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:42:19 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/22 17:48:48 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/22 20:37:44 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "heredoc.h"
 
-int	exec_builtin(t_minishell *data)
+int	exec_builtin(t_cmd *cmd, t_minishell *data)
 {
 	t_list	*tmp;
-	t_list	**lst;
 
-	lst = data->token;
-	if (!lst || ft_lstsize(*lst) == 0)
+	if (!cmd->cmd || ft_lstsize(*cmd->cmd) == 0)
 		return (-1);
-	tmp = *lst;
-	if (ft_strlen((*lst)->content) == 2 && ft_strncmp((*lst)->content, "cd", 2) == 0)
-		ft_cd(lst);
-	else if (ft_strlen((*lst)->content) == 4 && ft_strncmp((*lst)->content, "echo", 4) == 0)
-		ft_echo(lst);
-	else if (ft_strlen((*lst)->content) == 3 && ft_strncmp((*lst)->content, "env", 3) == 0)
-		ft_env(lst);
-	else if (ft_strlen((*lst)->content) == 4 && ft_strncmp((*lst)->content, "exit", 4) == 0)
+	tmp = *cmd->cmd;
+	if (ft_strlen((*cmd->cmd)->content) == 2 && ft_strncmp((*cmd->cmd)->content, "cd", 2) == 0)
+		ft_cd(cmd->cmd);
+	else if (ft_strlen((*cmd->cmd)->content) == 4 && ft_strncmp((*cmd->cmd)->content, "echo", 4) == 0)
+		ft_echo(cmd->cmd);
+	else if (ft_strlen((*cmd->cmd)->content) == 3 && ft_strncmp((*cmd->cmd)->content, "env", 3) == 0)
+		ft_env(cmd->cmd);
+	else if (ft_strlen((*cmd->cmd)->content) == 4 && ft_strncmp((*cmd->cmd)->content, "exit", 4) == 0)
+	{
+		printf("here1\n");
 		ft_exit(data);
-	else if (ft_strlen((*lst)->content) == 6 && ft_strncmp((*lst)->content, "export", 6) == 0)
-		ft_export(lst);
-	else if (ft_strlen((*lst)->content) == 3 && ft_strncmp((*lst)->content, "pwd", 3) == 0)
+	}
+	else if (ft_strlen((*cmd->cmd)->content) == 6 && ft_strncmp((*cmd->cmd)->content, "export", 6) == 0)
+		ft_export(cmd->cmd);
+	else if (ft_strlen((*cmd->cmd)->content) == 3 && ft_strncmp((*cmd->cmd)->content, "pwd", 3) == 0)
 		ft_pwd();
-	else if (ft_strlen((*lst)->content) == 5 && ft_strncmp((*lst)->content, "unset", 5) == 0)
-		ft_unset(lst);
+	else if (ft_strlen((*cmd->cmd)->content) == 5 && ft_strncmp((*cmd->cmd)->content, "unset", 5) == 0)
+		ft_unset(cmd->cmd);
 	else
 		return (1);
-	*lst = tmp;
+	*cmd->cmd = tmp;
 	return (0);
 }

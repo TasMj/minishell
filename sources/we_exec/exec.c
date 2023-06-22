@@ -23,6 +23,7 @@ int	launch_process(t_cmd *cmd, t_xek *x)
 	{
 		dup_pipe(cmd, x);
 		open_n_dup(cmd, x);
+
 		if (exec_it(cmd) != 0)
 			exit(1);
 		exit(0);
@@ -70,13 +71,21 @@ int	go_exec(t_xek *x)
 -> cat < file | wc -l > file2 */
 int	we_exec(t_minishell *data)
 {
+	int	i;
+
+	i = 0;
 	data->x = malloc(sizeof(t_xek));
 	ft_memset(data->x, 0, sizeof(t_xek));
 
-	if (prep_cmd(data) != 0)
+	if (prep_cmd(data) == 1)
 	{
-		destroy_exec(data->x);
-		// free_all();
+		while (i < data->x->nb_cmd)
+		{
+			free_cmd(&(data->x->cmd[i]));
+			i++;
+		}
+		free(data->x->cmd);
+		free(data->x);
 		return (1);
 	}
 

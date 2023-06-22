@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/22 19:11:48 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/22 20:28:46 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,12 +265,12 @@ void	clean_all(t_exec *data);
 
 /* exec god */
 int		exec(t_list **token, t_list **env);
-int		exec_builtin(t_minishell *data);
+int	exec_builtin(t_cmd *cmd, t_minishell *data);
 
 /* exec builtins */
 int	fork_builtin(t_cmd *cmd, t_exec *data);
 int	simple_builtin(t_cmd *cmd, t_exec *data);
-int	is_builtin(t_list **cmd);
+int	is_builtin(t_cmd *cmd);
 
 char	*del_equal(char *str);
 void    reunite_token(t_list **list_token);
