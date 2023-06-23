@@ -3,44 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 13:02:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/22 20:53:53 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/23 12:17:59 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "heredoc.h"
 
-long long	ft_atoi(const char *nptr)
-{
-	long long	res;
-	int			i;
-	int			sign;
-
-	i = 0;
-	res = 0;
-	sign = 1;
-	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == ' ')
-		i++;
-	if (nptr[i] == '+' || nptr[i] == '-')
-	{
-		if (nptr[i] == '-')
-			sign = -sign;
-		i++;
-	}
-	while (nptr[i] >= '0' && nptr[i] <= '9')
-	{
-		if ((res > 2147483647 && sign == 1) || (res < -2147483648 && sign == -1))
-			return (-1);
-		res = (res * 10) + (nptr[i] - 48);
-		i++;
-	}
-	return (res * sign);
-}
-
-// void    ft_putstr_fd(char *s, int fd)
+// static void    ft_putstr_fd(char *s, int fd)
 // {
 //     int        i;
 
@@ -53,9 +25,9 @@ long long	ft_atoi(const char *nptr)
 void    ft_exit(t_minishell *data)
 {
     t_list    *tmp;
-    int        i;
+    // int        i;
 
-    i = 0;
+    // i = 0;
     tmp = *data->token;
     
     destroy_exec(data->x);

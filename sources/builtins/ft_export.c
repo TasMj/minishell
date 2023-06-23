@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/06/20 15:43:50 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/23 12:26:38 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "heredoc.h"
 
 t_list	**g_list_env;
 
-int	sort_env_ascii(void)
+/* sort the environement by ascii */
+static int	sort_env_ascii(void)
 {
 	t_list	**copy;
 
@@ -28,8 +28,10 @@ int	sort_env_ascii(void)
 	return (0);
 }
 
-int	add_var_env(char *stock, t_list *tmp)
+/* add new variable to the environement */
+static int	add_var_env(char *stock, t_list *tmp)
 {
+	printf("ca rentre\n");
 	char	*copy;
 	(void)tmp;
 
@@ -43,11 +45,11 @@ int	add_var_env(char *stock, t_list *tmp)
 	add_list(g_list_env, stock, 0);
 	free(copy);
 	free(stock);
-	
 	return (0);
 }
 
-int	modify_var(char *stock, t_list *tmp)
+/* modify the value of an environement arg that already exist */
+static int	modify_var(char *stock, t_list *tmp)
 {
 	char	*copy_env;
 	char	*copy_token;

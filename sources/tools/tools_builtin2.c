@@ -6,16 +6,14 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:41:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/10 18:25:38 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/23 04:49:06 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "heredoc.h"
-/* export =*/
 
 /* return size of str until '=' */
-int	ft_strlen_var(char *str)
+static int	ft_strlen_var(char *str)
 {
 	int	i;
 
@@ -38,7 +36,7 @@ void	print_export(t_list **list)
 	(*list) = tmp;
 }
 
-void	set_min_max(t_list **list, t_min_max *m)
+static void	set_min_max(t_list **list, t_min_max *m)
 {
 	if (ft_strlen_var((*list)->content) >= \
 	ft_strlen_var((*list)->next->content))
@@ -53,7 +51,7 @@ void	set_min_max(t_list **list, t_min_max *m)
 	}
 }
 
-int	is_sorted(t_list **list)
+static int	is_sorted(t_list **list)
 {
 	t_list		*tmp;
 	t_min_max	*m;
@@ -76,7 +74,7 @@ int	is_sorted(t_list **list)
 	return (0);
 }
 
-void swap_in_list(t_list **list, t_list *tmp)
+static void swap_in_list(t_list **list, t_list *tmp)
 {
     char *tmp_content;
 	

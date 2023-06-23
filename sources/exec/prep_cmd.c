@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   prep_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/22 21:05:27 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/23 04:47:03 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "heredoc.h"
 
 /* On clone les token jusqua un pipe ou la fin
 -> {cat < file} */
-t_list	**clone_to_pipe(t_list *token)
+static t_list	**clone_to_pipe(t_list *token)
 {
 	t_list	**lst;
 	t_list	*elem;
@@ -36,7 +35,7 @@ t_list	**clone_to_pipe(t_list *token)
 
 /* Retourne la commande brut sans les redir
 -> {cat} {wc -l}, etc) */
-t_list	**clone_to_op(t_list *token)
+static t_list	**clone_to_op(t_list *token)
 {
 	t_list	**lst;
 	t_list	*elem;
@@ -56,7 +55,7 @@ t_list	**clone_to_op(t_list *token)
 
 /* Verifie si la commande est valide 
 ex : ls -> OK, jules -> not found */
-int	check_cmd(t_cmd *cmd)
+static int	check_cmd(t_cmd *cmd)
 {
 	/* Si la commande est un path */
 	if (has_slash(cmd) == 1)
@@ -84,7 +83,7 @@ int	check_cmd(t_cmd *cmd)
 }
 
 /* Init tous les param de chaque cmd */
-int	fill_cmd(t_cmd *cmd)
+static int	fill_cmd(t_cmd *cmd)
 {
 	/* On attribue a cmd la commande sans les op */
 	cmd->cmd = clone_to_op(*(cmd->token));

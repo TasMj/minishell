@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   type.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 12:57:45 by tas               #+#    #+#             */
-/*   Updated: 2023/05/25 16:37:12 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/23 04:14:40 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	determine_type(char *token)
+static int	determine_type(char *token)
 {
 	if (check_heredoc(token) == 1)
 		return (HEREDOC);

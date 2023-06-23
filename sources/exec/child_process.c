@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   child_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 19:56:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/22 21:01:38 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/23 12:45:03 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "heredoc.h"
 
 /* Redirige l'entree et/ou la sortie d'une commande vers une pipe */
 void	dup_pipe(t_cmd *cmd, t_xek *x)
@@ -70,7 +69,6 @@ int	open_n_dup(t_cmd *cmd, t_xek *x)
 
 int	is_builtin(t_cmd *cmd)
 {
-
 	if (ft_strncmp((*cmd->cmd)->content, "cd", 2) == 0)
 		return (1);
 	else if (ft_strncmp((*cmd->cmd)->content, "echo", 4) == 0)
@@ -86,16 +84,6 @@ int	is_builtin(t_cmd *cmd)
 	else if (ft_strncmp((*cmd->cmd)->content, "unset", 5) == 0)
 		return (1);
 	return (0);
-}
-
-void    ft_putstr_fd(char *s, int fd)
-{
-    int        i;
-
-    i = 0;
-    if (s != NULL)
-        while (s[i])
-            write(fd, &s[i++], 1);
 }
 
 int	exec_it(t_cmd *cmd)

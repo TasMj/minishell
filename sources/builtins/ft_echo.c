@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:09:31 by tas               #+#    #+#             */
-/*   Updated: 2023/06/22 21:55:34 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/23 04:46:02 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "heredoc.h"
 
 //echo cat<<EOF cat << EOF
 
-int	ft_n(char *str)
+/* check if flag n */
+static int	ft_n(char *str)
 {
 	int	i;
 
@@ -33,7 +33,7 @@ int	ft_n(char *str)
 	return (0);
 }
 
-int	set_echo(t_list **list_token, t_echo *e)
+static int	set_echo(t_list **list_token, t_echo *e)
 {
 	(*list_token) = (*list_token)->next;
 	if (ft_strlen((*list_token)->content) >= 2

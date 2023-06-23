@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroy_all.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 01:58:38 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/20 15:20:52 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/23 03:44:37 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ void free_cmd(t_cmd *cmd)
 	if (cmd->cmd)
 		free_list(cmd->cmd);
 	if (cmd->tab)
-	{
 		free_tab(cmd->tab);
-	}
 	if (cmd->tab_env)
 		free_tab(cmd->tab_env);
 	if (cmd->file)
@@ -61,12 +59,10 @@ void free_cmd(t_cmd *cmd)
 	if (cmd->redir)
 		free(cmd->redir);
 	if (cmd->path)
-	{
 		free(cmd->path);
-	}
 }
 
-int	free_pipes(t_xek *x)
+static int	free_pipes(t_xek *x)
 {
 	int	i;
 

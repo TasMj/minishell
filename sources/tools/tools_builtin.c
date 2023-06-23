@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tools_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:08:46 by tmejri            #+#    #+#             */
-/*   Updated: 2023/05/28 17:03:52 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/23 12:22:13 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "heredoc.h"
 
 int	count_slash(char *str)
 {
@@ -29,6 +28,20 @@ int	count_slash(char *str)
 	return (counter);
 }
 
+static int	check_equal(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	check_list_equal(t_list **list)
 {
 	t_list	*tmp;
@@ -44,20 +57,6 @@ int	check_list_equal(t_list **list)
 	}
 	*list = tmp;
 	return (i);
-}
-
-int	check_equal(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-			return (1);
-		i++;
-	}
-	return (0);
 }
 
 char	*del_equal(char *str)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:12:00 by tas               #+#    #+#             */
-/*   Updated: 2023/05/28 19:16:27 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/23 04:27:38 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_list	*ft_lstlast(t_list *lst)
 	return (lst);
 }
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+static void	ft_lstadd_back(t_list **lst, t_list *new)
 {
 	t_list	*dernier;
 
@@ -39,7 +39,7 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 	}
 }
 
-t_list	*ft_lstnew(char *input, int flag_space)
+static t_list	*ft_lstnew(char *input, int flag_space)
 {
 	t_list	*new;
 
@@ -53,18 +53,18 @@ t_list	*ft_lstnew(char *input, int flag_space)
 	return (new);
 }
 
-void	print_list(t_list **list)
-{
-	t_list	*tmp;
-
-	tmp = (*list);
-	while (*list)
-	{
-		printf("content: [%s]\n", (*list)->content);
-		(*list) = (*list)->next;
-	}
-	(*list) = tmp;
-}
+// void	print_list(t_list **list)
+// {
+	// t_list	*tmp;
+// 
+	// tmp = (*list);
+	// while (*list)
+	// {
+		// printf("content: [%s]\n", (*list)->content);
+		// (*list) = (*list)->next;
+	// }
+	// (*list) = tmp;
+// }
 
 /* add to the list, word ready without space. take words with quotes */
 void	add_list(t_list **list_token, char *stockage, int flag_space)
@@ -73,7 +73,6 @@ void	add_list(t_list **list_token, char *stockage, int flag_space)
 
 	to_add = ft_lstnew(stockage, flag_space);
 	ft_lstadd_back(list_token, to_add);
-	// print_list(list_token);
 }
 
 int	ft_lstsize(t_list *lst)

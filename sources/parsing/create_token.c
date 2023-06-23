@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   create_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/06/22 23:15:02 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/23 04:48:20 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "heredoc.h"
 
 char	*get_input(void)
 {
@@ -38,7 +37,7 @@ char	*get_input(void)
 	return (input);
 }
 
-void	delimit_operator(t_substitution *s, char *input)
+static void	delimit_operator(t_substitution *s, char *input)
 {
 	if (input[s->i] == '|' || input[s->i] == '>' || input[s->i] == '<')
 	{
@@ -59,7 +58,7 @@ void	delimit_operator(t_substitution *s, char *input)
 	}
 }
 
-void	delimit_token(t_substitution *s, char *input)
+static void	delimit_token(t_substitution *s, char *input)
 {
 	if (input[s->i] == 39 || input[s->i] == 34)
 	{
@@ -75,7 +74,7 @@ void	delimit_token(t_substitution *s, char *input)
 		delimit_operator(s, input);
 }
 
-void	add_token(t_list **list_token, t_substitution *s, char *input)
+static void	add_token(t_list **list_token, t_substitution *s, char *input)
 {
 	s->start = s->i;
 	delimit_token(s, input);

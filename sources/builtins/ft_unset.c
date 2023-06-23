@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:35 by tas               #+#    #+#             */
-/*   Updated: 2023/06/19 16:36:54 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/23 04:46:19 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "heredoc.h"
 
-char	*var_name(char *str)
+/* keep env variable's name */
+static char	*var_name(char *str)
 {
 	char	*stockage;
 	int		i;
@@ -25,7 +25,8 @@ char	*var_name(char *str)
 	return (stockage);
 }
 
-int	check_var(char *str)
+/* check if the variable is in the env */
+static int	check_var(char *str)
 {
 	t_list	*tmp;
 	char	*var;
@@ -47,7 +48,8 @@ int	check_var(char *str)
 	return (0);
 }
 
-void	del(char *str)
+/* delet an environement var */
+static void	del(char *str)
 {
 	t_list	*tmp_first;
 	t_list	*tmp_next;

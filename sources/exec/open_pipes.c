@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   open_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:02:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/05/30 18:23:10 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/23 12:19:11 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* Retourne le nombre de pipes de la ligne de commande */
-int	count_pipes(t_list *token)
-{
-	int	count;
+// static int	count_pipes(t_list *token)
+// {
+// 	int	count;
 
-	count = 0;
-	while (token)
-	{
-		if (token->type == PIPE)
-			count++;
-		token = token->next;
-	}
-	return (count);
-}
+// 	count = 0;
+// 	while (token)
+// 	{
+// 		if (token->type == PIPE)
+// 			count++;
+// 		token = token->next;
+// 	}
+// 	return (count);
+// }
 
 /* Ouvre toutes les pipes de la ligne de comande */
 int	open_pipes(t_minishell *data)

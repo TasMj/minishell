@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:10:27 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/22 17:47:19 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/23 04:46:41 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "heredoc.h"
 
 /* Retourne le nombre de hdoc dans les tokens */
 int	nb_hdoc(t_minishell *data)
@@ -31,7 +30,7 @@ int	nb_hdoc(t_minishell *data)
 }
 
 /* Recupere tous les delimiteurs des heredoc */
-int	get_delims(t_minishell *data)
+static int	get_delims(t_minishell *data)
 {
 	t_list	*elem;
 	int		i;
@@ -55,7 +54,7 @@ int	get_delims(t_minishell *data)
 }
 
 /* Ecrit str dans fd (avec un \n) */
-void write_in_fd(char *str, int fd)
+static void write_in_fd(char *str, int fd)
 {
 	if (!str)
 		return ;
@@ -64,7 +63,7 @@ void write_in_fd(char *str, int fd)
 }
 
 /* Ouvre l'ecriture du heredoc */
-int	write_in_hdoc(t_hdoc *hdoc)
+static int	write_in_hdoc(t_hdoc *hdoc)
 {
 	char	*input;
 	
@@ -88,7 +87,7 @@ int	write_in_hdoc(t_hdoc *hdoc)
 }
 
 /* Child process dans lequel on va remplir le heredoc */
-int	heredoc_child(t_minishell *data)
+static int	heredoc_child(t_minishell *data)
 {
 	int	i;
 	

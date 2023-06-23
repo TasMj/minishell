@@ -6,13 +6,13 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:48 by tas               #+#    #+#             */
-/*   Updated: 2023/06/10 13:27:18 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/23 04:46:06 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "heredoc.h"
 
+/* initialisation of the environnement. Create a small env if env -i */
 t_list	**get_list_env(char **env)
 {
 	int		i;

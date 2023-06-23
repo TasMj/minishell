@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/06/20 15:24:52 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/23 12:29:19 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "heredoc.h"
 
-int	set_old_path(char *path)
+/* keep the last pwd */
+static int	set_old_path(char *path)
 {
 	t_list	*tmp;
 	char	*copy_env;
@@ -28,13 +28,8 @@ int	set_old_path(char *path)
 			(*g_list_env) = (*g_list_env)->next;
 		else if (ft_strcmp(copy_env, "OLDPWD") == 0)
 		{
-			printf("ptr: %p gle: \n", (*g_list_env)->content);
 			free((*g_list_env)->content);
-			printf("ptr: %p gle 2:\n", (*g_list_env)->content);
-			
 			(*g_list_env)->content = ft_strjoin("OLDPWD=", path);
-			printf("ptr: %p gle 3:\n", (*g_list_env)->content);
-			
 			*g_list_env = tmp;
 			free(copy_env);
 			return (0);
@@ -45,7 +40,7 @@ int	set_old_path(char *path)
 }
 
 /* check if directory and not file */
-int	is_dir(char *path)
+static int	is_dir(char *path)
 {
 	struct stat	st;
 
@@ -54,7 +49,8 @@ int	is_dir(char *path)
 	return (S_ISDIR(st.st_mode));
 }
 
-char	*get_previous_dir(char *str)
+/* return the previous directory */
+static char	*get_previous_dir(char *str)
 {
 	int	i;
 	int	slash;
@@ -72,7 +68,8 @@ char	*get_previous_dir(char *str)
 	return (ft_strdup_size(str, i));
 }
 
-int	err_cd(t_list **list, char *path)
+/* return if not a file or a directory */
+static int	err_cd(t_list **list, char *path)
 {
 	if (is_dir(path) == 0)
 	{
@@ -90,7 +87,8 @@ int	err_cd(t_list **list, char *path)
 	return (0);
 }
 
-char	*set_path(char *path, t_list **list)
+/* return path */
+static char	*set_path(char *path, t_list **list)
 {
 	char	cwd[1024];
 

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   substitution2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:47:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/22 22:00:57 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/23 12:34:37 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "heredoc.h"
 
 int	check_dollar(char *str)
 {
@@ -25,24 +24,6 @@ int	check_dollar(char *str)
 		i++;
 	}
 	return (0);
-}
-
-char	*remove_space(char *str)
-{
-	int		i;
-	int		start;
-	int		end;
-	char	*stockage;
-
-	i = 0;
-	while (is_a_space(str[i]) == 1)
-		i++;
-	start = i;
-	while (is_a_space(str[i]) == 0)
-		i++;
-	end = i;
-	stockage = ft_strdup_size(str + start, (end - start));
-	return (stockage);
 }
 
 char	*substitution(t_minishell *data, char *token)

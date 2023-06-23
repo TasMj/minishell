@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 12:45:54 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/19 17:12:35 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/23 03:21:11 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,4 +145,31 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	dest[i] = '\0';
 	return (dest);
+}
+
+long long	ft_atoi(const char *nptr)
+{
+	long long	res;
+	int			i;
+	int			sign;
+
+	i = 0;
+	res = 0;
+	sign = 1;
+	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == ' ')
+		i++;
+	if (nptr[i] == '+' || nptr[i] == '-')
+	{
+		if (nptr[i] == '-')
+			sign = -sign;
+		i++;
+	}
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		if ((res > 2147483647 && sign == 1) || (res < -2147483648 && sign == -1))
+			return (-1);
+		res = (res * 10) + (nptr[i] - 48);
+		i++;
+	}
+	return (res * sign);
 }

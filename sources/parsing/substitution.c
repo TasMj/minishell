@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   substitution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/06/22 22:27:20 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/23 04:48:41 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "heredoc.h"
 
-void	go_to_dollar(t_substitution *s, t_minishell *data)
+static void	go_to_dollar(t_substitution *s, t_minishell *data)
 {
 	// int i;
 	
@@ -49,7 +48,7 @@ void	go_to_dollar(t_substitution *s, t_minishell *data)
 	// i++;
 }
 
-void	more_dollar(t_substitution *s, t_minishell *data)
+static void	more_dollar(t_substitution *s, t_minishell *data)
 {
 	s->i = 0;
 	while ((*data->token)->content[s->i])
@@ -83,7 +82,7 @@ void	substitute_dollar(t_minishell *data)
 	free(s);
 }
 
-void	delimit_sub(t_substitution *s, t_minishell *data)
+static void	delimit_sub(t_substitution *s, t_minishell *data)
 {
 	if (s->stock[s->i] && s->stock[s->i] == '$' && \
 		(is_a_space(s->stock[s->i + 1]) == 1 || s->stock[s->i + 1] == '\0'))

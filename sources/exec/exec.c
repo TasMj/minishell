@@ -1,100 +1,100 @@
-// /* ************************************************************************** */
-// /*                                                                            */
-// /*                                                        :::      ::::::::   */
-// /*   exec.c                                             :+:      :+:    :+:   */
-// /*                                                    +:+ +:+         +:+     */
-// /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
-// /*                                                +#+#+#+#+#+   +#+           */
-// /*   Created: 2023/05/22 22:58:44 by jthuysba          #+#    #+#             */
-// /*   Updated: 2023/05/28 03:38:07 by jthuysba         ###   ########.fr       */
-// /*                                                                            */
-// /* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/28 14:57:13 by jthuysba          #+#    #+#             */
+/*   Updated: 2023/05/30 01:18:40 by jthuysba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// #include "minishell.h"
-// #include "heredoc.h"
+#include "minishell.h"
 
-// // Setup fd in et out pour chaque commande
-// void	set_pipe(t_cmd *cmd, t_exec *data)
-// {
-// 	if (data->nb_cmd == 1)
-// 	{
-// 		cmd->fd_in = STDIN_FILENO;
-// 		cmd->fd_out = STDOUT_FILENO;
-// 	}
-// 	else if (cmd->id == 0)
-// 	{
-// 		cmd->fd_in = STDIN_FILENO;
-// 		cmd->fd_out = data->fd[0][1];	
-// 	}
-// 	else if (cmd->id == data->nb_pipes)
-// 	{
-// 		cmd->fd_in = data->fd[cmd->id - 1][0];
-// 		cmd->fd_out = STDOUT_FILENO;
-// 	}
-// 	else
-// 	{
-// 		cmd->fd_in = data->fd[cmd->id - 1][0];
-// 		cmd->fd_out = data->fd[cmd->id][1];
-// 	}
-// }
+/* On lance un process pour chaque commande */
+static int	launch_process(t_cmd *cmd, t_xek *x)
+{
+	cmd->pid = fork();
+	if (cmd->pid < 0)
+		return (1);
+	if (cmd->pid == 0)
+	{
+		dup_pipe(cmd, x);
+		open_n_dup(cmd, x);
 
-// int	set_cmd(t_cmd *cmd, t_exec *data, t_list *elem)
-// {
-// 	cmd->cmd = get_cmd(elem);
-// 	if (!cmd->cmd)
-// 		return (1);
-// 	cmd->path = find_path(data->env, (*cmd->cmd)->content);
-// 	if (!cmd->path)
-// 		return (1);
-// 	set_pipe(cmd, data);
-// 	if (set_fd(cmd, elem) != 0)
-// 		return (1);
-// 	return (0);
-// }
+		if (exec_it(cmd) != 0)
+			exit(1);
+		exit(0);
+	}
+	return (0);
+}
 
-// int	setup_cmds(t_exec *data)
-// {
-// 	t_list	*elem;
-// 	int	i;
-
-// 	data->nb_cmd = nb_cmd(*data->token);
-// 	data->cmd = calloc(sizeof(t_cmd), data->nb_cmd);
-// 	if (!data->cmd)
-// 		return (1);
-// 	i = 0;
-// 	elem = *data->token;
-// 	while (elem)
-// 	{
-// 		data->cmd[i].id = i;
-// 		data->cmd[i].data = data;
-// 		data->cmd[i].pid = -1;
-// 		data->cmd[i].tmp_in = 0;
-// 		data->cmd[i].tmp_out = 0;
-		
-// 		if (set_cmd(&data->cmd[i], data, elem) != 0)
-// 			return (1);
-			
-// 		i++;
-// 		while (elem && elem->type != PIPE)
-// 			elem = elem->next;
-// 		if (elem && elem->type == PIPE)
-// 			elem = elem->next;
-// 	}
-// 	return (0);
-// }
-
-// int	exec(t_list **token, t_list **env)
-// {
-// 	t_exec	data;
+/* Execute les commandes */
+static int	go_exec(t_xek *x)
+{
+	int	i;
+	int	ret;
 	
-// 	data.token = token;
-// 	data.env = lst_to_tab(env);
-// 	setup_pipes(&data);
-// 	if (setup_cmds(&data) != 0)
-// 		return (clean_all(&data), 1);
+	/* On lance un process pour chaque commande */
+	i = 0;
+	while (i < x->nb_cmd)
+	{
+		launch_process(&(x->cmd[i]), x);
+		i++;
+	}
+	close_all(x);
+	i = 0;
+	while (i < x->nb_cmd)
+	{
+		waitpid(x->cmd[i].pid, &ret, WUNTRACED);
+		if (WIFEXITED(ret))
+		{
+			x->cmd->data->code_err = WEXITSTATUS(ret);
+		}
+		else
+		{
 
-// 	exec_all(&data);
+			x->cmd->data->code_err = WTERMSIG(ret) + 128;
+			if (x->cmd->data->code_err == 139)
+				printf("Segmentation Fault BOOM !\n");
+			else
+				printf("Interrupted with signal %d\n", x->cmd->data->code_err);
+		}
+		i++;
+	}
+	return (0);
+}
 
-// 	clean_all(&data);
-// 	return (0);
-// }
+/* Execute les tokens
+-> cat < file | wc -l > file2 */
+int	we_exec(t_minishell *data)
+{
+	int	i;
+
+	i = 0;
+	data->x = malloc(sizeof(t_xek));
+	ft_memset(data->x, 0, sizeof(t_xek));
+
+	if (prep_cmd(data) == 1)
+	{
+		while (i < data->x->nb_cmd)
+		{
+			free_cmd(&(data->x->cmd[i]));
+			i++;
+		}
+		free(data->x->cmd);
+		free(data->x);
+		return (1);
+	}
+
+	open_pipes(data);
+
+	exec_heredoc(data);
+
+	go_exec(data->x);
+
+	destroy_exec(data->x);
+
+	return (0);
+}

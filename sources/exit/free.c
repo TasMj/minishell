@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:33:10 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/20 15:57:40 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/23 04:47:27 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "heredoc.h"
 
 void	free_tab(char **tab)
 {
@@ -66,14 +65,6 @@ void	free_all(char *s1, char *s2)
 	free(s1);
 	free(s2);
 }
-
-// void	free_exit(t_list **list)
-// {
-	// free_list_token_content(list);
-	// free_list(list);
-	// free_list_token_content(g_list_env);
-	// free_list(g_list_env);
-// }
 
 void	free_end(t_minishell *data)
 {

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
+#    By: tas <tas@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/06/12 18:49:56 by jthuysba         ###   ########.fr        #
+#    Updated: 2023/06/23 12:40:45 by tas              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,35 +19,27 @@ BUILTINS		= ./sources/builtins/ft_cd.c ./sources/builtins/ft_echo.c \
 				./sources/builtins/ft_export.c ./sources/builtins/ft_pwd.c \
 				./sources/builtins/ft_unset.c \
 		
-EXEC			= ./sources/exec/path.c \
-				./sources/exec/builtin.c \
-				./sources/exec/signal.c \
-				# ./sources/exec/clean_all.c ./sources/exec/setup_pipes.c \
-				# ./sources/exec/exec_utils.c ./sources/exec/exec.c \
-				# ./sources/exec/set_fd.c ./sources/exec/exec_all.c \
-				# ./sources/exec/handle_builtin.c \
-				# ./sources/exec/heredoc.c \
-
-WE_EXEC			= ./sources/we_exec/exec.c ./sources/we_exec/prep_cmd.c \
-				./sources/we_exec/utils.c ./sources/we_exec/destroy_all.c \
-				./sources/we_exec/open_pipes.c ./sources/we_exec/handle_redir.c \
-				./sources/we_exec/child_process.c ./sources/we_exec/exec_heredoc.c \
+EXEC			= ./sources/exec/builtin.c ./sources/exec/child_process.c \
+				./sources/exec/destroy_all.c ./sources/exec/exec_heredoc.c \
+				./sources/exec/exec.c ./sources/exec/handle_redir.c \
+				./sources/exec/open_pipes.c ./sources/exec/path.c \
+				./sources/exec/prep_cmd.c ./sources/exec/signal.c \
 
 EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
-				./sources/exit/free_struct.c
 
-PARSING			= ./sources/parsing/create_token.c ./sources/parsing/quotes.c \
-				./sources/parsing/check_type.c ./sources/parsing/substitution.c \
-				./sources/parsing/type.c ./sources/parsing/preparsing.c \
-				./sources/parsing/substitution2.c \
+PARSING			= ./sources/parsing/check_type.c ./sources/parsing/create_token.c \
+				./sources/parsing/preparsing.c ./sources/parsing/quotes.c \
+				./sources/parsing/substitution.c \
+				./sources/parsing/substitution2.c ./sources/parsing/type.c  \
+				
 
-TOOLS			= ./sources/tools/ft_split.c ./sources/tools/tools_exec.c \
+TOOLS			= ./sources/tools/ft_split.c ./sources/tools/tools_builtin.c \
+				./sources/tools/tools_builtin2.c  ./sources/tools/tools_exec.c \
 				./sources/tools/tools_list.c ./sources/tools/tools_parsing.c \
-				./sources/tools/tools.c ./sources/tools/tools_builtin.c \
-				./sources/tools/tools_builtin2.c ./sources/tools/tools2.c \
-				./sources/tools/tools_redir.c 
+				./sources/tools/tools.c ./sources/tools/tools2.c \
+				./sources/tools/utils.c \
 
-SRCS			= ${MAIN} ${BUILTINS} ${EXEC} ${WE_EXEC} ${EXIT} ${PARSING} ${TOOLS}
+SRCS			= ${MAIN} ${BUILTINS} ${EXEC} ${EXIT} ${PARSING} ${TOOLS}
 
 OBJS			= ${SRCS:.c=.o}
 

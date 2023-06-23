@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/06/22 23:14:26 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/23 12:46:19 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "heredoc.h"
 
 int    init_list(t_minishell *data)
 {
@@ -19,11 +18,11 @@ int    init_list(t_minishell *data)
     if (err_quote(data->token) == 1)
         return (1);
     substitute_dollar(data);
-    // print_list(data->token);
     get_type(data->token);
     remove_list_quotes(data->token);
     remove_empty_tokens(data->token);
     reunite_token(data->token);
+    // print_list(data->token);
     return (0);
 }
 
@@ -48,7 +47,6 @@ int main(int argc, char **argv, char **env)
             {
                 // exec_builtin(&data);
                 we_exec(&data);
-                // exec(list_token, g_list_env);
             }
         }
         free_list_token_content(data.token);
