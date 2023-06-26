@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:10:27 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/23 04:46:41 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/26 17:54:17 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static int	write_in_hdoc(t_hdoc *hdoc)
 {
 	char	*input;
 	
+	// signal(SIGINT, &signal_heredoc);
 	while (1)
 	{
 		input = readline("> ");

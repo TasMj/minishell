@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/06/23 12:26:38 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/26 18:21:28 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static int	sort_env_ascii(void)
 /* add new variable to the environement */
 static int	add_var_env(char *stock, t_list *tmp)
 {
-	printf("ca rentre\n");
 	char	*copy;
 	(void)tmp;
 

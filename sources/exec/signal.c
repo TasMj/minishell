@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:43:39 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/26 17:32:15 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/26 18:03:15 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +27,28 @@ void	handle_signal(int sigid)
 	}
 }
 
-// void	handle_signal_heredoc(int sigid)
-// {
-		// if (sigid == SIGINT)
-	// {
-		// rl_replace_line("", 1);
-		// rl_on_new_line();
-		// write(2, "\n", 1);
-		// rl_redisplay();
-	// }
-	// if (sigid == SIGQUIT)
-	// {
-		// return ;
-	// }
-// 
-// }
+void	set_signal(void)
+{
+	signal(SIGINT, &handle_signal);
+	signal(SIGQUIT, SIG_IGN);
+}
 
-// void	handle_signal_prog(int sigid)
-// {
-	
-// }
-
+void	signal_ignore(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
 
 void	ctr_bs(int sigid)
 {
 	if (sigid == SIGQUIT)
 		return ;
+}	
+
+void	signal_heredoc(int sig, t_minishell *data)
+{
+	(void)sig;
+	close(STDIN_FILENO);
+	data->code_err = 128;
+	return ;
 }

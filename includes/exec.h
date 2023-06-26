@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 03:31:12 by tas               #+#    #+#             */
-/*   Updated: 2023/06/26 13:06:20 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/26 17:52:44 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ int     handle_redir(t_cmd *cmd, t_list *elem);
 int     open_pipes(t_minishell *data);
 int     prep_cmd(t_minishell *data);
 int     handle_builtin(t_cmd *cmd, t_minishell *data);
-
-
-
+void	handle_signal(int sigid);
+void	signal_ignore(void);
+void	set_signal(void);
+void	ctr_bs(int sigid);
+void	signal_heredoc(int sig, t_minishell *data);
 
 #endif

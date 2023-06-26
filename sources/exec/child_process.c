@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 19:56:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/26 14:34:19 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/26 18:05:27 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,17 @@ int	exec_it(t_cmd *cmd, t_minishell *data)
 	// 	// return (0);
 	// }
 	cmd->tab_env = lst_to_tab(g_list_env);
+	signal_ignore();
 	if (has_slash(cmd) == 1)
 	{
 		if (execve((*cmd->cmd)->content, cmd->tab, cmd->tab_env) != 0)
-			return (1);
+			return (1);//WIP
 		exit (0);
 	}
 	else
 	{
 		if (execve(cmd->path, cmd->tab, cmd->tab_env) != 0)
-			return (1);
+			return (1);//WIP
 		exit (0);
 	}
 	return (0);

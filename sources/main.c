@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/06/26 12:51:22 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/26 17:47:39 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,16 @@ int main(int argc, char **argv, char **env)
 
     g_list_env = get_list_env(env);
     ft_memset(&data, 0, sizeof(t_minishell));
+    set_signal();
     while (1)
     {
-        // signal(SIGQUIT, &ctrl_d);
-        signal(SIGINT, ctrl_c);
         data.input = get_input();
         data.token = malloc(sizeof(t_list));
         *data.token = NULL;
         if (init_list(&data) == 0)
         {
             if (syntax_error(data.token) == 2)
-            {
-                // exec_builtin(&data);
                 we_exec(&data);
-            }
         }
         free_list_token_content(data.token);
         free_list(data.token);
