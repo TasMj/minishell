@@ -117,6 +117,8 @@ int	we_exec(t_minishell *data)
 	}
 	open_pipes(data);
 	exec_heredoc(data);
+	signal(SIGINT, &ctrl_c);
+	signal(SIGQUIT, SIG_IGN);
 	go_exec(data->x, data);
 	destroy_exec(data->x);
 	return (0);
