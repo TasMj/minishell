@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroy_all.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 01:58:38 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/23 03:44:37 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/26 16:36:02 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ void	destroy_exec(t_xek *x)
 		free_cmd(&(x->cmd[i]));
 		i++;
 	}
-	free_pipes(x);
 	close_all(x);
+	free_pipes(x);
 	free(x->hdoc);
 	free(x->cmd);
 	free(x);

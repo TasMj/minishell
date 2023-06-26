@@ -3,41 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/06/23 12:29:19 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/26 12:54:09 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* keep the last pwd */
-static int	set_old_path(char *path)
-{
-	t_list	*tmp;
-	char	*copy_env;
+void	print_list(t_list **list);
 
-	if (is_in_env("OLDPWD") == 0)
-		return (1);
-	tmp = *g_list_env;
-	while (*g_list_env)
-	{
-		copy_env = del_equal((*g_list_env)->content);
-		if (ft_strcmp(copy_env, "OLDPWD") == 1)
-			(*g_list_env) = (*g_list_env)->next;
-		else if (ft_strcmp(copy_env, "OLDPWD") == 0)
-		{
-			free((*g_list_env)->content);
-			(*g_list_env)->content = ft_strjoin("OLDPWD=", path);
-			*g_list_env = tmp;
-			free(copy_env);
-			return (0);
-		}
-		free(copy_env);
-	}
-	return (0);
-}
+
+/* keep the last pwd */
+// static int	set_old_path(char *path)
+// {
+// 	t_list	*tmp;
+// 	char	*copy_env;
+
+// 	if (is_in_env("OLDPWD") == 0)
+// 		return (1);
+// 	tmp = *g_list_env;
+// 	while (*g_list_env)
+// 	{
+// 		copy_env = del_equal((*g_list_env)->content);
+// 		if (ft_strcmp(copy_env, "OLDPWD") == 1)
+// 			(*g_list_env) = (*g_list_env)->next;
+// 		else if (ft_strcmp(copy_env, "OLDPWD") == 0)
+// 		{
+// 			free((*g_list_env)->content);
+// 			(*g_list_env)->content = ft_strjoin("OLDPWD=", path);
+// 			*g_list_env = tmp;
+// 			free(copy_env);
+// 			return (0);
+// 		}
+// 		free(copy_env);
+// 	}
+// 	return (0);
+// }
 
 /* check if directory and not file */
 static int	is_dir(char *path)
@@ -106,8 +109,8 @@ int	ft_cd(t_list **list)
 
 	tmp = *list;
 	path = NULL;
-	char *old_path = getcwd(cwd, sizeof(cwd));
-	set_old_path(old_path);
+	// char *old_path = getcwd(cwd, sizeof(cwd));
+	// set_old_path(old_path);
 	if (ft_strcmp("cd", (*list)->content) == 0 && (*list)->next == NULL && is_in_env("HOME") == 1)
 		path = get_venv("HOME");
 	else if (ft_strcmp("cd", (*list)->content) == 0 && (*list)->next == NULL && is_in_env("HOME") == 0)

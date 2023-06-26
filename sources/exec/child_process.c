@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 19:56:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/23 12:45:03 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/26 14:34:19 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,36 +67,27 @@ int	open_n_dup(t_cmd *cmd, t_xek *x)
 	return (1);
 }
 
-int	is_builtin(t_cmd *cmd)
+int	exec_it(t_cmd *cmd, t_minishell *data)
 {
-	if (ft_strncmp((*cmd->cmd)->content, "cd", 2) == 0)
-		return (1);
-	else if (ft_strncmp((*cmd->cmd)->content, "echo", 4) == 0)
-		return (1);
-	else if (ft_strncmp((*cmd->cmd)->content, "env", 3) == 0)
-		return (1);
-	else if (ft_strncmp((*cmd->cmd)->content, "exit", 4) == 0)
-		return (1);
-	else if (ft_strncmp((*cmd->cmd)->content, "export", 6) == 0)
-		return (1);
-	else if (ft_strncmp((*cmd->cmd)->content, "pwd", 3) == 0)
-		return (1);
-	else if (ft_strncmp((*cmd->cmd)->content, "unset", 5) == 0)
-		return (1);
-	return (0);
-}
-
-int	exec_it(t_cmd *cmd)
-{
+	//Si commande invalide
 	if (!cmd->path && is_builtin(cmd) == 0)
 	{
-		ft_exit(cmd->data);
+		ft_exit(data);
 	}
-	if (is_builtin(cmd) == 1)
-	{
-		exec_builtin(cmd, cmd->data);
-		ft_exit(cmd->data);
-	}
+	// if (is_builtin(cmd) == 1)
+	// {
+	// 	// exec_builtin(cmd, data);
+	// 	// chdir("/mnt/nfs/homes/tmejri/Documents/minishell/includes");
+	// 	// char	cwd[1024];
+		
+	// 	// if (getcwd(cwd, sizeof(cwd)) != NULL)
+	// 	// 	printf("%s\n", cwd);
+	// 	// execlp("cd", "cd", NULL);
+	// 	execlp("pwd", "pwd", NULL);
+	// 	ft_exit(data);
+	// 	// exit (0);
+	// 	// return (0);
+	// }
 	cmd->tab_env = lst_to_tab(g_list_env);
 	if (has_slash(cmd) == 1)
 	{

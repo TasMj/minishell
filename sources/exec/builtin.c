@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:42:19 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/23 04:46:27 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/26 17:01:16 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_list(t_list **list);
+void	ft_pwd(void);
 
 int	exec_builtin(t_cmd *cmd, t_minishell *data)
 {
@@ -36,5 +39,38 @@ int	exec_builtin(t_cmd *cmd, t_minishell *data)
 	else
 		return (1);
 	*cmd->cmd = tmp;
+	return (0);
+}
+
+int	handle_builtin(t_cmd *cmd, t_minishell *data)
+{
+	int	tmp_in;
+	int	tmp_out;
+
+	tmp_in = dup(STDIN_FILENO);
+	tmp_out = dup(STDOUT_FILENO);
+	// dup_pipe(cmd, data->x);
+	if (data->x->nb_cmd > 1)
+	{
+		if (data->x->nb_cmd == 1)
+			return (0);
+		if (cmd->id == 0)
+			dup2(data->x->pipe[0][1], STDOUT_FILENO);
+		else if (cmd->id == data->x->nb_cmd - 1)
+		{
+			dup2(data->x->pipe[data->x->nb_cmd - 2][0], STDIN_FILENO);
+		}
+		else
+		{
+			dup2(data->x->pipe[cmd->id - 1][0], STDIN_FILENO);
+			dup2(data->x->pipe[cmd->id][1], STDOUT_FILENO);
+		}
+	}
+	open_n_dup(cmd, data->x);
+	exec_builtin(cmd, data);
+	dup2(tmp_in, STDIN_FILENO);
+	dup2(tmp_out, STDOUT_FILENO);
+	close(tmp_in);
+	close(tmp_out);
 	return (0);
 }

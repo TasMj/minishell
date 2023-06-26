@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 13:02:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/23 12:17:59 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/26 13:46:49 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ void    ft_exit(t_minishell *data)
     free_list_token_content(data->token);
     free_list(data->token);
     free_list(g_list_env);
+
     exit(data->code_err);
-    // if (ft_lstsize(*data->token) == 1)
+    // if (ft_lstsize(*da1ta->token) == 1)
     // {
     //     free_list_token_content(data->token);
     //     free_list(data->token);
@@ -61,5 +62,5 @@ void    ft_exit(t_minishell *data)
     //     free_list(g_list_env);
     //     exit(data->code_err);
     // }
-    *data->token = tmp;
+    // *data->token = tmp;
 }

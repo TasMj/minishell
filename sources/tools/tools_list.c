@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:12:00 by tas               #+#    #+#             */
-/*   Updated: 2023/06/23 04:27:38 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/26 12:36:24 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,18 @@ static t_list	*ft_lstnew(char *input, int flag_space)
 	return (new);
 }
 
-// void	print_list(t_list **list)
-// {
-	// t_list	*tmp;
-// 
-	// tmp = (*list);
-	// while (*list)
-	// {
-		// printf("content: [%s]\n", (*list)->content);
-		// (*list) = (*list)->next;
-	// }
-	// (*list) = tmp;
-// }
+void	print_list(t_list **list)
+{
+	t_list	*tmp;
+
+	tmp = (*list);
+	while (*list)
+	{
+		printf("content: [%s]\n", (*list)->content);
+		(*list) = (*list)->next;
+	}
+	(*list) = tmp;
+}
 
 /* add to the list, word ready without space. take words with quotes */
 void	add_list(t_list **list_token, char *stockage, int flag_space)

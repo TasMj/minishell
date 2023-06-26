@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:09:31 by tas               #+#    #+#             */
-/*   Updated: 2023/06/23 04:46:02 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/26 16:57:26 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ static int	set_echo(t_list **list_token, t_echo *e)
 	while (*list_token)
 	{
 		e->to_free = 1;
-		e->stockage = ft_strjoin(e->stockage, (*list_token)->content);
+		
+		e->stockage = ft_strdup((*list_token)->content);
+		// e->stockage = ft_strjoin(e->stockage, (*list_token)->content);
 		if ((*list_token)->next != NULL)
 			(*list_token) = (*list_token)->next;
 		else
@@ -74,7 +76,7 @@ int	ft_echo(t_list **list_token)
 
 	e = malloc(sizeof(t_echo));
 	ft_memset(e, 0, sizeof(t_echo));
-	e->stockage = "";
+	// e->stockage = "";
 	tmp = *list_token;
 	while ((*list_token) != NULL)
 	{
@@ -85,7 +87,9 @@ int	ft_echo(t_list **list_token)
 			(*list_token) = (*list_token)->next;
 	}
 	if (e->flag != 1)
+	{
 		printf("%s\n", e->stockage);
+	}
 	else
 		printf("%s", e->stockage);
 	if (e->to_free == 1)

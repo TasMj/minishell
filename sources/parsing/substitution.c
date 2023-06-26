@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/06/23 04:48:41 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/26 12:51:13 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	go_to_dollar(t_substitution *s, t_minishell *data)
 {
+
 	// int i;
 	
 	// i = 0;
@@ -24,7 +25,7 @@ static void	go_to_dollar(t_substitution *s, t_minishell *data)
 	// if(i == 0)
 		// s->new_content = ft_strdup(s->without_dollar);
 	// else
-	s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 1);
+		s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 0);
 	if ((*data->token)->content[s->i] && (*data->token)->content[s->i] == '$' && (*data->token)->content[s->i + 1] == '\0')
 	{
 		s->new_content = ft_strjoin_mod(s->new_content, "$", 0);
