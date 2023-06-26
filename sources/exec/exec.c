@@ -58,6 +58,7 @@ static int	go_exec(t_xek *x, t_minishell *data)
 	
 	/* On lance un process pour chaque commande */
 	i = 0;
+	ret = 0;
 	// printf("xnbmc=%d\n", x->nb_cmd);
 	while (i < x->nb_cmd)
 	{

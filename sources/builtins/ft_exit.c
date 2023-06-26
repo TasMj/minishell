@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 13:02:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/26 13:46:49 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/26 21:48:21 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@
 
 void    ft_exit(t_minishell *data)
 {
-    t_list    *tmp;
+    // t_list    *tmp;
     // int        i;
 
     // i = 0;
-    tmp = *data->token;
+    // tmp = *data->token;
     
     destroy_exec(data->x);
     
