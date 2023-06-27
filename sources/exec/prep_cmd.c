@@ -3,34 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   prep_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/26 16:02:38 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/27 12:42:37 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void    add_lst_type(t_list **list_token, t_list *elem)
+{
+    t_list    *to_add;
+
+    to_add = ft_lstnew(elem->content, elem->flag_space);
+    to_add->type = elem->type;
+    ft_lstadd_back(list_token, to_add);
+}
+
 /* On clone les token jusqua un pipe ou la fin
 -> {cat < file} */
-static t_list	**clone_to_pipe(t_list *token)
+static t_list    **clone_to_pipe(t_list *token)
 {
-	t_list	**lst;
-	t_list	*elem;
+    t_list    **lst;
+    t_list    *elem;
 
-	lst = malloc(sizeof(t_list));
-	if (!lst)
-		return (NULL);
-	*lst = NULL;
-	elem = token;
-	while (elem && elem->type != PIPE)
-	{
-		add_list(lst, elem->content, elem->flag_space);
-		elem = elem->next;
-	}
-	get_type(lst);
-	return (lst);
+    lst = malloc(sizeof(t_list));
+    if (!lst)
+        return (NULL);
+    *lst = NULL;
+    elem = token;
+    while (elem && elem->type != PIPE)
+    {
+        add_lst_type(lst, elem);
+        elem = elem->next;
+    }
+    return (lst);
 }
 
 /* Retourne la commande brut sans les redir
