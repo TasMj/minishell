@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:56:18 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/23 04:48:28 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/27 12:34:03 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,29 @@ int	err_quote(t_list **list_token)
 	}
 	*list_token = tmp;
 	return (0);
+}
+
+int	err_redir(t_list **list_token)
+{
+	t_list	*tmp;
+
+	tmp = *list_token;
+	while (*list_token)
+	{
+		if ((*list_token)->type == WORD)
+			(*list_token) = (*list_token)->next;
+		else
+		{
+			if ((*list_token)->next != NULL && (*list_token)->type != WORD && (*list_token)->next->type != WORD)
+			{
+				printf("minishell: syntax error near unexpected token `%s'\n", (*list_token)->next->content);
+				return (1);
+			}
+			(*list_token) = (*list_token)->next;
+		}
+	}
+	*list_token = tmp;
+	return (3);
 }
 
 void reunite_token(t_list **list_token)

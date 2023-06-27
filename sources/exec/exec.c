@@ -67,7 +67,10 @@ static int	go_exec(t_xek *x, t_minishell *data)
 			launch_process(&(x->cmd[i]), data);
 		}
 		else
+		{
+
 			handle_builtin(&(x->cmd[i]), data);
+		}
 		i++;
 	}
 	close_all(x);
@@ -86,8 +89,8 @@ static int	go_exec(t_xek *x, t_minishell *data)
 			x->cmd->data->code_err = WTERMSIG(ret) + 128;
 			if (x->cmd->data->code_err == 139)
 				printf("Segmentation Fault BOOM !\n");
-			else
-				printf("Interrupted with signal %d\n", x->cmd->data->code_err);
+			// else
+				// printf("Interrupted with signal %d\n", x->cmd->data->code_err);
 		}
 		i++;
 	}
