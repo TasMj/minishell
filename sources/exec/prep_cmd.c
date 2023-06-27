@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/27 12:09:08 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/27 12:12:10 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,9 @@ static t_list	**clone_to_pipe(t_list *token)
 	elem = token;
 	while (elem && elem->type != PIPE)
 	{
-		// add_list(lst, elem->content, elem->flag_space);
 		add_lst_type(lst, elem);
 		elem = elem->next;
 	}
-	// get_type(lst);
 	return (lst);
 }
 
