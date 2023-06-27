@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/06/27 11:01:51 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/27 13:58:48 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ int main(int argc, char **argv, char **env)
         if (init_list(&data) == 0)
         {
             if (syntax_error(data.token) == 2)
-            {
                 we_exec(&data);
-            }
         }
         free_list_token_content(data.token);
         free_list(data.token);

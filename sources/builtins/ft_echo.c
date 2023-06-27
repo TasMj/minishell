@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:09:31 by tas               #+#    #+#             */
-/*   Updated: 2023/06/27 11:44:45 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/27 13:58:24 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//echo cat<<EOF cat << EOF
 
 /* check if flag n */
 static int	ft_n(char *str)
@@ -89,9 +87,7 @@ int	ft_echo(t_list **list_token)
 			(*list_token) = (*list_token)->next;
 	}
 	if (e->flag != 1 && e->stockage != NULL)
-	{
 		printf("%s\n", e->stockage);
-	}
 	else if (e->flag != 0 && e->stockage != NULL)
 		printf("%s", e->stockage);
 	if (e->to_free == 1)
