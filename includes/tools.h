@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 04:17:24 by tas               #+#    #+#             */
-/*   Updated: 2023/06/23 04:51:42 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/27 12:42:25 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,8 @@ char	    **lst_to_tab(t_list **lst);
 int	        nb_cmd(t_list *token);
 void	    set_to_zero(t_xek *x);
 int	        has_slash(t_cmd *cmd);
+t_list      *ft_lstnew(char *input, int flag_space);
+void        ft_lstadd_back(t_list **lst, t_list *new);
+
 
 #endif

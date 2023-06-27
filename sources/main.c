@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/06/26 17:47:39 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/27 12:33:15 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,12 @@ int    init_list(t_minishell *data)
     data->token = create_token(data->token, data->input);
     if (err_quote(data->token) == 1)
         return (1);
+
+
     substitute_dollar(data);
     get_type(data->token);
+    if (err_redir(data->token) != 3)
+        return (1);
     remove_list_quotes(data->token);
     remove_empty_tokens(data->token);
     reunite_token(data->token);
@@ -43,7 +47,9 @@ int main(int argc, char **argv, char **env)
         if (init_list(&data) == 0)
         {
             if (syntax_error(data.token) == 2)
+            {
                 we_exec(&data);
+            }
         }
         free_list_token_content(data.token);
         free_list(data.token);

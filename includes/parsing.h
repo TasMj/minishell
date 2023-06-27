@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 04:00:25 by tas               #+#    #+#             */
-/*   Updated: 2023/06/23 04:51:38 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/27 12:11:37 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ char	*substitution(t_minishell *data, char *token);
 void	quote_sub(t_substitution *s, int a, t_minishell *data);
 char	*remove_quote_end(t_substitution *s, t_minishell *data);
 void	get_type(t_list **list_token);
+int	err_redir(t_list **list_token);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/06/23 04:48:20 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/27 12:44:14 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ static void	delimit_operator(t_substitution *s, char *input)
 	{
 		while (input[s->i] && input[s->i] != 39 && input[s->i] != 34)
 			s->i++;
+	}
+	else if (input[s->i] == '$')
+	{
+		if (input[s->i + 1] && input[s->i + 1] == '?')
+			s->i+=2;
 	}
 	else
 	{

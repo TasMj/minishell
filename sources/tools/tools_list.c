@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:12:00 by tas               #+#    #+#             */
-/*   Updated: 2023/06/26 12:36:24 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/27 12:42:33 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_list	*ft_lstlast(t_list *lst)
 	return (lst);
 }
 
-static void	ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
 	t_list	*dernier;
 
@@ -39,7 +39,7 @@ static void	ft_lstadd_back(t_list **lst, t_list *new)
 	}
 }
 
-static t_list	*ft_lstnew(char *input, int flag_space)
+t_list	*ft_lstnew(char *input, int flag_space)
 {
 	t_list	*new;
 
