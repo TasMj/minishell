@@ -42,5 +42,6 @@ char	*substitution(t_minishell *data, char *token);
 void	quote_sub(t_substitution *s, int a, t_minishell *data);
 char	*remove_quote_end(t_substitution *s, t_minishell *data);
 void	get_type(t_list **list_token);
+int	err_redir(t_list **list_token);
 
 #endif

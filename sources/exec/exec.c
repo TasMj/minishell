@@ -14,19 +14,19 @@
 
 int	is_builtin(t_cmd *cmd)
 {
-	if (ft_strncmp((*cmd->cmd)->content, "cd", 2) == 0)
+	if (ft_strlen((*cmd->cmd)->content) == 2 && ft_strncmp((*cmd->cmd)->content, "cd", 2) == 0)
 		return (1);
-	else if (ft_strncmp((*cmd->cmd)->content, "echo", 4) == 0)
+	else if (ft_strlen((*cmd->cmd)->content) == 4 && ft_strncmp((*cmd->cmd)->content, "echo", 4) == 0)
 		return (1);
-	else if (ft_strncmp((*cmd->cmd)->content, "env", 3) == 0)
+	else if (ft_strlen((*cmd->cmd)->content) == 3 && ft_strncmp((*cmd->cmd)->content, "env", 3) == 0)
 		return (1);
-	else if (ft_strncmp((*cmd->cmd)->content, "exit", 4) == 0)
+	else if (ft_strlen((*cmd->cmd)->content) == 4 && ft_strncmp((*cmd->cmd)->content, "exit", 4) == 0)
 		return (1);
-	else if (ft_strncmp((*cmd->cmd)->content, "export", 6) == 0)
+	else if (ft_strlen((*cmd->cmd)->content) == 6 && ft_strncmp((*cmd->cmd)->content, "export", 6) == 0)
 		return (1);
-	else if (ft_strncmp((*cmd->cmd)->content, "pwd", 3) == 0)
+	else if (ft_strlen((*cmd->cmd)->content) == 3 && ft_strncmp((*cmd->cmd)->content, "pwd", 3) == 0)
 		return (1);
-	else if (ft_strncmp((*cmd->cmd)->content, "unset", 5) == 0)
+	else if (ft_strlen((*cmd->cmd)->content) == 5 && ft_strncmp((*cmd->cmd)->content, "unset", 5) == 0)
 		return (1);
 	return (0);
 }
@@ -66,7 +66,10 @@ static int	go_exec(t_xek *x, t_minishell *data)
 		if (is_builtin(&(x->cmd[i])) == 0)
 			launch_process(&(x->cmd[i]), data);
 		else
+		{
+
 			handle_builtin(&(x->cmd[i]), data);
+		}
 		i++;
 	}
 	close_all(x);
@@ -85,8 +88,8 @@ static int	go_exec(t_xek *x, t_minishell *data)
 			x->cmd->data->code_err = WTERMSIG(ret) + 128;
 			if (x->cmd->data->code_err == 139)
 				printf("Segmentation Fault BOOM !\n");
-			else
-				printf("Interrupted with signal %d\n", x->cmd->data->code_err);
+			// else
+				// printf("Interrupted with signal %d\n", x->cmd->data->code_err);
 		}
 		i++;
 	}

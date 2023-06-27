@@ -23,11 +23,11 @@ void	add_lst_type(t_list **list_token, t_list *elem)
 
 /* On clone les token jusqua un pipe ou la fin
 -> {cat < file} */
-static t_list	**clone_to_pipe(t_list *token)
+static t_list    **clone_to_pipe(t_list *token)
 {
-	t_list	**lst;
-	t_list	*elem;
-
+    t_list    **lst;
+    t_list    *elem;
+  
 	lst = malloc(sizeof(t_list));
 	if (!lst)
 		return (NULL);

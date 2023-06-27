@@ -17,8 +17,12 @@ int    init_list(t_minishell *data)
     data->token = create_token(data->token, data->input);
     if (err_quote(data->token) == 1)
         return (1);
+
+
     substitute_dollar(data);
     get_type(data->token);
+    if (err_redir(data->token) != 3)
+        return (1);
     remove_list_quotes(data->token);
     remove_empty_tokens(data->token);
     reunite_token(data->token);
@@ -43,7 +47,9 @@ int main(int argc, char **argv, char **env)
         if (init_list(&data) == 0)
         {
             if (syntax_error(data.token) == 2)
+            {
                 we_exec(&data);
+            }
         }
         free_list_token_content(data.token);
         free_list(data.token);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 19:56:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/26 18:05:27 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/27 11:57:12 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	dup_pipe(t_cmd *cmd, t_xek *x)
 /* On ouvre nos fichiers et on redirige selon le type en ecrasant la pipe */
 int	open_n_dup(t_cmd *cmd, t_xek *x)
 {
+	
 	int	i;
 	int	fd;
 
@@ -56,7 +57,7 @@ int	open_n_dup(t_cmd *cmd, t_xek *x)
 			x->hdoc_index++;
 		}
 		if (fd == -1)
-			exit(1);//WIP ERROR
+			return (1);//WIP ERROR
 		if (cmd->redir[i] == STDOUT || cmd->redir[i] == APPEND)
 			dup2(fd, STDOUT_FILENO);
 		else if (cmd->redir[i] == STDIN || cmd->redir[i] == HEREDOC)
