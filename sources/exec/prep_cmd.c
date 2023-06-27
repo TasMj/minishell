@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   prep_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/26 16:02:38 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/27 12:09:08 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	add_lst_type(t_list **list_token, t_list *elem)
+{
+	t_list	*to_add;
+
+	to_add = ft_lstnew(elem->content, elem->flag_space);
+	to_add->type = elem->type;
+	ft_lstadd_back(list_token, to_add);
+}
 
 /* On clone les token jusqua un pipe ou la fin
 -> {cat < file} */
@@ -26,10 +35,11 @@ static t_list	**clone_to_pipe(t_list *token)
 	elem = token;
 	while (elem && elem->type != PIPE)
 	{
-		add_list(lst, elem->content, elem->flag_space);
+		// add_list(lst, elem->content, elem->flag_space);
+		add_lst_type(lst, elem);
 		elem = elem->next;
 	}
-	get_type(lst);
+	// get_type(lst);
 	return (lst);
 }
 
