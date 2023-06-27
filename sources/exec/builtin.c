@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:42:19 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/27 12:02:10 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/27 15:01:26 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@ int	exec_builtin(t_cmd *cmd, t_minishell *data)
 	return (0);
 }
 
+void	dup_n_close(int tmp_in, int tmp_out)
+{
+	dup2(tmp_in, STDIN_FILENO);
+	dup2(tmp_out, STDOUT_FILENO);
+	close(tmp_in);
+	close(tmp_out);
+}
+
 int	handle_builtin(t_cmd *cmd, t_minishell *data)
 {
 	int	tmp_in;
@@ -49,11 +57,8 @@ int	handle_builtin(t_cmd *cmd, t_minishell *data)
 
 	tmp_in = dup(STDIN_FILENO);
 	tmp_out = dup(STDOUT_FILENO);
-	// dup_pipe(cmd, data->x);
 	if (data->x->nb_cmd > 1)
 	{
-		if (data->x->nb_cmd == 1)
-			return (0);
 		if (cmd->id == 0)
 			dup2(data->x->pipe[0][1], STDOUT_FILENO);
 		else if (cmd->id == data->x->nb_cmd - 1)
@@ -66,11 +71,25 @@ int	handle_builtin(t_cmd *cmd, t_minishell *data)
 			dup2(data->x->pipe[cmd->id][1], STDOUT_FILENO);
 		}
 	}
-	open_n_dup(cmd, data->x);
-	exec_builtin(cmd, data);
-	dup2(tmp_in, STDIN_FILENO);
-	dup2(tmp_out, STDOUT_FILENO);
-	close(tmp_in);
-	close(tmp_out);
+	if (open_n_dup(cmd, data->x) != 0)
+	{
+		dup_n_close(tmp_in, tmp_out);
+		printf("File open error (WIP)\n");
+		return (1);
+	}
+	if (ft_strcmp((*cmd->cmd)->content, "exit") == 0)
+	{
+		dup_n_close(tmp_in, tmp_out);
+		if (ft_lstsize(*(cmd->cmd)) == 1)
+		{
+			printf("exit\n");
+			ft_exit(cmd->data);
+		}
+		else if (ft_lstsize(*(cmd->cmd)) > 1)
+			ft_exit_code(cmd, cmd->data);
+	}
+	else
+		exec_builtin(cmd, data);
+	dup_n_close(tmp_in, tmp_out);
 	return (0);
 }

@@ -41,10 +41,6 @@ static int	launch_process(t_cmd *cmd, t_minishell *data)
 	{
 		dup_pipe(cmd, data->x);
 		open_n_dup(cmd, data->x);
-
-		// if (exec_it(cmd, data) != 0)
-		// 	exit(1);
-		// execlp("pwd", "pwd", NULL);
 		exec_it(cmd , data);
 	}
 	return (0);
@@ -64,7 +60,9 @@ static int	go_exec(t_xek *x, t_minishell *data)
 	{
 		// launch_process(&(x->cmd[i]), data);
 		if (is_builtin(&(x->cmd[i])) == 0)
+		{
 			launch_process(&(x->cmd[i]), data);
+		}
 		else
 		{
 
