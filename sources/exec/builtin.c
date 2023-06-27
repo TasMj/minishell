@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:42:19 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/27 15:09:55 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/27 16:59:02 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,12 @@ void	dup_n_close(int tmp_in, int tmp_out)
 	close(tmp_out);
 }
 
-int	handle_builtin(t_cmd *cmd, t_minishell *data)
+int	handle_exit(t_cmd *cmd, t_minishell *data)
 {
-	int	tmp_in;
-	int	tmp_out;
-
 	if (ft_strcmp((*cmd->cmd)->content, "exit") == 0)
 	{
 		if (data->x->nb_cmd > 1)
-			return (0);
+			return (1);
 		if (ft_lstsize(*(cmd->cmd)) == 1)
 		{
 			printf("exit\n");
@@ -65,22 +62,35 @@ int	handle_builtin(t_cmd *cmd, t_minishell *data)
 		else if (ft_lstsize(*(cmd->cmd)) > 1)
 			ft_exit_code(cmd, data);
 	}
+	return (0);
+}
+
+int		bltin_dup_pipes(t_cmd *cmd, t_minishell *data)
+{
+	if (cmd->id == 0)
+		dup2(data->x->pipe[0][1], STDOUT_FILENO);
+	else if (cmd->id == data->x->nb_cmd - 1)
+		dup2(data->x->pipe[data->x->nb_cmd - 2][0], STDIN_FILENO);
+	else
+	{
+		dup2(data->x->pipe[cmd->id - 1][0], STDIN_FILENO);
+		dup2(data->x->pipe[cmd->id][1], STDOUT_FILENO);
+	}
+	return (0);
+}
+
+int	handle_builtin(t_cmd *cmd, t_minishell *data)
+{
+	int	tmp_in;
+	int	tmp_out;
+
+
+	if (handle_exit(cmd, data) == 1)
+		return (0);
 	tmp_in = dup(STDIN_FILENO);
 	tmp_out = dup(STDOUT_FILENO);
 	if (data->x->nb_cmd > 1)
-	{
-		if (cmd->id == 0)
-			dup2(data->x->pipe[0][1], STDOUT_FILENO);
-		else if (cmd->id == data->x->nb_cmd - 1)
-		{
-			dup2(data->x->pipe[data->x->nb_cmd - 2][0], STDIN_FILENO);
-		}
-		else
-		{
-			dup2(data->x->pipe[cmd->id - 1][0], STDIN_FILENO);
-			dup2(data->x->pipe[cmd->id][1], STDOUT_FILENO);
-		}
-	}
+		bltin_dup_pipes(cmd, data);
 	if (open_n_dup(cmd, data->x) != 0)
 	{
 		dup_n_close(tmp_in, tmp_out);

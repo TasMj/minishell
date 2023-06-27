@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 04:17:24 by tas               #+#    #+#             */
-/*   Updated: 2023/06/27 12:10:50 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/27 16:52:48 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_list	    **ft_copy_list(t_list **copy);
 void	    print_export(t_list **list);
 t_list	    **sort_env(t_list **list);
 int         ft_isalpha(char *str);
+int			is_numeric(char *str);
 int         extract_str(char *str);
 t_list	    *ft_lstlast(t_list *lst);
 void	    add_list(t_list **list_token, char *stockage, int flag_space);
