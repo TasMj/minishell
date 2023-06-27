@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_builtin2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:41:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/23 04:49:06 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/27 15:26:54 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,10 @@ int	ft_isalpha(char *str)
 			|| (str[i] >= 'a' && str[i] <= 'z'))
 			i++;
 		else
+		{
+			printf("minishell: export: `%s': not a valid identifier\n", str);
 			return (1);
+		}
 	}
 	return (0);
 }
