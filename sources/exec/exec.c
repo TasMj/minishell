@@ -14,19 +14,19 @@
 
 int	is_builtin(t_cmd *cmd)
 {
-	if (ft_strncmp((*cmd->cmd)->content, "cd", 2) == 0)
+	if (ft_strlen((*cmd->cmd)->content) == 2 && ft_strncmp((*cmd->cmd)->content, "cd", 2) == 0)
 		return (1);
-	else if (ft_strncmp((*cmd->cmd)->content, "echo", 4) == 0)
+	else if (ft_strlen((*cmd->cmd)->content) == 4 && ft_strncmp((*cmd->cmd)->content, "echo", 4) == 0)
 		return (1);
-	else if (ft_strncmp((*cmd->cmd)->content, "env", 3) == 0)
+	else if (ft_strlen((*cmd->cmd)->content) == 3 && ft_strncmp((*cmd->cmd)->content, "env", 3) == 0)
 		return (1);
-	else if (ft_strncmp((*cmd->cmd)->content, "exit", 4) == 0)
+	else if (ft_strlen((*cmd->cmd)->content) == 4 && ft_strncmp((*cmd->cmd)->content, "exit", 4) == 0)
 		return (1);
-	else if (ft_strncmp((*cmd->cmd)->content, "export", 6) == 0)
+	else if (ft_strlen((*cmd->cmd)->content) == 6 && ft_strncmp((*cmd->cmd)->content, "export", 6) == 0)
 		return (1);
-	else if (ft_strncmp((*cmd->cmd)->content, "pwd", 3) == 0)
+	else if (ft_strlen((*cmd->cmd)->content) == 3 && ft_strncmp((*cmd->cmd)->content, "pwd", 3) == 0)
 		return (1);
-	else if (ft_strncmp((*cmd->cmd)->content, "unset", 5) == 0)
+	else if (ft_strlen((*cmd->cmd)->content) == 5 && ft_strncmp((*cmd->cmd)->content, "unset", 5) == 0)
 		return (1);
 	return (0);
 }
