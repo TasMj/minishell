@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/06/27 13:57:59 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/27 17:12:21 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int	err_cd(t_list **list, char *path)
 static char	*set_path(char *path, t_list **list)
 {
 	char	cwd[1024];
-
+	
 	path = ft_strdup((getcwd(cwd, sizeof(cwd))));
 	path = ft_strjoin_mod(path, "/", 1);
 	path = ft_strjoin_mod(path, (*list)->next->content, 1);
@@ -121,7 +121,14 @@ int	ft_cd(t_list **list)
 	else if ((*list)->next && ft_strcmp((".."), (*list)->next->content) == 0)
 		path = get_previous_dir(getcwd(cwd, sizeof(cwd)));
 	else if (ft_lstsize(*list) <= 2)
-		path = set_path(path, list);
+	{
+		char *home = get_venv("HOME");
+		if (ft_strlen((*list)->next->content) >= ft_strlen(home)
+		&& ft_strncmp((*list)->next->content, home, ft_strlen(home)) == 0)
+			path = ft_strdup((*list)->next->content);
+		else
+			path = set_path(path, list);
+	}
 	else
 	{
 		*list = tmp;

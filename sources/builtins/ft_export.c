@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/06/27 15:29:35 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/27 15:32:38 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	add_var_env(char *stock, t_list *tmp)
 	{
 		free(copy);
 		// free(stock);
-		return (err_msg(5));
+		return (1);
 	}
 	add_list(g_list_env, stock, 0);
 	free(copy);
