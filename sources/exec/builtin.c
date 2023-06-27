@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:42:19 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/27 15:01:26 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/27 15:09:55 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	print_list(t_list **list);
 void	ft_pwd(void);
 
-int	exec_builtin(t_cmd *cmd, t_minishell *data)
+static int	exec_builtin(t_cmd *cmd)
 {
 	t_list	*tmp;
 
@@ -28,8 +28,6 @@ int	exec_builtin(t_cmd *cmd, t_minishell *data)
 		ft_echo(cmd->cmd);
 	else if (ft_strlen((*cmd->cmd)->content) == 3 && ft_strncmp((*cmd->cmd)->content, "env", 3) == 0)
 		ft_env(cmd->cmd);
-	else if (ft_strlen((*cmd->cmd)->content) == 4 && ft_strncmp((*cmd->cmd)->content, "exit", 4) == 0)
-		ft_exit(data);
 	else if (ft_strlen((*cmd->cmd)->content) == 6 && ft_strncmp((*cmd->cmd)->content, "export", 6) == 0)
 		ft_export(cmd->cmd);
 	else if (ft_strlen((*cmd->cmd)->content) == 3 && ft_strncmp((*cmd->cmd)->content, "pwd", 3) == 0)
@@ -55,6 +53,18 @@ int	handle_builtin(t_cmd *cmd, t_minishell *data)
 	int	tmp_in;
 	int	tmp_out;
 
+	if (ft_strcmp((*cmd->cmd)->content, "exit") == 0)
+	{
+		if (data->x->nb_cmd > 1)
+			return (0);
+		if (ft_lstsize(*(cmd->cmd)) == 1)
+		{
+			printf("exit\n");
+			ft_exit(cmd->data);
+		}
+		else if (ft_lstsize(*(cmd->cmd)) > 1)
+			ft_exit_code(cmd, data);
+	}
 	tmp_in = dup(STDIN_FILENO);
 	tmp_out = dup(STDOUT_FILENO);
 	if (data->x->nb_cmd > 1)
@@ -77,19 +87,8 @@ int	handle_builtin(t_cmd *cmd, t_minishell *data)
 		printf("File open error (WIP)\n");
 		return (1);
 	}
-	if (ft_strcmp((*cmd->cmd)->content, "exit") == 0)
-	{
-		dup_n_close(tmp_in, tmp_out);
-		if (ft_lstsize(*(cmd->cmd)) == 1)
-		{
-			printf("exit\n");
-			ft_exit(cmd->data);
-		}
-		else if (ft_lstsize(*(cmd->cmd)) > 1)
-			ft_exit_code(cmd, cmd->data);
-	}
 	else
-		exec_builtin(cmd, data);
+		exec_builtin(cmd);
 	dup_n_close(tmp_in, tmp_out);
 	return (0);
 }
