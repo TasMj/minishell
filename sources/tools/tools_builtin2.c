@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:41:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/27 16:52:35 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:18:47 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int	is_numeric(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (!(str[i] >= '0' && str[i] <= '9'))
+		if (!((str[i] >= '0' && str[i] <= '9') || str[i] == '+' || str[i] == '-'))
 			return (0);
 		i++;
 	}

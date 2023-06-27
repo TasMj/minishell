@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 04:17:24 by tas               #+#    #+#             */
-/*   Updated: 2023/06/27 16:52:48 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:02:51 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,5 @@ void	    set_to_zero(t_xek *x);
 int		has_slash(t_cmd *cmd);
 t_list	*ft_lstnew(char *input, int flag_space);
 void	ft_lstadd_back(t_list **lst, t_list *new);
-
+int	is_dir(char *path);
 #endif

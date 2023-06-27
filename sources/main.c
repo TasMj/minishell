@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/06/27 11:01:51 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:12:01 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ int main(int argc, char **argv, char **env)
         if (init_list(&data) == 0)
         {
             if (syntax_error(data.token) == 2)
-            {
-                we_exec(&data);
-            }
+               we_exec(&data);
+            else
+                data.code_err = 2;
         }
         free_list_token_content(data.token);
         free_list(data.token);

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/27 12:12:10 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:11:11 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,12 @@ static int	check_cmd(t_cmd *cmd)
 	/* Si la commande est un path */
 	if (has_slash(cmd) == 1)
 	{
+		if (is_dir((*cmd->cmd)->content) == 1)
+		{
+			printf("minishell: %s: Is a directory\n", (*cmd->cmd)->content);
+			cmd->data->code_err = 126;
+			return (1);
+		}
 		/* On check si la path est valide si oui on return 0 */
 		if (access((*cmd->cmd)->content, F_OK | X_OK) != -1)
 			return (0);
@@ -128,7 +134,7 @@ int	prep_cmd(t_minishell *data)
 		data->x->cmd[i].data = data;
 		data->x->cmd[i].id = i;
 		data->x->cmd[i].token = clone_to_pipe(elem);
-		if (fill_cmd(&(data->x->cmd[i])) == 1 && data->x->cmd[i].id != 0)
+		if (fill_cmd(&(data->x->cmd[i])) == 1)
 			return (1);
 		while (elem && elem->type != PIPE)
 			elem = elem->next;

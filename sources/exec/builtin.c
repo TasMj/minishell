@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:42:19 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/27 16:59:02 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:51:54 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ static int	exec_builtin(t_cmd *cmd)
 		return (-1);
 	tmp = *cmd->cmd;
 	if (ft_strlen((*cmd->cmd)->content) == 2 && ft_strncmp((*cmd->cmd)->content, "cd", 2) == 0)
-		ft_cd(cmd->cmd);
+	{
+		if (ft_cd(cmd) != 0)
+			return (1);
+	}
 	else if (ft_strlen((*cmd->cmd)->content) == 4 && ft_strncmp((*cmd->cmd)->content, "echo", 4) == 0)
 		ft_echo(cmd->cmd);
 	else if (ft_strlen((*cmd->cmd)->content) == 3 && ft_strncmp((*cmd->cmd)->content, "env", 3) == 0)
@@ -98,7 +101,8 @@ int	handle_builtin(t_cmd *cmd, t_minishell *data)
 		return (1);
 	}
 	else
-		exec_builtin(cmd);
+		if (exec_builtin(cmd) != 0)
+			return (dup_n_close(tmp_in, tmp_out), 1);
 	dup_n_close(tmp_in, tmp_out);
 	return (0);
 }

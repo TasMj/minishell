@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 03:02:40 by tas               #+#    #+#             */
-/*   Updated: 2023/06/27 14:55:01 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:34:42 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 /*                                fonctions                                   */
 /******************************************************************************/
 
-int     ft_cd(t_list **list);
+int     ft_cd(t_cmd *cmd);
 int     ft_echo(t_list **list_token);
 t_list  **get_list_env(char **env);
 int     ft_env(t_list **l);

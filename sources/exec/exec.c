@@ -46,43 +46,21 @@ static int	launch_process(t_cmd *cmd, t_minishell *data)
 	return (0);
 }
 
-/* Execute les commandes */
-static int	go_exec(t_xek *x, t_minishell *data)
+int	wait_child(t_xek *x)
 {
 	int	i;
 	int	ret;
-	
-	/* On lance un process pour chaque commande */
-	i = 0;
-	ret = 0;
-	// printf("xnbmc=%d\n", x->nb_cmd);
-	while (i < x->nb_cmd)
-	{
-		// launch_process(&(x->cmd[i]), data);
-		if (is_builtin(&(x->cmd[i])) == 0)
-		{
-			launch_process(&(x->cmd[i]), data);
-		}
-		else
-		{
 
-			handle_builtin(&(x->cmd[i]), data);
-		}
-		i++;
-	}
 	close_all(x);
 	i = 0;
+	ret = 0;
 	while (i < x->nb_cmd)
 	{
 		waitpid(x->cmd[i].pid, &ret, WUNTRACED);
-		// execlp("pwd", "pwd", NULL);
 		if (WIFEXITED(ret))
-		{
 			x->cmd->data->code_err = WEXITSTATUS(ret);
-		}
 		else
 		{
-
 			x->cmd->data->code_err = WTERMSIG(ret) + 128;
 			if (x->cmd->data->code_err == 139)
 				printf("Segmentation Fault BOOM !\n");
@@ -91,6 +69,26 @@ static int	go_exec(t_xek *x, t_minishell *data)
 		}
 		i++;
 	}
+	return (0);
+}
+
+/* Execute les commandes */
+static int	go_exec(t_xek *x, t_minishell *data)
+{
+	int	i;
+	
+	/* On lance un process pour chaque commande */
+	i = 0;
+	while (i < x->nb_cmd)
+	{
+		if (is_builtin(&(x->cmd[i])) == 0)
+			launch_process(&(x->cmd[i]), data);
+		else
+			if (handle_builtin(&(x->cmd[i]), data) != 0)
+				return (wait_child(x), 1);
+		i++;
+	}
+	wait_child(x);
 	set_signal();
 	return (0);
 }
@@ -101,24 +99,18 @@ int	we_exec(t_minishell *data)
 {
 	int	i;
 
-
 	i = 0;
 	data->x = malloc(sizeof(t_xek));
 	ft_memset(data->x, 0, sizeof(t_xek));
 	if (prep_cmd(data) == 1)
-	{
-		while (i < data->x->nb_cmd)
-		{
-			free_cmd(&(data->x->cmd[i]));
-			i++;
-		}
-		free(data->x->cmd);
-		free(data->x);
-		return (1);
-	}
+		return (destroy_exec(data->x), 1);
 	open_pipes(data);
 	exec_heredoc(data);
-	go_exec(data->x, data);
+	if (go_exec(data->x, data) != 0)
+	{
+		data->code_err = 1;
+		return (destroy_exec(data->x), 1);
+	}
 	destroy_exec(data->x);
 	return (0);
 }

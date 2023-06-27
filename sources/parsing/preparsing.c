@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preparsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:56:18 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/27 12:34:03 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/27 17:21:25 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	syntax_error(t_list **list_token)
 		|| ft_lstlast(*list_token)->type == STDIN
 		|| ft_lstlast(*list_token)->type == STDOUT
 		|| ft_lstlast(*list_token)->type == PIPE)
-		return (err_msg(0));
+			return (err_msg(0));
 	return (2);
 }
 
