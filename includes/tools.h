@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 04:17:24 by tas               #+#    #+#             */
-/*   Updated: 2023/06/27 15:27:56 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/28 17:52:11 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ int         has_slash(t_cmd *cmd);
 t_list      *ft_lstnew(char *input, int flag_space);
 void        ft_lstadd_back(t_list **lst, t_list *new);
 int         check_equal(char *str);
+int         ft_isalnum(int c);
 
 #endif

@@ -3,52 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   substitution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/06/26 12:51:13 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/28 18:10:44 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <ctype.h>
 
-static void	go_to_dollar(t_substitution *s, t_minishell *data)
+static void go_to_dollar(t_substitution *s, t_minishell *data)
 {
-
-	// int i;
-	
-	// i = 0;
-	s->deb = s->i;
-	while ((*data->token)->content[s->i] && (*data->token)->content[s->i] != '$')
-		s->i++;
-	s->without_dollar = ft_strdup_size((*data->token)->content + s->deb, (s->i - s->deb));
-	// if(i == 0)
-		// s->new_content = ft_strdup(s->without_dollar);
-	// else
-		s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 0);
-	if ((*data->token)->content[s->i] && (*data->token)->content[s->i] == '$' && (*data->token)->content[s->i + 1] == '\0')
-	{
-		s->new_content = ft_strjoin_mod(s->new_content, "$", 0);
-		s->i++;
-	}
-	else
-	{
-		s->start = s->i;
-		s->i++;
-		while ((*data->token)->content[s->i] != '\0' && (*data->token)->content[s->i] != '$')
-			s->i++;
-		s->end = s->i;
-		s->keep_var = ft_strdup_size((*data->token)->content + s->start, \
-		(s->end - s->start));
-		s->var_substitute = substitution(data, s->keep_var);
-		if (ft_strlen(s->var_substitute) != 0)
-			s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
-		free(s->keep_var);
-	}
-	free(s->without_dollar);
-	// i++;
+    s->deb = s->i;
+    while ((*data->token)->content[s->i] && (*data->token)->content[s->i] != '$')
+        s->i++;
+    s->without_dollar = ft_strdup_size((*data->token)->content + s->deb, (s->i - s->deb));
+    s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 0);
+    if ((*data->token)->content[s->i] && (*data->token)->content[s->i] == '$' && (*data->token)->content[s->i + 1] == '\0')
+    {
+        s->new_content = ft_strjoin_mod(s->new_content, "$", 0);
+        s->i++;
+    }
+    else
+    {
+        s->start = s->i;
+        s->i++;
+        while ((*data->token)->content[s->i] != '\0' && (ft_isalnum((*data->token)->content[s->i]) || (*data->token)->content[s->i] == '_'))
+            s->i++;
+        s->end = s->i;
+        s->keep_var = ft_strdup_size((*data->token)->content + s->start, (s->end - s->start));
+        s->var_substitute = substitution(data, s->keep_var);
+        if (ft_strlen(s->var_substitute) != 0)
+            s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
+        else
+        {
+            // Supprimer le caractère "$" ainsi que les caractères alphanumériques qui suivent
+            s->new_content = ft_strjoin_mod(s->new_content, "", 1);
+            while ((*data->token)->content[s->i] != '\0' && !ft_isalnum((*data->token)->content[s->i]))
+                s->i++;
+            s->i--;
+        }
+        // free(s->keep_var);
+    }
+    // free(s->without_dollar);
 }
-
 static void	more_dollar(t_substitution *s, t_minishell *data)
 {
 	s->i = 0;
