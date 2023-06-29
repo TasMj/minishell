@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:42:19 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/27 18:51:54 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/29 23:06:17 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	handle_builtin(t_cmd *cmd, t_minishell *data)
 	if (open_n_dup(cmd, data->x) != 0)
 	{
 		dup_n_close(tmp_in, tmp_out);
-		printf("File open error (WIP)\n");
+		// printf("File open error (WIP)\n");
 		return (1);
 	}
 	else

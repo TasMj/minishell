@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/06/27 18:12:01 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/29 23:26:52 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ int main(int argc, char **argv, char **env)
         *data.token = NULL;
         if (init_list(&data) == 0)
         {
-            if (syntax_error(data.token) == 2)
+            if (!data.token || ft_lstsize(*(data.token)) == 0)
+		        data.code_err = 0;
+            else if (syntax_error(data.token) == 2)
                we_exec(&data);
             else
                 data.code_err = 2;

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/06/27 19:10:09 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/29 22:16:28 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,6 @@ static char	*get_previous_dir(char *str)
 	return (ft_strdup_size(str, i));
 }
 
-int	err_write(char *error)
-{
-	int	i;
-
-	i = 0;
-	while (error[i])
-	{
-		write(2, &error[i], 1);
-		i++;
-	}
-	return (0);
-}
-
 /* return if not a file or a directory */
 static int	err_cd(t_cmd *cmd, char *path)
 {
@@ -92,7 +79,7 @@ static int	err_cd(t_cmd *cmd, char *path)
 	if (is_dir(path) == 0)
 	{
 		// printf("minishell: cd: %s: Not a directory\n", (*cmd->cmd)->next->content);
-		err_write("minishell: Not a directory\n");
+		err_write("cd: Not a directory\n");
 		free(path);
 		return (1);
 	}
@@ -100,7 +87,7 @@ static int	err_cd(t_cmd *cmd, char *path)
 	{
 		// printf("minishell: cd: %s: ", (*cmd->cmd)->next->content);
 		// write(2, "No such file or directory\n", )
-		err_write("minishell: No such file or directory\n");
+		err_write("cd: No such file or directory\n");
 		free(path);
 		return (1);
 	}
