@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   type.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 12:57:45 by tas               #+#    #+#             */
-/*   Updated: 2023/06/23 04:14:40 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/27 14:00:07 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 static int	determine_type(char *token)
 {
-	if (check_heredoc(token) == 1)
+	if (ft_strlen(token) == 2 && check_heredoc(token) == 1)
 		return (HEREDOC);
-	else if (check_append(token) == 1)
+	else if (ft_strlen(token) == 2 && check_append(token) == 1)
 		return (APPEND);
-	else if (check_redir_in(token[0]) == 1)
+	else if (ft_strlen(token) == 1 && check_redir_in(token[0]) == 1)
 		return (STDIN);
-	else if (check_redir_out(token[0]) == 1)
+	else if (ft_strlen(token) == 1 && check_redir_out(token[0]) == 1)
 		return (STDOUT);
-	else if (ft_strncmp(token, "|", 1) == 0)
+	else if (ft_strlen(token) == 1 && ft_strncmp(token, "|", 1) == 0)
 		return (PIPE);
 	else if (ft_strncmp(token, "\0", 1) == 0)
 		return (END);

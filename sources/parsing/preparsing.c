@@ -22,13 +22,23 @@ int	syntax_error(t_list **list_token)
 			|| ft_strcmp((*list_token)->content, ">>") == 0
 			|| ft_strcmp((*list_token)->content, "<>") == 0)
 			return (err_msg(0));
+		if (ft_strcmp((*list_token)->content, "|") == 0)
+		{
+			printf("minishell: syntax error near unexpected token `%s'\n", (*list_token)->content);
+			return (0);
+		}
 	}
 	if (ft_lstlast(*list_token)->type == APPEND
 		|| ft_lstlast(*list_token)->type == HEREDOC
 		|| ft_lstlast(*list_token)->type == STDIN
 		|| ft_lstlast(*list_token)->type == STDOUT
 		|| ft_lstlast(*list_token)->type == PIPE)
-			return (err_msg(0));
+		return (err_msg(0));
+	if (ft_strcmp((*list_token)->content, "|") == 0)
+	{
+		printf("minishell: syntax error near unexpected token `%s'\n", (*list_token)->content);
+		return (0);
+	}
 	return (2);
 }
 
