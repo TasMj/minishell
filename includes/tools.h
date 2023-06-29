@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 04:17:24 by tas               #+#    #+#             */
-/*   Updated: 2023/06/28 17:52:11 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/29 22:08:09 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_list	    **ft_copy_list(t_list **copy);
 void	    print_export(t_list **list);
 t_list	    **sort_env(t_list **list);
 int         ft_isalpha(char *str);
+int			is_numeric(char *str);
 int         extract_str(char *str);
 t_list	    *ft_lstlast(t_list *lst);
 void	    add_list(t_list **list_token, char *stockage, int flag_space);
@@ -54,9 +55,11 @@ char	    *ft_itoa(int n);
 char	    **lst_to_tab(t_list **lst);
 int	        nb_cmd(t_list *token);
 void	    set_to_zero(t_xek *x);
-int         has_slash(t_cmd *cmd);
-t_list      *ft_lstnew(char *input, int flag_space);
-void        ft_lstadd_back(t_list **lst, t_list *new);
+int		has_slash(t_cmd *cmd);
+t_list	*ft_lstnew(char *input, int flag_space);
+void	ft_lstadd_back(t_list **lst, t_list *new);
+int	is_dir(char *path);
+int	err_write(char *error);
 int         check_equal(char *str);
 int         ft_isalnum(int c);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 13:28:23 by tas               #+#    #+#             */
-/*   Updated: 2023/05/28 20:06:08 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/29 22:10:14 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@ int	err_msg(int n)
 {	
 	write(2, "minishell: ", 11);
 	if (n == 0)
-		write(2, ERR_REDIR_IN_OUT, ft_strlen(ERR_REDIR_IN_OUT));
+		err_write(ERR_REDIR_IN_OUT);
 	else if (n == 1)
-		write(2, ERR_QUOTE, ft_strlen(ERR_QUOTE));
+		err_write(ERR_QUOTE);
 	else if (n == 127)
-		write(2, ERR_CMD, ft_strlen(ERR_CMD));
+		err_write(ERR_CMD);
 	else if (n == 3)
-		write(2, ERR_MANY_ARG, ft_strlen(ERR_MANY_ARG));
+		err_write(ERR_MANY_ARG);
 	else if (n == 4)
-		write(2, ERR_HOME, ft_strlen(ERR_HOME));
+		err_write(ERR_HOME);
 	else if (n == 5)
-		write(2, ERR_EXPORT, ft_strlen(ERR_EXPORT));
+		err_write(ERR_EXPORT);
 	return (1);
 }

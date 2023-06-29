@@ -46,8 +46,12 @@ int main(int argc, char **argv, char **env)
         *data.token = NULL;
         if (init_list(&data) == 0)
         {
-            if (syntax_error(data.token) == 2)
-                we_exec(&data);
+            if (!data.token || ft_lstsize(*(data.token)) == 0)
+		        data.code_err = 0;
+            else if (syntax_error(data.token) == 2)
+               we_exec(&data);
+            else
+                data.code_err = 2;
         }
         free_list_token_content(data.token);
         free_list(data.token);

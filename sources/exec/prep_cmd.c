@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/27 12:12:10 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/29 23:48:32 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,26 @@ static int	check_cmd(t_cmd *cmd)
 	/* Si la commande est un path */
 	if (has_slash(cmd) == 1)
 	{
-		/* On check si la path est valide si oui on return 0 */
-		if (access((*cmd->cmd)->content, F_OK | X_OK) != -1)
-			return (0);
-		/* Sinon on return 1 et message d'erreur */
-		printf("minishell: %s: no such file or directory\n", (*cmd->cmd)->content);
-		cmd->data->code_err = 127;
-		return (1);
+		if (access((*cmd->cmd)->content, F_OK) == -1)
+		{
+			err_write("No such file or directory\n");
+			cmd->data->code_err = 127;
+			return (1);
+		}
+		else if (access((*cmd->cmd)->content, R_OK) == -1
+			|| access((*cmd->cmd)->content, W_OK) == -1)
+		{
+			err_write("Permission denied\n");
+			cmd->data->code_err = 126;
+			return (1);
+		}
+		else if (is_dir((*cmd->cmd)->content) == 1)
+		{
+			err_write("Is a directory\n");
+			cmd->data->code_err = 126;
+			return (1);
+		}
+		return (0);
 	}
 	/* Sinon ex : ls -a, cat ou jules */
 	cmd->tab = lst_to_tab(g_list_env);
@@ -82,7 +95,8 @@ static int	check_cmd(t_cmd *cmd)
 	if (!cmd->path && is_builtin(cmd) == 0)
 	{
 		/* Si la commande n'est pas valide on retourne une erreur */
-		printf("minishell: %s: command not found\n", (*cmd->cmd)->content);
+		// printf("minishell: %s: command not found\n", (*cmd->cmd)->content);
+		err_write("command not found\n");
 		cmd->data->code_err = 127;
 		return (1);
 	}
@@ -128,7 +142,7 @@ int	prep_cmd(t_minishell *data)
 		data->x->cmd[i].data = data;
 		data->x->cmd[i].id = i;
 		data->x->cmd[i].token = clone_to_pipe(elem);
-		if (fill_cmd(&(data->x->cmd[i])) == 1 && data->x->cmd[i].id != 0)
+		if (fill_cmd(&(data->x->cmd[i])) == 1)
 			return (1);
 		while (elem && elem->type != PIPE)
 			elem = elem->next;

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 13:02:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/26 21:48:21 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/29 22:16:10 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,43 +24,34 @@
 
 void    ft_exit(t_minishell *data)
 {
-    // t_list    *tmp;
-    // int        i;
-
-    // i = 0;
-    // tmp = *data->token;
-    
     destroy_exec(data->x);
     
     free_list_token_content(data->token);
     free_list(data->token);
     free_list(g_list_env);
-
     exit(data->code_err);
-    // if (ft_lstsize(*da1ta->token) == 1)
-    // {
-    //     free_list_token_content(data->token);
-    //     free_list(data->token);
-    //     free_list(g_list_env);
-    //     exit(data->code_err);
-    // }
-    // if (ft_lstsize(*data->token) > 2)
-    // {
-    //     // ft_putstr_fd2("exit\n", 2);
-    //     // ft_putstr_fd2("minishell: exit: too many arguments\n", 2);
-    //     free_list_token_content(data->token);
-    //     free_list(data->token);
-    //     free_list(g_list_env);
-    //     exit(data->code_err);
-    // }
-    // if (ft_lstsize(*data->token) == 2)
-    // {
-    //     i = ft_atoi((*data->token)->next->content);
-    //     // ft_putstr_fd2("exit\n", 2);
-    //     free_list_token_content(data->token);
-    //     free_list(data->token);
-    //     free_list(g_list_env);
-    //     exit(data->code_err);
-    // }
-    // *data->token = tmp;
+}
+
+void    ft_exit_code(t_cmd *cmd, t_minishell *data)
+{
+    int code;
+
+    code = ft_atoi((*cmd->cmd)->next->content);
+    if (is_numeric((*cmd->cmd)->next->content) == 0)
+    {
+        // printf("minishell: exit: %s: numeric argument required\n", (*cmd->cmd)->next->content);
+        err_write("exit: numeric argument required\n");
+        code = 2;
+    }
+    else if (ft_lstsize(*(cmd->cmd)) > 2)
+    {
+        err_msg(3);
+        return ;
+    }
+    printf("exit\n");
+    destroy_exec(data->x);
+    free_list_token_content(data->token);
+    free_list(data->token);
+    free_list(g_list_env);
+    exit(code);
 }

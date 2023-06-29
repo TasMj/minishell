@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_builtin2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:41:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/27 15:26:54 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/27 18:18:47 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,4 +121,18 @@ int	ft_isalpha(char *str)
 		}
 	}
 	return (0);
+}
+
+int	is_numeric(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!((str[i] >= '0' && str[i] <= '9') || str[i] == '+' || str[i] == '-'))
+			return (0);
+		i++;
+	}
+	return (1);
 }

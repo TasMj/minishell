@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/06/27 17:12:21 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/29 22:16:28 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	set_old_path(char *path)
 }
 
 /* check if directory and not file */
-static int	is_dir(char *path)
+int	is_dir(char *path)
 {
 	struct stat	st;
 
@@ -72,18 +72,22 @@ static char	*get_previous_dir(char *str)
 }
 
 /* return if not a file or a directory */
-static int	err_cd(t_list **list, char *path)
+static int	err_cd(t_cmd *cmd, char *path)
 {
+	(void) cmd;
+
 	if (is_dir(path) == 0)
 	{
-		printf("minishell: cd: %s: Not a directory\n", (*list)->next->content);
+		// printf("minishell: cd: %s: Not a directory\n", (*cmd->cmd)->next->content);
+		err_write("cd: Not a directory\n");
 		free(path);
 		return (1);
 	}
 	if (chdir(path) == -1)
 	{
-		printf("minishell: cd: %s: No such file or directory\n", \
-		(*list)->next->content);
+		// printf("minishell: cd: %s: ", (*cmd->cmd)->next->content);
+		// write(2, "No such file or directory\n", )
+		err_write("cd: No such file or directory\n");
 		free(path);
 		return (1);
 	}
@@ -101,24 +105,24 @@ static char	*set_path(char *path, t_list **list)
 	return (path);
 }
 
-int	ft_cd(t_list **list)
+int	ft_cd(t_cmd *cmd)
 {
 	char	cwd[1024];
 	char	*path;
 	t_list	*tmp;
 
-	tmp = *list;
+	tmp = *cmd->cmd;
 	path = NULL;
 	char *old_path = getcwd(cwd, sizeof(cwd));
 	set_old_path(old_path);
 	if (ft_strcmp("cd", (*list)->content) == 0 && (*list)->next == NULL && is_in_env("HOME") == 1)
 		path = get_venv("HOME");
-	else if (ft_strcmp("cd", (*list)->content) == 0 && (*list)->next == NULL && is_in_env("HOME") == 0)
+	else if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && (*cmd->cmd)->next == NULL && is_in_env("HOME") == 0)
 	{
-		*list = tmp;
+		*cmd->cmd = tmp;
 		return (err_msg(4));
 	}
-	else if ((*list)->next && ft_strcmp((".."), (*list)->next->content) == 0)
+	else if ((*cmd->cmd)->next && ft_strcmp((".."), (*cmd->cmd)->next->content) == 0)
 		path = get_previous_dir(getcwd(cwd, sizeof(cwd)));
 	else if (ft_lstsize(*list) <= 2)
 	{
@@ -131,12 +135,12 @@ int	ft_cd(t_list **list)
 	}
 	else
 	{
-		*list = tmp;
+		*cmd->cmd = tmp;
 		return (err_msg(3));
 	}
-	if (err_cd(list, path) == 1)
+	if (err_cd(cmd, path) == 1)
 		return (1);
+	*cmd->cmd = tmp;
 	free(path);
-	*list = tmp;
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preparsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:56:18 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/29 18:24:20 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/29 23:25:59 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	syntax_error(t_list **list_token)
 {
-	if (!list_token || ft_lstsize(*list_token) == 0)
-		return (0);
 	if (ft_lstsize(*list_token) == 1)
 	{
 		if (ft_strcmp((*list_token)->content, "<") == 0
@@ -40,7 +38,6 @@ int	syntax_error(t_list **list_token)
 	{
 		printf("minishell: syntax error near unexpected token `%s'\n", (*list_token)->content);
 		return (0);
-
 	}
 	return (2);
 }
@@ -76,7 +73,10 @@ int	err_redir(t_list **list_token)
 		{
 			if ((*list_token)->next != NULL && (*list_token)->type != WORD && (*list_token)->next->type != WORD)
 			{
-				printf("minishell: syntax error near unexpected token `%s'\n", (*list_token)->next->content);
+				// printf("minishell: syntax error near unexpected token `%s'\n", (*list_token)->next->content);
+				err_write("syntax error near unexpected token ");
+				write(2, &(*list_token)->next->content, ft_strlen((*list_token)->next->content));
+				write(2, "\n", 1);
 				return (1);
 			}
 			(*list_token) = (*list_token)->next;

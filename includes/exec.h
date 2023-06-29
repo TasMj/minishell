@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 03:31:12 by tas               #+#    #+#             */
-/*   Updated: 2023/06/26 17:52:44 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/27 15:09:42 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 /*                                fonctions                                   */
 /******************************************************************************/
 
-int     exec_builtin(t_cmd *cmd, t_minishell *data);
 char	*find_path(char **env, char *token);
 void	ctrl_c(int sigid);
 void	ctr_bs(int sigid);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 19:56:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/27 11:57:12 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/29 23:23:02 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,26 @@ int	open_n_dup(t_cmd *cmd, t_xek *x)
 		else if (cmd->redir[i] == APPEND)
 			fd = open(cmd->file[i], O_CREAT | O_APPEND | O_RDWR, 0666);
 		else if (cmd->redir[i] == STDIN)
+		{
 			fd = open(cmd->file[i], O_RDONLY);
+			if (fd < 0)
+			{
+				err_write("No such file or directory\n");
+				cmd->data->code_err = 1;
+				return (1);
+			}
+		}
 		else if (cmd->redir[i] == HEREDOC)
 		{
 			fd = x->hdoc[x->hdoc_index].hd_pipe[0];
 			x->hdoc_index++;
 		}
 		if (fd == -1)
-			return (1);//WIP ERROR
+		{
+			err_write("Permission denied\n");
+			cmd->data->code_err = 1;
+			return (1);
+		}
 		if (cmd->redir[i] == STDOUT || cmd->redir[i] == APPEND)
 			dup2(fd, STDOUT_FILENO);
 		else if (cmd->redir[i] == STDIN || cmd->redir[i] == HEREDOC)
@@ -65,32 +77,18 @@ int	open_n_dup(t_cmd *cmd, t_xek *x)
 		close(fd);
 		i++;
 	}
-	return (1);
+	return (0);
 }
 
 int	exec_it(t_cmd *cmd, t_minishell *data)
 {
 	//Si commande invalide
-	if (!cmd->path && is_builtin(cmd) == 0)
+	if (!cmd->path && is_builtin(cmd) == 0 && has_slash(cmd) == 0)
 	{
 		ft_exit(data);
 	}
-	// if (is_builtin(cmd) == 1)
-	// {
-	// 	// exec_builtin(cmd, data);
-	// 	// chdir("/mnt/nfs/homes/tmejri/Documents/minishell/includes");
-	// 	// char	cwd[1024];
-		
-	// 	// if (getcwd(cwd, sizeof(cwd)) != NULL)
-	// 	// 	printf("%s\n", cwd);
-	// 	// execlp("cd", "cd", NULL);
-	// 	execlp("pwd", "pwd", NULL);
-	// 	ft_exit(data);
-	// 	// exit (0);
-	// 	// return (0);
-	// }
 	cmd->tab_env = lst_to_tab(g_list_env);
-	signal_ignore();
+	// signal_ignore();
 	if (has_slash(cmd) == 1)
 	{
 		if (execve((*cmd->cmd)->content, cmd->tab, cmd->tab_env) != 0)
