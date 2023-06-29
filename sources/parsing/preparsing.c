@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:56:18 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/27 12:34:03 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/29 18:24:20 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ int	syntax_error(t_list **list_token)
 			|| ft_strcmp((*list_token)->content, ">>") == 0
 			|| ft_strcmp((*list_token)->content, "<>") == 0)
 			return (err_msg(0));
+		if (ft_strcmp((*list_token)->content, "|") == 0)
+		{
+			printf("minishell: syntax error near unexpected token `%s'\n", (*list_token)->content);
+			return (0);
+		}
 	}
 	if (ft_lstlast(*list_token)->type == APPEND
 		|| ft_lstlast(*list_token)->type == HEREDOC
@@ -31,6 +36,12 @@ int	syntax_error(t_list **list_token)
 		|| ft_lstlast(*list_token)->type == STDOUT
 		|| ft_lstlast(*list_token)->type == PIPE)
 		return (err_msg(0));
+	if (ft_strcmp((*list_token)->content, "|") == 0)
+	{
+		printf("minishell: syntax error near unexpected token `%s'\n", (*list_token)->content);
+		return (0);
+
+	}
 	return (2);
 }
 
