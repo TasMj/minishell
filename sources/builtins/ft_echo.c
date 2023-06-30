@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:09:31 by tas               #+#    #+#             */
-/*   Updated: 2023/06/27 11:44:45 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/30 10:58:39 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int	ft_echo(t_list **list_token)
 	t_echo	*e;
 
 	e = malloc(sizeof(t_echo));
+	if (!e)
+		return (1);
 	ft_memset(e, 0, sizeof(t_echo));
 	e->stockage = "";
 	tmp = *list_token;
@@ -89,9 +91,7 @@ int	ft_echo(t_list **list_token)
 			(*list_token) = (*list_token)->next;
 	}
 	if (e->flag != 1 && e->stockage != NULL)
-	{
 		printf("%s\n", e->stockage);
-	}
 	else if (e->flag != 0 && e->stockage != NULL)
 		printf("%s", e->stockage);
 	if (e->to_free == 1)

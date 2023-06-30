@@ -79,6 +79,7 @@ static int	go_exec(t_xek *x, t_minishell *data)
 	
 	/* On lance un process pour chaque commande */
 	i = 0;
+	// signal_ignore();
 	while (i < x->nb_cmd)
 	{
 		if (is_builtin(&(x->cmd[i])) == 0)

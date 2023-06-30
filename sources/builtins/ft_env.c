@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:48 by tas               #+#    #+#             */
-/*   Updated: 2023/06/23 04:46:06 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/30 11:02:27 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ t_list	**get_list_env(char **env)
 
 	i = 0;
 	list_env = malloc(sizeof(t_list));
+	if (!list_env)
+		return (NULL);
 	ft_memset(list_env, 0, sizeof(t_list));
 	if (env[0] == NULL)
 	{
