@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/06/27 15:32:38 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/30 12:30:41 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ static int	add_var_env(char *stock, t_list *tmp)
 	char	*copy;
 	(void)tmp;
 
+	if (stock[0] == '=')
+	{
+		printf("minishell: export: `=': not a valid identifier\n");
+		return (1);
+	}
 	copy = del_equal(stock);
 	if (ft_isalpha(copy) == 1)
 	{
