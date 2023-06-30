@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/06/30 11:03:37 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/30 13:10:12 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int    init_list(t_minishell *data)
     data->token = create_token(data->token, data->input);
     if (err_quote(data->token) == 1)
         return (1);
-
 
     substitute_dollar(data);
     get_type(data->token);

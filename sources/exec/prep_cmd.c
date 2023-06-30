@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/29 23:48:32 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/30 14:11:41 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,21 @@ static t_list	**clone_to_op(t_list *token)
 	if (!lst)
 		return (NULL);
 	*lst = NULL;
+	// while (elem)
+	// {
+	// 	if (elem->type == WORD)
+	// 	{
+	// 		add_list(lst, elem->content, elem->flag_space);
+	// 		elem = elem->next;
+	// 	}
+	// 	else
+	// 	{
+	// 		if (elem->next)
+	// 			elem = elem->next;
+	// 		if (elem->next)
+	// 			elem = elem->next;
+	// 	}
+	// }
 	while (elem && elem->type == WORD)
 	{
 		add_list(lst, elem->content, elem->flag_space);
@@ -91,7 +106,8 @@ static int	check_cmd(t_cmd *cmd)
 	}
 	/* Sinon ex : ls -a, cat ou jules */
 	cmd->tab = lst_to_tab(g_list_env);
-	cmd->path = find_path(cmd->tab, (*cmd->cmd)->content);
+	if (is_in_env("PATH") == 1)
+		cmd->path = find_path(cmd->tab, (*cmd->cmd)->content);
 	if (!cmd->path && is_builtin(cmd) == 0)
 	{
 		/* Si la commande n'est pas valide on retourne une erreur */

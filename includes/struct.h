@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 12:14:14 by tas               #+#    #+#             */
-/*   Updated: 2023/06/26 16:03:06 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/30 14:08:40 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_cmd
 	int		nb_redir;
 	pid_t	pid;
 	char	**tab_env;
+	int		status;
 	struct s_minishell *data;
 }	t_cmd;
 

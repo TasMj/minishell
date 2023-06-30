@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:41:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/27 18:18:47 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/30 12:46:56 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,7 @@ int	ft_isalpha(char *str)
 			|| (str[i] >= 'a' && str[i] <= 'z'))
 			i++;
 		else
-		{
-			printf("minishell: export: `%s': not a valid identifier\n", str);
 			return (1);
-		}
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/06/30 12:26:12 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/30 12:47:59 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,17 @@ static int	add_var_env(char *stock, t_list *tmp)
 {
 	char	*copy;
 	(void)tmp;
-
+	
+	if (stock[0] == '=')
+    {
+		err_write("export: `=': not a valid identifier\n");
+        return (1);
+    }
 	copy = del_equal(stock);
 	if (ft_isalpha(copy) == 1)
 	{
+		// printf("minishell: export: `%s': not a valid identifier\n", str);
+		err_write("export: not a valid identifier\n");
 		free(copy);
 		// free(stock);
 		return (1);
