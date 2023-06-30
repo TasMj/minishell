@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:32 by tas               #+#    #+#             */
-/*   Updated: 2023/06/29 17:35:52 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/30 01:16:30 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,131 +61,26 @@ int	ft_isalnum(int c)
 		return (0);
 }
 
-/*
-void	remove_empty_tokens(t_list **list)
-{
-	char		*str;
-	t_list		*to_free;
-	t_list		*temp;
-	int			prev_flag;
-	int			a;
-
-	temp = *list;
-	a = 0;
-	while (*list && !((*list)->content)[0])
-	{
-		to_free = *list;
-		*list = (*list)->next;
-		free(to_free->content);
-		free(to_free);
-	}
-	temp = *list;
-	while (temp && temp->next)
-	{
-	printf("DEBUT: temp: [%s], flag: %d\n", temp->content, temp->flag_space);
-
-		if (a == 1)
-		{
-			temp->flag_space = prev_flag;
-			a = 0;	
-		}
-		str = temp->next->content;
-		if (!str[0])
-		{
-			printf("---------> str: [%s]\n", str);
-			a = 1;
-			printf("ca rentre\n");
-			to_free = temp->next;
-			temp->next = temp->next->next;
-	printf("to_free: [%s], flag: %d\n", to_free->content, to_free->flag_space);
-		if (to_free->flag_space == 0 && temp->flag_space == 1)
-			prev_flag = temp->flag_space;
-		else
-			prev_flag = to_free->flag_space;
-		// printf("prev: %d\n", prev_flag);
-	// printf("temp->: [%s], flag: %d\n", (*list)->content, to_free->flag_space);
-			free(to_free->content);
-			free(to_free);
-		}
-	printf("FIN: temp: [%s], flag: %d\n", temp->content, temp->flag_space);
-		temp = temp->next;
-		printf("t\n");
-	}
-	printf("a %d\n", prev_flag);
-
-	if (!temp)
-	{
-		printf("par la\n");
-		// temp = NULL;
-		// temp->flag_space = prev_flag;
-	}
-	else if (ft_strlen(temp->content) != 0)
-	{
-		printf("ca sort\n");
-		if (a == 0)
-			temp->flag_space = prev_flag;
-	}
-
-	// if (ft_strlen(temp->content) != 0)
-	// {
-		// printf("ca sort\n");
-		// temp->flag_space = prev_flag;
-	// }
-	printf("s\n");
-}
-*/
-
 void remove_empty_tokens(t_list **list)
 {
-    char    *str;
-    t_list  *to_free;
-    t_list  *temp;
-    int     prev_flag;
-    int     a;
-
-    temp = *list;
-    a = 0;
-    while (*list && !((*list)->content)[0])
-    {
-        to_free = *list;
-        *list = (*list)->next;
-        free(to_free->content);
-        free(to_free);
-    }
-    temp = *list;
-    while (temp && temp->next)
-    {
-        if (a == 1)
-        {
-            temp->flag_space = prev_flag;
-            a = 0;  
-        }
-        str = temp->next->content;
-        if (!str[0])
-        {
-            a = 1;
-            to_free = temp->next;
-            temp->next = temp->next->next;
-            while (temp->next && !(temp->next->content)[0])
-            {
-                t_list *empty_token = temp->next;
-                temp->next = temp->next->next;
-                free(empty_token->content);
-                free(empty_token);
-            }
-            if (to_free->flag_space == 0 && temp->flag_space == 1)
-                prev_flag = temp->flag_space;
-            else
-                prev_flag = to_free->flag_space;
-            free(to_free->content);
-            free(to_free);
-        }
-        temp = temp->next;
-    }
-    if (temp && ft_strlen(temp->content) != 0)
-    {
-        if (a == 0)
-            temp->flag_space = prev_flag;
-    }
+	t_list	*tmp;
+	int		prev_flag;
+	int a = 0;
+	
+	tmp = *list;
+	while (*list)
+	{
+		if (a == 1 && (*list)->flag_space == 0)
+		{
+			(*list)->flag_space = prev_flag;
+			a = 0;
+		}
+		if (ft_strlen((*list)->content) == 0)
+		{
+			a = 1;
+			prev_flag = (*list)->flag_space;
+		}
+		(*list) = (*list)->next;
+	}
+	*list = tmp;
 }
-
