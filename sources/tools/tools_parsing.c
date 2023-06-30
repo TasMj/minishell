@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:32 by tas               #+#    #+#             */
-/*   Updated: 2023/06/30 01:16:30 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/30 11:54:42 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,34 @@ int	ft_isalnum(int c)
 		return (0);
 }
 
+void	free_empty_token(t_list **list)
+{
+	char		*str;
+	t_list		*to_free;
+	t_list		*temp;
+
+	while (*list && !((*list)->content)[0])
+	{
+		to_free = *list;
+		*list = (*list)->next;
+		free(to_free->content);
+		free(to_free);
+	}
+	temp = *list;
+	while (temp && temp->next)
+	{
+		str = temp->next->content;
+		if (!str[0])
+		{
+			to_free = temp->next;
+			temp->next = temp->next->next;
+			free(to_free->content);
+			free(to_free);
+		}
+		temp = temp->next;
+	}
+}
+
 void remove_empty_tokens(t_list **list)
 {
 	t_list	*tmp;
@@ -83,4 +111,5 @@ void remove_empty_tokens(t_list **list)
 		(*list) = (*list)->next;
 	}
 	*list = tmp;
+	free_empty_token(list);
 }
