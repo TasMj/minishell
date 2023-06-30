@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:12:00 by tas               #+#    #+#             */
-/*   Updated: 2023/06/27 12:10:43 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/29 09:27:14 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	print_list(t_list **list)
 	tmp = (*list);
 	while (*list)
 	{
-		printf("content: [%s]\n", (*list)->content);
+		printf("content: [%s], flag_space: %d\n", (*list)->content, (*list)->flag_space);
 		(*list) = (*list)->next;
 	}
 	(*list) = tmp;

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 13:02:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/27 17:15:21 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/29 22:16:10 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void    ft_exit_code(t_cmd *cmd, t_minishell *data)
     code = ft_atoi((*cmd->cmd)->next->content);
     if (is_numeric((*cmd->cmd)->next->content) == 0)
     {
-        printf("minishell: exit: %s: numeric argument required\n", (*cmd->cmd)->next->content);
+        // printf("minishell: exit: %s: numeric argument required\n", (*cmd->cmd)->next->content);
+        err_write("exit: numeric argument required\n");
         code = 2;
     }
     else if (ft_lstsize(*(cmd->cmd)) > 2)

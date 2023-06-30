@@ -115,7 +115,10 @@ int	ft_isalpha(char *str)
 			|| (str[i] >= 'a' && str[i] <= 'z'))
 			i++;
 		else
+		{
+			printf("minishell: export: `%s': not a valid identifier\n", str);
 			return (1);
+		}
 	}
 	return (0);
 }

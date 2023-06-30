@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:32 by tas               #+#    #+#             */
-/*   Updated: 2023/06/23 04:49:17 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/30 11:54:42 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,40 @@ int	is_a_separator(char c)
 	return (0);
 }
 
-void	remove_empty_tokens(t_list **list)
+char	*get_venv(char *str)
+{
+	t_list	*tmp;
+	char	*var;
+	char	*copy_env;
+
+	tmp = *g_list_env;
+	while (*g_list_env)
+	{
+		copy_env = del_equal((*g_list_env)->content);
+		if (ft_strcmp(str, copy_env) == 0)
+		{
+			var = after_equal((*g_list_env)->content);
+			*g_list_env = tmp;
+			free(copy_env);
+			return (var);
+		}
+		free(copy_env);
+		(*g_list_env) = (*g_list_env)->next;
+	}
+	*g_list_env = tmp;
+	return (NULL);
+}
+
+int	ft_isalnum(int c)
+{
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')
+		|| (c >= '0' && c <= '9'))
+		return (1);
+	else
+		return (0);
+}
+
+void	free_empty_token(t_list **list)
 {
 	char		*str;
 	t_list		*to_free;
@@ -56,26 +89,27 @@ void	remove_empty_tokens(t_list **list)
 	}
 }
 
-char	*get_venv(char *str)
+void remove_empty_tokens(t_list **list)
 {
 	t_list	*tmp;
-	char	*var;
-	char	*copy_env;
-
-	tmp = *g_list_env;
-	while (*g_list_env)
+	int		prev_flag;
+	int a = 0;
+	
+	tmp = *list;
+	while (*list)
 	{
-		copy_env = del_equal((*g_list_env)->content);
-		if (ft_strcmp(str, copy_env) == 0)
+		if (a == 1 && (*list)->flag_space == 0)
 		{
-			var = after_equal((*g_list_env)->content);
-			*g_list_env = tmp;
-			free(copy_env);
-			return (var);
+			(*list)->flag_space = prev_flag;
+			a = 0;
 		}
-		free(copy_env);
-		(*g_list_env) = (*g_list_env)->next;
+		if (ft_strlen((*list)->content) == 0)
+		{
+			a = 1;
+			prev_flag = (*list)->flag_space;
+		}
+		(*list) = (*list)->next;
 	}
-	*g_list_env = tmp;
-	return (NULL);
+	*list = tmp;
+	free_empty_token(list);
 }

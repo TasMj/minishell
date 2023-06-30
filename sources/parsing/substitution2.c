@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:47:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/23 12:34:37 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/29 21:44:54 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ char	*substitution(t_minishell *data, char *token)
 
 	variable = NULL;
 	if ((ft_strlen(token) == 2) && ft_strcmp(token, "$?") == 0)
+	{
 		variable = ft_itoa(data->code_err);
+	}
 	else if (is_in_env(token + 1))
 		variable = get_venv(token + 1);
 	else if (!variable)

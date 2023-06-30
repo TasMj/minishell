@@ -40,7 +40,11 @@ static int	launch_process(t_cmd *cmd, t_minishell *data)
 	if (cmd->pid == 0)
 	{
 		dup_pipe(cmd, data->x);
-		open_n_dup(cmd, data->x);
+		if (open_n_dup(cmd, data->x) != 0)
+		{
+			// destroy_exec(data->x);
+			ft_exit(data);
+		}
 		exec_it(cmd , data);
 	}
 	return (0);
@@ -63,7 +67,8 @@ int	wait_child(t_xek *x)
 		{
 			x->cmd->data->code_err = WTERMSIG(ret) + 128;
 			if (x->cmd->data->code_err == 139)
-				printf("Segmentation Fault BOOM !\n");
+				err_write("Segmentation fault error\n");
+				// printf("Segmentation Fault BOOM !\n");
 			// else
 				// printf("Interrupted with signal %d\n", x->cmd->data->code_err);
 		}
@@ -98,9 +103,6 @@ static int	go_exec(t_xek *x, t_minishell *data)
 -> cat < file | wc -l > file2 */
 int	we_exec(t_minishell *data)
 {
-	int	i;
-
-	i = 0;
 	data->x = malloc(sizeof(t_xek));
 	ft_memset(data->x, 0, sizeof(t_xek));
 	if (prep_cmd(data) == 1)

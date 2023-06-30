@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:48 by tas               #+#    #+#             */
-/*   Updated: 2023/06/30 11:02:27 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/30 11:02:27 by jthuysba         ###   ########.fr       */n
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int	ft_env(t_list **l)
 	tmp_cmd = *l;
 	if ((*l)->next != NULL)
 	{
-		printf("env: ‘%s’: No such file or directory\n", (*l)->next->content);
+		// printf("env: ‘%s’: No such file or directory\n", (*l)->next->content);
+		err_write("env: No such file or directory\n");
 		*l = tmp_cmd;
 		return (1);
 	}

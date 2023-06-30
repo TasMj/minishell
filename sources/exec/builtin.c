@@ -98,7 +98,7 @@ int	handle_builtin(t_cmd *cmd, t_minishell *data)
 	if (open_n_dup(cmd, data->x) != 0)
 	{
 		dup_n_close(tmp_in, tmp_out);
-		printf("File open error (WIP)\n");
+		// printf("File open error (WIP)\n");
 		return (1);
 	}
 	else

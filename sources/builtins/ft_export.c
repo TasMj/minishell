@@ -40,12 +40,12 @@ static int	add_var_env(char *stock, t_list *tmp)
 	if (ft_isalpha(copy) == 1)
 	{
 		free(copy);
-		free(stock);
-		return (err_msg(5));
+		// free(stock);
+		return (1);
 	}
 	add_list(g_list_env, stock, 0);
 	free(copy);
-	free(stock);
+	// free(stock);
 	return (0);
 }
 
@@ -66,12 +66,12 @@ static int	modify_var(char *stock, t_list *tmp)
 			free((*g_list_env)->content);
 			(*g_list_env)->content = ft_strdup(stock);
 			*g_list_env = tmp;
-			free(copy_env);
-			free(copy_token);
+			// free(copy_env);
+			// free(copy_token);
 			return (1);
 		}
-		free(copy_env);
-		free(copy_token);
+		// free(copy_env);
+		// free(copy_token);
 	}
 	return (0);
 }
@@ -92,10 +92,14 @@ int	ft_export(t_list **list_token)
 	{
 		while (*list_token != NULL)
 		{
-			if (check_list_equal(list_token) != 1)
-				return (0);
 			(*list_token) = (*list_token)->next;
-			stock = ft_strdup((*list_token)->content);
+			if (check_equal((*list_token)->content) == 0)
+			{
+				stock = ft_strdup((*list_token)->content);
+				stock = ft_strjoin_mod(stock, "=", 1);			
+			}
+			else
+				stock = ft_strdup((*list_token)->content);
 			(*list_token) = (*list_token)->next;
 			while (*list_token && (*list_token)->content[0] != '=' && (*list_token)->flag_space == 0)
 			{

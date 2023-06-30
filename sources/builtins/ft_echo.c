@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-//echo cat<<EOF cat << EOF
-
 /* check if flag n */
 static int	ft_n(char *str)
 {
