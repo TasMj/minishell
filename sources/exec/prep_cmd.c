@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/30 14:11:41 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/30 14:47:03 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,7 @@ static int	check_cmd(t_cmd *cmd)
 			cmd->data->code_err = 127;
 			return (1);
 		}
-		else if (access((*cmd->cmd)->content, R_OK) == -1
-			|| access((*cmd->cmd)->content, W_OK) == -1)
+		else if (access((*cmd->cmd)->content, R_OK) == -1)
 		{
 			err_write("Permission denied\n");
 			cmd->data->code_err = 126;

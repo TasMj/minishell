@@ -6,15 +6,14 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 13:28:23 by tas               #+#    #+#             */
-/*   Updated: 2023/06/29 22:10:14 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/30 14:53:14 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	err_msg(int n)
-{	
-	write(2, "minishell: ", 11);
+{
 	if (n == 0)
 		err_write(ERR_REDIR_IN_OUT);
 	else if (n == 1)
