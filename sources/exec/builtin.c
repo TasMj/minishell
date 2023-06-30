@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:42:19 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/29 23:06:17 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/30 11:45:01 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,27 @@ void	ft_pwd(void);
 static int	exec_builtin(t_cmd *cmd)
 {
 	t_list	*tmp;
+	int		ret;
 
 	if (!cmd->cmd || ft_lstsize(*cmd->cmd) == 0)
 		return (-1);
+	ret = 0;
 	tmp = *cmd->cmd;
 	if (ft_strlen((*cmd->cmd)->content) == 2 && ft_strncmp((*cmd->cmd)->content, "cd", 2) == 0)
-	{
-		if (ft_cd(cmd) != 0)
-			return (1);
-	}
+		ret = ft_cd(cmd);
 	else if (ft_strlen((*cmd->cmd)->content) == 4 && ft_strncmp((*cmd->cmd)->content, "echo", 4) == 0)
-		ft_echo(cmd->cmd);
+		ret = ft_echo(cmd->cmd);
 	else if (ft_strlen((*cmd->cmd)->content) == 3 && ft_strncmp((*cmd->cmd)->content, "env", 3) == 0)
-		ft_env(cmd->cmd);
+		ret = ft_env(cmd->cmd);
 	else if (ft_strlen((*cmd->cmd)->content) == 6 && ft_strncmp((*cmd->cmd)->content, "export", 6) == 0)
-		ft_export(cmd->cmd);
+		ret = ft_export(cmd->cmd);
 	else if (ft_strlen((*cmd->cmd)->content) == 3 && ft_strncmp((*cmd->cmd)->content, "pwd", 3) == 0)
 		ft_pwd();
 	else if (ft_strlen((*cmd->cmd)->content) == 5 && ft_strncmp((*cmd->cmd)->content, "unset", 5) == 0)
-		ft_unset(cmd->cmd);
+		ret = ft_unset(cmd->cmd);
 	else
+		return (1);
+	if (ret != 0)
 		return (1);
 	*cmd->cmd = tmp;
 	return (0);

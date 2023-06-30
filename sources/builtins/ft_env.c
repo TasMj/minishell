@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:48 by tas               #+#    #+#             */
-/*   Updated: 2023/06/29 22:16:17 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/30 11:02:27 by jthuysba         ###   ########.fr       */n
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ t_list	**get_list_env(char **env)
 
 	i = 0;
 	list_env = malloc(sizeof(t_list));
+	if (!list_env)
+		return (NULL);
 	ft_memset(list_env, 0, sizeof(t_list));
 	if (env[0] == NULL)
 	{

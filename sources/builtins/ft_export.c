@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/06/27 15:32:38 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/30 11:44:18 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static int	sort_env_ascii(void)
 	t_list	**copy;
 
 	copy = malloc(sizeof(t_list));
+	if (!copy)
+		return (1);
 	ft_memset(copy, 0, sizeof(t_list));
 	copy = ft_copy_list(copy);
 	copy = sort_env(copy);
@@ -82,7 +84,10 @@ int	ft_export(t_list **list_token)
 	
 	tmp = *g_list_env;
 	if (ft_lstsize(*list_token) == 1)
-		sort_env_ascii();
+	{
+		if (sort_env_ascii() != 0)
+			return (1);
+	}
 	else
 	{
 		while (*list_token != NULL)

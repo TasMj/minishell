@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:09:31 by tas               #+#    #+#             */
-/*   Updated: 2023/06/27 13:58:24 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/06/30 10:58:39 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int	ft_echo(t_list **list_token)
 	t_echo	*e;
 
 	e = malloc(sizeof(t_echo));
+	if (!e)
+		return (1);
 	ft_memset(e, 0, sizeof(t_echo));
 	e->stockage = "";
 	tmp = *list_token;
