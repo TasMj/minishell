@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/06/29 22:16:28 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/30 12:25:42 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	ft_cd(t_cmd *cmd)
 	path = NULL;
 	char *old_path = getcwd(cwd, sizeof(cwd));
 	set_old_path(old_path);
-	if (ft_strcmp("cd", (*list)->content) == 0 && (*list)->next == NULL && is_in_env("HOME") == 1)
+	if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && (*cmd->cmd)->next == NULL && is_in_env("HOME") == 1)
 		path = get_venv("HOME");
 	else if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && (*cmd->cmd)->next == NULL && is_in_env("HOME") == 0)
 	{
@@ -124,14 +124,14 @@ int	ft_cd(t_cmd *cmd)
 	}
 	else if ((*cmd->cmd)->next && ft_strcmp((".."), (*cmd->cmd)->next->content) == 0)
 		path = get_previous_dir(getcwd(cwd, sizeof(cwd)));
-	else if (ft_lstsize(*list) <= 2)
+	else if (ft_lstsize(*cmd->cmd) <= 2)
 	{
 		char *home = get_venv("HOME");
-		if (ft_strlen((*list)->next->content) >= ft_strlen(home)
-		&& ft_strncmp((*list)->next->content, home, ft_strlen(home)) == 0)
-			path = ft_strdup((*list)->next->content);
+		if (ft_strlen((*cmd->cmd)->next->content) >= ft_strlen(home)
+		&& ft_strncmp((*cmd->cmd)->next->content, home, ft_strlen(home)) == 0)
+			path = ft_strdup((*cmd->cmd)->next->content);
 		else
-			path = set_path(path, list);
+			path = set_path(path, cmd->cmd);
 	}
 	else
 	{

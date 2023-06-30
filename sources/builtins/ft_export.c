@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/06/30 11:04:54 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/30 12:26:12 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,10 @@ int	ft_export(t_list **list_token)
 	
 	tmp = *g_list_env;
 	if (ft_lstsize(*list_token) == 1)
+	{
 		if (sort_env_ascii() != 0)
 			return (1);
+	}
 	else
 	{
 		while (*list_token != NULL)
