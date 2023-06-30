@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 19:56:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/30 14:01:31 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/30 21:02:49 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	open_n_dup(t_cmd *cmd, t_xek *x)
 			fd = open(cmd->file[i], O_RDONLY);
 			if (fd < 0)
 			{
-				err_write("No such file or directory\n");
+				err_write("No such file or directory\n", 1);
 				if (!(x->nb_cmd > 1 && cmd->id == 0))
 					cmd->data->code_err = 1;
 				return (1);
@@ -67,7 +67,7 @@ int	open_n_dup(t_cmd *cmd, t_xek *x)
 		}
 		if (fd == -1)
 		{
-			err_write("Permission denied\n");
+			err_write("Permission denied\n", 1);
 			cmd->data->code_err = 1;
 			return (1);
 		}

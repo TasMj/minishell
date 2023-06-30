@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 13:02:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/30 13:37:12 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/30 21:06:41 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ void    ft_exit_code(t_cmd *cmd, t_minishell *data)
     if (is_numeric((*cmd->cmd)->next->content) == 0 || bool != 0)
     {
         // printf("minishell: exit: %s: numeric argument required\n", (*cmd->cmd)->next->content);
-        err_write("exit: numeric argument required\n");
+        err_write("exit: numeric argument required\n", 1);
         code = 2;
     }
     else if (ft_lstsize(*(cmd->cmd)) > 2)
     {
-        err_msg(3);
+        err_msg(3, "IGNORE", 1);
         return ;
     }
     printf("exit\n");

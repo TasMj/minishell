@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prep_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/30 14:47:03 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/30 22:58:54 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,25 +80,31 @@ static t_list	**clone_to_op(t_list *token)
 ex : ls -> OK, jules -> not found */
 static int	check_cmd(t_cmd *cmd)
 {
+	char	*msg_err;
 	/* Si la commande est un path */
 	if (has_slash(cmd) == 1)
 	{
 		if (access((*cmd->cmd)->content, F_OK) == -1)
 		{
-			err_write("No such file or directory\n");
+			msg_err = ft_strjoin((*cmd->cmd)->content, ": No such file or directory\n");
+			err_write(msg_err, 2);
 			cmd->data->code_err = 127;
+			free(msg_err);
 			return (1);
 		}
 		else if (access((*cmd->cmd)->content, R_OK) == -1)
 		{
-			err_write("Permission denied\n");
+			(void)msg_err;
+			err_write("Permission denied\n", 1);
 			cmd->data->code_err = 126;
 			return (1);
 		}
 		else if (is_dir((*cmd->cmd)->content) == 1)
 		{
-			err_write("Is a directory\n");
+			msg_err = ft_strjoin((*cmd->cmd)->content, ": Is a directory\n");
+			err_write(msg_err, 2);
 			cmd->data->code_err = 126;
+			free(msg_err);
 			return (1);
 		}
 		return (0);
@@ -111,7 +117,8 @@ static int	check_cmd(t_cmd *cmd)
 	{
 		/* Si la commande n'est pas valide on retourne une erreur */
 		// printf("minishell: %s: command not found\n", (*cmd->cmd)->content);
-		err_write("command not found\n");
+		msg_err = ft_strjoin((*cmd->cmd)->content, ": command not found\n");
+		err_write(msg_err, 2);
 		cmd->data->code_err = 127;
 		return (1);
 	}

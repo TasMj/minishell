@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/06/30 12:47:59 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/30 21:03:04 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ static int	add_var_env(char *stock, t_list *tmp)
 	
 	if (stock[0] == '=')
     {
-		err_write("export: `=': not a valid identifier\n");
+		err_write("export: `=': not a valid identifier\n", 1);
         return (1);
     }
 	copy = del_equal(stock);
 	if (ft_isalpha(copy) == 1)
 	{
 		// printf("minishell: export: `%s': not a valid identifier\n", str);
-		err_write("export: not a valid identifier\n");
+		err_write("export: not a valid identifier\n", 1);
 		free(copy);
 		// free(stock);
 		return (1);

@@ -67,7 +67,7 @@ int	wait_child(t_xek *x)
 		{
 			x->cmd->data->code_err = WTERMSIG(ret) + 128;
 			if (x->cmd->data->code_err == 139)
-				err_write("Segmentation fault error\n");
+				err_write("Segmentation fault error\n", x->cmd->data->code_err);
 				// printf("Segmentation Fault BOOM !\n");
 			// else
 				// printf("Interrupted with signal %d\n", x->cmd->data->code_err);

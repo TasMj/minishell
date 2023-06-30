@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/06/30 12:25:42 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/30 21:07:00 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static int	err_cd(t_cmd *cmd, char *path)
 	if (is_dir(path) == 0)
 	{
 		// printf("minishell: cd: %s: Not a directory\n", (*cmd->cmd)->next->content);
-		err_write("cd: Not a directory\n");
+		err_write("cd: Not a directory\n", 1);
 		free(path);
 		return (1);
 	}
@@ -87,7 +87,7 @@ static int	err_cd(t_cmd *cmd, char *path)
 	{
 		// printf("minishell: cd: %s: ", (*cmd->cmd)->next->content);
 		// write(2, "No such file or directory\n", )
-		err_write("cd: No such file or directory\n");
+		err_write("cd: No such file or directory\n", 1);
 		free(path);
 		return (1);
 	}
@@ -120,7 +120,7 @@ int	ft_cd(t_cmd *cmd)
 	else if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && (*cmd->cmd)->next == NULL && is_in_env("HOME") == 0)
 	{
 		*cmd->cmd = tmp;
-		return (err_msg(4));
+		return (err_msg(4, "IGNORE", 1));
 	}
 	else if ((*cmd->cmd)->next && ft_strcmp((".."), (*cmd->cmd)->next->content) == 0)
 		path = get_previous_dir(getcwd(cwd, sizeof(cwd)));
@@ -136,7 +136,7 @@ int	ft_cd(t_cmd *cmd)
 	else
 	{
 		*cmd->cmd = tmp;
-		return (err_msg(3));
+		return (err_msg(3, "IGNORE", 1));
 	}
 	if (err_cd(cmd, path) == 1)
 		return (1);

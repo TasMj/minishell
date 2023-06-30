@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 04:17:24 by tas               #+#    #+#             */
-/*   Updated: 2023/06/29 22:08:09 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/30 21:01:07 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		has_slash(t_cmd *cmd);
 t_list	*ft_lstnew(char *input, int flag_space);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 int	is_dir(char *path);
-int	err_write(char *error);
+int	err_write(char *error, int code_err);
 int         check_equal(char *str);
 int         ft_isalnum(int c);
 

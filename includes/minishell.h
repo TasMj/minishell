@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/30 14:54:40 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/30 23:05:53 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@
 /*Errors*/
 # define ERR_REDIR_IN_OUT "syntax error near unexpected token `newline'\n"
 # define ERR_QUOTE "not handle by minishell\n"
-# define ERR_CMD "command not found\n"
 # define ERR_MANY_ARG "too many arguments\n"
 # define ERR_HOME "cd: HOME not set\n"
 # define ERR_EXPORT "not a valid identifier\n"

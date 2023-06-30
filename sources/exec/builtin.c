@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:42:19 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/30 14:12:18 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/30 23:29:08 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@ static int	exec_builtin(t_cmd *cmd)
 {
 	t_list	*tmp;
 	int		ret;
+	char	*msg_err;
+	int 	i;
 
+	i = 1;
+	
+	(void)msg_err;
 	if (!cmd->cmd || ft_lstsize(*cmd->cmd) == 0)
 		return (-1);
 	ret = 0;
@@ -33,7 +38,24 @@ static int	exec_builtin(t_cmd *cmd)
 	else if (ft_strlen((*cmd->cmd)->content) == 6 && ft_strncmp((*cmd->cmd)->content, "export", 6) == 0)
 		ret = ft_export(cmd->cmd);
 	else if (ft_strlen((*cmd->cmd)->content) == 3 && ft_strncmp((*cmd->cmd)->content, "pwd", 3) == 0)
+	{
+		if (ft_lstsize(*cmd->cmd) > 1 && (*cmd->cmd)->next->content[0] == '-')
+		{
+			while ((*cmd->cmd)->next->content[i] == '-')
+				i++;
+			if (ft_strlen((*cmd->cmd)->next->content) == i && (*cmd->cmd)->next->content[i] == '\0')
+			{
+				ft_pwd();
+				return (1);
+			}
+			msg_err = ft_strjoin("pwd: ", (*cmd->cmd)->next->content);
+			msg_err = ft_strjoin_mod(msg_err, ": invalid option\npwd: usage: pwd [-LP]\n", 1);
+			err_write(msg_err, 2);
+			free(msg_err);
+			return (1);
+		}
 		ft_pwd();
+	}
 	else if (ft_strlen((*cmd->cmd)->content) == 5 && ft_strncmp((*cmd->cmd)->content, "unset", 5) == 0)
 		ret = ft_unset(cmd->cmd);
 	else

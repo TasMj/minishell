@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 03:54:06 by tas               #+#    #+#             */
-/*   Updated: 2023/06/23 04:51:24 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/30 21:05:11 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 /*                                fonctions                                   */
 /******************************************************************************/
 
-int     err_msg(int n);
+int     err_msg(int n, char *msg_err, int code_err);
 void	free_tab(char **tab);
 void    free_list_token_content(t_list **list_token);
 void	free_list(t_list **list);

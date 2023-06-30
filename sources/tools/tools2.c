@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:24:17 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/29 22:14:44 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/30 21:25:09 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,15 +115,16 @@ char	*ft_itoa(int n)
 	return (str);
 }
 
-int	err_write(char *error)
+int	err_write(char *error, int code_err)
 {
 	int	i;
 
 	i = 0;
-	write(2, "minishell: ", 11);
+	write(code_err, "minishell: ", 11);
+	
 	while (error[i])
 	{
-		write(2, &error[i], 1);
+		write(code_err, &error[i], 1);
 		i++;
 	}
 	return (0);

@@ -6,43 +6,58 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:56:18 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/30 19:44:58 by tas              ###   ########.fr       */
+/*   Updated: 2023/06/30 22:28:03 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	syntax_error(t_list **list_token)
+int	syntax_error(t_minishell *data)
 {
-	if (ft_lstsize(*list_token) == 1)
+	char	*msg_err;
+
+	if (ft_lstsize(*data->token) == 1)
 	{
-		if (ft_strcmp((*list_token)->content, "<") == 0
-			|| ft_strcmp((*list_token)->content, ">") == 0
-			|| ft_strcmp((*list_token)->content, "<<") == 0
-			|| ft_strcmp((*list_token)->content, ">>") == 0
-			|| ft_strcmp((*list_token)->content, "<>") == 0)
-			return (err_msg(0));
-		if (ft_strcmp((*list_token)->content, "|") == 0)
+		if (ft_strcmp((*data->token)->content, "<") == 0
+			|| ft_strcmp((*data->token)->content, ">") == 0
+			|| ft_strcmp((*data->token)->content, "<<") == 0
+			|| ft_strcmp((*data->token)->content, ">>") == 0
+			|| ft_strcmp((*data->token)->content, "<>") == 0)
 		{
-			printf("minishell: syntax error near unexpected token `%s'\n", (*list_token)->content);
-			return (0);
+			data->code_err = 2;
+			return (err_msg(0, "IGNORE", 2));
 		}
-		if (ft_strcmp((*list_token)->content, ":") == 0
-			|| ft_strcmp((*list_token)->content, "!") == 0)
+		if (ft_strcmp((*data->token)->content, "|") == 0)
+		{
+			data->code_err = 2;
+			msg_err = ft_strjoin("syntax error near unexpected token `", (*data->token)->content);
+			msg_err = ft_strjoin_mod(msg_err, "'\n", 1);
+			return (err_msg(6, msg_err, 2));
+		}
+		if (ft_strcmp((*data->token)->content, ":") == 0
+			|| ft_strcmp((*data->token)->content, "#") == 0)
 			return (0);
+		if (ft_strcmp((*data->token)->content, "!") == 0)
+		{
+			data->code_err = 1;
+			return (1);
+		}
 	}
-	if (ft_lstlast(*list_token)->type == APPEND
-		|| ft_lstlast(*list_token)->type == HEREDOC
-		|| ft_lstlast(*list_token)->type == STDIN
-		|| ft_lstlast(*list_token)->type == STDOUT
-		|| ft_lstlast(*list_token)->type == PIPE)
-		return (err_msg(0));
-	if (ft_strcmp((*list_token)->content, "|") == 0)
+	if (ft_lstlast(*data->token)->type == APPEND
+		|| ft_lstlast(*data->token)->type == HEREDOC
+		|| ft_lstlast(*data->token)->type == STDIN
+		|| ft_lstlast(*data->token)->type == STDOUT
+		|| ft_lstlast(*data->token)->type == PIPE)
+		return (err_msg(0, "IGNORE", 2));
+	if (ft_strcmp((*data->token)->content, "|") == 0)
 	{
-		printf("minishell: syntax error near unexpected token `%s'\n", (*list_token)->content);
-		return (0);
+		msg_err = ft_strjoin("syntax error near unexpected token `", (*data->token)->content);
+		msg_err = ft_strjoin_mod(msg_err, "'\n", 1);
+		return (err_msg(6, msg_err, 2));
+		// printf("minishell: syntax error near unexpected token `%s'\n", (*data->token)->content);
+		return (2);
 	}
-	return (2);
+	return (3);
 }
 
 int	err_quote(t_list **list_token)
@@ -55,7 +70,7 @@ int	err_quote(t_list **list_token)
 		if (check_pair_quote((*list_token)->content) == 1)
 		{
 			*list_token = tmp;
-			return (err_msg(1));
+			return (err_msg(1, "IGNORE", 1));
 		}
 		(*list_token) = (*list_token)->next;
 	}
@@ -63,29 +78,29 @@ int	err_quote(t_list **list_token)
 	return (0);
 }
 
-int	err_redir(t_list **list_token)
+int	err_redir(t_minishell *data)
 {
 	t_list	*tmp;
-
-	tmp = *list_token;
-	while (*list_token)
+	char	*msg_err;
+	
+	tmp = *data->token;
+	while (*data->token)
 	{
-		if ((*list_token)->type == WORD)
-			(*list_token) = (*list_token)->next;
+		if ((*data->token)->type == WORD)
+			(*data->token) = (*data->token)->next;
 		else
 		{
-			if ((*list_token)->next != NULL && (*list_token)->type != WORD && (*list_token)->next->type != WORD)
+			if ((*data->token)->next != NULL && (*data->token)->type != WORD && (*data->token)->next->type != WORD)
 			{
-				// printf("minishell: syntax error near unexpected token `%s'\n", (*list_token)->next->content);
-				err_write("syntax error near unexpected token ");
-				write(2, &(*list_token)->next->content, ft_strlen((*list_token)->next->content));
-				write(2, "\n", 1);
-				return (1);
+				data->code_err = 2;
+				msg_err = ft_strjoin("syntax error near unexpected token `", (*data->token)->content);
+				msg_err = ft_strjoin_mod(msg_err, "'\n", 1);
+				return (err_msg(6, msg_err, 2));
 			}
-			(*list_token) = (*list_token)->next;
+			(*data->token) = (*data->token)->next;
 		}
 	}
-	*list_token = tmp;
+	*data->token = tmp;
 	return (3);
 }
 
