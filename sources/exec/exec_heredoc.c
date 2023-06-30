@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:10:27 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/30 12:02:27 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/06/26 17:54:17 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,31 +29,6 @@ int	nb_hdoc(t_minishell *data)
 	return (count);
 }
 
-void	free_delims(t_xek *x)
-{
-	int	i;
-
-	i = 0;
-	while (i < x->nb_hdoc)
-	{
-		if (x->hdoc[i].delim)
-			free(x->hdoc[i].delim);
-		i++;
-	}
-}
-
-void	close_writing_pipes(t_xek *x, int cap)
-{
-	int	i;
-
-	i = 0;
-	while (i < cap)
-	{
-		close(x->hdoc[i].hd_pipe[1]);
-		i++;
-	}
-}
-
 /* Recupere tous les delimiteurs des heredoc */
 static int	get_delims(t_minishell *data)
 {
@@ -69,10 +44,8 @@ static int	get_delims(t_minishell *data)
 		if (elem->type == HEREDOC)
 		{
 			data->x->hdoc[i].delim = ft_strdup(elem->next->content);
-			if (!data->x->hdoc[i].delim)
-				return (free_delims(data->x), close_writing_pipes(data->x, i - 1), 1);
 			if (pipe(data->x->hdoc[i].hd_pipe) < 0)
-				return (free_delims(data->x), close_writing_pipes(data->x, i - 1), 1);
+				return (1);
 			i++;
 		}
 		elem = elem->next;
@@ -133,10 +106,10 @@ static int	heredoc_child(t_minishell *data)
 	return (0);
 }
 
-
 int	exec_heredoc(t_minishell *data)
 {
 	pid_t	pid;
+	int		i;
 	
 	data->x->nb_hdoc = nb_hdoc(data);
 	if (data->x->nb_hdoc == 0)
@@ -146,15 +119,20 @@ int	exec_heredoc(t_minishell *data)
 	data->x->hdoc = malloc(sizeof(t_heredoc) * data->x->nb_hdoc);
 	if (!data->x->hdoc)
 		return (1);
-	if (get_delims(data) != 0)
-		return (1);
+	get_delims(data);
 	
 	/* On cree un process dans lequel on va ouvrir tous les hdoc un par un */
 	pid = fork();
 	if (pid == 0)
 		heredoc_child(data);
 	waitpid(pid, NULL, 0);
-	free_delims(data->x);
-	close_writing_pipes(data->x, data->x->nb_hdoc);
+	
+	i = 0;
+	while (i < data->x->nb_hdoc)
+	{
+		free(data->x->hdoc[i].delim);
+		close(data->x->hdoc[i].hd_pipe[1]);
+		i++;
+	}
 	return (0);
 }
