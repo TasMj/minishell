@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/07/01 16:32:48 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/01 17:12:26 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ static int	add_var_env(char *stock, t_list *tmp)
 		{
 			msg_err = ft_strjoin_mod(msg_err,"': event not found\n", 1);
 			err_write(msg_err, 0);
-
 		}
 		else
 		{
@@ -64,6 +63,14 @@ static int	add_var_env(char *stock, t_list *tmp)
 		}
 		free(copy);
 		// free(stock);
+		return (1);
+	}
+	if (contain_exclam(stock) == 1)
+	{
+		msg_err = ft_strjoin("export: `", stock);
+		msg_err = ft_strjoin_mod(msg_err,"': event not found\n", 1);
+		err_write(msg_err, 0);
+		free(copy);
 		return (1);
 	}
 	add_list(g_list_env, stock, 0);
