@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:47:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/29 21:44:54 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/01 11:35:43 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,11 @@ char	*substitution(t_minishell *data, char *token)
 void	quote_sub(t_substitution *s, int a, t_minishell *data)
 {
 	if (a == 1)
+	{
 		s->var_substitute = sub_quotes((*data->token)->content, s, data);
+	printf("jpp\n");
+		
+	}
 	else if (a == 2)
 		s->var_substitute = remove_quotes((*data->token)->content);
 	free((*data->token)->content);

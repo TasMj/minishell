@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/06/30 21:07:00 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/01 15:35:10 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,18 @@ static char	*get_previous_dir(char *str)
 /* return if not a file or a directory */
 static int	err_cd(t_cmd *cmd, char *path)
 {
+	char	*msg_err;
 	(void) cmd;
 
 	if (is_dir(path) == 0)
 	{
+		msg_err = ft_strjoin((*cmd->cmd)->next->content, ": Not a directory\n");
+		err_write(msg_err, 2);
+		cmd->data->code_err = 127;
+		free(msg_err);
+		free(path);
+		return (1);
+
 		// printf("minishell: cd: %s: Not a directory\n", (*cmd->cmd)->next->content);
 		err_write("cd: Not a directory\n", 1);
 		free(path);
@@ -85,11 +93,12 @@ static int	err_cd(t_cmd *cmd, char *path)
 	}
 	if (chdir(path) == -1)
 	{
-		// printf("minishell: cd: %s: ", (*cmd->cmd)->next->content);
-		// write(2, "No such file or directory\n", )
-		err_write("cd: No such file or directory\n", 1);
-		free(path);
-		return (1);
+			msg_err = ft_strjoin((*cmd->cmd)->next->content, ": No such file or directory\n");
+			err_write(msg_err, 2);
+			cmd->data->code_err = 127;
+			free(msg_err);
+			free(path);
+			return (1);
 	}
 	return (0);
 }
@@ -110,13 +119,19 @@ int	ft_cd(t_cmd *cmd)
 	char	cwd[1024];
 	char	*path;
 	t_list	*tmp;
+	char	*msg_err;
 
+	(void)msg_err;
 	tmp = *cmd->cmd;
 	path = NULL;
 	char *old_path = getcwd(cwd, sizeof(cwd));
-	set_old_path(old_path);
+	// set_old_path(old_path);
 	if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && (*cmd->cmd)->next == NULL && is_in_env("HOME") == 1)
+	{
 		path = get_venv("HOME");
+		if (ft_strlen(path) == 0)
+			return (1);
+	}
 	else if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && (*cmd->cmd)->next == NULL && is_in_env("HOME") == 0)
 	{
 		*cmd->cmd = tmp;
@@ -126,12 +141,34 @@ int	ft_cd(t_cmd *cmd)
 		path = get_previous_dir(getcwd(cwd, sizeof(cwd)));
 	else if (ft_lstsize(*cmd->cmd) <= 2)
 	{
-		char *home = get_venv("HOME");
-		if (ft_strlen((*cmd->cmd)->next->content) >= ft_strlen(home)
-		&& ft_strncmp((*cmd->cmd)->next->content, home, ft_strlen(home)) == 0)
-			path = ft_strdup((*cmd->cmd)->next->content);
+		if (ft_lstsize(*cmd->cmd) == 2 && contain_slash((*cmd->cmd)->next->content) == 0)
+			path = get_venv("HOME"); //mettre le bon emplacement
+		else if (ft_lstsize(*cmd->cmd) == 2 && (*cmd->cmd)->next->content[0] == '-')
+		{
+			if (ft_strlen((*cmd->cmd)->next->content) == 1)
+				path = get_venv("OLDPWD");
+			else
+			{
+				msg_err = ft_strjoin("cd: ", (*cmd->cmd)->next->content);
+				msg_err = ft_strjoin_mod(msg_err, ": invalid option\ncd: usage: cd [-L|[-P [-e]] [-@]] [dir]\n", 1);
+				err_write(msg_err, 2);
+				free(msg_err);
+				return (1);
+			}
+		}
+		else if (ft_lstsize(*cmd->cmd) == 2 && (*cmd->cmd)->next->content[0] == '~')
+		{
+			path = get_venv("HOME");
+		}
 		else
-			path = set_path(path, cmd->cmd);
+		{
+			char *home = get_venv("HOME");
+			if (ft_strlen((*cmd->cmd)->next->content) >= ft_strlen(home)
+			&& ft_strncmp((*cmd->cmd)->next->content, home, ft_strlen(home)) == 0)
+				path = ft_strdup((*cmd->cmd)->next->content);
+			else
+				path = set_path(path, cmd->cmd);
+		}
 	}
 	else
 	{
@@ -142,5 +179,6 @@ int	ft_cd(t_cmd *cmd)
 		return (1);
 	*cmd->cmd = tmp;
 	free(path);
+	set_old_path(old_path);
 	return (0);
 }

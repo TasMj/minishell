@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/06/30 13:15:23 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/01 12:46:17 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void	substitute_dollar(t_minishell *data)
 {
 	t_substitution	*s;
 	t_list			*tmp;
+	t_list			*prev;
+	
 	s = malloc(sizeof(t_substitution));
 	tmp = *data->token;
 	s->new_content = "";
@@ -86,12 +88,33 @@ void	substitute_dollar(t_minishell *data)
 		if (check_dollar((*data->token)->content) == 1)
 		{
 			if ((*data->token)->content[0] == 34)
+			{
+				printf("data: %s\n", (*data->token)->content);
 				quote_sub(s, 1, data);
+				printf("nim\n");
+			}
 			else if ((*data->token)->content[0] == 39)
+			{
+				printf("tas\n");
 				quote_sub(s, 2, data);
+			}
 			else if (ft_strlen((*data->token)->content) > 1)
 				more_dollar(s, data);
+			else if (ft_strlen((*data->token)->content) == 1)
+			{
+				if (!(!(*data->token)->next && (*data->token)->content[0] == '$')
+					&& (!((*data->token)->next->content && (*data->token)->content[0] == '$' && (*data->token)->next->flag_space == 1))
+					&& (*data->token)->next->content && (*data->token)->content[0] == '$' && (*data->token)->next->flag_space == 0)
+				{
+					printf("prev: %s\n", prev->content);
+					prev->next = (*data->token)->next;
+					(*data->token)->next->flag_space = (*data->token)->flag_space;
+					free((*data->token)->content);
+					free(*data->token);
+				}
+			}
 		}
+		prev = (*data->token);
 		(*data->token) = (*data->token)->next;
 	}
 	(*data->token) = tmp;
@@ -135,6 +158,7 @@ char	*sub_quotes(char *token, t_substitution *s, t_minishell *data)
 			s->i++;
 		s->without_dollar = ft_strdup_size(s->stock + s->deb, (s->i - s->deb));
 		// if (!ft_strcmp(s->new_content, ""))
+		// printf("without: %s\n", s->without_dollar);
 		if (ft_strlen(s->new_content) == 0)
 		{
 			// s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 2);
@@ -142,7 +166,16 @@ char	*sub_quotes(char *token, t_substitution *s, t_minishell *data)
 			free(s->without_dollar);
 		}
 		else
-			s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 3);
+		{
+			// printf("new: [%s]\n", s->new_content);
+			// printf("without: [%s]\n", s->without_dollar);
+			if (!s->new_content)
+				s->new_content = ft_strdup(s->without_dollar);
+			else
+				s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 3);
+			// s->new_content = ft_strjoin(s->new_content, s->without_dollar);
+	printf("sub_quote\n");
+		}
 		delimit_sub(s, data);
 	}
 	free(s->stock);

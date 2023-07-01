@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/06/30 20:43:49 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/01 12:35:56 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ int    init_list(t_minishell *data)
     if (err_redir(data) != 3)
         return (1);
     remove_list_quotes(data->token);
-    remove_empty_tokens(data->token);
-    reunite_token(data->token);
+    add_space(data);
     // print_list(data->token);
+    remove_empty_tokens(data->token);
+    // print_list(data->token);
+    reunite_token(data->token);
     return (0);
 }
 

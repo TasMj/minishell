@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_builtin2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:41:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/30 12:46:56 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/01 16:31:17 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,4 +132,39 @@ int	is_numeric(char *str)
 		i++;
 	}
 	return (1);
+}
+
+int contain_slash(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != '/')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	is_abc(char c)
+{
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_')
+		return (0);
+	return (1);
+}
+
+int	contain_exclam(char *str)
+{
+	int i;
+
+	i = 0;
+	while(str[i])
+	{
+		if (str[i] == '!')
+			return (1);
+		i++;
+	}
+	return (0);
 }

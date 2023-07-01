@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/06/30 21:03:04 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/01 16:32:48 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static int	sort_env_ascii(void)
 static int	add_var_env(char *stock, t_list *tmp)
 {
 	char	*copy;
+	char	*msg_err;
 	(void)tmp;
 	
 	if (stock[0] == '=')
@@ -42,10 +43,25 @@ static int	add_var_env(char *stock, t_list *tmp)
         return (1);
     }
 	copy = del_equal(stock);
-	if (ft_isalpha(copy) == 1)
+	if (!(is_alphanum(copy) == 0 && is_abc(copy[0]) == 0))
 	{
-		// printf("minishell: export: `%s': not a valid identifier\n", str);
-		err_write("export: not a valid identifier\n", 1);
+		msg_err = ft_strjoin("export: `", copy);
+		if (copy[0] == '-')
+		{
+			msg_err = ft_strjoin_mod(msg_err,"': invalid option\n", 1);
+			err_write(msg_err, 2);
+		}
+		else if (contain_exclam(copy) == 1)
+		{
+			msg_err = ft_strjoin_mod(msg_err,"': event not found\n", 1);
+			err_write(msg_err, 0);
+
+		}
+		else
+		{
+			msg_err = ft_strjoin_mod(msg_err,"': not a valid identifier\n", 1);
+			err_write(msg_err, 1);
+		}
 		free(copy);
 		// free(stock);
 		return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:32 by tas               #+#    #+#             */
-/*   Updated: 2023/06/30 12:28:10 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/01 16:10:29 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,29 @@ int	ft_isalnum(int c)
 		return (0);
 }
 
+static int	ft_alnu_m(int c)
+{
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')
+		|| (c >= '0' && c <= '9') || c == '_')
+		return (1);
+	else
+		return (0);
+}
+
+int is_alphanum(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_alnu_m(str[i]) == 0)
+			return (1);
+		i++;
+	}
+		return (0);
+}
+
 void    free_empty_token(t_list **list)
 {
     char        *str;
@@ -112,4 +135,30 @@ void remove_empty_tokens(t_list **list)
 	}
 	*list = tmp;
 	free_empty_token(list);
+}
+
+void	add_space(t_minishell *data)
+{
+	t_list	*tmp;
+	t_list	*prev;
+	char	*to_add;
+
+	tmp = *data->token;
+	while (*data->token)
+	{
+		if ((*data->token)->flag_space == 1 && ft_strlen((*data->token)->content) != 0)
+		{
+			if (ft_strlen(prev->content) == 0)
+			{
+				to_add = ft_strdup(" ");
+				to_add = ft_strjoin_mod(to_add, (*data->token)->content, 1);
+				printf("to_add: %s\n", to_add);
+				free((*data->token)->content);
+				(*data->token)->content = ft_strdup(to_add);
+			}
+		}
+		prev = *data->token;
+		(*data->token) = (*data->token)->next;
+	}
+	*data->token = tmp;
 }

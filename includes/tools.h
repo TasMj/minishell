@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 04:17:24 by tas               #+#    #+#             */
-/*   Updated: 2023/06/30 21:01:07 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/01 16:29:47 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,11 @@ int	is_dir(char *path);
 int	err_write(char *error, int code_err);
 int         check_equal(char *str);
 int         ft_isalnum(int c);
+void	add_space(t_minishell *data);
+int contain_slash(char *str);
+int	is_abc(char c);
+int is_alphanum(char *str);
+int	contain_exclam(char *str);
+
 
 #endif
