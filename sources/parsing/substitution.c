@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/07/01 19:21:04 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/01 20:16:00 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,11 @@ void	substitute_dollar(t_minishell *data)
 	s = malloc(sizeof(t_substitution));
 	tmp = *data->token;
 	s->new_content = "";
+	prev = NULL;
 	while ((*data->token) != NULL)
 	{
+		printf("list: %s\n", (*data->token)->content);
+		
 		if (check_dollar((*data->token)->content) == 1)
 		{
 			if ((*data->token)->content[0] == 34)
@@ -107,14 +110,24 @@ void	substitute_dollar(t_minishell *data)
 			}
 			else if (ft_strlen((*data->token)->content) == 1)
 			{
+				printf("lllllllll\n");
 				if (!(!(*data->token)->next && (*data->token)->content[0] == '$')
 					&& (!((*data->token)->next->content && (*data->token)->content[0] == '$' && (*data->token)->next->flag_space == 1))
 					&& (*data->token)->next->content && (*data->token)->content[0] == '$' && (*data->token)->next->flag_space == 0)
 				{
-					prev->next = (*data->token)->next;
-					(*data->token)->next->flag_space = (*data->token)->flag_space;
-					free((*data->token)->content);
-					free(*data->token);
+					if (prev != NULL)
+					{
+						prev->next = (*data->token)->next;
+						(*data->token)->next->flag_space = (*data->token)->flag_space;
+						free((*data->token)->content);
+						free(*data->token);
+					}
+					else
+					{
+						tmp = (*data->token)->next;
+						free ((*data->token)->content);
+						free(*data->token);
+					}
 				}
 			}
 		}
@@ -128,8 +141,9 @@ void	substitute_dollar(t_minishell *data)
 		prev = (*data->token);
 		(*data->token) = (*data->token)->next;
 	}
-	(*data->token) = tmp;
-	print_list(data->token);
+	*data->token = tmp;
+	printf("°°°°°°°°°°°°°°°°°°°°°\n");
+	// print_list(data->token);
 	free(s);
 }
 
