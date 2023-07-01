@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/07/01 20:16:00 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/01 20:43:22 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ void	substitute_dollar(t_minishell *data)
 	prev = NULL;
 	while ((*data->token) != NULL)
 	{
-		printf("list: %s\n", (*data->token)->content);
-		
 		if (check_dollar((*data->token)->content) == 1)
 		{
 			if ((*data->token)->content[0] == 34)
@@ -102,15 +100,15 @@ void	substitute_dollar(t_minishell *data)
 				quote_sub(s, 2, data);
 			else if (ft_strlen((*data->token)->content) > 1)
 			{
-				printf("token: %s\n", (*data->token)->content);
-				printf("deb nc: %s\n", s->new_content);
+				// printf("token: %s\n", (*data->token)->content);
+				// printf("deb nc: %s\n", s->new_content);
 				more_dollar(s, data);
-				printf("sortie du scope\n");
+				// printf("sortie du scope\n");
 				
 			}
 			else if (ft_strlen((*data->token)->content) == 1)
 			{
-				printf("lllllllll\n");
+				// printf("lllllllll\n");
 				if (!(!(*data->token)->next && (*data->token)->content[0] == '$')
 					&& (!((*data->token)->next->content && (*data->token)->content[0] == '$' && (*data->token)->next->flag_space == 1))
 					&& (*data->token)->next->content && (*data->token)->content[0] == '$' && (*data->token)->next->flag_space == 0)
@@ -131,8 +129,8 @@ void	substitute_dollar(t_minishell *data)
 				}
 			}
 		}
-		printf("***********************\n");
-		printf("NC: %s\n", s->new_content);
+		// printf("***********************\n");
+		// printf("NC: %s\n", s->new_content);
 		if (ft_strlen(s->new_content) != 0)
 		{
 			free(s->new_content);
@@ -142,8 +140,6 @@ void	substitute_dollar(t_minishell *data)
 		(*data->token) = (*data->token)->next;
 	}
 	*data->token = tmp;
-	printf("°°°°°°°°°°°°°°°°°°°°°\n");
-	// print_list(data->token);
 	free(s);
 }
 

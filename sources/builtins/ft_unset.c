@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:35 by tas               #+#    #+#             */
-/*   Updated: 2023/06/23 04:46:19 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/01 21:20:20 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,40 @@ static void	del(char *str)
 	free(var);
 }
 
+int	not_options(char *str)
+{
+	char	*msg_err;
+	
+	if (!(is_alphanum(str) == 0 && is_abc(str[0]) == 0))
+	{
+		msg_err = ft_strjoin("export: `", str);
+		if (str[0] == '-')
+		{
+			msg_err = ft_strjoin_mod(msg_err,"': invalid option\n", 1);
+			err_write(msg_err, 2);
+		}
+		else if (contain_exclam(str) == 1)
+		{
+			msg_err = ft_strjoin_mod(msg_err,"': event not found\n", 1);
+			err_write(msg_err, 0);
+		}
+		else
+		{
+			msg_err = ft_strjoin_mod(msg_err,"': not a valid identifier\n", 1);
+			err_write(msg_err, 1);
+		}
+		return (1);
+	}
+	return (0);
+}
+
 int	ft_unset(t_list **list_token)
 {
+	if (!(*list_token)->next)
+		return (0);
 	(*list_token) = (*list_token)->next;
+	if (not_options((*list_token)->content) == 1)
+		return (0);
 	while (*list_token != NULL)
 	{
 		if (check_var((*list_token)->content) == 1)

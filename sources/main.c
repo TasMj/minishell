@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/07/01 19:50:04 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/01 20:41:10 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int    init_list(t_minishell *data)
         return (1);
     substitute_dollar(data);
     // print_list(data->token);
-    printf("MAIN\n");
     get_type(data->token);
     if (err_redir(data) != 3)
         return (1);

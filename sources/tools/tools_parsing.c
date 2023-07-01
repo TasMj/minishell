@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:32 by tas               #+#    #+#             */
-/*   Updated: 2023/07/01 16:10:29 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/01 21:23:36 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,6 @@ void	add_space(t_minishell *data)
 			{
 				to_add = ft_strdup(" ");
 				to_add = ft_strjoin_mod(to_add, (*data->token)->content, 1);
-				printf("to_add: %s\n", to_add);
 				free((*data->token)->content);
 				(*data->token)->content = ft_strdup(to_add);
 			}
