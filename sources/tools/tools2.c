@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:24:17 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/30 21:25:09 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/02 16:07:56 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,19 @@ char	*ft_itoa(int n)
 	if (neg)
 		str[0] = '-';
 	return (str);
+}
+
+int	put_str_err(char *error)
+{
+	int	i;
+
+	i = 0;
+	while (error[i])
+	{
+		write(2, &error[i], 1);
+		i++;
+	}
+	return (0);
 }
 
 int	err_write(char *error, int code_err)

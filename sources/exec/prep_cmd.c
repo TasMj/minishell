@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prep_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/30 22:58:54 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/02 18:52:29 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,12 @@ static int	check_cmd(t_cmd *cmd)
 			free(msg_err);
 			return (1);
 		}
-		else if (access((*cmd->cmd)->content, R_OK) == -1)
+		else if (access((*cmd->cmd)->content, X_OK) == -1)
 		{
 			(void)msg_err;
-			err_write("Permission denied\n", 1);
+			put_str_err("minishell: ");
+			put_str_err((*cmd->cmd)->content);
+			put_str_err(": Permission denied\n");
 			cmd->data->code_err = 126;
 			return (1);
 		}
@@ -115,12 +117,14 @@ static int	check_cmd(t_cmd *cmd)
 		cmd->path = find_path(cmd->tab, (*cmd->cmd)->content);
 	if (!cmd->path && is_builtin(cmd) == 0)
 	{
-		/* Si la commande n'est pas valide on retourne une erreur */
-		// printf("minishell: %s: command not found\n", (*cmd->cmd)->content);
-		msg_err = ft_strjoin((*cmd->cmd)->content, ": command not found\n");
-		err_write(msg_err, 2);
-		cmd->data->code_err = 127;
-		return (1);
+		put_str_err("minishell: ");
+		put_str_err((*cmd->cmd)->content);
+		put_str_err(": command not found\n");
+		// msg_err = ft_strjoin((*cmd->cmd)->content, ": command not found\n");
+		// err_write(msg_err, 2);
+		if (cmd->id == cmd->data->x->nb_cmd - 1)
+			cmd->data->code_err = 127;
+		return (0);
 	}
 	free_tab(cmd->tab);
 	return (0);

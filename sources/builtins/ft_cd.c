@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/07/01 15:35:10 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/02 18:28:18 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,8 @@ int	ft_cd(t_cmd *cmd)
 	(void)msg_err;
 	tmp = *cmd->cmd;
 	path = NULL;
+	if (cmd->data->x->nb_cmd > 1)
+		return (0);
 	char *old_path = getcwd(cwd, sizeof(cwd));
 	// set_old_path(old_path);
 	if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && (*cmd->cmd)->next == NULL && is_in_env("HOME") == 1)
