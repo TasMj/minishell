@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroy_all.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 01:58:38 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/26 16:36:02 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/02 16:33:07 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,17 @@ void	close_all(t_xek *x)
 	int	i;
 
 	i = 0;
-	while (i < x->nb_cmd - 1)
+	if (x->pipe)
 	{
-		close(x->pipe[i][0]);
-		close(x->pipe[i][1]);
-		i++;
+		while (i < x->nb_cmd - 1)
+		{
+			if (x->pipe[i])
+			{
+				close(x->pipe[i][0]);
+				close(x->pipe[i][1]);
+			}
+			i++;
+		}
 	}
 	i = 0;
 	while (i < x->nb_hdoc)
@@ -67,12 +73,16 @@ static int	free_pipes(t_xek *x)
 	int	i;
 
 	i = 0;
-	while (i < x->nb_cmd - 1)
+	if (x->pipe)
 	{
-		free(x->pipe[i]);
-		i++;
+		while (i < x->nb_cmd - 1)
+		{
+			if (x->pipe[i])
+				free(x->pipe[i]);
+			i++;
+		}
+		free(x->pipe);
 	}
-	free(x->pipe);
 	return (0);
 }
 

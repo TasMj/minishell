@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 04:00:25 by tas               #+#    #+#             */
-/*   Updated: 2023/06/30 20:44:53 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/02 18:02:43 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int     check_redir_out(char c);
 int     check_heredoc(char *str);
 int     check_append(char *str);
 int     is_redir(char *str);
-char	*get_input(void);
+char	*get_input(t_minishell *data);
 t_list	**create_token(t_list **list_token, char *input);
 int     syntax_error(t_minishell *data);
 int     err_quote(t_list **list_token);
