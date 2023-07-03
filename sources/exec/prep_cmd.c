@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/03 13:44:39 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/03 14:32:42 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,11 @@ static t_list	**clone_to_op(t_list *token)
 				elem = elem->next;
 			else
 				return (lst);
-			if (elem->next)
-				elem = elem->next;
-			else
-				return (lst);
 		}
-		if (elem->type == WORD)
+		else if (elem->type == WORD)
 			add_list(lst, elem->content, elem->flag_space);
 		elem = elem->next;
 	}
-	// while (elem && elem->type == WORD)
-	// {
-	// 	add_list(lst, elem->content, elem->flag_space);
-	// 	elem = elem->next;
-	// }
 	return (lst);
 }
 
@@ -137,6 +128,8 @@ static int	fill_cmd(t_cmd *cmd)
 {
 	/* On attribue a cmd la commande sans les op */
 	cmd->cmd = clone_to_op(*(cmd->token));
+	if (!cmd->cmd)
+		return (1);
 	if (check_cmd(cmd) != 0)
 		return (1);
 	cmd->tab = lst_to_tab(cmd->cmd);
@@ -157,7 +150,7 @@ int	prep_cmd(t_minishell *data)
 	-> 1 pipe => 2 commandes */
 	data->x->nb_cmd = nb_cmd(*data->token);
 	if (data->x->nb_cmd == 0)
-		return (0);
+		return (2);
 	data->x->cmd = malloc(sizeof(t_cmd) * data->x->nb_cmd);
 	if (!data->x->cmd)
 		return (1);

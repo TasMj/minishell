@@ -78,7 +78,7 @@ int	wait_child(t_xek *x)
 }
 
 /* Execute les commandes */
-static int	go_exec(t_xek *x, t_minishell *data)
+int	go_exec(t_xek *x, t_minishell *data)
 {
 	int	i;
 	
@@ -99,14 +99,58 @@ static int	go_exec(t_xek *x, t_minishell *data)
 	return (0);
 }
 
+int	open_n_leave(t_list	*token)
+{
+	int	fd;
+
+	while (token)
+	{
+		if (token->type == STDOUT)
+		{
+			fd = open(token->next->content, O_CREAT | O_TRUNC | O_RDWR, 0666);
+			close(fd);
+		}
+		else if (token->type == APPEND)
+		{
+			fd = open(token->next->content, O_CREAT | O_APPEND | O_RDWR, 0666);
+			close(fd);
+		}
+		else if (token->type == STDIN)
+		{
+			fd = open(token->content, O_RDONLY);
+			if (fd < 0)
+			{
+				put_str_err("minishell: ");
+				put_str_err(token->next->content);
+				put_str_err(": No such file or directory\n");
+				// if (!(x->nb_cmd > 1 && cmd->id == 0))
+				// 	cmd->data->code_err = 1;
+				return (1);
+			}
+		}
+		token = token->next;
+	}
+	return (0);
+}
+
 /* Execute les tokens
 -> cat < file | wc -l > file2 */
 int	we_exec(t_minishell *data)
 {
+	int	ret;
+
 	data->x = malloc(sizeof(t_xek));
 	ft_memset(data->x, 0, sizeof(t_xek));
-	if (prep_cmd(data) == 1)
+
+	ret = prep_cmd(data);
+	if (ret == 1)
 		return (destroy_exec(data->x), 1);
+	if (ret == 2)
+	{
+		open_n_leave(*data->token);
+		destroy_exec(data->x);
+		return (0);
+	}
 	open_pipes(data);
 	exec_heredoc(data);
 	if (go_exec(data->x, data) != 0)
