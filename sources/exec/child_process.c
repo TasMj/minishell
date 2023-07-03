@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 19:56:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/03 12:01:13 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/03 17:36:14 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,32 @@ void	dup_pipe(t_cmd *cmd, t_xek *x)
 	return ;
 }
 
+int	check_access(char *file, t_cmd *cmd)
+{
+	if (access(file, F_OK) != -1)
+	{
+		if (access(file, R_OK | X_OK) != -1)
+		{
+			put_str_err("minishell: ");
+			put_str_err((*cmd->cmd)->content);
+			put_str_err(": ");
+			put_str_err(file);
+			put_str_err(": Permission denied\n");
+			return (1);
+		}
+		else
+			return (0);
+	}
+	else
+	{
+		printf("lol\n");
+		put_str_err("minishell: ");
+		put_str_err(file);
+		put_str_err(": No such file or directory\n");
+	}
+	return (0);
+}
+
 /* On ouvre nos fichiers et on redirige selon le type en ecrasant la pipe */
 int	open_n_dup(t_cmd *cmd, t_xek *x)
 {
@@ -44,7 +70,6 @@ int	open_n_dup(t_cmd *cmd, t_xek *x)
 	i = 0;
 	while (cmd->file[i])
 	{
-		/* Selon le type de redir on ouvre le file differement */
 		if (cmd->redir[i] == STDOUT)
 			fd = open(cmd->file[i], O_CREAT | O_TRUNC | O_RDWR, 0666);
 		else if (cmd->redir[i] == APPEND)
@@ -52,27 +77,31 @@ int	open_n_dup(t_cmd *cmd, t_xek *x)
 		else if (cmd->redir[i] == STDIN)
 		{
 			fd = open(cmd->file[i], O_RDONLY);
-			if (fd < 0)
-			{
-				put_str_err("minishell: ");
-				put_str_err(cmd->file[i]);
-				put_str_err(": No such file or directory\n");
-				if (!(x->nb_cmd > 1 && cmd->id == 0))
-					cmd->data->code_err = 1;
-				return (1);
-			}
+			// if (fd < 0)
+			// {
+			// 	put_str_err("minishell: ");
+			// 	put_str_err(cmd->file[i]);
+			// 	put_str_err(": No such file or directory\n");
+			// 	if (!(x->nb_cmd > 1 && cmd->id == 0))
+			// 		cmd->data->code_err = 1;
+			// 	return (1);
+			// }
 		}
 		else if (cmd->redir[i] == HEREDOC)
 		{
 			fd = x->hdoc[x->hdoc_index].hd_pipe[0];
 			x->hdoc_index++;
 		}
-		if (fd == -1)
+		if (cmd->redir[i] != HEREDOC)
 		{
-			err_write("Permission denied\n", 1);
-			cmd->data->code_err = 1;
-			return (1);
+			if (check_access(cmd->file[i], cmd) == 1)
+			{
+				cmd->data->code_err = 1;
+				return (1);
+			}
 		}
+		if (fd == -1)
+			return (1);
 		if (cmd->redir[i] == STDOUT || cmd->redir[i] == APPEND)
 			dup2(fd, STDOUT_FILENO);
 		else if (cmd->redir[i] == STDIN || cmd->redir[i] == HEREDOC)

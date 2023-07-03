@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 12:14:14 by tas               #+#    #+#             */
-/*   Updated: 2023/06/30 14:08:40 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/03 18:06:22 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_list
 	int				index;
 	int				flag_space;
 	int				flag_quote;
+	int				quote_trace;
 	struct s_list	*next;
 }	t_list;
 
@@ -67,16 +68,6 @@ typedef struct s_path
 	char	**path_split;
 }	t_path;
 
-typedef struct s_exec
-{
-	t_list	**token;
-	// t_cmd	*cmd;
-	char	**env;
-	int		**fd;
-	int		nb_pipes;
-	int		nb_cmd;
-}	t_exec;
-
 typedef struct s_cmd
 {
 	int		id;
@@ -97,6 +88,7 @@ typedef struct	s_hdoc
 {
 	char	*delim;
 	int		hd_pipe[2];
+	int		flag_sub;
 }	t_hdoc;
 
 typedef struct s_xek
@@ -116,28 +108,6 @@ typedef struct s_minishell
 	int				code_err;
 	struct s_xek	*x;
 }	t_minishell;
-
-typedef struct s_heredoc
-{
-    char    *delimiteur;
-	pid_t	pid;
-    int     tube[2];
-	char	*cmd;
-	char	*path_cmd;
-	char	**token_arg;
-} t_heredoc;
-
-typedef struct s_redir
-{
-	int		fd;
-	pid_t	pid;
-    int     tube[2];
-	char	*cmd;
-	char	*file_name;
-	char	*path_cmd;
-	char	**token_arg;
-
-}t_redir;
 
 typedef struct s_echo
 {

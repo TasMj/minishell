@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:10:27 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/26 17:54:17 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/03 18:10:10 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ static int	get_delims(t_minishell *data)
 		if (elem->type == HEREDOC)
 		{
 			data->x->hdoc[i].delim = ft_strdup(elem->next->content);
+			if (elem->next->quote_trace == 1)
+				data->x->hdoc[i].flag_sub = 1;
+			else
+				data->x->hdoc[i].flag_sub = 0;
 			if (pipe(data->x->hdoc[i].hd_pipe) < 0)
 				return (1);
 			i++;
@@ -62,11 +66,27 @@ static void write_in_fd(char *str, int fd)
 	write(fd, "\n", 1);
 }
 
+char *substitute_hdoc(char *input, t_minishell *data)
+{
+	char			*result;
+	t_substitution	*s;
+	
+	s = malloc(sizeof(t_substitution));
+	ft_memset(s, 0, sizeof(t_substitution));
+	while (input[s->i])
+		sub_dollar_hdoc(s, input, data);
+	result = ft_strdup(s->new_content);
+	free(input);
+	free(s);
+	return (result);
+}
+
 /* Ouvre l'ecriture du heredoc */
-static int	write_in_hdoc(t_hdoc *hdoc)
+static int	write_in_hdoc(t_hdoc *hdoc, t_minishell *data)
 {
 	char	*input;
-	
+	(void) data;
+
 	// signal(SIGINT, &signal_heredoc);
 	while (1)
 	{
@@ -78,6 +98,10 @@ static int	write_in_hdoc(t_hdoc *hdoc)
 			free(input);
 			break ;
 		}
+
+		if (hdoc->flag_sub == 0)
+			input = substitute_hdoc(input, data);
+		
 		/* Sinon on ecrit le input dans la pipe d'ecriture du heredoc */
 		write_in_fd(input, hdoc->hd_pipe[1]);
 		free(input);
@@ -96,7 +120,7 @@ static int	heredoc_child(t_minishell *data)
 	while (i < data->x->nb_hdoc)
 	{
 		/* Tant qu'on a des hdoc on les ouvrent et on ecrit dedans un par un */
-		write_in_hdoc(&(data->x->hdoc[i]));
+		write_in_hdoc(&(data->x->hdoc[i]), data);
 		i++;
 	}
 
@@ -116,7 +140,7 @@ int	exec_heredoc(t_minishell *data)
 		return (0);
 	data->x->hdoc_index = 0;
 	/* On alloue un t_hdoc pour chaque hdoc */
-	data->x->hdoc = malloc(sizeof(t_heredoc) * data->x->nb_hdoc);
+	data->x->hdoc = malloc(sizeof(t_hdoc) * data->x->nb_hdoc);
 	if (!data->x->hdoc)
 		return (1);
 	get_delims(data);

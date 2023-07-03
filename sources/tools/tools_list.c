@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:12:00 by tas               #+#    #+#             */
-/*   Updated: 2023/06/29 09:27:14 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/03 17:55:37 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ t_list	*ft_lstnew(char *input, int flag_space)
 		return (NULL);
 	new->content = input;
 	new->flag_space = flag_space;
+	if (input[0] == 34 || input[0] == 39)
+		new->quote_trace = 1;
 	new->next = NULL;
 	return (new);
 }
@@ -60,7 +62,7 @@ void	print_list(t_list **list)
 	tmp = (*list);
 	while (*list)
 	{
-		printf("content: [%s], flag_space: %d\n", (*list)->content, (*list)->flag_space);
+		printf("content: [%s], flag_quote: %d\n", (*list)->content, (*list)->quote_trace);
 		(*list) = (*list)->next;
 	}
 	(*list) = tmp;

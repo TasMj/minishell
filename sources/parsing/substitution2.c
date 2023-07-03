@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitution2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:47:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/03 14:50:32 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/03 17:33:02 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,61 @@ char *remove_quote_end(t_substitution *s, t_minishell *data)
 	else
 		tmp = ft_strdup(s->var_substitute);
 	return (tmp);
+}
+
+void sub_dollar_hdoc(t_substitution *s, char *str, t_minishell *data)
+{
+    s->deb = s->i;
+    while (str[s->i] && str[s->i] != '$')
+        s->i++;
+    s->without_dollar = ft_strdup_size(str + s->deb, (s->i - s->deb));
+	if (!s->new_content)
+		s->new_content = ft_strdup(s->without_dollar);
+	else
+		s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 1);
+    if (str[s->i] && str[s->i] == '$' && str[s->i + 1] == '\0')
+    {
+        s->new_content = ft_strjoin_mod(s->new_content, "$", 0);
+        s->i++;
+    }
+	else if (str[s->i + 1] && str[s->i + 1] == '?')
+	{
+		s->start = s->i;
+        s->i += 2;
+        s->end = s->i;
+        s->keep_var = ft_strdup_size(str + s->start, (s->end - s->start));
+        s->var_substitute = substitution(data, s->keep_var);
+		int deb = s->i;
+        s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
+        while (str[s->i] != '\0' && (!ft_isalnum(str[s->i]) && str[s->i] != '$'))
+               s->i++;
+		char *tmp = ft_strdup_size(str + deb, (s->i - deb));
+        s->new_content = ft_strjoin_mod(s->new_content, tmp, 3);
+        free(s->keep_var);
+	}
+    else
+    {
+        s->start = s->i;
+        s->i++;
+        while (str[s->i] != '\0' && (ft_isalnum(str[s->i]) || str[s->i] == '_'))
+            s->i++;
+        s->end = s->i;
+        s->keep_var = ft_strdup_size(str + s->start, (s->end - s->start));
+        s->var_substitute = substitution(data, s->keep_var);
+        if (ft_strlen(s->var_substitute) != 0)
+            s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
+        else
+        {
+			int deb = s->i;
+            s->new_content = ft_strjoin_mod(s->new_content, "", 1);
+            while (str[s->i] != '\0' && (!ft_isalnum(str[s->i]) && str[s->i] != '$'))
+                s->i++;
+			char *tmp = ft_strdup_size(str + deb, (s->i - deb));
+            s->new_content = ft_strjoin_mod(s->new_content, tmp, 3);
+        }
+        if (s->keep_var)
+			free(s->keep_var);
+    }
+	if (s->without_dollar)
+	    free(s->without_dollar);
 }

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/03 14:32:42 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/03 18:04:22 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	add_lst_type(t_list **list_token, t_list *elem)
 
 	to_add = ft_lstnew(elem->content, elem->flag_space);
 	to_add->type = elem->type;
+	to_add->quote_trace = elem->quote_trace;
 	ft_lstadd_back(list_token, to_add);
 }
 

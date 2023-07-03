@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:56:18 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/03 12:43:23 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/03 18:01:46 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,12 @@ int	err_redir(t_minishell *data)
 			}
 			if ((*data->token)->next != NULL && (*data->token)->type != WORD && (*data->token)->next->type != WORD)
 			{
+				if (((*data->token)->type != PIPE && (*data->token)->next->type == PIPE) 
+					|| ((*data->token)->type == PIPE && (*data->token)->next->type != PIPE))
+				{
+					*data->token = tmp;
+					return (1);
+				}
 				data->code_err = 2;
 				msg_err = ft_strjoin("syntax error near unexpected token `", (*data->token)->content);
 				msg_err = ft_strjoin_mod(msg_err, "'\n", 1);
@@ -125,6 +131,8 @@ void reunite_token(t_list **list_token)
         {
             t_list *next_token = (*list_token)->next;
             (*list_token)->content = ft_strjoin_mod((*list_token)->content, next_token->content, 1);
+			if ((*list_token)->quote_trace == 1 || (*list_token)->next->quote_trace == 1)
+				(*list_token)->quote_trace = 1;
             (*list_token)->flag_space = next_token->flag_space;
             (*list_token)->next = next_token->next;
             free(next_token->content);
