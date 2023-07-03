@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:24:17 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/02 16:07:56 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/03 11:46:16 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	ft_strcmp(char *s1, char *s2)
 	return (0);
 }
 
-static size_t	nbr_len(long int n)
+size_t	nbr_len(long int n)
 {
 	size_t		i;
 	long int	nb;

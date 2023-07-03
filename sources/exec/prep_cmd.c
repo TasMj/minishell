@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/02 18:52:29 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/03 13:44:39 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,26 +53,28 @@ static t_list	**clone_to_op(t_list *token)
 	if (!lst)
 		return (NULL);
 	*lst = NULL;
-	// while (elem)
-	// {
-	// 	if (elem->type == WORD)
-	// 	{
-	// 		add_list(lst, elem->content, elem->flag_space);
-	// 		elem = elem->next;
-	// 	}
-	// 	else
-	// 	{
-	// 		if (elem->next)
-	// 			elem = elem->next;
-	// 		if (elem->next)
-	// 			elem = elem->next;
-	// 	}
-	// }
-	while (elem && elem->type == WORD)
+	while (elem)
 	{
-		add_list(lst, elem->content, elem->flag_space);
+		if (elem->type != WORD)
+		{
+			if (elem->next)
+				elem = elem->next;
+			else
+				return (lst);
+			if (elem->next)
+				elem = elem->next;
+			else
+				return (lst);
+		}
+		if (elem->type == WORD)
+			add_list(lst, elem->content, elem->flag_space);
 		elem = elem->next;
 	}
+	// while (elem && elem->type == WORD)
+	// {
+	// 	add_list(lst, elem->content, elem->flag_space);
+	// 	elem = elem->next;
+	// }
 	return (lst);
 }
 
@@ -124,7 +126,7 @@ static int	check_cmd(t_cmd *cmd)
 		// err_write(msg_err, 2);
 		if (cmd->id == cmd->data->x->nb_cmd - 1)
 			cmd->data->code_err = 127;
-		return (0);
+		return (free_tab(cmd->tab), 0);
 	}
 	free_tab(cmd->tab);
 	return (0);

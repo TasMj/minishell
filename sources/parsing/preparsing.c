@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preparsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:56:18 by tmejri            #+#    #+#             */
-/*   Updated: 2023/06/30 22:28:03 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/03 12:43:23 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,14 @@ int	err_redir(t_minishell *data)
 			(*data->token) = (*data->token)->next;
 		else
 		{
+			if ((*data->token)->type != WORD
+				&& (*data->token)->next == NULL)
+			{
+				data->code_err = 2;
+				msg_err = ft_strjoin("syntax error near unexpected token `", (*data->token)->content);
+				msg_err = ft_strjoin_mod(msg_err, "'\n", 1);
+				return (err_msg(6, msg_err, 2));
+			}
 			if ((*data->token)->next != NULL && (*data->token)->type != WORD && (*data->token)->next->type != WORD)
 			{
 				data->code_err = 2;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 19:56:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/06/30 21:02:49 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/03 12:01:13 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ int	open_n_dup(t_cmd *cmd, t_xek *x)
 			fd = open(cmd->file[i], O_RDONLY);
 			if (fd < 0)
 			{
-				err_write("No such file or directory\n", 1);
+				put_str_err("minishell: ");
+				put_str_err(cmd->file[i]);
+				put_str_err(": No such file or directory\n");
 				if (!(x->nb_cmd > 1 && cmd->id == 0))
 					cmd->data->code_err = 1;
 				return (1);

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/07/02 18:30:04 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/03 11:48:00 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,26 @@ char	*get_input(t_minishell *data)
 	char	*input;
 	// char	cwd[1024];
 	char	*prompt;
+	char	*code;
 
 	// prompt = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	// prompt = ft_strjoin_mod("\033[1;33m", prompt, 2);
 	// prompt = ft_strjoin_mod(prompt, "\033[0m", 1);
 	// prompt = ft_strjoin_mod(prompt, "$> ", 1);
+	code = ft_itoa(data->code_err);
 	if (data->code_err == 0)
 	{
 		prompt = ft_strdup("[");
-		prompt = ft_strjoin_mod(prompt, ft_itoa(data->code_err), 1);
+		prompt = ft_strjoin_mod(prompt, code, 1);
 		prompt = ft_strjoin_mod(prompt, "]\033[1;32m> \033[0m", 1);
 	}
 	else
 	{
 		prompt = ft_strdup("[\033[1;31m");
-		prompt = ft_strjoin_mod(prompt, ft_itoa(data->code_err), 1);
+		prompt = ft_strjoin_mod(prompt, code, 1);
 		prompt = ft_strjoin_mod(prompt, "\033[0m]\033[1;32m> \033[0m", 1);
 	}
+	free(code);
 	// prompt = ft_strdup("\033[1;32m$> \033[0m");
 	input = readline(prompt);
 	free(prompt);

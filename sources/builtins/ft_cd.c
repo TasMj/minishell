@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/07/02 18:28:18 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/03 13:19:07 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,13 @@ static int	err_cd(t_cmd *cmd, char *path)
 
 	if (is_dir(path) == 0)
 	{
-		msg_err = ft_strjoin((*cmd->cmd)->next->content, ": Not a directory\n");
-		err_write(msg_err, 2);
+		// msg_err = ft_strjoin((*cmd->cmd)->next->content, ": Not a directory\n");
+		// err_write(msg_err, 2);
+		put_str_err("minishell: cd: ");
+		put_str_err((*cmd->cmd)->next->content);
+		put_str_err(": Not a directory\n");
 		cmd->data->code_err = 127;
-		free(msg_err);
+		// free(msg_err);
 		free(path);
 		return (1);
 
@@ -125,7 +128,17 @@ int	ft_cd(t_cmd *cmd)
 	tmp = *cmd->cmd;
 	path = NULL;
 	if (cmd->data->x->nb_cmd > 1)
-		return (0);
+	{
+		path = ft_strdup((*cmd->cmd)->next->content);
+		if (is_dir(path) == 0)
+		{
+			put_str_err("minishell: cd: ");
+			put_str_err((*cmd->cmd)->next->content);
+			put_str_err(": Not a directory\n");
+			cmd->data->code_err = 127;
+		}
+		return (free(path), 0);
+	}
 	char *old_path = getcwd(cwd, sizeof(cwd));
 	// set_old_path(old_path);
 	if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && (*cmd->cmd)->next == NULL && is_in_env("HOME") == 1)
