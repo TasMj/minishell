@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:30:38 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/03 13:43:25 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/03 14:31:45 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,23 @@ int	nb_cmd(t_list *token)
 	int	count;
 
 	count = 0;
-	if (token->type != PIPE)
-		count++;
 	while (token)
 	{
-		if (token->type == PIPE)
+		if (token->type != WORD && token->type != PIPE)
+		{
+			if (token->next)
+				token = token->next;
+		}
+		else if (token->type == WORD)
+		{
 			count++;
+			while (token->type != PIPE && token)
+			{
+				token = token->next;
+				if (token == NULL)
+					return (count);
+			}
+		}
 		token = token->next;
 	}
 	return (count);
