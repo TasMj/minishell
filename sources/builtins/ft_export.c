@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/07/01 17:12:26 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/03 14:49:55 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static int	add_var_env(char *stock, t_list *tmp)
 			msg_err = ft_strjoin_mod(msg_err,"': not a valid identifier\n", 1);
 			err_write(msg_err, 1);
 		}
+		free(msg_err);
 		free(copy);
 		// free(stock);
 		return (1);
@@ -70,6 +71,7 @@ static int	add_var_env(char *stock, t_list *tmp)
 		msg_err = ft_strjoin("export: `", stock);
 		msg_err = ft_strjoin_mod(msg_err,"': event not found\n", 1);
 		err_write(msg_err, 0);
+		free(msg_err);
 		free(copy);
 		return (1);
 	}

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   substitution2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:47:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/01 18:45:54 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/03 14:50:32 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_dollar(char *str)
+int check_dollar(char *str)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (str[i])
@@ -26,15 +26,13 @@ int	check_dollar(char *str)
 	return (0);
 }
 
-char	*substitution(t_minishell *data, char *token)
+char *substitution(t_minishell *data, char *token)
 {
-	char	*variable;
+	char *variable;
 
 	variable = NULL;
 	if ((ft_strlen(token) == 2) && ft_strcmp(token, "$?") == 0)
-	{
 		variable = ft_itoa(data->code_err);
-	}
 	else if (is_in_env(token + 1))
 		variable = get_venv(token + 1);
 	else if (!variable)
@@ -42,7 +40,7 @@ char	*substitution(t_minishell *data, char *token)
 	return (variable);
 }
 
-void	quote_sub(t_substitution *s, int a, t_minishell *data)
+void quote_sub(t_substitution *s, int a, t_minishell *data)
 {
 	if (a == 1)
 		s->var_substitute = sub_quotes((*data->token)->content, s, data);
@@ -54,21 +52,33 @@ void	quote_sub(t_substitution *s, int a, t_minishell *data)
 	// free(s->new_content);
 }
 
-char	*remove_quote_end(t_substitution *s, t_minishell *data)
+char *remove_quote_end(t_substitution *s, t_minishell *data)
 {
-	int		i;
-	char	*var_modif;
-	char	*tmp;
+	int i;
+	char *tmp;
 
-	i = 0;
-	while (s->keep_var[i] && s->keep_var[i] != 39 && s->keep_var[i] != 34)
-		i++;
-	if (i != ft_strlen(s->keep_var))
-		s->flag_keep_quote = 1;
-	tmp = ft_strdup_size(s->keep_var, i);
-	var_modif = substitution(data, tmp);
-	free(tmp);
-	if (ft_strlen(var_modif) != 0)
-		var_modif = ft_strjoin_mod(var_modif, s->keep_var + i, 1);
-	return (var_modif);
+	i = 1;
+	tmp = NULL;
+	if (ft_strncmp(s->keep_var, "$?", 2) == 0)
+		s->var_substitute = substitution(data, "$?");
+	else
+	{
+		while (ft_isalnum(s->keep_var[i]))
+			i++;
+		s->end = i;
+		s->keep_var2 = ft_strdup_size(s->keep_var, s->end);
+		s->var_substitute = substitution(data, s->keep_var2);
+		free(s->keep_var2);
+	}
+	if (s->keep_var[s->end] != '\0')
+	{
+		s->start = s->end;
+		while (s->keep_var[s->end] != '\0')
+			s->end++;
+		tmp = ft_strdup_size(s->keep_var + s->start, (s->end - s->start));
+		tmp = ft_strjoin_mod(s->var_substitute, tmp, 3);
+	}
+	else
+		tmp = ft_strdup(s->var_substitute);
+	return (tmp);
 }

@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/07/03 13:19:07 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/03 14:49:34 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_list(t_list **list);
-
 
 /* keep the last pwd */
 static int	set_old_path(char *path)
 {
 	t_list	*tmp;
 	char	*copy_env;
+	t_list *old_content;
 
 	if (is_in_env("OLDPWD") == 0)
 		return (1);
@@ -31,9 +29,10 @@ static int	set_old_path(char *path)
 			(*g_list_env) = (*g_list_env)->next;
 		else if (ft_strcmp(copy_env, "OLDPWD") == 0)
 		{
-			// free((*g_list_env)->content);
+			old_content = (*g_list_env);
 			(*g_list_env)->content = ft_strjoin("OLDPWD=", path);
 			*g_list_env = tmp;
+			free(old_content->content);
 			free(copy_env);
 			return (0);
 		}
@@ -79,18 +78,10 @@ static int	err_cd(t_cmd *cmd, char *path)
 
 	if (is_dir(path) == 0)
 	{
-		// msg_err = ft_strjoin((*cmd->cmd)->next->content, ": Not a directory\n");
-		// err_write(msg_err, 2);
-		put_str_err("minishell: cd: ");
-		put_str_err((*cmd->cmd)->next->content);
-		put_str_err(": Not a directory\n");
+		msg_err = ft_strjoin((*cmd->cmd)->next->content, ": Not a directory\n");
+		err_write(msg_err, 2);
 		cmd->data->code_err = 127;
-		// free(msg_err);
-		free(path);
-		return (1);
-
-		// printf("minishell: cd: %s: Not a directory\n", (*cmd->cmd)->next->content);
-		err_write("cd: Not a directory\n", 1);
+		free(msg_err);
 		free(path);
 		return (1);
 	}
@@ -123,24 +114,24 @@ int	ft_cd(t_cmd *cmd)
 	char	*path;
 	t_list	*tmp;
 	char	*msg_err;
+	char	*old_path;
 
 	(void)msg_err;
 	tmp = *cmd->cmd;
 	path = NULL;
 	if (cmd->data->x->nb_cmd > 1)
-	{
-		path = ft_strdup((*cmd->cmd)->next->content);
-		if (is_dir(path) == 0)
-		{
-			put_str_err("minishell: cd: ");
-			put_str_err((*cmd->cmd)->next->content);
-			put_str_err(": Not a directory\n");
-			cmd->data->code_err = 127;
-		}
-		return (free(path), 0);
-	}
-	char *old_path = getcwd(cwd, sizeof(cwd));
-	// set_old_path(old_path);
+    {
+        path = ft_strdup((*cmd->cmd)->next->content);
+        if (is_dir(path) == 0)
+        {
+            put_str_err("minishell: cd: ");
+            put_str_err((*cmd->cmd)->next->content);
+            put_str_err(": Not a directory\n");
+            cmd->data->code_err = 127;
+        }
+        return (free(path), 0);
+    }
+	old_path = getcwd(cwd, sizeof(cwd));
 	if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && (*cmd->cmd)->next == NULL && is_in_env("HOME") == 1)
 	{
 		path = get_venv("HOME");
