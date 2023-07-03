@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/07/03 18:15:28 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/03 23:32:44 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int    init_list(t_minishell *data)
     data->token = create_token(data->token, data->input);
     if (err_quote(data->token) == 1)
         return (1);
-    substitute_dollar(data);
     get_type(data->token);
+    substitute_dollar(data);
     if (err_redir(data) != 3)
         return (1);
     remove_list_quotes(data->token);
@@ -61,6 +61,7 @@ int main(int argc, char **argv, char **env)
             // else if (syntax_error(&data) != 0 && syntax_error(&data) != 1)
                 // data.code_err = 2;
         }
+        // print_list(data.token);
         free_list_token_content(data.token);
         free_list(data.token);
         free(data.input);

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:10:27 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/03 18:10:10 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/03 19:42:04 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,12 @@ char *substitute_hdoc(char *input, t_minishell *data)
 	
 	s = malloc(sizeof(t_substitution));
 	ft_memset(s, 0, sizeof(t_substitution));
+	printf("before while s->i: %d\n", s->i);
 	while (input[s->i])
+	{
+		printf("s->i: %d\n", s->i);
 		sub_dollar_hdoc(s, input, data);
+	}
 	result = ft_strdup(s->new_content);
 	free(input);
 	free(s);
@@ -91,6 +95,9 @@ static int	write_in_hdoc(t_hdoc *hdoc, t_minishell *data)
 	while (1)
 	{
 		input = readline("> ");
+		// for(int i = 0; input[i]; i++)
+		// 	write(1, &input[i], 1);
+		// write(1, "\n", 1);
 		/* Si l'input est le delimiteur on arrete d'ecrire dans le hdoc */
 		if (!input || ft_strcmp(input, hdoc->delim) == 0)
 		{

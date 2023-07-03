@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/07/03 14:50:19 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/03 23:06:34 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void go_to_dollar(t_substitution *s, t_minishell *data)
         s->new_content = ft_strjoin_mod(s->new_content, "$", 0);
         s->i++;
     }
-	else if ((*data->token)->content[s->i + 1] && (*data->token)->content[s->i + 1] == '?')
+	else if ((*data->token)->content[s->i] && (*data->token)->content[s->i + 1] && (*data->token)->content[s->i + 1] == '?')
 	{
 		s->start = s->i;
         s->i += 2;
@@ -46,7 +46,8 @@ static void go_to_dollar(t_substitution *s, t_minishell *data)
     else
     {
         s->start = s->i;
-        s->i++;
+		if ((s->i + 1) < ft_strlen((*data->token)->content))
+        	s->i++;
         while ((*data->token)->content[s->i] != '\0' && (ft_isalnum((*data->token)->content[s->i]) || (*data->token)->content[s->i] == '_'))
             s->i++;
         s->end = s->i;
@@ -68,8 +69,19 @@ static void go_to_dollar(t_substitution *s, t_minishell *data)
     }
 	if (s->without_dollar)
 	    free(s->without_dollar);
+	printf("fin i: %d\n", s->i);
 }
 
+t_list	*ft_lst_prev(t_list *elem, t_list *first)
+{
+	while (first)
+	{
+		if (first->next == elem)
+			return (first);
+		first = first->next;
+	}
+	return (first);
+}
 
 static void	more_dollar(t_substitution *s, t_minishell *data)
 {
@@ -78,7 +90,6 @@ static void	more_dollar(t_substitution *s, t_minishell *data)
 		go_to_dollar(s, data);
 	free((*data->token)->content);
 	(*data->token)->content = ft_strdup(s->new_content);
-	// free(s->new_content);
 }
 
 void	substitute_dollar(t_minishell *data)
@@ -86,7 +97,11 @@ void	substitute_dollar(t_minishell *data)
 	t_substitution	*s;
 	t_list			*tmp;
 	t_list			*prev;
-	
+	t_list	*start;
+	t_list	*reset;
+
+	start = *data->token;
+	reset = *data->token;
 	s = malloc(sizeof(t_substitution));
 	ft_memset(s, 0, sizeof(t_substitution));
 	tmp = *data->token;
@@ -101,7 +116,13 @@ void	substitute_dollar(t_minishell *data)
 			else if ((*data->token)->content[0] == 39)
 				quote_sub(s, 2, data);
 			else if (ft_strlen((*data->token)->content) > 1)
-				more_dollar(s, data);
+			{
+				if (ft_lst_prev(*data->token, start)->type != HEREDOC)
+				{
+					start = reset;
+					more_dollar(s, data);
+				}
+			}
 			else if (ft_strlen((*data->token)->content) == 1)
 			{
 				if (!(!(*data->token)->next && (*data->token)->content[0] == '$')
@@ -113,7 +134,7 @@ void	substitute_dollar(t_minishell *data)
 						prev->next = (*data->token)->next;
 						(*data->token)->next->flag_space = (*data->token)->flag_space;
 						free((*data->token)->content);
-						free(*data->token);
+						// free(*data->token);
 					}
 					else
 					{
@@ -175,6 +196,8 @@ static void	delimit_sub(t_substitution *s, t_minishell *data)
 
 char	*sub_quotes(char *token, t_substitution *s, t_minishell *data)
 {
+	char	*to_return;
+	
 	s->i = 0;
 	s->stock = remove_quotes(token);
 	while (s->stock[s->i])
@@ -199,6 +222,6 @@ char	*sub_quotes(char *token, t_substitution *s, t_minishell *data)
 		delimit_sub(s, data);
 	}
 	free(s->stock);
-	char	*to_return = ft_strdup(s->new_content);
+	to_return = ft_strdup(s->new_content);
 	return (to_return);
 }

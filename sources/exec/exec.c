@@ -60,17 +60,18 @@ int	wait_child(t_xek *x)
 	ret = 0;
 	while (i < x->nb_cmd)
 	{
-		waitpid(x->cmd[i].pid, &ret, WUNTRACED);
-		if (WIFEXITED(ret))
-			x->cmd->data->code_err = WEXITSTATUS(ret);
-		else
+		if (is_builtin(&x->cmd[i]) == 0)
+			waitpid(x->cmd[i].pid, &ret, WUNTRACED);
+		if (x->cmd[i].id == x->nb_cmd - 1)
 		{
-			x->cmd->data->code_err = WTERMSIG(ret) + 128;
-			if (x->cmd->data->code_err == 139)
-				err_write("Segmentation fault error\n", x->cmd->data->code_err);
-				// printf("Segmentation Fault BOOM !\n");
-			// else
-				// printf("Interrupted with signal %d\n", x->cmd->data->code_err);
+			if (WIFEXITED(ret))
+				x->cmd->data->code_err = WEXITSTATUS(ret);
+			else
+			{
+				x->cmd->data->code_err = WTERMSIG(ret) + 128;
+				if (x->cmd->data->code_err == 139)
+					err_write("Segmentation fault error\n", x->cmd->data->code_err);
+			}
 		}
 		i++;
 	}

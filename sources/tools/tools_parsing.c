@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:32 by tas               #+#    #+#             */
-/*   Updated: 2023/07/01 21:23:36 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/03 22:12:42 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,8 @@ void	add_space(t_minishell *data)
 	char	*to_add;
 
 	tmp = *data->token;
+	to_add = NULL;
+	// prev = *data->token; 
 	while (*data->token)
 	{
 		if ((*data->token)->flag_space == 1 && ft_strlen((*data->token)->content) != 0)
@@ -154,6 +156,7 @@ void	add_space(t_minishell *data)
 				to_add = ft_strjoin_mod(to_add, (*data->token)->content, 1);
 				free((*data->token)->content);
 				(*data->token)->content = ft_strdup(to_add);
+				free(to_add);
 			}
 		}
 		prev = *data->token;

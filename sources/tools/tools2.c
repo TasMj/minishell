@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:24:17 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/03 11:46:16 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/03 21:10:21 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,16 +128,16 @@ int	put_str_err(char *error)
 	return (0);
 }
 
-int	err_write(char *error, int code_err)
+int	err_write(char *error, int out)
 {
 	int	i;
 
 	i = 0;
-	write(code_err, "minishell: ", 11);
+	write(out, "minishell: ", 11);
 	
 	while (error[i])
 	{
-		write(code_err, &error[i], 1);
+		write(out, &error[i], 1);
 		i++;
 	}
 	return (0);

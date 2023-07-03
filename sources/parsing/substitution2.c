@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:47:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/03 17:33:02 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/03 23:25:14 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ char *substitution(t_minishell *data, char *token)
 	if ((ft_strlen(token) == 2) && ft_strcmp(token, "$?") == 0)
 		variable = ft_itoa(data->code_err);
 	else if (is_in_env(token + 1))
+	{
+		printf("var: %s\n", token);	
 		variable = get_venv(token + 1);
+	}
 	else if (!variable)
 		variable = "";
 	return (variable);
@@ -49,7 +52,7 @@ void quote_sub(t_substitution *s, int a, t_minishell *data)
 	free((*data->token)->content);
 	(*data->token)->content = ft_strdup(s->var_substitute);
 	(*data->token)->flag_quote = 1;
-	// free(s->new_content);
+	free(s->var_substitute);
 }
 
 char *remove_quote_end(t_substitution *s, t_minishell *data)
@@ -98,7 +101,7 @@ void sub_dollar_hdoc(t_substitution *s, char *str, t_minishell *data)
         s->new_content = ft_strjoin_mod(s->new_content, "$", 0);
         s->i++;
     }
-	else if (str[s->i + 1] && str[s->i + 1] == '?')
+	else if (str[s->i] && str[s->i + 1] && str[s->i + 1] == '?')
 	{
 		s->start = s->i;
         s->i += 2;
@@ -116,7 +119,8 @@ void sub_dollar_hdoc(t_substitution *s, char *str, t_minishell *data)
     else
     {
         s->start = s->i;
-        s->i++;
+		if ((s->i + 1) < ft_strlen((*data->token)->content))
+	        s->i++;
         while (str[s->i] != '\0' && (ft_isalnum(str[s->i]) || str[s->i] == '_'))
             s->i++;
         s->end = s->i;
@@ -138,4 +142,5 @@ void sub_dollar_hdoc(t_substitution *s, char *str, t_minishell *data)
     }
 	if (s->without_dollar)
 	    free(s->without_dollar);
+		
 }
