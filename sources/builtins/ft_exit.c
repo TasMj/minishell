@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 13:02:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/04 11:07:59 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/04 18:50:08 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void    ft_exit_code(t_cmd *cmd, t_minishell *data)
 
     bool = 0;
 	data->code_err = ft_capped_atoll((*cmd->cmd)->next->content, &bool);
+    if (data->x->nb_cmd > 1 && cmd->id == data->x->nb_cmd - 1)
+        return ;
     if (is_numeric((*cmd->cmd)->next->content) == 0 || bool != 0)
     {
         printf("exit\n");
@@ -79,8 +81,10 @@ void    ft_exit_code(t_cmd *cmd, t_minishell *data)
     }
     else if (ft_lstsize(*(cmd->cmd)) > 2)
     {
+        data->code_err = 1;
         printf("exit\n");
-        err_msg(3, "IGNORE", 1);
+        put_str_err("minishell: exit: too many arguments\n");
+        // err_msg(3, "IGNORE", 1);
         return ;
     }
     printf("exit\n");

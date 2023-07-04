@@ -45,7 +45,10 @@ static int	launch_process(t_cmd *cmd, t_minishell *data)
 			// destroy_exec(data->x);
 			ft_exit(data);
 		}
-		exec_it(cmd , data);
+		if (cmd->cmd)
+			exec_it(cmd , data);
+		else
+			ft_exit(data);
 	}
 	return (0);
 }
@@ -60,17 +63,19 @@ int	wait_child(t_xek *x)
 	ret = 0;
 	while (i < x->nb_cmd)
 	{
-		if (is_builtin(&x->cmd[i]) == 0)
-			waitpid(x->cmd[i].pid, &ret, WUNTRACED);
-		if (x->cmd[i].id == x->nb_cmd - 1)
+		if (!x->cmd[i].cmd || is_builtin(&x->cmd[i]) == 0)
 		{
-			if (WIFEXITED(ret))
-				x->cmd->data->code_err = WEXITSTATUS(ret);
-			else
+			waitpid(x->cmd[i].pid, &ret, WUNTRACED);
+			if (x->cmd[i].id == x->nb_cmd - 1)
 			{
-				x->cmd->data->code_err = WTERMSIG(ret) + 128;
-				if (x->cmd->data->code_err == 139)
-					err_write("Segmentation fault error\n", x->cmd->data->code_err);
+				if (WIFEXITED(ret))
+					x->cmd->data->code_err = WEXITSTATUS(ret);
+				else
+				{
+					x->cmd->data->code_err = WTERMSIG(ret) + 128;
+					if (x->cmd->data->code_err == 139)
+						err_write("Segmentation fault error\n", x->cmd->data->code_err);
+				}
 			}
 		}
 		i++;
@@ -88,7 +93,7 @@ int	go_exec(t_xek *x, t_minishell *data)
 	// signal_ignore();
 	while (i < x->nb_cmd)
 	{
-		if (is_builtin(&(x->cmd[i])) == 0)
+		if (!x->cmd[i].cmd || is_builtin(&(x->cmd[i])) == 0)
 			launch_process(&(x->cmd[i]), data);
 		else
 			if (handle_builtin(&(x->cmd[i]), data) != 0)
