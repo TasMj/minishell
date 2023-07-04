@@ -147,13 +147,12 @@ int	we_exec(t_minishell *data)
 
 	data->x = malloc(sizeof(t_xek));
 	ft_memset(data->x, 0, sizeof(t_xek));
-	// print_list(data->token);
 	if (ft_strcmp((*data->token)->content, "export") == 0)
 		remove_empty_tokens(data->token);
 	ret = prep_cmd(data);
 	if (ret == 1)
 		return (destroy_exec(data->x), 1);
-	if (ret == 2)
+	else if (ret == 2)
 	{
 		open_n_leave(*data->token);
 		destroy_exec(data->x);
