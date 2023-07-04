@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:42:19 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/03 21:34:33 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/04 18:49:36 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,16 @@ int	handle_exit(t_cmd *cmd, t_minishell *data)
 {
 	if (ft_strcmp((*cmd->cmd)->content, "exit") == 0)
 	{
-		if (data->x->nb_cmd > 1)
-			return (1);
-		if (ft_lstsize(*(cmd->cmd)) == 1)
+		// if (data->x->nb_cmd > 1)
+		// 	return (1);
+		if (ft_lstsize(*(cmd->cmd)) == 1 && data->x->nb_cmd == 1)
 		{
 			printf("exit\n");
 			ft_exit(cmd->data);
 		}
 		else if (ft_lstsize(*(cmd->cmd)) > 1)
 			ft_exit_code(cmd, data);
+		return (1);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/03 18:04:22 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/04 20:07:52 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static t_list    **clone_to_pipe(t_list *token)
 
 /* Retourne la commande brut sans les redir
 -> {cat} {wc -l}, etc) */
-static t_list	**clone_to_op(t_list *token)
+static t_list	**get_cmd(t_list *token)
 {
 	t_list	**lst;
 	t_list	*elem;
@@ -67,6 +67,8 @@ static t_list	**clone_to_op(t_list *token)
 			add_list(lst, elem->content, elem->flag_space);
 		elem = elem->next;
 	}
+	if (*lst == NULL)
+		return (free(lst), NULL);
 	return (lst);
 }
 
@@ -76,7 +78,9 @@ static int	check_cmd(t_cmd *cmd)
 {
 	char	*msg_err;
 	/* Si la commande est un path */
-	if (has_slash(cmd) == 1)
+	if (!cmd->cmd)
+		return (0);
+	if (cmd->cmd && has_slash(cmd) == 1)
 	{
 		if (access((*cmd->cmd)->content, F_OK) == -1)
 		{
@@ -128,12 +132,11 @@ static int	check_cmd(t_cmd *cmd)
 static int	fill_cmd(t_cmd *cmd)
 {
 	/* On attribue a cmd la commande sans les op */
-	cmd->cmd = clone_to_op(*(cmd->token));
-	if (!cmd->cmd)
-		return (1);
+	cmd->cmd = get_cmd(*(cmd->token));
 	if (check_cmd(cmd) != 0)
 		return (1);
-	cmd->tab = lst_to_tab(cmd->cmd);
+	if (cmd->cmd)
+		cmd->tab = lst_to_tab(cmd->cmd);
 	cmd->pid = 0;
 	handle_redir(cmd, *(cmd->token));
 	// free(cmd->tab);
@@ -146,6 +149,7 @@ int	prep_cmd(t_minishell *data)
 {
 	t_list	*elem;
 	int	i;
+	int	ret;
 
 	/* On compte les commandes en fonction des pipes
 	-> 1 pipe => 2 commandes */
@@ -164,8 +168,13 @@ int	prep_cmd(t_minishell *data)
 		data->x->cmd[i].data = data;
 		data->x->cmd[i].id = i;
 		data->x->cmd[i].token = clone_to_pipe(elem);
-		if (fill_cmd(&(data->x->cmd[i])) == 1)
-			return (1);
+		ret = fill_cmd(&(data->x->cmd[i]));
+		// if (data->x->cmd[i].cmd)
+		// 	print_list(data->x->cmd[i].cmd);
+		// else
+		// 	printf("NULL\n");
+		if (ret != 0)
+			return (ret);
 		while (elem && elem->type != PIPE)
 			elem = elem->next;
 		if (elem && elem->type == PIPE)
