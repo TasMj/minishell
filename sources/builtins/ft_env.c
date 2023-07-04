@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:48 by tas               #+#    #+#             */
-/*   Updated: 2023/06/30 21:03:30 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/04 11:09:10 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_list	**get_list_env(char **env)
 	}
 	while (env[i] != NULL)
 	{
-		add_list(list_env, env[i], 0);
+		add_list(list_env, ft_strdup(env[i]), 0);
 		i++;
 	}
 	return (list_env);

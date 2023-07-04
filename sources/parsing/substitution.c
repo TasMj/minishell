@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/07/03 23:06:34 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/04 11:45:04 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,8 @@ void	substitute_dollar(t_minishell *data)
 						prev->next = (*data->token)->next;
 						(*data->token)->next->flag_space = (*data->token)->flag_space;
 						free((*data->token)->content);
-						// free(*data->token);
+						free(*data->token);
+						(*data->token) = prev;
 					}
 					else
 					{

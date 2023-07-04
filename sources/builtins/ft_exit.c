@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 13:02:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/02 17:50:24 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/04 11:07:59 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
 void    ft_exit(t_minishell *data)
 {
     destroy_exec(data->x);
-    
     free_list_token_content(data->token);
     free_list(data->token);
+    free_list_token_content(g_list_env);
     free_list(g_list_env);
     exit(data->code_err);
 }
