@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:35 by tas               #+#    #+#             */
-/*   Updated: 2023/07/01 21:20:20 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/04 18:42:21 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	not_options(char *str)
 	
 	if (!(is_alphanum(str) == 0 && is_abc(str[0]) == 0))
 	{
-		msg_err = ft_strjoin("export: `", str);
+		msg_err = ft_strjoin("unset: `", str);
 		if (str[0] == '-')
 		{
 			msg_err = ft_strjoin_mod(msg_err,"': invalid option\n", 1);
@@ -102,6 +102,7 @@ int	not_options(char *str)
 			msg_err = ft_strjoin_mod(msg_err,"': not a valid identifier\n", 1);
 			err_write(msg_err, 1);
 		}
+		free(msg_err);
 		return (1);
 	}
 	return (0);

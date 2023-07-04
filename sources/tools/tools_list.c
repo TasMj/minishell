@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:12:00 by tas               #+#    #+#             */
-/*   Updated: 2023/07/04 11:25:12 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/04 18:46:04 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	add_list(t_list **list_token, char *stockage, int flag_space)
 {
 	t_list	*to_add;
 
-	// printf("1 : %p\n", to_add->content);
 	to_add = ft_lstnew(stockage, flag_space);
 	ft_lstadd_back(list_token, to_add);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitution2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:47:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/04 13:16:05 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/04 18:12:56 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ char *remove_quote_end(t_substitution *s, t_minishell *data)
 	}
 	else
 		tmp = ft_strdup(s->var_substitute);
+	free(s->var_substitute);
 	return (tmp);
 }
 
