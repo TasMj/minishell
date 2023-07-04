@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 19:56:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/04 18:47:19 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/04 21:21:42 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	check_access(char *file, t_cmd *cmd)
 	}
 	else
 	{
-		printf("lol\n");
 		put_str_err("minishell: ");
 		put_str_err(file);
 		put_str_err(": No such file or directory\n");
@@ -77,15 +76,15 @@ int	open_n_dup(t_cmd *cmd, t_xek *x)
 		else if (cmd->redir[i] == STDIN)
 		{
 			fd = open(cmd->file[i], O_RDONLY);
-			// if (fd < 0)
-			// {
-			// 	put_str_err("minishell: ");
-			// 	put_str_err(cmd->file[i]);
-			// 	put_str_err(": No such file or directory\n");
-			// 	if (!(x->nb_cmd > 1 && cmd->id == 0))
-			// 		cmd->data->code_err = 1;
-			// 	return (1);
-			// }
+			if (fd < 0)
+			{
+				put_str_err("minishell: ");
+				put_str_err(cmd->file[i]);
+				put_str_err(": No such file or directory\n");
+				if (!(x->nb_cmd > 1 && cmd->id == 0))
+					cmd->data->code_err = 1;
+				return (1);
+			}
 		}
 		else if (cmd->redir[i] == HEREDOC)
 		{

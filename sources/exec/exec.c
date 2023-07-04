@@ -95,7 +95,7 @@ int	go_exec(t_xek *x, t_minishell *data)
 	{
 		if (!x->cmd[i].cmd || is_builtin(&(x->cmd[i])) == 0)
 			launch_process(&(x->cmd[i]), data);
-		else
+		else if (is_builtin(&(x->cmd[i])) == 1)
 			if (handle_builtin(&(x->cmd[i]), data) != 0)
 				return (wait_child(x), 1);
 		i++;
