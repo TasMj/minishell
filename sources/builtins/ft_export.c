@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/07/04 11:11:56 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/04 17:34:40 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static int	add_var_env(char *stock, t_list *tmp)
 	if (stock[0] == '=')
     {
 		err_write("export: `=': not a valid identifier\n", 1);
+		free(stock);
         return (1);
     }
 	copy = del_equal(stock);
@@ -63,7 +64,7 @@ static int	add_var_env(char *stock, t_list *tmp)
 		}
 		free(msg_err);
 		free(copy);
-		// free(stock);
+		free(stock);
 		return (1);
 	}
 	if (contain_exclam(stock) == 1)
@@ -97,12 +98,12 @@ static int	modify_var(char *stock, t_list *tmp)
 			free((*g_list_env)->content);
 			(*g_list_env)->content = ft_strdup(stock);
 			*g_list_env = tmp;
-			// free(copy_env);
-			// free(copy_token);
+			free(copy_env);
+			free(copy_token);
 			return (1);
 		}
-		// free(copy_env);
-		// free(copy_token);
+		free(copy_env);
+		free(copy_token);
 	}
 	return (0);
 }
@@ -114,6 +115,8 @@ int	ft_export(t_list **list_token)
 	char	*copy;
 	
 	tmp = *g_list_env;
+	// remove_empty_tokens(list_token);
+	// print_list(list_token);
 	if (ft_lstsize(*list_token) == 1)
 	{
 		if (sort_env_ascii() != 0)
@@ -127,7 +130,7 @@ int	ft_export(t_list **list_token)
 			if (check_equal((*list_token)->content) == 0)
 			{
 				stock = ft_strdup((*list_token)->content);
-				stock = ft_strjoin_mod(stock, "=", 1);			
+				stock = ft_strjoin_mod(stock, "=", 1);
 			}
 			else
 				stock = ft_strdup((*list_token)->content);
@@ -146,7 +149,8 @@ int	ft_export(t_list **list_token)
 			if (is_in_env(copy) == 0)
 			{
 				free(copy);
-				return (add_var_env(stock, tmp));
+				add_var_env(stock, tmp);
+				return (0);
 			}
 			else if (modify_var(stock, tmp) == 1)
 			{

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:32 by tas               #+#    #+#             */
-/*   Updated: 2023/07/03 22:12:42 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/04 16:12:55 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int is_alphanum(char *str)
 	}
 		return (0);
 }
+
 
 void    free_empty_token(t_list **list)
 {

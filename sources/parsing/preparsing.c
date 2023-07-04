@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:56:18 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/03 21:44:53 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/04 17:01:24 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	syntax_error(t_minishell *data)
 	return (3);
 }
 
-int	err_quote(t_list **list_token)
+int	err_quote(t_list **list_token, t_minishell *data)
 {
 	t_list	*tmp;
 
@@ -75,6 +75,12 @@ int	err_quote(t_list **list_token)
 		(*list_token) = (*list_token)->next;
 	}
 	*list_token = tmp;
+	if (ft_lstsize(*list_token) == 1 && (ft_strcmp((*list_token)->content, "\'\'") == 0 || ft_strcmp((*list_token)->content, "\"\"") == 0))
+	{
+		data->code_err = 127;
+		put_str_err("minishell: : command not found\n");
+        return (1);
+	}
 	return (0);
 }
 

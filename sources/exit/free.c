@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:33:10 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/04 11:37:31 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/04 17:21:38 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,11 @@ void    free_list_token_content(t_list **list_token)
 		// printf("free g_list %p\n", tmp->content);
 		if (tmp->content)
 		{
-			// printf("2 : %p\n", tmp->content);
-			free(tmp->content);
+			if (tmp->content != NULL)
+			{
+				// printf("1 : %s\n", tmp->content);
+				free(tmp->content);
+			}
 		}
         tmp = tmp->next;
     }

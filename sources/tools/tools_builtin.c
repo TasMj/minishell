@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:08:46 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/03 23:17:02 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/04 17:02:51 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	is_in_env(char *str)
 	char	*copy;
 
 	tmp = *g_list_env;
+	// printf("str: %s\n", str);
 	while (*g_list_env)
 	{
 		copy = del_equal((*g_list_env)->content);

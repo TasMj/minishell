@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:47:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/03 23:25:14 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/04 13:16:05 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,47 @@ int check_dollar(char *str)
 	return (0);
 }
 
+static char	*remove_dollar(char *str)
+{
+	int		i;
+	int		j;
+	char	*token;
+
+	i = 0;
+	j = 0;
+	if (str[i])
+	{
+		i++;
+		token = malloc(sizeof(char) * ft_strlen(str));
+	}
+	else 
+		return (NULL);
+	while(str[i])
+	{
+		token[j] = str[i];
+		i++;
+		j++;
+	}
+	token[j] = '\0';
+	return(token);
+	
+}
+
 char *substitution(t_minishell *data, char *token)
 {
 	char *variable;
-
+	
 	variable = NULL;
 	if ((ft_strlen(token) == 2) && ft_strcmp(token, "$?") == 0)
 		variable = ft_itoa(data->code_err);
-	else if (is_in_env(token + 1))
+	else if (token[0] == '$')
 	{
-		printf("var: %s\n", token);	
-		variable = get_venv(token + 1);
+		char *var_check = remove_dollar(token);
+		if (is_in_env(var_check))
+			variable = get_venv(var_check);
+		else
+			variable = "";
+		free(var_check);
 	}
 	else if (!variable)
 		variable = "";
@@ -79,7 +109,7 @@ char *remove_quote_end(t_substitution *s, t_minishell *data)
 		while (s->keep_var[s->end] != '\0')
 			s->end++;
 		tmp = ft_strdup_size(s->keep_var + s->start, (s->end - s->start));
-		tmp = ft_strjoin_mod(s->var_substitute, tmp, 3);
+		tmp = ft_strjoin_mod(s->var_substitute, tmp, 2);
 	}
 	else
 		tmp = ft_strdup(s->var_substitute);

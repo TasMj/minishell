@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/07/04 11:45:04 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/04 16:47:04 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void go_to_dollar(t_substitution *s, t_minishell *data)
             s->i++;
         s->end = s->i;
         s->keep_var = ft_strdup_size((*data->token)->content + s->start, (s->end - s->start));
-        s->var_substitute = substitution(data, s->keep_var);
+		s->var_substitute = substitution(data, s->keep_var);
         if (ft_strlen(s->var_substitute) != 0)
             s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
         else
@@ -69,18 +69,27 @@ static void go_to_dollar(t_substitution *s, t_minishell *data)
     }
 	if (s->without_dollar)
 	    free(s->without_dollar);
-	printf("fin i: %d\n", s->i);
 }
 
 t_list	*ft_lst_prev(t_list *elem, t_list *first)
 {
+	t_list	*tmp;
+
+	tmp = first;
+	if (first == elem)
+		return (NULL);
 	while (first)
 	{
 		if (first->next == elem)
+		{
+			first = tmp;
 			return (first);
+		}
 		first = first->next;
 	}
-	return (first);
+	first = tmp;	
+	// printf("ret: %s\n", first->content);
+	return (NULL);
 }
 
 static void	more_dollar(t_substitution *s, t_minishell *data)
@@ -117,11 +126,18 @@ void	substitute_dollar(t_minishell *data)
 				quote_sub(s, 2, data);
 			else if (ft_strlen((*data->token)->content) > 1)
 			{
-				if (ft_lst_prev(*data->token, start)->type != HEREDOC)
+				if (ft_lst_prev(*data->token, start) == NULL)
+				{
+					// printf("1\n");
+					start = reset;
+					more_dollar(s, data);
+				}
+				else if (ft_lst_prev(*data->token, start) != NULL && ft_lst_prev(*data->token, start)->type != HEREDOC)
 				{
 					start = reset;
 					more_dollar(s, data);
 				}
+				// more_dollar(s, data);
 			}
 			else if (ft_strlen((*data->token)->content) == 1)
 			{
@@ -191,6 +207,8 @@ static void	delimit_sub(t_substitution *s, t_minishell *data)
 		s->keep_var2 = remove_quote_end(s, data);
 		if (ft_strlen(s->keep_var2) != 0)
 			s->new_content = ft_strjoin_mod(s->new_content, s->keep_var2, 3);
+		else
+			free(s->keep_var2);
 		free(s->keep_var);
 	}
 }

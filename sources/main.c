@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/07/04 10:29:39 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/04 17:25:07 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 int    init_list(t_minishell *data)
 {
     data->token = create_token(data->token, data->input);
-    if (err_quote(data->token) == 1)
+    if (err_quote(data->token, data) == 1)
         return (1);
     get_type(data->token);
     substitute_dollar(data);
     if (err_redir(data) != 3)
         return (1);
     remove_list_quotes(data->token);
-    add_space(data);
+    // add_space(data);
     // remove_empty_tokens(data->token);
     reunite_token(data->token);
     // print_list(data->token);
@@ -40,6 +40,7 @@ int main(int argc, char **argv, char **env)
         return (perror("env malloc error\n"), 1);
     ft_memset(&data, 0, sizeof(t_minishell));
     set_signal();
+    // sigaction()
     while (1)
     {
         data.input = get_input(&data);
