@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/07/04 16:47:04 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/04 21:16:17 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ void	substitute_dollar(t_minishell *data)
 						tmp = (*data->token)->next;
 						free ((*data->token)->content);
 						free(*data->token);
+						(*data->token) = tmp;
 					}
 				}
 			}
