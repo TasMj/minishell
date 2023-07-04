@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/07/04 19:13:39 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/04 19:13:39 by jthuysba         ###   ########.fr       */n
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	set_old_path(char *path)
 {
 	t_list	*tmp;
 	char	*copy_env;
-	t_list *old_content;
+	// t_list *old_content;
 
 	if (is_in_env("OLDPWD") == 0)
 		return (1);
@@ -29,10 +29,11 @@ static int	set_old_path(char *path)
 			(*g_list_env) = (*g_list_env)->next;
 		else if (ft_strcmp(copy_env, "OLDPWD") == 0)
 		{
-			old_content = (*g_list_env);
+			// old_content = (*g_list_env);
+			free((*g_list_env)->content);
 			(*g_list_env)->content = ft_strjoin("OLDPWD=", path);
 			*g_list_env = tmp;
-			free(old_content->content);
+			// free(old_content->content);
 			free(copy_env);
 			return (0);
 		}
@@ -78,7 +79,9 @@ static int	err_cd(t_cmd *cmd, char *path)
 
 	if (is_dir(path) == 0)
 	{
-		msg_err = ft_strjoin((*cmd->cmd)->next->content, ": Not a directory\n");
+		msg_err = ft_strdup("cd: ");
+		msg_err = ft_strjoin_mod(msg_err, (*cmd->cmd)->next->content, 1);
+		msg_err = ft_strjoin_mod(msg_err, ": Not a directory\n", 1);
 		err_write(msg_err, 2);
 		cmd->data->code_err = 127;
 		free(msg_err);
@@ -87,7 +90,9 @@ static int	err_cd(t_cmd *cmd, char *path)
 	}
 	if (chdir(path) == -1)
 	{
-			msg_err = ft_strjoin((*cmd->cmd)->next->content, ": No such file or directory\n");
+			msg_err = ft_strdup("cd: ");
+			msg_err = ft_strjoin_mod(msg_err, (*cmd->cmd)->next->content, 1);
+			msg_err = ft_strjoin_mod(msg_err, ": No such file or directory\n", 1);
 			err_write(msg_err, 2);
 			cmd->data->code_err = 127;
 			free(msg_err);
@@ -115,6 +120,7 @@ int	ft_cd(t_cmd *cmd)
 	t_list	*tmp;
 	char	*msg_err;
 	char	*old_path;
+	char	*home;
 
 	(void)msg_err;
 	tmp = *cmd->cmd;
@@ -168,12 +174,13 @@ int	ft_cd(t_cmd *cmd)
 		}
 		else
 		{
-			char *home = get_venv("HOME");
+			home = get_venv("HOME");
 			if (ft_strlen((*cmd->cmd)->next->content) >= ft_strlen(home)
 			&& ft_strncmp((*cmd->cmd)->next->content, home, ft_strlen(home)) == 0)
 				path = ft_strdup((*cmd->cmd)->next->content);
 			else
 				path = set_path(path, cmd->cmd);
+			free(home);
 		}
 	}
 	else
