@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:29 by tas               #+#    #+#             */
-/*   Updated: 2023/07/04 19:25:27 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 00:31:38 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ void	ft_pwd(void)
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 		printf("%s\n", cwd);
 	else
-		perror("pwd error: No such file or directory\n");
+		perror("pwd error");
 }

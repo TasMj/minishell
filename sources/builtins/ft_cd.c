@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/07/04 19:13:39 by jthuysba         ###   ########.fr       */n
+/*   Updated: 2023/07/05 00:38:52 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,14 @@ static char	*get_previous_dir(char *str)
 static int	err_cd(t_cmd *cmd, char *path)
 {
 	char	*msg_err;
-	(void) cmd;
 
+	// if (path == NULL || ft_strlen(path) == 0)
+	if (path == NULL)
+	{
+		cmd->data->code_err = 127;
+		err_write("cd: ..: No such file or directory\n", 2);
+		return (1);
+	}
 	if (is_dir(path) == 0)
 	{
 		msg_err = ft_strdup("cd: ");
@@ -130,7 +136,7 @@ int	ft_cd(t_cmd *cmd)
         path = ft_strdup((*cmd->cmd)->next->content);
         if (is_dir(path) == 0)
         {
-            put_str_err("minishell: cd: ");
+            put_str_err("cd: ");
             put_str_err((*cmd->cmd)->next->content);
             put_str_err(": Not a directory\n");
             cmd->data->code_err = 127;
@@ -141,8 +147,8 @@ int	ft_cd(t_cmd *cmd)
 	if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && (*cmd->cmd)->next == NULL && is_in_env("HOME") == 1)
 	{
 		path = get_venv("HOME");
-		if (ft_strlen(path) == 0)
-			return (1);
+		if (path == NULL)
+			return (err_msg(4, "IGNORE", 1));
 	}
 	else if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && (*cmd->cmd)->next == NULL && is_in_env("HOME") == 0)
 	{
@@ -170,17 +176,21 @@ int	ft_cd(t_cmd *cmd)
 		}
 		else if (ft_lstsize(*cmd->cmd) == 2 && (*cmd->cmd)->next->content[0] == '~')
 		{
+			if (is_in_env("HOME") == 0)
+				return (err_msg(4, "IGNORE", 2));
 			path = get_venv("HOME");
 		}
 		else
 		{
 			home = get_venv("HOME");
-			if (ft_strlen((*cmd->cmd)->next->content) >= ft_strlen(home)
-			&& ft_strncmp((*cmd->cmd)->next->content, home, ft_strlen(home)) == 0)
+			if (home == NULL && ft_strlen((*cmd->cmd)->next->content) == 0)
+				return (err_msg(4, "IGNORE", 2));
+			if (home != NULL && ft_strlen((*cmd->cmd)->next->content) >= ft_strlen(home) && ft_strncmp((*cmd->cmd)->next->content, home, ft_strlen(home)) == 0)
 				path = ft_strdup((*cmd->cmd)->next->content);
 			else
 				path = set_path(path, cmd->cmd);
-			free(home);
+			if (home)
+				free(home);
 		}
 	}
 	else

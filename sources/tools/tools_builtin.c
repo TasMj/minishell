@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:08:46 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/04 17:02:51 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 00:36:19 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	count_slash(char *str)
 	int	counter;
 	int	i;
 
+	if (!str)
+		return (0);
 	i = 0;
 	counter = 0;
 	while (str[i])
@@ -77,9 +79,15 @@ char	*after_equal(char *str)
 	int		start;
 	char	*var;
 
+	if(check_equal(str) == 0)
+		return (NULL);
 	i = 0;
 	while (str[i] && str[i] != '=')
 		i++;
+	if ((i + 1) == ft_strlen(str))
+	{
+		return (NULL);
+	}
 	if (str[i] && str[i] == '=')
 		i++;
 	start = i;

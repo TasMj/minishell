@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/07/04 21:16:17 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 00:34:38 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static void go_to_dollar(t_substitution *s, t_minishell *data)
 	}
     else
     {
+	printf("str: %s\n" ,(*data->token)->content);
+		
         s->start = s->i;
 		if ((s->i + 1) < ft_strlen((*data->token)->content))
         	s->i++;
@@ -53,7 +55,7 @@ static void go_to_dollar(t_substitution *s, t_minishell *data)
         s->end = s->i;
         s->keep_var = ft_strdup_size((*data->token)->content + s->start, (s->end - s->start));
 		s->var_substitute = substitution(data, s->keep_var);
-        if (ft_strlen(s->var_substitute) != 0)
+		if (s->var_substitute && ft_strlen(s->var_substitute) != 0)
             s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
         else
         {
@@ -96,7 +98,9 @@ static void	more_dollar(t_substitution *s, t_minishell *data)
 {
 	s->i = 0;
 	while ((*data->token)->content[s->i])
+	{
 		go_to_dollar(s, data);
+	}
 	free((*data->token)->content);
 	(*data->token)->content = ft_strdup(s->new_content);
 }
