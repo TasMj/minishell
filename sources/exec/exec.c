@@ -41,10 +41,7 @@ static int	launch_process(t_cmd *cmd, t_minishell *data)
 	{
 		dup_pipe(cmd, data->x);
 		if (open_n_dup(cmd, data->x) != 0)
-		{
-			// destroy_exec(data->x);
 			ft_exit(data);
-		}
 		if (cmd->cmd)
 			exec_it(cmd , data);
 		else

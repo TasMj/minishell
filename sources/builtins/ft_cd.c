@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 09:09:43 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 11:14:07 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,31 @@ static char	*set_path(char *path, t_list **list)
 	return (path);
 }
 
+static int	modify_pwd(char *new_pwd)
+{
+	char	*copy_env;
+	t_list	*tmp;
+
+	tmp = *g_list_env;
+	while (*g_list_env)
+	{
+		copy_env = del_equal((*g_list_env)->content);
+		if (ft_strcmp(copy_env, "PWD") == 1)
+			(*g_list_env) = (*g_list_env)->next;
+		else if (ft_strcmp(copy_env, "PWD") == 0)
+		{
+			free((*g_list_env)->content);
+			(*g_list_env)->content = ft_strjoin("PWD=", new_pwd);
+			*g_list_env = tmp;
+			free(copy_env);
+			return (1);
+		}
+		free(copy_env);
+	}
+	*g_list_env = tmp;
+	return (0);
+}
+
 int	ft_cd(t_cmd *cmd)
 {
 	char	cwd[1024];
@@ -159,17 +184,15 @@ int	ft_cd(t_cmd *cmd)
 	path = NULL;
 	if (cmd->data->x->nb_cmd > 1)
     {
-		if (err_nb_cmd(cmd, path) == 1)
-			return (1);
-        // path = ft_strdup((*cmd->cmd)->next->content);
-        // if (is_dir(path) == 0)
-        // {
-        //     put_str_err("cd: ");
-        //     put_str_err((*cmd->cmd)->next->content);
-        //     put_str_err(": Not a directory\n");
-        //     cmd->data->code_err = 127;
-        // }
-        // return (free(path), 0);
+        path = ft_strdup((*cmd->cmd)->next->content);
+        if (chdir(path) == -1)
+        {
+            put_str_err("cd: ");
+            put_str_err((*cmd->cmd)->next->content);
+            put_str_err(": No such file or directory\n");
+            cmd->data->code_err = 1;
+        }
+        return (free(path), 0);
     }
 	old_path = getcwd(cwd, sizeof(cwd));
 	if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && (*cmd->cmd)->next == NULL && is_in_env("HOME") == 1)
@@ -188,7 +211,15 @@ int	ft_cd(t_cmd *cmd)
 	else if (ft_lstsize(*cmd->cmd) <= 2)
 	{
 		if (ft_lstsize(*cmd->cmd) == 2 && contain_slash((*cmd->cmd)->next->content) == 0)
-			path = get_venv("HOME"); //mettre le bon emplacement
+		{
+			chdir("/");
+			*cmd->cmd = tmp;
+			if (path)
+				free(path);
+			set_old_path(old_path);
+			modify_pwd("/");
+			return (0);
+		}
 		else if (ft_lstsize(*cmd->cmd) == 2 && (*cmd->cmd)->next->content[0] == '-')
 		{
 			if (ft_strlen((*cmd->cmd)->next->content) == 1)
@@ -229,7 +260,9 @@ int	ft_cd(t_cmd *cmd)
 	if (err_cd(cmd, path) == 1)
 		return (1);
 	*cmd->cmd = tmp;
+	modify_pwd(path);
 	free(path);
 	set_old_path(old_path);
 	return (0);
 }
+

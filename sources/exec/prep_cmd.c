@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/04 20:07:52 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 10:15:36 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int	check_cmd(t_cmd *cmd)
 	/* Si la commande est un path */
 	if (!cmd->cmd)
 		return (0);
-	if (cmd->cmd && has_slash(cmd) == 1)
+	if (cmd->cmd && (has_slash(cmd) == 1 || is_in_env("PATH") == 0))
 	{
 		if (access((*cmd->cmd)->content, F_OK) == -1)
 		{

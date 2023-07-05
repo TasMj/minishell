@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 09:06:57 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 10:10:10 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,6 @@ void	substitute_dollar(t_minishell *data)
 			{
 				if (ft_lst_prev(*data->token, start) == NULL)
 				{
-					// printf("1\n");
 					start = reset;
 					more_dollar(s, data);
 				}
