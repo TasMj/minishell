@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   create_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
 /*   Updated: 2023/07/05 11:35:21 by jthuysba         ###   ########.fr       */
@@ -18,7 +18,7 @@ char	*get_input(t_minishell *data)
 	char	*input;
 	char	cwd[1024];
 	char	*prompt;
-	char	*code;
+	// char	*code;
 
 	code = ft_itoa(data->code_err);
 	getcwd(cwd, sizeof(cwd));
@@ -35,9 +35,6 @@ char	*get_input(t_minishell *data)
 	// prompt = ft_strjoin_mod(getcwd(cwd, sizeof(cwd)));
 
 
-
-
-	
 	// if (data->code_err == 0)
 	// {
 	// 	prompt = ft_strdup("[");
@@ -59,7 +56,11 @@ char	*get_input(t_minishell *data)
 	// prompt = ft_strdup("\033[1;32m$> \033[0m");
 	input = readline(prompt); 
 	free(prompt);
-	if (input == NULL)
+	if (data->code_err == 130)
+	{
+		return (NULL);
+	}
+	else if (input == NULL)
 	{
 		free(input);
 		write(1, "exit\n", 5);
