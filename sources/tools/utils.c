@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:30:38 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/04 19:56:05 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:41:54 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	**lst_to_tab(t_list **lst)
 {
 	t_list	*elem;
 	char	**tab;
-	int	i;
+	int		i;
 
 	elem = *lst;
 	tab = malloc(sizeof(char *) * (ft_lstsize(*lst) + 1));
@@ -70,6 +70,7 @@ ex : /bin/ls, /jules */
 int	has_slash(t_cmd *cmd)
 {
 	int	i;
+
 	i = 0;
 	while ((*cmd->cmd)->content[i])
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 12:14:14 by tas               #+#    #+#             */
-/*   Updated: 2023/07/03 18:06:22 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 16:43:10 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,24 @@ typedef struct s_list
 
 typedef struct s_substitution
 {
-    char    *var_substitute;
-    char    *keep_var;
-    char	*keep_var2;
-    char    *new_content;
-    char    *without_dollar;
-    char	*stock;
-    int		start;
-    int		end;
-    int		deb;
-    int		i;
-	int		flag;
-	int		flag_space;
-	int		flag_keep_quote;
-	int		quote;
+    char    		*var_substitute;
+    char    		*keep_var;
+    char			*keep_var2;
+    char    		*new_content;
+    char    		*without_dollar;
+    char			*stock;
+    int				start;
+    int				end;
+    int				deb;
+    int				i;
+	int				flag;
+	int				flag_space;
+	int				flag_keep_quote;
+	int				quote;
+	t_list			*tmp;
+	t_list			*prev;
+	t_list			*starting;
+	t_list			*reset;
 }	t_substitution;
 
 typedef struct s_data

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 12:17:52 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:44:59 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ char	*get_input(t_minishell *data)
 
 	code = ft_itoa(data->code_err);
 	getcwd(cwd, sizeof(cwd));
-
 	if (data->code_err == 0)
 		prompt = ft_strdup("[");
 	else
@@ -65,7 +64,7 @@ static void	delimit_operator(t_substitution *s, char *input)
 			s->i++;
 	}
 	else if (input[s->i] == '$' && input[s->i + 1] && input[s->i + 1] == '?')
-		s->i+=2;
+		s->i += 2;
 	else
 	{
 		while (is_a_separator(input[s->i]) == 0

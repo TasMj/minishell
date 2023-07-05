@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 12:25:10 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 15:43:35 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@ int    init_list(t_minishell *data)
     substitute_dollar(data);
     if (err_redir(data) != 3)
     {
-    printf("%d\n", err_redir(data));
+        // printf("lala\n");
         return (1);
-        
     }
     remove_list_quotes(data->token);
     // add_space(data);

@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 10:10:10 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 17:19:17 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,67 +14,89 @@
 
 void	go_to_code_err(t_substitution *s, t_minishell *data)
 {
+	int		deb;
+	char	*tmp;
+
 	s->start = s->i;
-    s->i += 2;
-    s->end = s->i;
-    s->keep_var = ft_strdup_size((*data->token)->content + s->start, (s->end - s->start));
-    s->var_substitute = substitution(data, s->keep_var);
-	int deb = s->i;
-    s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
-    while ((*data->token)->content[s->i] != '\0'
-		&& (!ft_isalnum((*data->token)->content[s->i]) && (*data->token)->content[s->i] != '$'))
-           s->i++;
-	char *tmp = ft_strdup_size((*data->token)->content + deb, (s->i - deb));
-    s->new_content = ft_strjoin_mod(s->new_content, tmp, 3);
-    free(s->keep_var);
+	s->i += 2;
+	s->end = s->i;
+	s->keep_var = ft_strdup_size((*data->token)->content + s->start, \
+	(s->end - s->start));
+	s->var_substitute = substitution(data, s->keep_var);
+	deb = s->i;
+	s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
+	while ((*data->token)->content[s->i] != '\0'
+		&& (!ft_isalnum((*data->token)->content[s->i]) && \
+		(*data->token)->content[s->i] != '$'))
+			s->i++;
+	tmp = ft_strdup_size((*data->token)->content + deb, (s->i - deb));
+	s->new_content = ft_strjoin_mod(s->new_content, tmp, 3);
+	free(s->keep_var);
+}
+
+void	go_to_rest_bis(int deb, t_minishell *data, t_substitution *s)
+{
+	char	*tmp;
+
+	s->new_content = ft_strjoin_mod(s->new_content, "", 1);
+	tmp = ft_strdup_size((*data->token)->content + deb, (s->i - deb));
+	while ((*data->token)->content[s->i] != '\0'
+		&& (!ft_isalnum((*data->token)->content[s->i])
+			&& (*data->token)->content[s->i] != '$'))
+		s->i++;
+	s->new_content = ft_strjoin_mod(s->new_content, tmp, 3);
 }
 
 void	go_to_rest(t_substitution *s, t_minishell *data)
 {
+	int		deb;
+
 	s->start = s->i;
 	if ((s->i + 1) < ft_strlen((*data->token)->content))
-    	s->i++;
-    while ((*data->token)->content[s->i] != '\0' && (ft_isalnum((*data->token)->content[s->i]) || (*data->token)->content[s->i] == '_'))
-        s->i++;
-    s->end = s->i;
-    s->keep_var = ft_strdup_size((*data->token)->content + s->start, (s->end - s->start));
+		s->i++;
+	while ((*data->token)->content[s->i] != '\0'
+		&& (ft_isalnum((*data->token)->content[s->i])
+			|| (*data->token)->content[s->i] == '_'))
+		s->i++;
+	s->end = s->i;
+	s->keep_var = ft_strdup_size((*data->token)->content + s->start, \
+	(s->end - s->start));
 	s->var_substitute = substitution(data, s->keep_var);
 	if (s->var_substitute && ft_strlen(s->var_substitute) != 0)
-        s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
-    else
-    {
-		int deb = s->i;
-        s->new_content = ft_strjoin_mod(s->new_content, "", 1);
-        while ((*data->token)->content[s->i] != '\0' && (!ft_isalnum((*data->token)->content[s->i]) && (*data->token)->content[s->i] != '$'))
-            s->i++;
-		char *tmp = ft_strdup_size((*data->token)->content + deb, (s->i - deb));
-        s->new_content = ft_strjoin_mod(s->new_content, tmp, 3);
-    }
-    if (s->keep_var)
+		s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
+	else
+	{
+		deb = s->i;
+		go_to_rest_bis(deb, data, s);
+	}
+	if (s->keep_var)
 		free(s->keep_var);
 }
 
-static void go_to_dollar(t_substitution *s, t_minishell *data)
+static	void	go_to_dollar(t_substitution *s, t_minishell *d)
 {
-    s->deb = s->i;
-    while ((*data->token)->content[s->i] && (*data->token)->content[s->i] != '$')
-        s->i++;
-    s->without_dollar = ft_strdup_size((*data->token)->content + s->deb, (s->i - s->deb));
+	s->deb = s->i;
+	while ((*d->token)->content[s->i] && (*d->token)->content[s->i] != '$')
+		s->i++;
+	s->without_dollar = ft_strdup_size((*d->token)->content + s->deb, \
+	(s->i - s->deb));
 	if (!s->new_content)
 		s->new_content = ft_strdup(s->without_dollar);
 	else
 		s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 1);
-    if ((*data->token)->content[s->i] && (*data->token)->content[s->i] == '$' && (*data->token)->content[s->i + 1] == '\0')
-    {
-        s->new_content = ft_strjoin_mod(s->new_content, "$", 0);
-        s->i++;
-    }
-	else if ((*data->token)->content[s->i] && (*data->token)->content[s->i + 1] && (*data->token)->content[s->i + 1] == '?')
-		go_to_code_err(s, data);
-    else
-		go_to_rest(s, data);
+	if ((*d->token)->content[s->i] && (*d->token)->content[s->i] == '$'
+		&& (*d->token)->content[s->i + 1] == '\0')
+	{
+		s->new_content = ft_strjoin_mod(s->new_content, "$", 0);
+		s->i++;
+	}
+	else if ((*d->token)->content[s->i] && (*d->token)->content[s->i + 1]
+		&& (*d->token)->content[s->i + 1] == '?')
+		go_to_code_err(s, d);
+	else
+		go_to_rest(s, d);
 	if (s->without_dollar)
-	    free(s->without_dollar);
+		free(s->without_dollar);
 }
 
 t_list	*ft_lst_prev(t_list *elem, t_list *first)
@@ -93,11 +115,11 @@ t_list	*ft_lst_prev(t_list *elem, t_list *first)
 		}
 		first = first->next;
 	}
-	first = tmp;	
+	first = tmp;
 	return (NULL);
 }
 
-static void	more_dollar(t_substitution *s, t_minishell *data)
+static	void	more_dollar(t_substitution *s, t_minishell *data)
 {
 	s->i = 0;
 	while ((*data->token)->content[s->i])
@@ -108,20 +130,62 @@ static void	more_dollar(t_substitution *s, t_minishell *data)
 	(*data->token)->content = ft_strdup(s->new_content);
 }
 
+void	without_quotes(t_minishell *data, t_substitution *s)
+{
+	if (ft_lst_prev(*data->token, s->starting) == NULL)
+	{
+		s->starting = s->reset;
+		more_dollar(s, data);
+	}
+	else if (ft_lst_prev(*data->token, s->starting) != NULL
+		&& ft_lst_prev(*data->token, s->starting)->type != HEREDOC)
+	{
+		s->starting = s->reset;
+		more_dollar(s, data);
+	}
+}
+
+void	quotes_next_to_dollar(t_minishell *data, t_substitution *s)
+{
+	if (!(!(*data->token)->next && (*data->token)->content[0] == '$')
+		&& (!((*data->token)->next->content && (*data->token)->content[0] == '$'
+				&& (*data->token)->next->flag_space == 1))
+		&& (*data->token)->next->content && (*data->token)->content[0] == '$'
+		&& (*data->token)->next->flag_space == 0)
+	{
+		if (s->prev != NULL)
+		{
+			s->prev->next = (*data->token)->next;
+			(*data->token)->next->flag_space = (*data->token)->flag_space;
+			free((*data->token)->content);
+			free(*data->token);
+			(*data->token) = s->prev;
+		}
+		else
+		{
+			s->tmp = (*data->token)->next;
+			free ((*data->token)->content);
+			free(*data->token);
+			(*data->token) = s->tmp;
+		}
+	}
+}
+
+void	init_s(t_substitution *s, t_minishell *data)
+{
+	ft_memset(s, 0, sizeof(t_substitution));
+	s->starting = *data->token;
+	s->reset = *data->token;
+	s->tmp = *data->token;
+	s->prev = NULL;
+}
+
 void	substitute_dollar(t_minishell *data)
 {
 	t_substitution	*s;
-	t_list			*tmp;
-	t_list			*prev;
-	t_list	*start;
-	t_list	*reset;
 
-	start = *data->token;
-	reset = *data->token;
 	s = malloc(sizeof(t_substitution));
-	ft_memset(s, 0, sizeof(t_substitution));
-	tmp = *data->token;
-	prev = NULL;
+	init_s(s, data);
 	while ((*data->token) != NULL)
 	{
 		s->new_content = NULL;
@@ -132,66 +196,37 @@ void	substitute_dollar(t_minishell *data)
 			else if ((*data->token)->content[0] == 39)
 				quote_sub(s, 2, data);
 			else if (ft_strlen((*data->token)->content) > 1)
-			{
-				if (ft_lst_prev(*data->token, start) == NULL)
-				{
-					start = reset;
-					more_dollar(s, data);
-				}
-				else if (ft_lst_prev(*data->token, start) != NULL && ft_lst_prev(*data->token, start)->type != HEREDOC)
-				{
-					start = reset;
-					more_dollar(s, data);
-				}
-				// more_dollar(s, data);
-			}
+				without_quotes(data, s);
 			else if (ft_strlen((*data->token)->content) == 1)
-			{
-				if (!(!(*data->token)->next && (*data->token)->content[0] == '$')
-					&& (!((*data->token)->next->content && (*data->token)->content[0] == '$' && (*data->token)->next->flag_space == 1))
-					&& (*data->token)->next->content && (*data->token)->content[0] == '$' && (*data->token)->next->flag_space == 0)
-				{
-					if (prev != NULL)
-					{
-						prev->next = (*data->token)->next;
-						(*data->token)->next->flag_space = (*data->token)->flag_space;
-						free((*data->token)->content);
-						free(*data->token);
-						(*data->token) = prev;
-					}
-					else
-					{
-						tmp = (*data->token)->next;
-						free ((*data->token)->content);
-						free(*data->token);
-						(*data->token) = tmp;
-					}
-				}
-			}
+				quotes_next_to_dollar(data, s);
 		}
 		if (s->new_content)
 			free(s->new_content);
-		prev = (*data->token);
+		s->prev = (*data->token);
 		(*data->token) = (*data->token)->next;
 	}
-	*data->token = tmp;
+	*data->token = s->tmp;
 	free(s);
 }
 
 void	delim_exclam(t_substitution *s, t_minishell *data)
 {
+	char	*tmp;
+	int		deb;
+
 	s->start = s->i;
-    s->i += 2;
-    s->end = s->i;
-    s->keep_var = ft_strdup_size(s->stock + s->start, (s->end - s->start));
-    s->keep_var2 = remove_quote_end(s, data);
-	int deb = s->i;
-    s->new_content = ft_strjoin_mod(s->new_content, s->keep_var2, 3);
-    while (s->stock[s->i] != '\0' && (!ft_isalnum(s->stock[s->i]) && s->stock[s->i] != '$'))
-           s->i++;
-	char *tmp = ft_strdup_size(s->stock + deb, (s->i - deb));
-    s->new_content = ft_strjoin_mod(s->new_content, tmp, 3);
-    free(s->keep_var);
+	s->i += 2;
+	s->end = s->i;
+	s->keep_var = ft_strdup_size(s->stock + s->start, (s->end - s->start));
+	s->keep_var2 = remove_quote_end(s, data);
+	deb = s->i;
+	s->new_content = ft_strjoin_mod(s->new_content, s->keep_var2, 3);
+	while (s->stock[s->i] != '\0' && (!ft_isalnum(s->stock[s->i])
+			&& s->stock[s->i] != '$'))
+			s->i++;
+	tmp = ft_strdup_size(s->stock + deb, (s->i - deb));
+	s->new_content = ft_strjoin_mod(s->new_content, tmp, 3);
+	free(s->keep_var);
 }
 
 void	delim_rest(t_substitution *s, t_minishell *data)
@@ -213,12 +248,14 @@ void	delim_rest(t_substitution *s, t_minishell *data)
 
 static void	delimit_sub(t_substitution *s, t_minishell *data)
 {
-	if (s->stock[s->i] && s->stock[s->i] == '$' && (is_a_space(s->stock[s->i + 1]) == 1 || s->stock[s->i + 1] == '\0'))
+	if (s->stock[s->i] && s->stock[s->i] == '$'
+		&& (is_a_space(s->stock[s->i + 1]) == 1 || s->stock[s->i + 1] == '\0'))
 	{
 		s->new_content = ft_strjoin_mod(s->new_content, "$", 1);
 		s->i++;
 	}
-	else if (s->stock[s->i] && s->stock[s->i] == '$' && s->stock[s->i + 1] && s->stock[s->i + 1] == '?')
+	else if (s->stock[s->i] && s->stock[s->i] == '$'
+		&& s->stock[s->i + 1] && s->stock[s->i + 1] == '?')
 		delim_exclam(s, data);
 	else if (s->stock[s->i] && s->stock[s->i + 1] && s->stock[s->i] == '$'
 		&& (is_a_space(s->stock[s->i + 1]) == 0
@@ -243,7 +280,8 @@ void	in_substitution(t_substitution *s, t_minishell *data)
 	else
 	{
 		if (s->without_dollar)
-			s->new_content = ft_strjoin_mod(s->new_content, s->without_dollar, 3);
+			s->new_content = ft_strjoin_mod(s->new_content, \
+			s->without_dollar, 3);
 	}
 	delimit_sub(s, data);
 }
@@ -251,7 +289,7 @@ void	in_substitution(t_substitution *s, t_minishell *data)
 char	*sub_quotes(char *token, t_substitution *s, t_minishell *data)
 {
 	char	*to_return;
-	
+
 	s->i = 0;
 	s->stock = remove_quotes(token);
 	while (s->stock[s->i])

@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 12:45:54 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 00:35:37 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 14:42:52 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,25 +151,25 @@ long long	ft_atoi(const char *nptr)
 {
 	long long	res;
 	int			i;
-	int			sign;
+	int			sgn;
 
 	i = 0;
 	res = 0;
-	sign = 1;
+	sgn = 1;
 	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == ' ')
 		i++;
 	if (nptr[i] == '+' || nptr[i] == '-')
 	{
 		if (nptr[i] == '-')
-			sign = -sign;
+			sgn = -sgn;
 		i++;
 	}
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
-		if ((res > 2147483647 && sign == 1) || (res < -2147483648 && sign == -1))
+		if ((res > 2147483647 && sgn == 1) || (res < -2147483648 && sgn == -1))
 			return (-1);
 		res = (res * 10) + (nptr[i] - 48);
 		i++;
 	}
-	return (res * sign);
+	return (res * sgn);
 }
