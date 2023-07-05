@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 19:56:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/05 04:24:11 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 05:55:28 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,13 @@ int	open_n_dup(t_cmd *cmd, t_xek *x)
 int	exec_it(t_cmd *cmd, t_minishell *data)
 {
 	//Si commande invalide
+	// printf("ici\n");
+	signal_default();
 	if (!cmd->path && is_builtin(cmd) == 0 && has_slash(cmd) == 0)
 	{
 		ft_exit(data);
 	}
 	cmd->tab_env = lst_to_tab(g_list_env);
-	// signal_ignore();
 	if (has_slash(cmd) == 1)
 	{
 		if (execve((*cmd->cmd)->content, cmd->tab, cmd->tab_env) != 0)

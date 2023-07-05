@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 04:12:02 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 04:51:16 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int main(int argc, char **argv, char **env)
     if (!g_list_env)
         return (perror("env malloc error\n"), 1);
     data = singleton_minishell();
+    data->code_err = 0;
     while (1)
     {
         set_signal();

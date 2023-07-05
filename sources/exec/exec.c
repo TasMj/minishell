@@ -66,10 +66,16 @@ int	wait_child(t_xek *x)
 		if (!x->cmd[i].cmd || is_builtin(&x->cmd[i]) == 0)
 		{
 			waitpid(x->cmd[i].pid, &ret, WUNTRACED);
+			set_signal();
 			if (x->cmd[i].id == x->nb_cmd - 1)
 			{
 				if (WIFEXITED(ret))
 					x->cmd->data->code_err = WEXITSTATUS(ret);
+				else if (WIFSIGNALED(ret))
+				{
+					signal_signal(ret);
+					// x->cmd->data->code_err = 128 + WTERMSIG(ret);
+				}
 				else
 				{
 					x->cmd->data->code_err = WTERMSIG(ret) + 128;
@@ -90,9 +96,10 @@ int	go_exec(t_xek *x, t_minishell *data)
 	
 	/* On lance un process pour chaque commande */
 	i = 0;
-	signal_ignore();
+	// signal_ignore();
 	while (i < x->nb_cmd)
 	{
+		signal_ignore();
 		if (!x->cmd[i].cmd || is_builtin(&(x->cmd[i])) == 0)
 			launch_process(&(x->cmd[i]), data);
 		else if (is_builtin(&(x->cmd[i])) == 1)
@@ -101,7 +108,7 @@ int	go_exec(t_xek *x, t_minishell *data)
 		i++;
 	}
 	wait_child(x);
-	set_signal();
+	// set_signal();
 	return (0);
 }
 
