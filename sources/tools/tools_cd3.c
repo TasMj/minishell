@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 21:15:13 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 21:20:58 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/06 00:51:23 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ int	handl_root(t_cmd *cmd, t_cd *c)
 		*cmd->cmd = c->tmp;
 		set_old_path(c->old_path);
 		modify_pwd("/");
+		if (c->path)
+			free(c->path);
+		free(c);
 		return (1);
 	}
 	return (0);
@@ -28,6 +31,8 @@ int	handl_root(t_cmd *cmd, t_cd *c)
 
 int	cd_directory(t_cd *c, t_cmd *cmd)
 {
+	if (c->path)
+		return (0);
 	c->home = get_venv("HOME");
 	if (c->home == NULL && ft_strlen((*cmd->cmd)->next->content) == 0)
 		return (err_msg(4, "IGNORE", 2));
@@ -53,6 +58,7 @@ int	go_chdir(t_cmd *cmd, t_cd *c)
 	modify_pwd(c->path);
 	if (c->path)
 		free(c->path);
+	free(c);	
 	return (2);
 }
 
@@ -60,24 +66,33 @@ int	cd_home(t_cmd *cmd, t_cd *c)
 {
 	if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && (*cmd->cmd)->next == NULL)
 	{
-		if (go_chdir(cmd, c) == 1)
-			return (1);
-		if (go_chdir(cmd, c) == 2)
-			return (2);
+		return (go_chdir(cmd,c));
+		// if (go_chdir(cmd, c) == 1)
+		// 	return (1);
+		// if (go_chdir(cmd, c) == 2)
+		// 	return (2);
 	}
-	if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && is_in_env("HOME") == 1)
-	{
-		c->path = get_venv("HOME");
-		if (c->path == NULL)
-			return (err_msg(4, "IGNORE", 1));
-	}
+	// if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && is_in_env("HOME") == 1 && ft_strcmp((".."), (*cmd->cmd)->next->content) != 0)
+	// {
+	// 	c->path = get_venv("HOME");
+	// 	printf("path: %s\n", c->path);
+	// 	if (c->path == NULL)
+	// 	{
+	// 		free(c);
+	// 		return (err_msg(4, "IGNORE", 1));
+	// 	}
+	// }
 	else if ((*cmd->cmd)->next && ft_strcmp((".."), \
 	(*cmd->cmd)->next->content) == 0)
+	{
 		c->path = get_previous_dir(getcwd(c->cwd, sizeof(c->cwd)));
+		printf("oui\n");	
+	}
 	else if (ft_strcmp("cd", (*cmd->cmd)->content) == 0
 		&& is_in_env("HOME") == 0)
 	{
 		*cmd->cmd = c->tmp;
+		free(c);			
 		return (err_msg(4, "IGNORE", 1));
 	}
 	return (0);

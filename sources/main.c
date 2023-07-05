@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 15:17:17 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/06 00:03:23 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ int    init_list(t_minishell *data)
     get_type(data->token);
     substitute_dollar(data);
     if (err_redir(data) != 3)
-    {
-        // printf("lala\n");
         return (1);
-    }
     remove_list_quotes(data->token);
     // add_space(data);
     // remove_empty_tokens(data->token);
@@ -38,12 +35,40 @@ t_minishell *singleton_minishell(void)
     if (data == NULL)
     {
         data = (t_minishell *)malloc(sizeof(t_minishell));
-        // ft_memset(&data, 0, sizeof(t_minishell));
         data->input = NULL;
         data->token = NULL;
         data->x = NULL;
     }
     return (data);
+}
+
+int	ft_isspace(char c)
+{
+	if (c == '\t' || c == '\n' || c == '\v'
+		|| c == '\f' || c == '\r' || c == ' ' || c == '\0')
+		return (1);
+	else
+		return (0);
+}
+
+int	space_only(char *p)
+{
+	char	*char_ptr;
+
+	char_ptr = p;
+	if (char_ptr != NULL)
+	{
+		while (*char_ptr)
+		{
+			if (ft_isspace(*char_ptr))
+				char_ptr++;
+			else
+				return (0);
+		}
+		return (1);
+	}
+	else
+		return (1);
 }
 
 int main(int argc, char **argv, char **env)
@@ -60,19 +85,15 @@ int main(int argc, char **argv, char **env)
     while (1)
     {
         set_signal();
-        // signal_ignore();
         data->input = get_input(data);
-        if (data->input[0])
+        if (data->input && space_only(data->input) == 0)
         {
             data->token = malloc(sizeof(t_list));
+            *data->token = NULL;
             if (!data->input && !data->token[0])
             {
-                free_list_token_content(data->token);
-                free_list(data->token);
-                free(data->input);
                 break ;
             }
-            *data->token = NULL;
             if (init_list(data) == 0)
             {
                 data->code_err = 0;
@@ -82,13 +103,10 @@ int main(int argc, char **argv, char **env)
                     set_signal();
                 }
             }
-            // print_list(data->token);
             free_list_token_content(data->token);
             free_list(data->token);
             free(data->input);
         }
-        // else
-        //     data->code_err = 0;
     }
     free_list_token_content(g_list_env);
     free_list(g_list_env);

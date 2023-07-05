@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 15:24:22 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 23:49:16 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,12 @@ char	*get_input(t_minishell *data)
 	char	*input;
 	// char	cwd[1024];
 	char	*prompt;
+	char	*code;
   
-	prompt = ft_strdup("$> ");
+	code = ft_itoa(data->code_err);
+	prompt = ft_strdup(code);
+	prompt = ft_strjoin_mod(prompt, "> ", 1);
+	free(code);
 	input = readline(prompt); 
 	free(prompt);
 	if (input == NULL)

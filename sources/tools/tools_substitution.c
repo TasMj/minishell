@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 22:34:52 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 22:52:49 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/06 00:17:49 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ t_list	*ft_lst_prev(t_list *elem, t_list *first)
 		return (NULL);
 	while (first)
 	{
-		if (first->next == elem)
+		printf("first: %s\n", first->content);
+		if (first->next && first->next == elem)
 		{
 			first = tmp;
 			return (first);

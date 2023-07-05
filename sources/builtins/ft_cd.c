@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 21:31:49 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/06 00:44:18 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int	ft_cd(t_cmd *cmd)
 	else
 	{
 		*cmd->cmd = c->tmp;
+		free(c);
 		return (err_msg(3, "IGNORE", 1));
 	}
 	end_cd(cmd, c);

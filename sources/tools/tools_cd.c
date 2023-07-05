@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 21:10:01 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 21:17:46 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/06 00:44:31 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	invalid_option(t_cmd *cmd, t_cd *c)
 		invalid option\ncd: usage: cd [-L|[-P [-e]] [-@]] [dir]\n", 1);
 		err_write(c->msg_err, 2);
 		free(c->msg_err);
+		free(c);
 		return (1);
 	}
 	return (0);
@@ -34,8 +35,9 @@ int	end_cd(t_cmd *cmd, t_cd *c)
 		return (1);
 	*cmd->cmd = c->tmp;
 	modify_pwd(c->path);
-	free(c->path);
 	set_old_path(c->old_path);
+	if (c->path)
+		free(c->path);
 	free(c);
 	return (0);
 }
@@ -48,7 +50,10 @@ int	intit_cd(t_cmd *cmd, t_cd *c)
 	if (cmd->data->x->nb_cmd > 1)
 	{
 		if (err_nb_cmd(cmd, c->path) == 1)
+		{
+			free(c);	
 			return (1);
+		}
 	}
 	c->old_path = getcwd(c->cwd, sizeof(c->cwd));
 	return (0);
@@ -57,7 +62,10 @@ int	intit_cd(t_cmd *cmd, t_cd *c)
 int	home_unset(t_cd *c)
 {
 	if (is_in_env("HOME") == 0)
+	{
+		free(c);
 		return (err_msg(4, "IGNORE", 2));
+	}
 	c->path = get_venv("HOME");
 	return (0);
 }
