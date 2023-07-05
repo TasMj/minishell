@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 08:32:11 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 10:06:30 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ t_list	*ft_lst_prev(t_list *elem, t_list *first)
 	t_list	*tmp;
 
 	tmp = first;
-	printf("elem: %s\n",elem->content);
 	if (first == elem)
 		return (NULL);
 	while (first)

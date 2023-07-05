@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:47:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 09:16:19 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 09:55:31 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,6 @@ void sub_dollar_hdoc(t_substitution *s, char *str, t_minishell *data)
         s->start = s->i;
 		if ((s->i + 1) < ft_strlen((*data->token)->content))
 	        s->i++;
-		printf("i: %d\n", s->i);
         while ((s->i <= ft_strlen(str)) && str[s->i] != '\0' && (ft_isalnum(str[s->i]) || str[s->i] == '_'))
             s->i++;
         s->end = s->i;
@@ -175,6 +174,4 @@ void sub_dollar_hdoc(t_substitution *s, char *str, t_minishell *data)
     }
 	if (s->without_dollar)
 	    free(s->without_dollar);
-	printf("nc: %s\n", s->new_content);
-		
 }
