@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 12:17:39 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 12:17:52 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,39 +29,14 @@ char	*get_input(t_minishell *data)
 		prompt = ft_strdup("[\033[1;31m");
 	prompt = ft_strjoin_mod(prompt, code, 1);
 	if (data->code_err == 0)
-		prompt = ft_strjoin_mod(prompt, "]", 1);
+		prompt = ft_strjoin_mod(prompt, "] ", 1);
 	else
-		prompt = ft_strjoin_mod(prompt, "\033[0m]", 1);
-	// prompt = ft_strjoin_mod(getcwd(cwd, sizeof(cwd)));
-
-
-	// if (data->code_err == 0)
-	// {
-	// 	prompt = ft_strdup("[");
-	// 	prompt = ft_strjoin_mod(prompt, code, 1);
-	// 	prompt = ft_strjoin_mod(prompt, "]\033[1;32m\033[0m", 1);
-	// 	prompt = ft_strjoin_mod(prompt, getcwd(cwd, sizeof(cwd)), 1);
-	// 	prompt = ft_strjoin_mod("\033[1;33m", prompt, 2);
-	// 	prompt = ft_strjoin_mod(prompt, "\033[0m", 1);
-	// 	prompt = ft_strjoin_mod(prompt, "$> ", 1);
-	// }
-	// else
-	// {
-	// 	prompt = ft_strdup("[\033[1;31m");
-	// 	prompt = ft_strjoin_mod(prompt, code, 1);
-	// 	prompt = ft_strjoin_mod(prompt, "\033[0m]\033[1;32m\033[0m", 1);
-	// }
-	// prompt = ft_strdup("> ");
-	// }
-	// prompt = ft_strjoin_mod();
+		prompt = ft_strjoin_mod(prompt, "\033[0m] ", 1);
 	free(code);
-	// prompt = ft_strdup("\033[1;32m$> \033[0m");
 	input = readline(prompt); 
 	free(prompt);
 	if (data->code_err == 130)
-	{
 		return (NULL);
-	}
 	else if (input == NULL)
 	{
 		free(input);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 13:02:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/05 09:04:20 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 12:36:51 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,20 @@ void    ft_exit_code(t_cmd *cmd, t_minishell *data)
     }
     printf("exit\n");
     ft_exit(data);
+}
+
+int	handle_exit(t_cmd *cmd, t_minishell *data)
+{
+	if (ft_strcmp((*cmd->cmd)->content, "exit") == 0)
+	{
+		if (ft_lstsize(*(cmd->cmd)) == 1 && data->x->nb_cmd == 1)
+		{
+			printf("exit\n");
+			ft_exit(cmd->data);
+		}
+		else if (ft_lstsize(*(cmd->cmd)) > 1)
+			ft_exit_code(cmd, data);
+		return (1);
+	}
+	return (0);
 }

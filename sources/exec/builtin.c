@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:42:19 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 12:05:47 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 12:39:15 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,6 @@ void	ft_pwd(void);
 
 int	select_builtin(t_cmd *cmd)
 {
-	int		i;
-	char	*msg_err;
-
-	i = 1;
 	if (ft_strcmp((*cmd->cmd)->content, "cd") == 0)
 		return (ft_cd(cmd));
 	else if (ft_strcmp((*cmd->cmd)->content, "echo") == 0)
@@ -30,22 +26,7 @@ int	select_builtin(t_cmd *cmd)
 	else if (ft_strcmp((*cmd->cmd)->content, "export") == 0)
 		return (ft_export(cmd->cmd));
 	else if (ft_strcmp((*cmd->cmd)->content, "pwd") == 0)
-	{
-		if (ft_lstsize(*cmd->cmd) > 1 && (*cmd->cmd)->next->content[0] == '-')
-		{
-			while ((*cmd->cmd)->next->content[i] == '-')
-				i++;
-			if (ft_strlen((*cmd->cmd)->next->content) == i
-				&& (*cmd->cmd)->next->content[i] == '\0')
-				return (ft_pwd(), 1);
-			msg_err = ft_strjoin("pwd: ", (*cmd->cmd)->next->content);
-			msg_err = ft_strjoin_mod(msg_err, ": invalid option\n", 1);
-			msg_err = ft_strjoin_mod(msg_err, "pwd: usage: pwd [-LP]\n", 1);
-			err_write(msg_err, 2);
-			return (free(msg_err), 1);
-		}
-		ft_pwd();
-	}
+		handle_pwd(cmd);
 	else if (ft_strcmp((*cmd->cmd)->content, "unset") == 0)
 		return (ft_unset(cmd->cmd));
 	return (0);
@@ -55,9 +36,7 @@ static int	exec_builtin(t_cmd *cmd)
 {
 	t_list	*tmp;
 	int		ret;
-	int		i;
 
-	i = 1;
 	if (!cmd->cmd || ft_lstsize(*cmd->cmd) == 0)
 		return (-1);
 	ret = 0;
@@ -75,22 +54,6 @@ void	dup_n_close(int tmp_in, int tmp_out)
 	dup2(tmp_out, STDOUT_FILENO);
 	close(tmp_in);
 	close(tmp_out);
-}
-
-int	handle_exit(t_cmd *cmd, t_minishell *data)
-{
-	if (ft_strcmp((*cmd->cmd)->content, "exit") == 0)
-	{
-		if (ft_lstsize(*(cmd->cmd)) == 1 && data->x->nb_cmd == 1)
-		{
-			printf("exit\n");
-			ft_exit(cmd->data);
-		}
-		else if (ft_lstsize(*(cmd->cmd)) > 1)
-			ft_exit_code(cmd, data);
-		return (1);
-	}
-	return (0);
 }
 
 int	bltin_dup_pipes(t_cmd *cmd, t_minishell *data)
