@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 09:54:52 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 12:06:22 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int    init_list(t_minishell *data)
         return (1);
     get_type(data->token);
     substitute_dollar(data);
-    // print_list(data->token);
     if (err_redir(data) != 3)
         return (1);
     remove_list_quotes(data->token);
