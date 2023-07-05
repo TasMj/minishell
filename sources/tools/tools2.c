@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:24:17 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/03 21:10:21 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:41:08 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ int	err_write(char *error, int out)
 
 	i = 0;
 	write(out, "minishell: ", 11);
-	
 	while (error[i])
 	{
 		write(out, &error[i], 1);

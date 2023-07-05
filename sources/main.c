@@ -21,9 +21,8 @@ int    init_list(t_minishell *data)
     substitute_dollar(data);
     if (err_redir(data) != 3)
     {
-    printf("%d\n", err_redir(data));
+        // printf("lala\n");
         return (1);
-        
     }
     remove_list_quotes(data->token);
     // add_space(data);

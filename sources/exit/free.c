@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:33:10 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/04 17:21:38 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 15:07:44 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,11 @@ void	free_end(t_minishell *data)
     free(data->	input);
 	free_list_token_content(g_list_env);
 	free_list(g_list_env);
+}
+
+int	free_and_ret(char *s1, char *s2, int ret)
+{
+	free(s1);
+	free(s2);
+	return (ret);
 }

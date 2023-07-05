@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:41:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 00:36:40 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 14:36:07 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,14 @@ static int	is_sorted(t_list **list)
 	return (0);
 }
 
-static void swap_in_list(t_list **list, t_list *tmp)
+static	void	swap_in_list(t_list **list, t_list *tmp)
 {
-    char *tmp_content;
-	
+	char	*tmp_content;
+
 	tmp_content = (*list)->content;
-    (*list)->content = (*list)->next->content;
-    (*list)->next->content = tmp_content;
-    *list = tmp;
+	(*list)->content = (*list)->next->content;
+	(*list)->next->content = tmp_content;
+	*list = tmp;
 }
 
 t_list	**sort_env(t_list **list)
@@ -127,16 +127,17 @@ int	is_numeric(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (!((str[i] >= '0' && str[i] <= '9') || str[i] == '+' || str[i] == '-'))
+		if (!((str[i] >= '0' && str[i] <= '9') || str[i] == '+'
+				|| str[i] == '-'))
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-int contain_slash(char *str)
+int	contain_slash(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (ft_strlen(str) == 0)
@@ -159,10 +160,10 @@ int	is_abc(char c)
 
 int	contain_exclam(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == '!')
 			return (1);

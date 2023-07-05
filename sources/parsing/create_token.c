@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   create_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
 /*   Updated: 2023/07/05 15:24:22 by jthuysba         ###   ########.fr       */
@@ -18,7 +18,7 @@ char	*get_input(t_minishell *data)
 	char	*input;
 	// char	cwd[1024];
 	char	*prompt;
-
+  
 	prompt = ft_strdup("$> ");
 	input = readline(prompt); 
 	free(prompt);
@@ -50,7 +50,7 @@ static void	delimit_operator(t_substitution *s, char *input)
 			s->i++;
 	}
 	else if (input[s->i] == '$' && input[s->i + 1] && input[s->i + 1] == '?')
-		s->i+=2;
+		s->i += 2;
 	else
 	{
 		while (is_a_separator(input[s->i]) == 0

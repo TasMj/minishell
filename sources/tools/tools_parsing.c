@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:32 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 00:37:58 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 14:40:35 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ static int	ft_alnu_m(int c)
 		return (0);
 }
 
-int is_alphanum(char *str)
+int	is_alphanum(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -81,44 +81,44 @@ int is_alphanum(char *str)
 			return (1);
 		i++;
 	}
-		return (0);
+	return (0);
 }
 
-
-void    free_empty_token(t_list **list)
+void	free_empty_token(t_list **list)
 {
-    char        *str;
-    t_list        *to_free;
-    t_list        *temp;
+	char		*str;
+	t_list		*to_free;
+	t_list		*temp;
 
-    while (*list && !((*list)->content)[0])
-    {
-        to_free = *list;
-        *list = (*list)->next;
-        free(to_free->content);
-        free(to_free);
-    }
-    temp = *list;
-    while (temp && temp->next)
-    {
-        str = temp->next->content;
-        if (!str[0])
-        {
-            to_free = temp->next;
-            temp->next = temp->next->next;
-            free(to_free->content);
-            free(to_free);
-        }
-        temp = temp->next;
-    }
+	while (*list && !((*list)->content)[0])
+	{
+		to_free = *list;
+		*list = (*list)->next;
+		free(to_free->content);
+		free(to_free);
+	}
+	temp = *list;
+	while (temp && temp->next)
+	{
+		str = temp->next->content;
+		if (!str[0])
+		{
+			to_free = temp->next;
+			temp->next = temp->next->next;
+			free(to_free->content);
+			free(to_free);
+		}
+		temp = temp->next;
+	}
 }
 
-void remove_empty_tokens(t_list **list)
+void	remove_empty_tokens(t_list **list)
 {
 	t_list	*tmp;
 	int		prev_flag;
-	int a = 0;
-	
+	int		a;
+
+	a = 0;
 	tmp = *list;
 	while (*list)
 	{
@@ -146,10 +146,10 @@ void	add_space(t_minishell *data)
 
 	tmp = *data->token;
 	to_add = NULL;
-	// prev = *data->token; 
 	while (*data->token)
 	{
-		if ((*data->token)->flag_space == 1 && ft_strlen((*data->token)->content) != 0)
+		if ((*data->token)->flag_space == 1
+			&& ft_strlen((*data->token)->content) != 0)
 		{
 			if (ft_strlen(prev->content) == 0)
 			{

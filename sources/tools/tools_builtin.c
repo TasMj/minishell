@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:08:46 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 00:36:19 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 14:33:29 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*after_equal(char *str)
 	int		start;
 	char	*var;
 
-	if(check_equal(str) == 0)
+	if (check_equal(str) == 0)
 		return (NULL);
 	i = 0;
 	while (str[i] && str[i] != '=')
@@ -103,7 +103,6 @@ int	is_in_env(char *str)
 	char	*copy;
 
 	tmp = *g_list_env;
-	// printf("str: %s\n", str);
 	while (*g_list_env)
 	{
 		copy = del_equal((*g_list_env)->content);
