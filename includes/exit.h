@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 03:54:06 by tas               #+#    #+#             */
-/*   Updated: 2023/06/30 21:05:11 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/05 12:37:01 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void    free_list_token_content(t_list **list_token);
 void	free_list(t_list **list);
 void	free_all(char *s1, char *s2);
 void	free_end(t_minishell *data);
+int	handle_exit(t_cmd *cmd, t_minishell *data);
 
 
 
