@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/07/04 21:08:41 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 09:04:42 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,38 @@ static int	sort_env_ascii(void)
 	return (0);
 }
 
+int	err_add_env(char *msg_err, char *stock, char *copy)
+{
+	msg_err = ft_strjoin("export: `", copy);
+	if (copy[0] == '-')
+	{
+		msg_err = ft_strjoin_mod(msg_err,"': invalid option\n", 1);
+		err_write(msg_err, 2);
+	}
+	else if (contain_exclam(copy) == 1)
+	{
+		msg_err = ft_strjoin_mod(msg_err,"': event not found\n", 1);
+		err_write(msg_err, 0);
+	}
+	else
+	{
+		msg_err = ft_strjoin_mod(msg_err,"': not a valid identifier\n", 1);
+		err_write(msg_err, 1);
+	}
+	free(msg_err);
+	free(copy);
+	free(stock);
+	return (1);
+}
+static	void	err_exclam(char *msg_err, char *stock, char *copy)
+{
+	msg_err = ft_strjoin("export: `", stock);
+	msg_err = ft_strjoin_mod(msg_err,"': event not found\n", 1);
+	err_write(msg_err, 0);
+	free(msg_err);
+	free(copy);
+}
+
 /* add new variable to the environement */
 static int	add_var_env(char *stock, t_list *tmp)
 {
@@ -37,6 +69,7 @@ static int	add_var_env(char *stock, t_list *tmp)
 	char	*msg_err;
 	(void)tmp;
 	
+	msg_err = NULL;
 	if (stock[0] == '=')
     {
 		err_write("export: `=': not a valid identifier\n", 1);
@@ -46,34 +79,12 @@ static int	add_var_env(char *stock, t_list *tmp)
 	copy = del_equal(stock);
 	if (!(is_alphanum(copy) == 0 && is_abc(copy[0]) == 0))
 	{
-		msg_err = ft_strjoin("export: `", copy);
-		if (copy[0] == '-')
-		{
-			msg_err = ft_strjoin_mod(msg_err,"': invalid option\n", 1);
-			err_write(msg_err, 2);
-		}
-		else if (contain_exclam(copy) == 1)
-		{
-			msg_err = ft_strjoin_mod(msg_err,"': event not found\n", 1);
-			err_write(msg_err, 0);
-		}
-		else
-		{
-			msg_err = ft_strjoin_mod(msg_err,"': not a valid identifier\n", 1);
-			err_write(msg_err, 1);
-		}
-		free(msg_err);
-		free(copy);
-		free(stock);
+		err_add_env(msg_err, stock, copy);
 		return (1);
 	}
 	if (contain_exclam(stock) == 1)
 	{
-		msg_err = ft_strjoin("export: `", stock);
-		msg_err = ft_strjoin_mod(msg_err,"': event not found\n", 1);
-		err_write(msg_err, 0);
-		free(msg_err);
-		free(copy);
+		err_exclam(msg_err, stock, copy);
 		return (1);
 	}
 	add_list(g_list_env, stock, 0);
@@ -115,8 +126,6 @@ int	ft_export(t_list **list_token)
 	char	*copy;
 	
 	tmp = *g_list_env;
-	// remove_empty_tokens(list_token);
-	// print_list(list_token);
 	if (ft_lstsize(*list_token) == 1)
 	{
 		if (sort_env_ascii() != 0)

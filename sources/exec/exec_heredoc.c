@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:10:27 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/05 09:33:11 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 10:03:03 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,8 @@ static int	write_in_hdoc(t_hdoc *hdoc, t_minishell *data)
 			input = substitute_hdoc(input, data);
 		write_in_fd(input, hdoc->hd_pipe[1]);
 	}
-	if (input && ft_strcmp(input, hdoc->delim) == 1)
-		write_in_fd(input, hdoc->hd_pipe[1]);
+	// if (input && ft_strcmp(input, hdoc->delim) == 1)
+	// 	write_in_fd(input, hdoc->hd_pipe[1]);
 	while (input && (!input[0] || ft_strcmp(input, hdoc->delim)) && (singleton_minishell()->code_err  != 130))
 	{
 		free(input);
@@ -120,7 +120,7 @@ static int	write_in_hdoc(t_hdoc *hdoc, t_minishell *data)
 		if (singleton_minishell()->code_err  == 130)
 			break ;
 		input = readline("> ");
-		if (!input)
+		if (!input || ft_strcmp(input, hdoc->delim) == 0)
 		{
 			free(hdoc->delim);
 			close(hdoc->hd_pipe[0]);
@@ -129,9 +129,10 @@ static int	write_in_hdoc(t_hdoc *hdoc, t_minishell *data)
 		}
 		if (input[0] == 0)
 			write_in_fd("", hdoc->hd_pipe[1]);
-		else if (hdoc->flag_sub == 0)
+		else
 		{
-			input = substitute_hdoc(input, data);
+			if (hdoc->flag_sub == 0)
+				input = substitute_hdoc(input, data);
 			write_in_fd(input, hdoc->hd_pipe[1]);
 		}
 	}

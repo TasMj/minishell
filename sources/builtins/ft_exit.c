@@ -6,21 +6,11 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 13:02:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/05 03:01:13 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 09:04:20 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// static void    ft_putstr_fd(char *s, int fd)
-// {
-//     int        i;
-
-//     i = 0;
-//     if (s != NULL)
-//         while (s[i])
-//             write(fd, &s[i++], 1);
-// }
 
 void    ft_exit(t_minishell *data)
 {
@@ -76,7 +66,6 @@ void    ft_exit_code(t_cmd *cmd, t_minishell *data)
     if (is_numeric((*cmd->cmd)->next->content) == 0 || bool != 0)
     {
         printf("exit\n");
-        // err_write("exit: numeric argument required\n", 1);
         put_str_err("minishell: exit: ");
         put_str_err((*cmd->cmd)->next->content);
         put_str_err(": numeric argument required\n");
@@ -88,7 +77,6 @@ void    ft_exit_code(t_cmd *cmd, t_minishell *data)
         data->code_err = 1;
         printf("exit\n");
         put_str_err("minishell: exit: too many arguments\n");
-        // err_msg(3, "IGNORE", 1);
         return ;
     }
     printf("exit\n");
