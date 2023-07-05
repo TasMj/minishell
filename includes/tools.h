@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 04:17:24 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 18:19:55 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 21:16:11 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int			contain_exclam(char *str);
 int			put_str_err(char *error);
 size_t		nbr_len(long int n);
 t_list		*ft_lst_prev(t_list *elem, t_list *first);
-
+int			ft_strlen_var(char *str);
+void		put_nbr(char *str, long int n, size_t i);
 
 #endif
