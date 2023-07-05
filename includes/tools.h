@@ -120,5 +120,4 @@ int	add_var_env(char *stock, t_list *tmp);
 int	modify_var(char *stock, t_list *tmp);
 
 
-
 #endif

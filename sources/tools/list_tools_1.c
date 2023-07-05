@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tools_list.c                                       :+:      :+:    :+:   */
+/*   list_tools_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:12:00 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 03:09:06 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 20:49:58 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,28 +53,6 @@ t_list	*ft_lstnew(char *input, int flag_space)
 		new->quote_trace = 1;
 	new->next = NULL;
 	return (new);
-}
-
-void	print_list(t_list **list)
-{
-	t_list	*tmp;
-
-	tmp = (*list);
-	while (*list)
-	{
-		printf("content: [%s], flag_quote: %d\n", (*list)->content, (*list)->quote_trace);
-		(*list) = (*list)->next;
-	}
-	(*list) = tmp;
-}
-
-/* add to the list, word ready without space. take words with quotes */
-void	add_list(t_list **list_token, char *stockage, int flag_space)
-{
-	t_list	*to_add;
-
-	to_add = ft_lstnew(stockage, flag_space);
-	ft_lstadd_back(list_token, to_add);
 }
 
 int	ft_lstsize(t_list *lst)

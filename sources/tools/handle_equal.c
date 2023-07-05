@@ -1,34 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tools_builtin.c                                    :+:      :+:    :+:   */
+/*   handle_equal.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/25 12:08:46 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 14:33:29 by tmejri           ###   ########.fr       */
+/*   Created: 2023/07/05 20:43:39 by jthuysba          #+#    #+#             */
+/*   Updated: 2023/07/05 20:45:08 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	count_slash(char *str)
-{
-	int	counter;
-	int	i;
-
-	if (!str)
-		return (0);
-	i = 0;
-	counter = 0;
-	while (str[i])
-	{
-		if (str[i] == '/')
-			counter++;
-		i++;
-	}
-	return (counter);
-}
 
 int	check_equal(char *str)
 {
@@ -117,14 +99,4 @@ int	is_in_env(char *str)
 	}
 	*g_list_env = tmp;
 	return (0);
-}
-
-t_list	**ft_copy_list(t_list **copy)
-{
-	while (*g_list_env)
-	{
-		add_list(copy, (*g_list_env)->content, 0);
-		(*g_list_env) = (*g_list_env)->next;
-	}
-	return (copy);
 }
