@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:56:18 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 00:37:32 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 03:09:40 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,33 +16,6 @@ int	syntax_error(t_minishell *data)
 {
 	char	*msg_err;
 
-	// if (ft_lstsize(*data->token) == 1)
-	// {
-	// 	if (ft_strcmp((*data->token)->content, "<") == 0
-	// 		|| ft_strcmp((*data->token)->content, ">") == 0
-	// 		|| ft_strcmp((*data->token)->content, "<<") == 0
-	// 		|| ft_strcmp((*data->token)->content, ">>") == 0
-	// 		|| ft_strcmp((*data->token)->content, "<>") == 0)
-	// 	{
-	// 		data->code_err = 2;
-	// 		return (err_msg(0, "IGNORE", 2));
-	// 	}
-	// 	if (ft_strcmp((*data->token)->content, "|") == 0)
-	// 	{
-	// 		data->code_err = 2;
-	// 		msg_err = ft_strjoin("syntax error near unexpected token `", (*data->token)->content);
-	// 		msg_err = ft_strjoin_mod(msg_err, "'\n", 1);
-	// 		return (err_msg(6, msg_err, 2));
-	// 	}
-	// 	if (ft_strcmp((*data->token)->content, ":") == 0
-	// 		|| ft_strcmp((*data->token)->content, "#") == 0)
-	// 		return (0);
-	// 	if (ft_strcmp((*data->token)->content, "!") == 0)
-	// 	{
-	// 		data->code_err = 1;
-	// 		return (1);
-	// 	}
-	// }
 	if (ft_lstlast(*data->token)->type == APPEND
 		|| ft_lstlast(*data->token)->type == HEREDOC
 		|| ft_lstlast(*data->token)->type == STDIN

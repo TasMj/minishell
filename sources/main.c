@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/07/04 21:56:10 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 02:56:35 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,42 +29,54 @@ int    init_list(t_minishell *data)
     return (0);
 }
 
+t_minishell *singleton_minishell(void)
+{
+    static t_minishell  *data = NULL;
+
+    if (data == NULL)
+    {
+        data = (t_minishell *)malloc(sizeof(t_minishell));
+        // ft_memset(&data, 0, sizeof(t_minishell));
+        data->input = NULL;
+        data->token = NULL;
+        data->x = NULL;
+    }
+    return (data);
+}
+
 int main(int argc, char **argv, char **env)
 {
     (void)argc;
     (void)argv;
-    t_minishell data;
+    t_minishell *data;
 
     g_list_env = get_list_env(env);
     if (!g_list_env)
         return (perror("env malloc error\n"), 1);
-    ft_memset(&data, 0, sizeof(t_minishell));
-    set_signal();
-    // sigaction()
+    data = singleton_minishell();
     while (1)
     {
-        data.input = get_input(&data);
-        data.token = malloc(sizeof(t_list));
-        if (!data.token)
+        set_signal();
+        data->input = get_input(data);
+        data->token = malloc(sizeof(t_list));
+        if (!data->token)
         {
-            free_list_token_content(data.token);
-            free_list(data.token);
-            free(data.input);
+            free_list_token_content(data->token);
+            free_list(data->token);
+            free(data->input);
             break ;
         }
-        *data.token = NULL;
-        if (init_list(&data) == 0)
+        *data->token = NULL;
+        if (init_list(data) == 0)
         {
-            data.code_err = 0;
-            if (syntax_error(&data) == 3)
-               we_exec(&data);
-            // else if (syntax_error(&data) != 0 && syntax_error(&data) != 1)
-                // data.code_err = 2;
+            data->code_err = 0;
+            if (syntax_error(data) == 3)
+               we_exec(data);
         }
-        // print_list(data.token);
-        free_list_token_content(data.token);
-        free_list(data.token);
-        free(data.input);
+        // print_list(data->token);
+        free_list_token_content(data->token);
+        free_list(data->token);
+        free(data->input);
     }
     free_list_token_content(g_list_env);
     free_list(g_list_env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 13:02:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/04 18:50:08 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 03:01:13 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,16 @@
 
 void    ft_exit(t_minishell *data)
 {
+    int code;
+
     destroy_exec(data->x);
     free_list_token_content(data->token);
     free_list(data->token);
     free_list_token_content(g_list_env);
     free_list(g_list_env);
-    exit(data->code_err);
+    code = singleton_minishell()->code_err;
+    free(singleton_minishell());
+    exit(code);
 }
 
 long long	ft_capped_atoll(const char *nptr, int *bool)

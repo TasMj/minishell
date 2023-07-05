@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 03:31:12 by tas               #+#    #+#             */
-/*   Updated: 2023/07/03 17:22:54 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 01:50:15 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ void	set_signal(void);
 void	ctr_bs(int sigid);
 void	signal_heredoc(int sig, t_minishell *data);
 void sub_dollar_hdoc(t_substitution *s, char *str, t_minishell *data);
+t_minishell *singleton_minishell(void);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:10:27 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/04 13:53:38 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 02:25:34 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,30 +87,50 @@ char *substitute_hdoc(char *input, t_minishell *data)
 static int	write_in_hdoc(t_hdoc *hdoc, t_minishell *data)
 {
 	char	*input;
-	(void) data;
 
-	// signal(SIGINT, &signal_heredoc);
-	while (1)
+	input = malloc(sizeof(char));
+	// while (1)
+	// {
+	// 	signal(SIGINT, &handle_signal);
+	// 	if (data->code_err  == 130)
+	// 		break ;
+	// 	input = readline("> ");
+	// 	// for(int i = 0; input[i]; i++)
+	// 	// 	write(1, &input[i], 1);
+	// 	// write(1, "\n", 1);
+	// 	/* Si l'input est le delimiteur on arrete d'ecrire dans le hdoc */
+	// 	if (!input || ft_strcmp(input, hdoc->delim) == 0)
+	// 	{
+	// 		// printf("\ncode_errrrrrrrrrrrrrrrr == %d\n", data->code_err);
+	// 		free(hdoc->delim);
+	// 		free(input);
+	// 		break ;
+	// 	}
+
+	// 	if (hdoc->flag_sub == 0)
+	// 		input = substitute_hdoc(input, data);
+		
+	// 	/* Sinon on ecrit le input dans la pipe d'ecriture du heredoc */
+	// 	write_in_fd(input, hdoc->hd_pipe[1]);
+	// 	free(input);
+	// }
+	while ((!input[0] || ft_strcmp(input, hdoc->delim)) && (singleton_minishell()->code_err  != 130))
 	{
-		input = readline("> ");
-		// for(int i = 0; input[i]; i++)
-		// 	write(1, &input[i], 1);
-		// write(1, "\n", 1);
-		/* Si l'input est le delimiteur on arrete d'ecrire dans le hdoc */
-		if (!input || ft_strcmp(input, hdoc->delim) == 0)
-		{
-			free(hdoc->delim);
-			free(input);
+		free(input);
+		signal(SIGINT, &handle_signal);
+		// data->code_err = 130;
+		if (singleton_minishell()->code_err  == 130)
 			break ;
-		}
-
+		input = readline("> ");
 		if (hdoc->flag_sub == 0)
 			input = substitute_hdoc(input, data);
 		
 		/* Sinon on ecrit le input dans la pipe d'ecriture du heredoc */
 		write_in_fd(input, hdoc->hd_pipe[1]);
-		free(input);
 	}
+	free(hdoc->delim);
+	free(input);
+	
 	close(hdoc->hd_pipe[0]);
 	close(hdoc->hd_pipe[1]);
 	return (0);
