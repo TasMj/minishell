@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:47:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 08:12:44 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 09:16:19 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,8 @@ void sub_dollar_hdoc(t_substitution *s, char *str, t_minishell *data)
         s->start = s->i;
 		if ((s->i + 1) < ft_strlen((*data->token)->content))
 	        s->i++;
-        while (str[s->i] != '\0' && (ft_isalnum(str[s->i]) || str[s->i] == '_'))
+		printf("i: %d\n", s->i);
+        while ((s->i <= ft_strlen(str)) && str[s->i] != '\0' && (ft_isalnum(str[s->i]) || str[s->i] == '_'))
             s->i++;
         s->end = s->i;
         s->keep_var = ft_strdup_size(str + s->start, (s->end - s->start));
@@ -164,7 +165,7 @@ void sub_dollar_hdoc(t_substitution *s, char *str, t_minishell *data)
         {
 			int deb = s->i;
             s->new_content = ft_strjoin_mod(s->new_content, "", 1);
-            while (str[s->i] != '\0' && (!ft_isalnum(str[s->i]) && str[s->i] != '$'))
+            while ((s->i <= ft_strlen(str)) && str[s->i] != '\0' && (!ft_isalnum(str[s->i]) && str[s->i] != '$'))
                 s->i++;
 			char *tmp = ft_strdup_size(str + deb, (s->i - deb));
             s->new_content = ft_strjoin_mod(s->new_content, tmp, 3);
@@ -174,5 +175,6 @@ void sub_dollar_hdoc(t_substitution *s, char *str, t_minishell *data)
     }
 	if (s->without_dollar)
 	    free(s->without_dollar);
+	printf("nc: %s\n", s->new_content);
 		
 }
