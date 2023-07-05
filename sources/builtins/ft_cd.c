@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 11:14:07 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:28:53 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	chdir_err(t_cmd *cmd, char *path)
 	free(path);
 }
 
-
 /* return if not a file or a directory */
 static int	err_cd(t_cmd *cmd, char *path)
 {
@@ -114,23 +113,6 @@ static int	err_cd(t_cmd *cmd, char *path)
 		chdir_err(cmd, path);
 			return (1);
 	}
-	return (0);
-}
-
-int	err_nb_cmd(t_cmd *cmd, char *path)
-{
-	if (cmd->data->x->nb_cmd > 1)
-    {
-        path = ft_strdup((*cmd->cmd)->next->content);
-        if (is_dir(path) == 0)
-        {
-            put_str_err("cd: ");
-            put_str_err((*cmd->cmd)->next->content);
-            put_str_err(": Not a directory\n");
-            cmd->data->code_err = 127;
-        }
-        return (free(path), 1);
-    }
 	return (0);
 }
 
@@ -170,99 +152,201 @@ static int	modify_pwd(char *new_pwd)
 	return (0);
 }
 
-int	ft_cd(t_cmd *cmd)
+int	err_nb_cmd(t_cmd *cmd, char *path)
 {
-	char	cwd[1024];
-	char	*path;
-	t_list	*tmp;
-	char	*msg_err;
-	char	*old_path;
-	char	*home;
-
-	(void)msg_err;
-	tmp = *cmd->cmd;
-	path = NULL;
 	if (cmd->data->x->nb_cmd > 1)
     {
         path = ft_strdup((*cmd->cmd)->next->content);
-        if (chdir(path) == -1)
+        if (is_dir(path) == 0)
         {
             put_str_err("cd: ");
             put_str_err((*cmd->cmd)->next->content);
-            put_str_err(": No such file or directory\n");
-            cmd->data->code_err = 1;
+            put_str_err(": Not a directory\n");
+            cmd->data->code_err = 127;
         }
-        return (free(path), 0);
+        return (free(path), 1);
     }
-	old_path = getcwd(cwd, sizeof(cwd));
-	if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && (*cmd->cmd)->next == NULL && is_in_env("HOME") == 1)
+	return (0);
+}
+
+int	handl_root(t_cmd *cmd, t_cd *c)
+{
+	if (ft_lstsize(*cmd->cmd) == 2 && contain_slash((*cmd->cmd)->next->content) == 0)
 	{
-		path = get_venv("HOME");
-		if (path == NULL)
+		chdir("/");
+		*cmd->cmd = c->tmp;
+		if (c->path)
+			free(c->path);
+		set_old_path(c->old_path);
+		modify_pwd("/");
+		return (0);
+	}
+	return (1);
+}
+
+int	cd_directory(t_cd *c, t_cmd *cmd)
+{
+	c->home = get_venv("HOME");
+	if (c->home == NULL && ft_strlen((*cmd->cmd)->next->content) == 0)
+		return (err_msg(4, "IGNORE", 2));
+	if (c->home != NULL && ft_strlen((*cmd->cmd)->next->content) >= ft_strlen(c->home) && ft_strncmp((*cmd->cmd)->next->content, c->home, ft_strlen(c->home)) == 0)
+		c->path = ft_strdup((*cmd->cmd)->next->content);
+	else
+		c->path = set_path(c->path, cmd->cmd);
+	if (c->home)
+		free(c->home);
+	return (0);
+}
+
+int	cd_list_one_tok(t_cmd *cmd, t_cd *c)
+{
+	if (handl_root(cmd, c) == 0)
+		return (0);
+	else if (ft_lstsize(*cmd->cmd) == 2 && (*cmd->cmd)->next->content[0] == '-')
+	{
+		if (ft_strlen((*cmd->cmd)->next->content) == 1)
+			c->path = get_venv("OLDPWD");
+		else
+		{
+			c->msg_err = ft_strjoin("cd: ", (*cmd->cmd)->next->content);
+			c->msg_err = ft_strjoin_mod(c->msg_err, ": invalid option\ncd: usage: cd [-L|[-P [-e]] [-@]] [dir]\n", 1);
+			err_write(c->msg_err, 2);
+			free(c->msg_err);
+			return (1);
+		}
+	}
+	else if (ft_lstsize(*cmd->cmd) == 2 && (*cmd->cmd)->next->content[0] == '~')
+	{
+		if (is_in_env("HOME") == 0)
+			return (err_msg(4, "IGNORE", 2));
+		c->path = get_venv("HOME");
+	}
+	else
+		cd_directory(c, cmd);
+	return (0);
+}
+
+int	cd_home(t_cmd *cmd, t_cd *c)
+{
+	if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && (*cmd->cmd)->next == NULL)
+	{
+		c->path = get_venv("HOME");
+		if (c->path == NULL)
+			return (err_msg(4, "IGNORE", 1));
+		*cmd->cmd = c->tmp;
+		chdir(c->path);
+		set_old_path(c->old_path);
+		modify_pwd(c->path);
+		if (c->path)
+			free(c->path);
+		return (2);
+	}
+	if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && is_in_env("HOME") == 1)
+	{
+		c->path = get_venv("HOME");
+		if (c->path == NULL)
 			return (err_msg(4, "IGNORE", 1));
 	}
-	else if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && (*cmd->cmd)->next == NULL && is_in_env("HOME") == 0)
+	else if ((*cmd->cmd)->next && ft_strcmp((".."), (*cmd->cmd)->next->content) == 0)
+		c->path = get_previous_dir(getcwd(c->cwd, sizeof(c->cwd)));
+	else if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && is_in_env("HOME") == 0)
 	{
-		*cmd->cmd = tmp;
+		*cmd->cmd = c->tmp;
 		return (err_msg(4, "IGNORE", 1));
 	}
-	else if ((*cmd->cmd)->next && ft_strcmp((".."), (*cmd->cmd)->next->content) == 0)
-		path = get_previous_dir(getcwd(cwd, sizeof(cwd)));
-	else if (ft_lstsize(*cmd->cmd) <= 2)
+	return(0);
+}
+
+int	invalid_option(t_cmd *cmd, t_cd *c)
+{
+	if (ft_strlen((*cmd->cmd)->next->content) == 1)
+		c->path = get_venv("OLDPWD");
+	else
 	{
-		if (ft_lstsize(*cmd->cmd) == 2 && contain_slash((*cmd->cmd)->next->content) == 0)
-		{
-			chdir("/");
-			*cmd->cmd = tmp;
-			if (path)
-				free(path);
-			set_old_path(old_path);
-			modify_pwd("/");
+		c->msg_err = ft_strjoin("cd: ", (*cmd->cmd)->next->content);
+		c->msg_err = ft_strjoin_mod(c->msg_err, ": invalid option\ncd: usage: cd [-L|[-P [-e]] [-@]] [dir]\n", 1);
+		err_write(c->msg_err, 2);
+		free(c->msg_err);
+		return (1);
+	}
+	return(0);
+}
+
+int	cd_lst_two_tok(t_cmd *cmd, t_cd *c)
+{
+	if (handl_root(cmd, c) == 0)
+		return (0);
+	else if (ft_lstsize(*cmd->cmd) == 2 && (*cmd->cmd)->next->content[0] == '-')
+	{
+		if (invalid_option(cmd, c) == 1)
+			return (1);
+	}
+	else if (ft_lstsize(*cmd->cmd) == 2 && (*cmd->cmd)->next->content[0] == '~')
+	{
+		if (is_in_env("HOME") == 0)
+			return (err_msg(4, "IGNORE", 2));
+		c->path = get_venv("HOME");
+	}
+	else
+		cd_directory(c, cmd);
+	return (0);
+}
+
+int	end_cd(t_cmd *cmd, t_cd *c)
+{
+	if (err_cd(cmd, c->path) == 1)
+		return (1);
+	*cmd->cmd = c->tmp;
+	modify_pwd(c->path);
+	free(c->path);
+	set_old_path(c->old_path);
+	free(c);
+	return (0);
+}
+
+int	ft_cd(t_cmd *cmd)
+{
+	t_cd	*c;
+	int		ret;
+
+	c = malloc(sizeof(t_cd));
+	ft_memset(c, 0, sizeof(ft_cd));
+	c->tmp = *cmd->cmd;
+	c->path = NULL;
+	if (cmd->data->x->nb_cmd > 1)
+    {
+		if (err_nb_cmd(cmd, c->path) == 1)
+			return (1);
+    }
+	c->old_path = getcwd(c->cwd, sizeof(c->cwd));
+	ret = cd_home(cmd, c);
+	if (ret != 0)
+		return (ret);
+	if (ft_lstsize(*cmd->cmd) <= 2)
+	{
+		if (handl_root(cmd, c) == 0)
 			return (0);
-		}
 		else if (ft_lstsize(*cmd->cmd) == 2 && (*cmd->cmd)->next->content[0] == '-')
 		{
-			if (ft_strlen((*cmd->cmd)->next->content) == 1)
-				path = get_venv("OLDPWD");
-			else
-			{
-				msg_err = ft_strjoin("cd: ", (*cmd->cmd)->next->content);
-				msg_err = ft_strjoin_mod(msg_err, ": invalid option\ncd: usage: cd [-L|[-P [-e]] [-@]] [dir]\n", 1);
-				err_write(msg_err, 2);
-				free(msg_err);
+			if (invalid_option(cmd, c) == 1)
 				return (1);
-			}
 		}
 		else if (ft_lstsize(*cmd->cmd) == 2 && (*cmd->cmd)->next->content[0] == '~')
 		{
 			if (is_in_env("HOME") == 0)
 				return (err_msg(4, "IGNORE", 2));
-			path = get_venv("HOME");
+			c->path = get_venv("HOME");
 		}
 		else
-		{
-			home = get_venv("HOME");
-			if (home == NULL && ft_strlen((*cmd->cmd)->next->content) == 0)
-				return (err_msg(4, "IGNORE", 2));
-			if (home != NULL && ft_strlen((*cmd->cmd)->next->content) >= ft_strlen(home) && ft_strncmp((*cmd->cmd)->next->content, home, ft_strlen(home)) == 0)
-				path = ft_strdup((*cmd->cmd)->next->content);
-			else
-				path = set_path(path, cmd->cmd);
-			if (home)
-				free(home);
-		}
+			cd_directory(c, cmd);
+	printf("ok\n");
 	}
 	else
 	{
-		*cmd->cmd = tmp;
+		*cmd->cmd = c->tmp;
 		return (err_msg(3, "IGNORE", 1));
 	}
-	if (err_cd(cmd, path) == 1)
-		return (1);
-	*cmd->cmd = tmp;
-	modify_pwd(path);
-	free(path);
-	set_old_path(old_path);
+	end_cd(cmd, c);
 	return (0);
-}
 
+}

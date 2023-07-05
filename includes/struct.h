@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 12:14:14 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 16:43:10 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 20:28:27 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,5 +126,15 @@ typedef struct s_min_max
 	int		min;
 	int		max;
 }t_min_max;
+
+typedef struct s_cd
+{
+	char	cwd[1024];
+	char	*path;
+	t_list	*tmp;
+	char	*msg_err;
+	char	*old_path;
+	char	*home;
+}	t_cd;
 
 #endif

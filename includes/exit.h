@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 03:54:06 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 18:15:16 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:28:14 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	free_list(t_list **list);
 void	free_all(char *s1, char *s2);
 void	free_end(t_minishell *data);
 int		handle_exit(t_cmd *cmd, t_minishell *data);
-
-
+int     free_and_ret(char *s1, char *s2, int ret);
 
 #endif
