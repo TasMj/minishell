@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:48 by tas               #+#    #+#             */
-/*   Updated: 2023/07/04 11:09:10 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 09:03:56 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	ft_env(t_list **l)
 	tmp_cmd = *l;
 	if ((*l)->next != NULL)
 	{
-		// printf("env: ‘%s’: No such file or directory\n", (*l)->next->content);
 		err_write("env: No such file or directory\n", 1);
 		*l = tmp_cmd;
 		return (1);

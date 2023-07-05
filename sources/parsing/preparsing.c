@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:56:18 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 03:09:40 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 09:06:27 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	syntax_error(t_minishell *data)
 		msg_err = ft_strjoin("syntax error near unexpected token `", (*data->token)->content);
 		msg_err = ft_strjoin_mod(msg_err, "'\n", 1);
 		return (err_msg(6, msg_err, 2));
-		// printf("minishell: syntax error near unexpected token `%s'\n", (*data->token)->content);
 		return (2);
 	}
 	return (3);
@@ -57,44 +56,77 @@ int	err_quote(t_list **list_token, t_minishell *data)
 	return (0);
 }
 
-int	list_one_tok(t_minishell *data)
+int	err_list_one_tok(t_minishell *data, char *msg_err)
 {
-	char	*msg_err;
-	
-	if (ft_lstsize(*data->token) == 1)
-	{
-		if (ft_strcmp((*data->token)->content, "<") == 0
+	if (ft_strcmp((*data->token)->content, "<") == 0
 			|| ft_strcmp((*data->token)->content, ">") == 0
 			|| ft_strcmp((*data->token)->content, "<<") == 0
 			|| ft_strcmp((*data->token)->content, ">>") == 0
 			|| ft_strcmp((*data->token)->content, "<>") == 0)
-		{
-			data->code_err = 2;
-			return (err_msg(0, "IGNORE", 2));
-		}
-		if (ft_strcmp((*data->token)->content, "|") == 0)
-		{
-			data->code_err = 2;
-			msg_err = ft_strjoin("syntax error near unexpected token `", (*data->token)->content);
-			msg_err = ft_strjoin_mod(msg_err, "'\n", 1);
-			return (err_msg(6, msg_err, 2));
-		}
-		if (ft_strcmp((*data->token)->content, ":") == 0
-			|| ft_strcmp((*data->token)->content, "#") == 0)
-			return (0);
-		if (ft_strcmp((*data->token)->content, "!") == 0)
-		{
-			data->code_err = 1;
-			return (1);
-		}
+	{
+		data->code_err = 2;
+		return (err_msg(0, "IGNORE", 2));
 	}
+	if (ft_strcmp((*data->token)->content, "|") == 0)
+	{
+		data->code_err = 2;
+		msg_err = ft_strjoin("syntax error near unexpected token `", (*data->token)->content);
+		msg_err = ft_strjoin_mod(msg_err, "'\n", 1);
+		return (err_msg(6, msg_err, 2));
+	}
+	if (ft_strcmp((*data->token)->content, ":") == 0
+		|| ft_strcmp((*data->token)->content, "#") == 0)
+		return (0);
+	if (ft_strcmp((*data->token)->content, "!") == 0)
+	{
+		data->code_err = 1;
+		return (1);
+	}
+	return (1);
+}
+
+int	list_one_tok(t_minishell *data)
+{
+	char	*msg_err;
+	
+	msg_err = NULL;
+	if (ft_lstsize(*data->token) == 1)
+		return(err_list_one_tok(data, msg_err));
 	return(3);
+}
+
+int	redir_next_pipe(t_minishell *data, t_list *tmp)
+{
+	char	*msg_err;
+	
+	if ((*data->token)->type != WORD && (*data->token)->next == NULL)
+	{
+		data->code_err = 2;
+		msg_err = ft_strjoin("syntax error near unexpected token `", (*data->token)->content);
+		msg_err = ft_strjoin_mod(msg_err, "'\n", 1);
+		*data->token = tmp;
+		return (err_msg(6, msg_err, 2));
+	}
+	if ((*data->token)->next != NULL && (*data->token)->type != WORD && (*data->token)->next->type != WORD)
+	{
+		if (((*data->token)->type != PIPE && (*data->token)->next->type == PIPE) 
+			|| ((*data->token)->type == PIPE && (*data->token)->next->type != PIPE))
+		{
+			*data->token = tmp;
+			return (3);
+		}
+		data->code_err = 2;
+		msg_err = ft_strjoin("syntax error near unexpected token `", (*data->token)->content);
+		msg_err = ft_strjoin_mod(msg_err, "'\n", 1);
+		*data->token = tmp;
+		return (err_msg(6, msg_err, 2));
+	}
+	return (0);
 }
 
 int	err_redir(t_minishell *data)
 {
 	t_list	*tmp;
-	char	*msg_err;
 	
 	tmp = *data->token;
 	if (list_one_tok(data) != 3)
@@ -105,28 +137,7 @@ int	err_redir(t_minishell *data)
 			(*data->token) = (*data->token)->next;
 		else
 		{
-			if ((*data->token)->type != WORD && (*data->token)->next == NULL)
-			{
-				data->code_err = 2;
-				msg_err = ft_strjoin("syntax error near unexpected token `", (*data->token)->content);
-				msg_err = ft_strjoin_mod(msg_err, "'\n", 1);
-				*data->token = tmp;
-				return (err_msg(6, msg_err, 2));
-			}
-			if ((*data->token)->next != NULL && (*data->token)->type != WORD && (*data->token)->next->type != WORD)
-			{
-				if (((*data->token)->type != PIPE && (*data->token)->next->type == PIPE) 
-					|| ((*data->token)->type == PIPE && (*data->token)->next->type != PIPE))
-				{
-					*data->token = tmp;
-					return (3);
-				}
-				data->code_err = 2;
-				msg_err = ft_strjoin("syntax error near unexpected token `", (*data->token)->content);
-				msg_err = ft_strjoin_mod(msg_err, "'\n", 1);
-				*data->token = tmp;
-				return (err_msg(6, msg_err, 2));
-			}
+			return (redir_next_pipe(data, tmp));
 			(*data->token) = (*data->token)->next;
 		}
 	}

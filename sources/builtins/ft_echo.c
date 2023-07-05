@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:09:31 by tas               #+#    #+#             */
-/*   Updated: 2023/06/30 10:58:39 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 09:03:39 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,42 +31,52 @@ static int	ft_n(char *str)
 	return (0);
 }
 
-static int	set_echo(t_list **list_token, t_echo *e)
+static	int handle_token(t_list **list_token, t_echo *e) 
 {
-    // print_list(list_token);
-	
-	(*list_token) = (*list_token)->next;
-	if (ft_strlen((*list_token)->content) >= 2
-		&& ft_strncmp((*list_token)->content, "-n", 2) == 0
-		&& (ft_n((*list_token)->content) == 0))
-	{
-		while ((*list_token)->next && ft_strlen((*list_token)->next->content) >= 2
-			&& ft_strncmp((*list_token)->next->content, "-n", 2) == 0
-			&& (ft_n((*list_token)->next->content) == 0))
-			(*list_token) = (*list_token)->next;
-		e->flag = 1;
-		if ((*list_token)->next == NULL)
-			return (0);
-		(*list_token) = (*list_token)->next;
-	}
-	while (*list_token)
-	{
-		e->to_free = 1;
-		
-		e->stockage = ft_strdup((*list_token)->content);
-		// e->stockage = ft_strjoin(e->stockage, (*list_token)->content);
-		if ((*list_token)->next != NULL)
-			(*list_token) = (*list_token)->next;
-		else
-			return (0);
-		while (*list_token)
-		{
-			e->stockage = ft_strjoin_mod(e->stockage, " ", 1);
-			e->stockage = ft_strjoin_mod(e->stockage, (*list_token)->content, 1);
-			(*list_token) = (*list_token)->next;
-		}
-	}
+    while ((*list_token)->next && ft_strlen((*list_token)->next->content) >= 2
+        && ft_strncmp((*list_token)->next->content, "-n", 2) == 0
+        && (ft_n((*list_token)->next->content) == 0)) 
+        	(*list_token) = (*list_token)->next;
+    e->flag = 1;
+    if ((*list_token)->next == NULL)
+        return (1);
+    (*list_token) = (*list_token)->next;
 	return (0);
+}
+
+static	int	handle_content(t_list **list_token, t_echo *e) 
+{
+    while (*list_token) 
+	{
+        e->to_free = 1;
+        e->stockage = ft_strdup((*list_token)->content);
+        if ((*list_token)->next != NULL)
+            (*list_token) = (*list_token)->next;
+        else
+            return (1);
+        while (*list_token) 
+		{
+            e->stockage = ft_strjoin_mod(e->stockage, " ", 1);
+            e->stockage = ft_strjoin_mod(e->stockage, (*list_token)->content, 1);
+            (*list_token) = (*list_token)->next;
+        }
+    }
+	return (0);
+}
+
+static int set_echo(t_list **list_token, t_echo *e) 
+{
+    (*list_token) = (*list_token)->next;
+    if (ft_strlen((*list_token)->content) >= 2
+        && ft_strncmp((*list_token)->content, "-n", 2) == 0
+        && (ft_n((*list_token)->content) == 0)) 
+	{
+        if (handle_token(list_token, e) == 1)
+			return (1);
+    }
+    if (handle_content(list_token, e) == 1)
+		return (1);
+    return (0);
 }
 
 int	ft_echo(t_list **list_token)
@@ -78,7 +88,7 @@ int	ft_echo(t_list **list_token)
 	if (!e)
 		return (1);
 	ft_memset(e, 0, sizeof(t_echo));
-	e->stockage = "";
+	// e->stockage = "";
 	tmp = *list_token;
 	while ((*list_token) != NULL)
 	{

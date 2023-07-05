@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitution2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:47:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 08:12:44 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 09:07:15 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,47 @@ char *remove_quote_end(t_substitution *s, t_minishell *data)
 	return (tmp);
 }
 
+void	hdoc_exclam(t_substitution *s, char *str, t_minishell *data)
+{
+	s->start = s->i;
+    s->i += 2;
+    s->end = s->i;
+    s->keep_var = ft_strdup_size(str + s->start, (s->end - s->start));
+    s->var_substitute = substitution(data, s->keep_var);
+	int deb = s->i;
+    s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
+    while (str[s->i] != '\0' && (!ft_isalnum(str[s->i]) && str[s->i] != '$'))
+           s->i++;
+	char *tmp = ft_strdup_size(str + deb, (s->i - deb));
+    s->new_content = ft_strjoin_mod(s->new_content, tmp, 3);
+    free(s->keep_var);
+}
+
+void	hdoc_rest(t_substitution *s, char *str, t_minishell *data)
+{
+	s->start = s->i;
+	if ((s->i + 1) < ft_strlen((*data->token)->content))
+	    s->i++;
+    while (str[s->i] != '\0' && (ft_isalnum(str[s->i]) || str[s->i] == '_'))
+        s->i++;
+    s->end = s->i;
+    s->keep_var = ft_strdup_size(str + s->start, (s->end - s->start));
+    s->var_substitute = substitution(data, s->keep_var);
+    if (ft_strlen(s->var_substitute) != 0)
+        s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
+    else
+    {
+		int deb = s->i;
+        s->new_content = ft_strjoin_mod(s->new_content, "", 1);
+        while (str[s->i] != '\0' && (!ft_isalnum(str[s->i]) && str[s->i] != '$'))
+            s->i++;
+		char *tmp = ft_strdup_size(str + deb, (s->i - deb));
+        s->new_content = ft_strjoin_mod(s->new_content, tmp, 3);
+    }
+    if (s->keep_var)
+		free(s->keep_var);
+}
+
 void sub_dollar_hdoc(t_substitution *s, char *str, t_minishell *data)
 {
     s->deb = s->i;
@@ -134,45 +175,9 @@ void sub_dollar_hdoc(t_substitution *s, char *str, t_minishell *data)
         s->i++;
     }
 	else if (str[s->i] && str[s->i + 1] && str[s->i + 1] == '?')
-	{
-		s->start = s->i;
-        s->i += 2;
-        s->end = s->i;
-        s->keep_var = ft_strdup_size(str + s->start, (s->end - s->start));
-        s->var_substitute = substitution(data, s->keep_var);
-		int deb = s->i;
-        s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
-        while (str[s->i] != '\0' && (!ft_isalnum(str[s->i]) && str[s->i] != '$'))
-               s->i++;
-		char *tmp = ft_strdup_size(str + deb, (s->i - deb));
-        s->new_content = ft_strjoin_mod(s->new_content, tmp, 3);
-        free(s->keep_var);
-	}
+		hdoc_exclam(s, str, data);
     else
-    {
-        s->start = s->i;
-		if ((s->i + 1) < ft_strlen((*data->token)->content))
-	        s->i++;
-        while (str[s->i] != '\0' && (ft_isalnum(str[s->i]) || str[s->i] == '_'))
-            s->i++;
-        s->end = s->i;
-        s->keep_var = ft_strdup_size(str + s->start, (s->end - s->start));
-        s->var_substitute = substitution(data, s->keep_var);
-        if (s->var_substitute && ft_strlen(s->var_substitute) != 0)
-            s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
-        else
-        {
-			int deb = s->i;
-            s->new_content = ft_strjoin_mod(s->new_content, "", 1);
-            while (str[s->i] != '\0' && (!ft_isalnum(str[s->i]) && str[s->i] != '$'))
-                s->i++;
-			char *tmp = ft_strdup_size(str + deb, (s->i - deb));
-            s->new_content = ft_strjoin_mod(s->new_content, tmp, 3);
-        }
-        if (s->keep_var)
-			free(s->keep_var);
-    }
+		hdoc_rest(s, str, data);
 	if (s->without_dollar)
 	    free(s->without_dollar);
-		
 }
