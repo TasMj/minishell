@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitution2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 16:47:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 00:34:59 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 08:12:44 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ void sub_dollar_hdoc(t_substitution *s, char *str, t_minishell *data)
         s->end = s->i;
         s->keep_var = ft_strdup_size(str + s->start, (s->end - s->start));
         s->var_substitute = substitution(data, s->keep_var);
-        if (ft_strlen(s->var_substitute) != 0)
+        if (s->var_substitute && ft_strlen(s->var_substitute) != 0)
             s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
         else
         {

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:10:27 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/05 06:57:28 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 08:46:33 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	get_delims(t_minishell *data)
 		if (elem->type == HEREDOC)
 		{
 			data->x->hdoc[i].delim = ft_strdup(elem->next->content);
-			if (elem->next->quote_trace == 1)
+			if (elem->next->quote_trace == 1  || check_dollar(data->x->hdoc[i].delim) == 1)
 				data->x->hdoc[i].flag_sub = 1;
 			else
 				data->x->hdoc[i].flag_sub = 0;
@@ -80,6 +80,7 @@ char *substitute_hdoc(char *input, t_minishell *data)
 		sub_dollar_hdoc(s, input, data);
 	}
 	result = ft_strdup(s->new_content);
+	free(s->new_content);
 	free(input);
 	free(s);
 	return (result);

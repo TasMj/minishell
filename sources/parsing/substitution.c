@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 06:16:51 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 08:32:11 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,14 @@ t_list	*ft_lst_prev(t_list *elem, t_list *first)
 	t_list	*tmp;
 
 	tmp = first;
+	printf("elem: %s\n",elem->content);
 	if (first == elem)
 		return (NULL);
 	while (first)
 	{
 		if (first->next == elem)
 		{
-			first = tmp;
+			// first = tmp;
 			return (first);
 		}
 		first = first->next;
@@ -132,15 +133,18 @@ void	substitute_dollar(t_minishell *data)
 			{
 				if (ft_lst_prev(*data->token, start) == NULL)
 				{
-					// printf("1\n");
+					printf("prev 1: %s\n", ft_lst_prev(*data->token, start)->content);
 					start = reset;
 					more_dollar(s, data);
 				}
 				else if (ft_lst_prev(*data->token, start) != NULL && ft_lst_prev(*data->token, start)->type != HEREDOC)
 				{
+					printf("oui\n");
+					printf("prev: %s\n", ft_lst_prev(*data->token, start)->content);
 					start = reset;
 					more_dollar(s, data);
 				}
+				printf("prev 3: %s\n", ft_lst_prev(*data->token, start)->content);
 				// more_dollar(s, data);
 			}
 			else if (ft_strlen((*data->token)->content) == 1)
@@ -172,6 +176,7 @@ void	substitute_dollar(t_minishell *data)
 		prev = (*data->token);
 		(*data->token) = (*data->token)->next;
 	}
+	print_list(data->token);
 	*data->token = tmp;
 	free(s);
 }
