@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:48 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 09:03:56 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 12:54:58 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_list	**get_list_env(char **env)
 	{
 		getcwd(cwd, sizeof(cwd));
 		add_list(list_env, ft_strjoin("PWD=", cwd), 0);
-		add_list(list_env, ft_strdup("_=/usr/bin/env"), 0);//
+		add_list(list_env, ft_strdup("_=/usr/bin/env"), 0);
 		return (list_env);
 	}
 	while (env[i] != NULL)

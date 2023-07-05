@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 10:10:10 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 13:42:07 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,37 @@ static void	more_dollar(t_substitution *s, t_minishell *data)
 	(*data->token)->content = ft_strdup(s->new_content);
 }
 
+void	quotes_after_dollars(t_minishell *data, t_list *prev, t_list *tmp)
+{
+	if (!(!(*data->token)->next && (*data->token)->content[0] == '$')
+		&& (!((*data->token)->next->content && (*data->token)->content[0] == '$' && (*data->token)->next->flag_space == 1))
+		&& (*data->token)->next->content && (*data->token)->content[0] == '$' && (*data->token)->next->flag_space == 0)
+	{
+		if (prev != NULL)
+		{
+			prev->next = (*data->token)->next;
+			(*data->token)->next->flag_space = (*data->token)->flag_space;
+			free((*data->token)->content);
+			free(*data->token);
+			(*data->token) = prev;
+		}
+		else
+		{
+			tmp = (*data->token)->next;
+			free ((*data->token)->content);
+			free(*data->token);
+			(*data->token) = tmp;
+		}
+	}
+}
+
 void	substitute_dollar(t_minishell *data)
 {
 	t_substitution	*s;
 	t_list			*tmp;
 	t_list			*prev;
-	t_list	*start;
-	t_list	*reset;
+	t_list			*start;
+	t_list			*reset;
 
 	start = *data->token;
 	reset = *data->token;
@@ -143,31 +167,9 @@ void	substitute_dollar(t_minishell *data)
 					start = reset;
 					more_dollar(s, data);
 				}
-				// more_dollar(s, data);
 			}
 			else if (ft_strlen((*data->token)->content) == 1)
-			{
-				if (!(!(*data->token)->next && (*data->token)->content[0] == '$')
-					&& (!((*data->token)->next->content && (*data->token)->content[0] == '$' && (*data->token)->next->flag_space == 1))
-					&& (*data->token)->next->content && (*data->token)->content[0] == '$' && (*data->token)->next->flag_space == 0)
-				{
-					if (prev != NULL)
-					{
-						prev->next = (*data->token)->next;
-						(*data->token)->next->flag_space = (*data->token)->flag_space;
-						free((*data->token)->content);
-						free(*data->token);
-						(*data->token) = prev;
-					}
-					else
-					{
-						tmp = (*data->token)->next;
-						free ((*data->token)->content);
-						free(*data->token);
-						(*data->token) = tmp;
-					}
-				}
-			}
+				quotes_after_dollars(data, prev, tmp);
 		}
 		if (s->new_content)
 			free(s->new_content);

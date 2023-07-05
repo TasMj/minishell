@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:35 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 10:19:23 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 12:46:29 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	check_var(char *str)
 {
 	t_list	*tmp;
 	char	*var;
-	
+
 	tmp = *g_list_env;
 	while (*g_list_env)
 	{
@@ -49,12 +49,12 @@ static int	check_var(char *str)
 }
 
 /* delet an environement var */
-static void del(char *str)
+static	void	del(char *str)
 {
-	t_list *tmp_first;
-	t_list *tmp_next;
-	t_list *var_before;
-	char *var;
+	t_list	*tmp_first;
+	t_list	*tmp_next;
+	t_list	*var_before;
+	char	*var;
 
 	var = var_name((*g_list_env)->content);
 	if (ft_strcmp(var, str) == 0)
@@ -89,26 +89,26 @@ static void del(char *str)
 int	not_options(char *str)
 {
 	char	*msg_err;
-	
+
 	if (!(is_alphanum(str) == 0 && is_abc(str[0]) == 0))
 	{
 		msg_err = ft_strjoin("unset: `", str);
 		if (str[0] == '-')
 		{
 			singleton_minishell()->code_err = 2;
-			msg_err = ft_strjoin_mod(msg_err,"': invalid option\n", 1);
+			msg_err = ft_strjoin_mod(msg_err, "': invalid option\n", 1);
 			err_write(msg_err, 2);
 		}
 		else if (contain_exclam(str) == 1)
 		{
 			singleton_minishell()->code_err = 0;
-			msg_err = ft_strjoin_mod(msg_err,"': event not found\n", 1);
+			msg_err = ft_strjoin_mod(msg_err, "': event not found\n", 1);
 			err_write(msg_err, 0);
 		}
 		else
 		{
 			singleton_minishell()->code_err = 1;
-			msg_err = ft_strjoin_mod(msg_err,"': not a valid identifier\n", 1);
+			msg_err = ft_strjoin_mod(msg_err, "': not a valid identifier\n", 1);
 			err_write(msg_err, 1);
 		}
 		free(msg_err);

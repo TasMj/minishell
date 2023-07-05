@@ -6,24 +6,24 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 13:02:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/05 09:04:20 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 12:54:20 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    ft_exit(t_minishell *data)
+void	ft_exit(t_minishell *data)
 {
-    int code;
+	int	code;
 
-    destroy_exec(data->x);
-    free_list_token_content(data->token);
-    free_list(data->token);
-    free_list_token_content(g_list_env);
-    free_list(g_list_env);
-    code = singleton_minishell()->code_err;
-    free(singleton_minishell());
-    exit(code);
+	destroy_exec(data->x);
+	free_list_token_content(data->token);
+	free_list(data->token);
+	free_list_token_content(g_list_env);
+	free_list(g_list_env);
+	code = singleton_minishell()->code_err;
+	free(singleton_minishell());
+	exit(code);
 }
 
 long long	ft_capped_atoll(const char *nptr, int *bool)
@@ -42,8 +42,8 @@ long long	ft_capped_atoll(const char *nptr, int *bool)
 	}
 	result = 0;
 	if (*nptr == '-' || *nptr == '+')
-    	return (++*bool, 0);
-    while (*nptr >= '0' && *nptr <= '9')
+		return (++*bool, 0);
+	while (*nptr >= '0' && *nptr <= '9')
 	{
 		if (sign > 0 && (LLONG_MAX - *nptr + '0') / 10 < result)
 			return (++*bool, 0);
@@ -55,30 +55,30 @@ long long	ft_capped_atoll(const char *nptr, int *bool)
 	return (sign * result);
 }
 
-void    ft_exit_code(t_cmd *cmd, t_minishell *data)
+void	ft_exit_code(t_cmd *cmd, t_minishell *data)
 {
-    int			bool;
+	int	bool;
 
-    bool = 0;
+	bool = 0;
 	data->code_err = ft_capped_atoll((*cmd->cmd)->next->content, &bool);
-    if (data->x->nb_cmd > 1 && cmd->id == data->x->nb_cmd - 1)
-        return ;
-    if (is_numeric((*cmd->cmd)->next->content) == 0 || bool != 0)
-    {
-        printf("exit\n");
-        put_str_err("minishell: exit: ");
-        put_str_err((*cmd->cmd)->next->content);
-        put_str_err(": numeric argument required\n");
-        data->code_err = 2;
-        ft_exit(data);
-    }
-    else if (ft_lstsize(*(cmd->cmd)) > 2)
-    {
-        data->code_err = 1;
-        printf("exit\n");
-        put_str_err("minishell: exit: too many arguments\n");
-        return ;
-    }
-    printf("exit\n");
-    ft_exit(data);
+	if (data->x->nb_cmd > 1 && cmd->id == data->x->nb_cmd - 1)
+		return ;
+	if (is_numeric((*cmd->cmd)->next->content) == 0 || bool != 0)
+	{
+		printf("exit\n");
+		put_str_err("minishell: exit: ");
+		put_str_err((*cmd->cmd)->next->content);
+		put_str_err(": numeric argument required\n");
+		data->code_err = 2;
+		ft_exit(data);
+	}
+	else if (ft_lstsize(*(cmd->cmd)) > 2)
+	{
+		data->code_err = 1;
+		printf("exit\n");
+		put_str_err("minishell: exit: too many arguments\n");
+		return ;
+	}
+	printf("exit\n");
+	ft_exit(data);
 }

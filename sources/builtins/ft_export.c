@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 09:04:42 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 12:51:27 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,17 @@ int	err_add_env(char *msg_err, char *stock, char *copy)
 	msg_err = ft_strjoin("export: `", copy);
 	if (copy[0] == '-')
 	{
-		msg_err = ft_strjoin_mod(msg_err,"': invalid option\n", 1);
+		msg_err = ft_strjoin_mod(msg_err, "': invalid option\n", 1);
 		err_write(msg_err, 2);
 	}
 	else if (contain_exclam(copy) == 1)
 	{
-		msg_err = ft_strjoin_mod(msg_err,"': event not found\n", 1);
+		msg_err = ft_strjoin_mod(msg_err, "': event not found\n", 1);
 		err_write(msg_err, 0);
 	}
 	else
 	{
-		msg_err = ft_strjoin_mod(msg_err,"': not a valid identifier\n", 1);
+		msg_err = ft_strjoin_mod(msg_err, "': not a valid identifier\n", 1);
 		err_write(msg_err, 1);
 	}
 	free(msg_err);
@@ -53,29 +53,29 @@ int	err_add_env(char *msg_err, char *stock, char *copy)
 	free(stock);
 	return (1);
 }
+
 static	void	err_exclam(char *msg_err, char *stock, char *copy)
 {
 	msg_err = ft_strjoin("export: `", stock);
-	msg_err = ft_strjoin_mod(msg_err,"': event not found\n", 1);
+	msg_err = ft_strjoin_mod(msg_err, "': event not found\n", 1);
 	err_write(msg_err, 0);
 	free(msg_err);
 	free(copy);
 }
 
 /* add new variable to the environement */
-static int	add_var_env(char *stock, t_list *tmp)
+static int	add_var_env(char *stock)
 {
 	char	*copy;
 	char	*msg_err;
-	(void)tmp;
-	
+
 	msg_err = NULL;
 	if (stock[0] == '=')
-    {
+	{
 		err_write("export: `=': not a valid identifier\n", 1);
 		free(stock);
-        return (1);
-    }
+		return (1);
+	}
 	copy = del_equal(stock);
 	if (!(is_alphanum(copy) == 0 && is_abc(copy[0]) == 0))
 	{
@@ -124,7 +124,7 @@ int	ft_export(t_list **list_token)
 	t_list	*tmp;
 	char	*stock;
 	char	*copy;
-	
+
 	tmp = *g_list_env;
 	if (ft_lstsize(*list_token) == 1)
 	{
@@ -158,7 +158,7 @@ int	ft_export(t_list **list_token)
 			if (is_in_env(copy) == 0)
 			{
 				free(copy);
-				add_var_env(stock, tmp);
+				add_var_env(stock);
 				return (0);
 			}
 			else if (modify_var(stock, tmp) == 1)
