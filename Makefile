@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
+#    By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
 #    Updated: 2023/07/05 21:17:46 by jthuysba         ###   ########.fr        #
@@ -34,7 +34,6 @@ PARSING			= ./sources/parsing/check_type.c ./sources/parsing/create_token.c \
 				./sources/parsing/substitution.c \
 				./sources/parsing/substitution2.c ./sources/parsing/type.c  \
 				
-
 TOOLS			= ./sources/tools/ft_split.c ./sources/tools/tools_builtin_1.c \
 				./sources/tools/list_tools_1.c ./sources/tools/list_tools_2.c \
 				./sources/tools/utils.c ./sources/tools/handle_equal.c \
@@ -42,7 +41,9 @@ TOOLS			= ./sources/tools/ft_split.c ./sources/tools/tools_builtin_1.c \
 				./sources/tools/sort_tools.c ./sources/tools/libft_tools_1.c \
 				./sources/tools/libft_tools_2.c ./sources/tools/libft_tools_3.c \
 				./sources/tools/libft_tools_4.c ./sources/tools/other_tools.c \
-				./sources/tools/token_tools.c \
+				./sources/tools/token_tools.c ./sources/tools/tools_cd.c \
+				./sources/tools/tools_cd2.c ./sources/tools/tools_cd3.c \
+				./sources/tools/tools_export.c \
 
 SRCS			= ${MAIN} ${BUILTINS} ${EXEC} ${EXIT} ${PARSING} ${TOOLS}
 
