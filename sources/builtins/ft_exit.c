@@ -6,15 +6,15 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 13:02:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/05 15:28:25 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 22:02:17 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    ft_exit(t_minishell *data)
+void	ft_exit(t_minishell *data)
 {
-	int code;
+	int	code;
 
 	destroy_exec(data->x);
 	free_list_token_content(data->token);
@@ -24,7 +24,7 @@ void    ft_exit(t_minishell *data)
 	code = singleton_minishell()->code_err;
 	free(singleton_minishell());
 	exit(code);
-	}
+}
 
 long long	ft_capped_atoll(const char *nptr, int *bool)
 {
@@ -42,8 +42,8 @@ long long	ft_capped_atoll(const char *nptr, int *bool)
 	}
 	result = 0;
 	if (*nptr == '-' || *nptr == '+')
-    	return (++*bool, 0);
-    while (*nptr >= '0' && *nptr <= '9')
+		return (++*bool, 0);
+	while (*nptr >= '0' && *nptr <= '9')
 	{
 		if (sign > 0 && (LLONG_MAX - *nptr + '0') / 10 < result)
 			return (++*bool, 0);
@@ -55,7 +55,7 @@ long long	ft_capped_atoll(const char *nptr, int *bool)
 	return (sign * result);
 }
 
-void    ft_exit_code(t_cmd *cmd, t_minishell *data)
+void	ft_exit_code(t_cmd *cmd, t_minishell *data)
 {
 	int			bool;
 
