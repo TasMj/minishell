@@ -31,6 +31,25 @@ int	is_builtin(t_cmd *cmd)
 	return (0);
 }
 
+int	exec_it(t_cmd *cmd, t_minishell *data)
+{
+	signal_default();
+	if (!cmd->path && is_builtin(cmd) == 0 && has_slash(cmd) == 0)
+		ft_exit(data);
+	cmd->tab_env = lst_to_tab(g_list_env);
+	if (has_slash(cmd) == 1)
+	{
+		if (execve((*cmd->cmd)->content, cmd->tab, cmd->tab_env) != 0)
+			return (1);
+	}
+	else
+	{
+		if (execve(cmd->path, cmd->tab, cmd->tab_env) != 0)
+			return (1);
+	}
+	return (0);
+}
+
 /* On lance un process pour chaque commande */
 static int	launch_process(t_cmd *cmd, t_minishell *data)
 {

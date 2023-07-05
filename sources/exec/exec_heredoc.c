@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:10:27 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/05 10:03:03 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 13:20:50 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,8 @@ static int	write_in_hdoc(t_hdoc *hdoc, t_minishell *data)
 {
 	char	*input;
 
-	// input = malloc(sizeof(char));
 	handle_signal_hdoc();
 	input = readline("> ");
-	// if (input[0] == 0)
 	if (!input)
 	{
 		free(hdoc->delim);
@@ -110,13 +108,9 @@ static int	write_in_hdoc(t_hdoc *hdoc, t_minishell *data)
 			input = substitute_hdoc(input, data);
 		write_in_fd(input, hdoc->hd_pipe[1]);
 	}
-	// if (input && ft_strcmp(input, hdoc->delim) == 1)
-	// 	write_in_fd(input, hdoc->hd_pipe[1]);
 	while (input && (!input[0] || ft_strcmp(input, hdoc->delim)) && (singleton_minishell()->code_err  != 130))
 	{
 		free(input);
-		// signal(SIGINT, &handle_signal);
-		// data->code_err = 130;
 		if (singleton_minishell()->code_err  == 130)
 			break ;
 		input = readline("> ");
@@ -138,7 +132,6 @@ static int	write_in_hdoc(t_hdoc *hdoc, t_minishell *data)
 	}
 	free(hdoc->delim);
 	free(input);
-	
 	close(hdoc->hd_pipe[0]);
 	close(hdoc->hd_pipe[1]);
 	return (0);
@@ -152,13 +145,9 @@ static int	heredoc_child(t_minishell *data)
 	i = 0;
 	while (i < data->x->nb_hdoc)
 	{
-		/* Tant qu'on a des hdoc on les ouvrent et on ecrit dedans un par un */
 		write_in_hdoc(&(data->x->hdoc[i]), data);
 		i++;
 	}
-
-	// METTRE ft_exit()
-	// exit(0);
 	ft_exit(data);
 	return (0);
 }
@@ -172,13 +161,10 @@ int	exec_heredoc(t_minishell *data)
 	if (data->x->nb_hdoc == 0)
 		return (0);
 	data->x->hdoc_index = 0;
-	/* On alloue un t_hdoc pour chaque hdoc */
 	data->x->hdoc = malloc(sizeof(t_hdoc) * data->x->nb_hdoc);
 	if (!data->x->hdoc)
 		return (1);
 	get_delims(data);
-	
-	/* On cree un process dans lequel on va ouvrir tous les hdoc un par un */
 	signal_ignore();
 	pid = fork();
 	if (pid == 0)

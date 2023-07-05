@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 12:17:52 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 15:24:22 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,13 @@ char	*get_input(t_minishell *data)
 {
 	(void) data;
 	char	*input;
-	char	cwd[1024];
+	// char	cwd[1024];
 	char	*prompt;
-	char	*code;
 
-	code = ft_itoa(data->code_err);
-	getcwd(cwd, sizeof(cwd));
-
-	if (data->code_err == 0)
-		prompt = ft_strdup("[");
-	else
-		prompt = ft_strdup("[\033[1;31m");
-	prompt = ft_strjoin_mod(prompt, code, 1);
-	if (data->code_err == 0)
-		prompt = ft_strjoin_mod(prompt, "] ", 1);
-	else
-		prompt = ft_strjoin_mod(prompt, "\033[0m] ", 1);
-	free(code);
+	prompt = ft_strdup("$> ");
 	input = readline(prompt); 
 	free(prompt);
-	if (data->code_err == 130)
-		return (NULL);
-	else if (input == NULL)
+	if (input == NULL)
 	{
 		free(input);
 		write(1, "exit\n", 5);
