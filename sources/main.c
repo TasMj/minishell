@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 12:06:22 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 12:25:10 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ int    init_list(t_minishell *data)
     get_type(data->token);
     substitute_dollar(data);
     if (err_redir(data) != 3)
+    {
+    printf("%d\n", err_redir(data));
         return (1);
+        
+    }
     remove_list_quotes(data->token);
     // add_space(data);
     // remove_empty_tokens(data->token);
