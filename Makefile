@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
+#    By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/07/05 18:01:43 by jthuysba         ###   ########.fr        #
+#    Updated: 2023/07/05 21:50:09 by tmejri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,9 @@ TOOLS			= ./sources/tools/ft_split.c ./sources/tools/tools_builtin.c \
 				./sources/tools/tools_builtin2.c  ./sources/tools/tools_exec.c \
 				./sources/tools/tools_list.c ./sources/tools/tools_parsing.c \
 				./sources/tools/tools.c ./sources/tools/tools2.c \
-				./sources/tools/utils.c \
+				./sources/tools/utils.c ./sources/tools/tools_cd.c \
+				./sources/tools/tools_cd2.c ./sources/tools/tools_cd3.c \
+				./sources/tools/tools_export.c \
 
 SRCS			= ${MAIN} ${BUILTINS} ${EXEC} ${EXIT} ${PARSING} ${TOOLS}
 

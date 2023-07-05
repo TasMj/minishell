@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 04:17:24 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 18:19:55 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 21:54:44 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,55 @@ int			contain_exclam(char *str);
 int			put_str_err(char *error);
 size_t		nbr_len(long int n);
 t_list		*ft_lst_prev(t_list *elem, t_list *first);
+
+/* tools */
+int	invalid_option(t_cmd *cmd, t_cd *c);
+int	end_cd(t_cmd *cmd, t_cd *c);
+int	intit_cd(t_cmd *cmd, t_cd *c);
+int	home_unset(t_cd *c);
+int	cd_one_tok(t_cmd *cmd, t_cd *c);
+void	dir_err(t_cmd *cmd, char *path);
+void	chdir_err(t_cmd *cmd, char *path);
+// static	int	err_cd(t_cmd *cmd, char *path);
+// static	char	*set_path(char *path, t_list **list);
+int	err_nb_cmd(t_cmd *cmd, char *path);
+int	handl_root(t_cmd *cmd, t_cd *c);
+int	cd_directory(t_cd *c, t_cmd *cmd);
+int	cd_home(t_cmd *cmd, t_cd *c);
+int	is_dir(char *path);
+int	go_chdir(t_cmd *cmd, t_cd *c);
+int	set_old_path(char *path);
+int	end_cd(t_cmd *cmd, t_cd *c);
+int	err_cd(t_cmd *cmd, char *path);
+char	*set_path(char *path, t_list **list);
+int	invalid_option(t_cmd *cmd, t_cd *c);
+int	end_cd(t_cmd *cmd, t_cd *c);
+int	intit_cd(t_cmd *cmd, t_cd *c);
+int	home_unset(t_cd *c);
+int	cd_one_tok(t_cmd *cmd, t_cd *c);
+int	handl_root(t_cmd *cmd, t_cd *c);
+int	cd_directory(t_cd *c, t_cmd *cmd);
+int	go_chdir(t_cmd *cmd, t_cd *c);
+int	cd_home(t_cmd *cmd, t_cd *c);
+int	is_dir(char *path);
+void	dir_err(t_cmd *cmd, char *path);
+void	chdir_err(t_cmd *cmd, char *path);
+int	err_cd(t_cmd *cmd, char *path);
+char	*set_path(char *path, t_list **list);
+int	err_nb_cmd(t_cmd *cmd, char *path);
+int	set_old_path(char *path);
+char	*get_previous_dir(char *str);
+int	modify_pwd(char *new_pwd);
+int	ft_cd(t_cmd *cmd);
+
+/* tools export */
+int	err_add_env(char *msg_err, char *stock, char *copy);
+void	err_exclam(char *msg_err, char *stock, char *copy);
+int	add_modif(char *copy, char *stock, t_list *tmp);
+char	*set_stock(char *str, char *stock);
+int	add_var_env(char *stock, t_list *tmp);
+int	modify_var(char *stock, t_list *tmp);
+
 
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 03:02:40 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 10:49:35 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 21:34:21 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ void    ft_exit_code(t_cmd *cmd, t_minishell *data);
 int     ft_export(t_list **list_token);
 void    ft_pwd(void);
 int     ft_unset(t_list **list_token);
+int	modify_pwd(char *new_pwd);
 
 #endif
