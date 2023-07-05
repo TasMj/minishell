@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:56:18 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 09:06:27 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 12:43:21 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	syntax_error(t_minishell *data)
 {
 	char	*msg_err;
-
 	if (ft_lstlast(*data->token)->type == APPEND
 		|| ft_lstlast(*data->token)->type == HEREDOC
 		|| ft_lstlast(*data->token)->type == STDIN
@@ -56,13 +55,15 @@ int	err_quote(t_list **list_token, t_minishell *data)
 	return (0);
 }
 
-int	err_list_one_tok(t_minishell *data, char *msg_err)
+int	err_lst_one(t_minishell *data)
 {
+	char	*msg_err;
+	
 	if (ft_strcmp((*data->token)->content, "<") == 0
-			|| ft_strcmp((*data->token)->content, ">") == 0
-			|| ft_strcmp((*data->token)->content, "<<") == 0
-			|| ft_strcmp((*data->token)->content, ">>") == 0
-			|| ft_strcmp((*data->token)->content, "<>") == 0)
+		|| ft_strcmp((*data->token)->content, ">") == 0
+		|| ft_strcmp((*data->token)->content, "<<") == 0
+		|| ft_strcmp((*data->token)->content, ">>") == 0
+		|| ft_strcmp((*data->token)->content, "<>") == 0)
 	{
 		data->code_err = 2;
 		return (err_msg(0, "IGNORE", 2));
@@ -74,28 +75,31 @@ int	err_list_one_tok(t_minishell *data, char *msg_err)
 		msg_err = ft_strjoin_mod(msg_err, "'\n", 1);
 		return (err_msg(6, msg_err, 2));
 	}
-	if (ft_strcmp((*data->token)->content, ":") == 0
-		|| ft_strcmp((*data->token)->content, "#") == 0)
-		return (0);
 	if (ft_strcmp((*data->token)->content, "!") == 0)
 	{
 		data->code_err = 1;
 		return (1);
 	}
-	return (1);
+	return (0);
 }
 
 int	list_one_tok(t_minishell *data)
 {
-	char	*msg_err;
-	
-	msg_err = NULL;
 	if (ft_lstsize(*data->token) == 1)
-		return(err_list_one_tok(data, msg_err));
+	{
+		if (err_lst_one(data) == 1)
+			return (1);
+		if (ft_strcmp((*data->token)->content, ":") == 0
+			|| ft_strcmp((*data->token)->content, "#") == 0)
+		{
+			data->code_err = 0;	
+			return (0);
+		}
+	}
 	return(3);
 }
 
-int	redir_next_pipe(t_minishell *data, t_list *tmp)
+int err_pipe(t_minishell *data, t_list	*tmp)
 {
 	char	*msg_err;
 	
@@ -137,8 +141,12 @@ int	err_redir(t_minishell *data)
 			(*data->token) = (*data->token)->next;
 		else
 		{
-			return (redir_next_pipe(data, tmp));
-			(*data->token) = (*data->token)->next;
+			if (err_pipe(data, tmp) == 1)
+				return (1);
+			else if (err_pipe(data, tmp) == 3)
+				return (3);
+			else
+				(*data->token) = (*data->token)->next;
 		}
 	}
 	*data->token = tmp;

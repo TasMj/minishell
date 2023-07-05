@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 11:35:21 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 12:30:32 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*get_input(t_minishell *data)
 	char	*input;
 	char	cwd[1024];
 	char	*prompt;
-	// char	*code;
+	char	*code;
 
 	code = ft_itoa(data->code_err);
 	getcwd(cwd, sizeof(cwd));
