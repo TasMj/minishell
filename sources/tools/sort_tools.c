@@ -1,40 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tools_builtin2.c                                   :+:      :+:    :+:   */
+/*   sort_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/25 12:41:38 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 14:36:07 by tmejri           ###   ########.fr       */
+/*   Created: 2023/07/05 20:54:39 by jthuysba          #+#    #+#             */
+/*   Updated: 2023/07/05 20:55:38 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* return size of str until '=' */
-static int	ft_strlen_var(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && i != '=')
-		i++;
-	return (i);
-}
-
-void	print_export(t_list **list)
-{
-	t_list	*tmp;
-
-	tmp = (*list);
-	while (*list)
-	{
-		printf("export %s\n", (*list)->content);
-		(*list) = (*list)->next;
-	}
-	(*list) = tmp;
-}
 
 static void	set_min_max(t_list **list, t_min_max *m)
 {
@@ -102,72 +78,4 @@ t_list	**sort_env(t_list **list)
 	*list = tmp;
 	free(m);
 	return (list);
-}
-
-int	ft_isalpha(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if ((str[i] >= 'A' && str[i] <= 'Z')
-			|| (str[i] >= 'a' && str[i] <= 'z'))
-			i++;
-		else
-			return (1);
-	}
-	return (0);
-}
-
-int	is_numeric(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (!((str[i] >= '0' && str[i] <= '9') || str[i] == '+'
-				|| str[i] == '-'))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	contain_slash(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (ft_strlen(str) == 0)
-		return (1);
-	while (str[i])
-	{
-		if (str[i] != '/')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int	is_abc(char c)
-{
-	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_')
-		return (0);
-	return (1);
-}
-
-int	contain_exclam(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '!')
-			return (1);
-		i++;
-	}
-	return (0);
 }
