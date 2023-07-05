@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 03:31:12 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 05:54:08 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 06:40:49 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ void sub_dollar_hdoc(t_substitution *s, char *str, t_minishell *data);
 t_minishell *singleton_minishell(void);
 void	signal_signal();
 void	signal_default(void);
+void	handle_signal_hdoc(void);
 
 #endif

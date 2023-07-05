@@ -74,7 +74,7 @@ int	wait_child(t_xek *x)
 				else if (WIFSIGNALED(ret))
 				{
 					signal_signal(ret);
-					// x->cmd->data->code_err = 128 + WTERMSIG(ret);
+					x->cmd->data->code_err = 128 + WTERMSIG(ret);
 				}
 				else
 				{

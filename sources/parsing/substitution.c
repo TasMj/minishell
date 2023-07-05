@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 00:34:38 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 06:16:51 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void go_to_dollar(t_substitution *s, t_minishell *data)
 	}
     else
     {
-	printf("str: %s\n" ,(*data->token)->content);
+	// printf("str: %s\n" ,(*data->token)->content);
 		
         s->start = s->i;
 		if ((s->i + 1) < ft_strlen((*data->token)->content))

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 04:51:16 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 06:24:02 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int main(int argc, char **argv, char **env)
         set_signal();
         // signal_ignore();
         data->input = get_input(data);
-        if (data->input)
+        if (data->input && data->input[0])
         {
             data->token = malloc(sizeof(t_list));
             if (!data->token)
@@ -71,7 +71,7 @@ int main(int argc, char **argv, char **env)
                 break ;
             }
             *data->token = NULL;
-            if (init_list(data) == 0)
+            if (init_list(data) == 0 && data->token[0])
             {
                 data->code_err = 0;
                 if (syntax_error(data) == 3)
@@ -84,8 +84,8 @@ int main(int argc, char **argv, char **env)
             free_list(data->token);
             free(data->input);
         }
-        else
-            data->code_err = 0;
+        // else
+        //     data->code_err = 0;
     }
     free_list_token_content(g_list_env);
     free_list(g_list_env);

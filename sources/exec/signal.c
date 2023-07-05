@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:43:39 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 05:58:50 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 06:43:53 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,25 @@ void	handle_signal(int sigid)
 	}
 }
 
+void	ctrl_c_hdoc(int sig)
+{
+	(void) sig;
+	close(0);
+	printf("\n");
+	singleton_minishell()->code_err = -42;
+}
+
+void	handle_signal_hdoc(void)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, &ctrl_c_hdoc);
+}
+
 void	signal_signal(int signal)
 {
 	if (signal == SIGINT)
 	{
+		singleton_minishell()->code_err = 130;
 		write(2, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -74,11 +89,3 @@ void	ctr_bs(int sigid)
 		return ;
 	}
 }	
-
-void	signal_heredoc(int sig, t_minishell *data)
-{
-	(void)sig;
-	close(STDIN_FILENO);
-	data->code_err = 128;
-	return ;
-}
