@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 19:56:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/05 13:18:36 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 15:35:01 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	open_type(int redir, char *file, t_xek *x)
 	else if (redir == HEREDOC)
 	{
 		x->hdoc_index++;
-		return (x->hdoc[x->hdoc_index].hd_pipe[0]);
+		return (x->hdoc[x->hdoc_index - 1].hd_pipe[0]);
 	}
 	return (0);
 }

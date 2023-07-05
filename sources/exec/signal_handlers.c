@@ -1,33 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   open_pipes.c                                       :+:      :+:    :+:   */
+/*   signal_handlers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/30 18:02:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/05 17:27:14 by jthuysba         ###   ########.fr       */
+/*   Created: 2023/07/05 18:00:12 by jthuysba          #+#    #+#             */
+/*   Updated: 2023/07/05 18:00:49 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Ouvre toutes les pipes de la ligne de comande */
-int	open_pipes(t_minishell *data)
+void	handle_signal_hdoc(void)
 {
-	int	i;
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, &ctrl_c_hdoc);
+}
 
-	data->x->nb_cmd = nb_cmd(*(data->token));
-	i = 0;
-	if (data->x->nb_cmd <= 1)
-		return (0);
-	data->x->pipe = malloc(sizeof(int *) * data->x->nb_cmd - 1);
-	while (i < data->x->nb_cmd - 1)
-	{
-		data->x->pipe[i] = malloc(sizeof(int) * 2);
-		if (pipe(data->x->pipe[i]) < 0)
-			return (1);
-		i++;
-	}
-	return (0);
+void	set_signal(void)
+{
+	signal(SIGINT, &handle_signal);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	signal_ignore(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	signal_default(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }

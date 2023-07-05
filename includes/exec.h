@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 03:31:12 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 13:18:16 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 18:01:11 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,15 @@ void	signal_default(void);
 void	handle_signal_hdoc(void);
 int	handle_pwd(t_cmd *cmd);
 int	exec_it(t_cmd *cmd, t_minishell *data);
+int	nb_hdoc(t_minishell *data);
+void	free_hdoc_tools(t_hdoc *hdoc, char *input);
+void	write_in_fd(char *str, int fd);
+char	*substitute_hdoc(char *input, t_minishell *data);
+void	handle_term_sig(int ret);
+int	open_n_leave(t_list	*token);
+int	cmd_access(t_cmd *cmd, char *msg_err);
+int	set_prep_tools(t_minishell *data);
+void	add_lst_type(t_list **list_token, t_list *elem);
+void	ctrl_c_hdoc(int sig);
 
 #endif
