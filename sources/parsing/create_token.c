@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 11:42:42 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 12:17:39 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*get_input(t_minishell *data)
 	char	*input;
 	char	cwd[1024];
 	char	*prompt;
-	// char	*code;
+	char	*code;
 
 	code = ft_itoa(data->code_err);
 	getcwd(cwd, sizeof(cwd));
@@ -52,7 +52,7 @@ char	*get_input(t_minishell *data)
 	// 	prompt = ft_strjoin_mod(prompt, "\033[0m]\033[1;32m\033[0m", 1);
 	// }
 	// prompt = ft_strdup("> ");
-	}
+	// }
 	// prompt = ft_strjoin_mod();
 	free(code);
 	// prompt = ft_strdup("\033[1;32m$> \033[0m");
