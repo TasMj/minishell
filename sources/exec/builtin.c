@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:42:19 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/04 18:49:36 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 10:40:09 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,12 @@ static int	exec_builtin(t_cmd *cmd)
 				ft_pwd();
 				return (1);
 			}
+			singleton_minishell()->code_err = 2;
 			msg_err = ft_strjoin("pwd: ", (*cmd->cmd)->next->content);
 			msg_err = ft_strjoin_mod(msg_err, ": invalid option\npwd: usage: pwd [-LP]\n", 1);
 			err_write(msg_err, 2);
 			free(msg_err);
-			return (1);
+			return (0);
 		}
 		ft_pwd();
 	}

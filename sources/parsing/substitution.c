@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 13:19:12 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 10:06:30 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 10:10:10 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,18 +132,14 @@ void	substitute_dollar(t_minishell *data)
 			{
 				if (ft_lst_prev(*data->token, start) == NULL)
 				{
-					printf("prev 1: %s\n", ft_lst_prev(*data->token, start)->content);
 					start = reset;
 					more_dollar(s, data);
 				}
 				else if (ft_lst_prev(*data->token, start) != NULL && ft_lst_prev(*data->token, start)->type != HEREDOC)
 				{
-					printf("oui\n");
-					printf("prev: %s\n", ft_lst_prev(*data->token, start)->content);
 					start = reset;
 					more_dollar(s, data);
 				}
-				printf("prev 3: %s\n", ft_lst_prev(*data->token, start)->content);
 				// more_dollar(s, data);
 			}
 			else if (ft_strlen((*data->token)->content) == 1)
