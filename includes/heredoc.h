@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.h                                             :+:      :+:    :+:   */
+/*   heredoc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/23 03:54:06 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 18:15:16 by jthuysba         ###   ########.fr       */
+/*   Created: 2023/07/05 18:10:50 by jthuysba          #+#    #+#             */
+/*   Updated: 2023/07/05 18:13:40 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXIT_H
-# define EXIT_H
+#ifndef HEREDOC_H
+# define HEREDOC_H
 
 /******************************************************************************/
 /*                                includes                                    */
@@ -22,14 +22,12 @@
 /*                                fonctions                                   */
 /******************************************************************************/
 
-int     err_msg(int n, char *msg_err, int code_err);
-void	free_tab(char **tab);
-void    free_list_token_content(t_list **list_token);
-void	free_list(t_list **list);
-void	free_all(char *s1, char *s2);
-void	free_end(t_minishell *data);
-int		handle_exit(t_cmd *cmd, t_minishell *data);
-
-
+int		nb_hdoc(t_minishell *data);
+void	free_hdoc_tools(t_hdoc *hdoc, char *input);
+void	write_in_fd(char *str, int fd);
+char	*substitute_hdoc(char *input, t_minishell *data);
+void 	sub_dollar_hdoc(t_substitution *s, char *str, t_minishell *data);
+int     nb_hdoc(t_minishell *data);
+int     exec_heredoc(t_minishell *data);
 
 #endif

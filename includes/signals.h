@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.h                                             :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/23 03:54:06 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 18:15:16 by jthuysba         ###   ########.fr       */
+/*   Created: 2023/07/05 18:05:55 by jthuysba          #+#    #+#             */
+/*   Updated: 2023/07/05 18:14:11 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXIT_H
-# define EXIT_H
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
 /******************************************************************************/
 /*                                includes                                    */
@@ -22,14 +22,14 @@
 /*                                fonctions                                   */
 /******************************************************************************/
 
-int     err_msg(int n, char *msg_err, int code_err);
-void	free_tab(char **tab);
-void    free_list_token_content(t_list **list_token);
-void	free_list(t_list **list);
-void	free_all(char *s1, char *s2);
-void	free_end(t_minishell *data);
-int		handle_exit(t_cmd *cmd, t_minishell *data);
-
-
+t_minishell *singleton_minishell(void);
+void		ctrl_c_hdoc(int sig);
+void		handle_term_sig(int ret);
+void		signal_default(void);
+void		handle_signal_hdoc(void);
+void		handle_signal(int sigid);
+void		signal_ignore(void);
+void		set_signal(void);
+void		signal_signal(int signal);
 
 #endif
