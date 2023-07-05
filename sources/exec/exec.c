@@ -63,7 +63,7 @@ int	wait_child(t_xek *x)
 	ret = 0;
 	while (i < x->nb_cmd)
 	{
-		if (!x->cmd[i].cmd|| is_builtin(&x->cmd[i]) == 0)
+		if (!x->cmd[i].cmd || is_builtin(&x->cmd[i]) == 0)
 		{
 			waitpid(x->cmd[i].pid, &ret, WUNTRACED);
 			if (x->cmd[i].id == x->nb_cmd - 1)

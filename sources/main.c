@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 02:56:35 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 04:12:02 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,26 +57,34 @@ int main(int argc, char **argv, char **env)
     while (1)
     {
         set_signal();
+        // signal_ignore();
         data->input = get_input(data);
-        data->token = malloc(sizeof(t_list));
-        if (!data->token)
+        if (data->input)
         {
+            data->token = malloc(sizeof(t_list));
+            if (!data->token)
+            {
+                free_list_token_content(data->token);
+                free_list(data->token);
+                free(data->input);
+                break ;
+            }
+            *data->token = NULL;
+            if (init_list(data) == 0)
+            {
+                data->code_err = 0;
+                if (syntax_error(data) == 3)
+                {
+                    we_exec(data);
+                }
+            }
+            // print_list(data->token);
             free_list_token_content(data->token);
             free_list(data->token);
             free(data->input);
-            break ;
         }
-        *data->token = NULL;
-        if (init_list(data) == 0)
-        {
+        else
             data->code_err = 0;
-            if (syntax_error(data) == 3)
-               we_exec(data);
-        }
-        // print_list(data->token);
-        free_list_token_content(data->token);
-        free_list(data->token);
-        free(data->input);
     }
     free_list_token_content(g_list_env);
     free_list(g_list_env);
