@@ -6,23 +6,11 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 01:58:38 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/05 09:53:00 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 13:19:53 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// void	close_writing(t_xek *x)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < x->nb_cmd - 1)
-// 	{
-// 		close(x->pipe[i][1]);
-// 		i++;
-// 	}
-// }
 
 /* Close toutes les pipes */
 void	close_all(t_xek *x)
@@ -42,10 +30,9 @@ void	close_all(t_xek *x)
 			i++;
 		}
 	}
-
 }
 
-void free_cmd(t_cmd *cmd)
+void	free_cmd(t_cmd *cmd)
 {
 	if (cmd->token)
 		free_list(cmd->token);

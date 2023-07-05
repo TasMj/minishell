@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 13:11:54 by tas               #+#    #+#             */
-/*   Updated: 2023/06/23 12:32:02 by tas              ###   ########.fr       */
+/*   Updated: 2023/07/05 17:29:49 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,12 @@ char	*find_path(char **env, char *token)
 				{
 					p.path_without = ft_strjoin_mod(p.path_split[p.j], "/", 0);
 					p.path_without = ft_strjoin_mod(p.path_without, token, 1);
-					free_tab(p.path_split);
-					return (p.path_without);
+					return (free_tab(p.path_split), p.path_without);
 				}
 				p.j++;
 			}
 		}
 		p.i++;
 	}
-	free_tab(p.path_split);
-	return (NULL);
+	return (free_tab(p.path_split), NULL);
 }

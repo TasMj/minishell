@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 15:43:35 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 15:17:17 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ int main(int argc, char **argv, char **env)
         set_signal();
         // signal_ignore();
         data->input = get_input(data);
-        if (data->input && data->input[0])
+        if (data->input[0])
         {
             data->token = malloc(sizeof(t_list));
-            if (!data->token)
+            if (!data->input && !data->token[0])
             {
                 free_list_token_content(data->token);
                 free_list(data->token);
@@ -73,12 +73,13 @@ int main(int argc, char **argv, char **env)
                 break ;
             }
             *data->token = NULL;
-            if (init_list(data) == 0 && data->token[0])
+            if (init_list(data) == 0)
             {
                 data->code_err = 0;
                 if (syntax_error(data) == 3)
                 {
                     we_exec(data);
+                    set_signal();
                 }
             }
             // print_list(data->token);

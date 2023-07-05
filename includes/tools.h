@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 04:17:24 by tas               #+#    #+#             */
-/*   Updated: 2023/07/04 15:44:07 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 18:19:55 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,21 @@
 /******************************************************************************/
 /*                                includes                                    */
 /******************************************************************************/
-#include "minishell.h"
+# include "minishell.h"
 
 /******************************************************************************/
 /*                                fonctions                                   */
 /******************************************************************************/
 
-char	    **ft_split(char const *s, char c);
-int         count_slash(char *str);
-int         check_list_equal(t_list **list);
-char	    *del_equal(char *str);
-char	    *after_equal(char *str);
-int         is_in_env(char *str);
-t_list	    **ft_copy_list(t_list **copy);
-void	    print_export(t_list **list);
-t_list	    **sort_env(t_list **list);
+char		**ft_split(char const *s, char c);
+int			count_slash(char *str);
+int			check_list_equal(t_list **list);
+char		*del_equal(char *str);
+char		*after_equal(char *str);
+int			is_in_env(char *str);
+t_list		**ft_copy_list(t_list **copy);
+void		print_export(t_list **list);
+t_list		**sort_env(t_list **list);
 int         ft_isalpha(char *str);
 int			is_numeric(char *str);
 int         extract_str(char *str);
@@ -55,21 +55,21 @@ char	    *ft_itoa(int n);
 char	    **lst_to_tab(t_list **lst);
 int	        nb_cmd(t_list *token);
 void	    set_to_zero(t_xek *x);
-int		has_slash(t_cmd *cmd);
-t_list	*ft_lstnew(char *input, int flag_space);
-void	ft_lstadd_back(t_list **lst, t_list *new);
-int	is_dir(char *path);
-int	err_write(char *error, int code_err);
+int			has_slash(t_cmd *cmd);
+t_list		*ft_lstnew(char *input, int flag_space);
+void		ft_lstadd_back(t_list **lst, t_list *new);
+int			is_dir(char *path);
+int			err_write(char *error, int code_err);
 int         check_equal(char *str);
 int         ft_isalnum(int c);
-void	add_space(t_minishell *data);
-int contain_slash(char *str);
-int	is_abc(char c);
-int is_alphanum(char *str);
-int	contain_exclam(char *str);
-int	put_str_err(char *error);
-size_t	nbr_len(long int n);
-t_list	*ft_lst_prev(t_list *elem, t_list *first);
+void		add_space(t_minishell *data);
+int 		contain_slash(char *str);
+int			is_abc(char c);
+int 		is_alphanum(char *str);
+int			contain_exclam(char *str);
+int			put_str_err(char *error);
+size_t		nbr_len(long int n);
+t_list		*ft_lst_prev(t_list *elem, t_list *first);
 
 
 #endif

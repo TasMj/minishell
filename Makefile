@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tas <tas@student.42.fr>                    +#+  +:+       +#+         #
+#    By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/07/01 16:59:28 by tas              ###   ########.fr        #
+#    Updated: 2023/07/05 18:01:43 by jthuysba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,8 @@ EXEC			= ./sources/exec/builtin.c ./sources/exec/child_process.c \
 				./sources/exec/exec.c ./sources/exec/handle_redir.c \
 				./sources/exec/open_pipes.c ./sources/exec/path.c \
 				./sources/exec/prep_cmd.c ./sources/exec/signal.c \
+				./sources/exec/heredoc_tools.c ./sources/exec/exec_tools.c \
+				./sources/exec/prep_cmd_tools.c ./sources/exec/signal_handlers.c \
 
 EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
 
