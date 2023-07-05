@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_tools_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:49:14 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/05 21:14:18 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 22:40:30 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,33 @@ void	add_list(t_list **list_token, char *stockage, int flag_space)
 
 	to_add = ft_lstnew(stockage, flag_space);
 	ft_lstadd_back(list_token, to_add);
+}
+
+void	reunite_token(t_list **lst)
+{
+	t_list	*tmp;
+	t_list	*next_token;
+
+	tmp = *lst;
+	while (*lst && (*lst)->next)
+	{
+		if (is_redir((*lst)->content) == 1)
+			(*lst) = (*lst)->next;
+		else if (((*lst)->next->flag_space == 0
+				&& is_redir((*lst)->next->content) == 0))
+		{
+			next_token = (*lst)->next;
+			(*lst)->content = ft_strjoin_mod((*lst)->content, \
+			next_token->content, 1);
+			if ((*lst)->quote_trace == 1 || (*lst)->next->quote_trace == 1)
+				(*lst)->quote_trace = 1;
+			(*lst)->flag_space = next_token->flag_space;
+			(*lst)->next = next_token->next;
+			free(next_token->content);
+			free(next_token);
+		}
+		else
+			(*lst) = (*lst)->next;
+	}
+	*lst = tmp;
 }

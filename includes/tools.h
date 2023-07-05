@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 04:17:24 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 21:54:44 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 23:06:36 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,18 @@ int	add_modif(char *copy, char *stock, t_list *tmp);
 char	*set_stock(char *str, char *stock);
 int	add_var_env(char *stock, t_list *tmp);
 int	modify_var(char *stock, t_list *tmp);
+
+int ft_strlen(char *str);
+int ft_strlen_var(char *str);
+void	put_nbr(char *str, long int n, size_t i);
+char	*var_name(char *str);
+int	check_var(char *str);
+char	*set_tmp(char *tmp, t_substitution *s);
+void	in_substitution(t_substitution *s, t_minishell *data);
+void	sub_rest(t_substitution *s, char *str);
+void	hdoc_exclam(t_substitution *s, char *str, t_minishell *data);
+void	go_to_dollar(t_substitution *s, t_minishell *d);
+void	quotes_next_to_dollar(t_minishell *data, t_substitution *s);
 
 
 #endif

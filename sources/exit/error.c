@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 13:28:23 by tas               #+#    #+#             */
-/*   Updated: 2023/07/03 12:41:27 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/05 22:27:14 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,31 @@ int	err_msg(int n, char *msg_err, int code_err)
 		free(msg_err);
 	}
 	return (1);
+}
+
+void	free_end(t_minishell *data)
+{
+	free_list_token_content(data->token);
+	free_list(data->token);
+	free(data->input);
+	free_list_token_content(g_list_env);
+	free_list(g_list_env);
+}
+
+void	free_list_token_content(t_list **list_token)
+{
+	t_list	*tmp;
+
+	if (!list_token)
+		return ;
+	tmp = (*list_token);
+	while (tmp)
+	{
+		if (tmp->content)
+		{
+			if (tmp->content != NULL)
+				free(tmp->content);
+		}
+		tmp = tmp->next;
+	}
 }

@@ -6,47 +6,11 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:35 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 22:09:00 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/05 22:19:34 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* keep env variable's name */
-static char	*var_name(char *str)
-{
-	char	*stockage;
-	int		i;
-
-	i = 0;
-	while (str[i] != '=')
-		i++;
-	stockage = ft_strdup_size(str, i);
-	return (stockage);
-}
-
-/* check if the variable is in the env */
-static int	check_var(char *str)
-{
-	t_list	*tmp;
-	char	*var;
-
-	tmp = *g_list_env;
-	while (*g_list_env)
-	{
-		var = var_name((*g_list_env)->content);
-		if (ft_strcmp(var, str) == 0)
-		{
-			*g_list_env = tmp;
-			free(var);
-			return (1);
-		}
-		free(var);
-		(*g_list_env) = (*g_list_env)->next;
-	}
-	*g_list_env = tmp;
-	return (0);
-}
 
 t_list	*to_del(char *var, char *str)
 {

@@ -6,7 +6,7 @@
 #    By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:48:33 by tmejri            #+#    #+#              #
-#    Updated: 2023/07/05 21:17:46 by jthuysba         ###   ########.fr        #
+#    Updated: 2023/07/05 23:07:29 by tmejri           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,10 @@ EXIT			= ./sources/exit/error.c ./sources/exit/free.c \
 
 PARSING			= ./sources/parsing/check_type.c ./sources/parsing/create_token.c \
 				./sources/parsing/preparsing.c ./sources/parsing/quotes.c \
-				./sources/parsing/substitution.c \
+				./sources/parsing/substitution_quotes2.c ./sources/parsing/substitution_hdoc.c \
+				./sources/parsing/substitution.c ./sources/parsing/substitution_quotes.c \
 				./sources/parsing/substitution2.c ./sources/parsing/type.c  \
+				./sources/parsing/preparsing2.c  ./sources/parsing/substitution_hdoc2.c \
 				
 TOOLS			= ./sources/tools/ft_split.c ./sources/tools/tools_builtin_1.c \
 				./sources/tools/list_tools_1.c ./sources/tools/list_tools_2.c \
@@ -43,7 +45,7 @@ TOOLS			= ./sources/tools/ft_split.c ./sources/tools/tools_builtin_1.c \
 				./sources/tools/libft_tools_4.c ./sources/tools/other_tools.c \
 				./sources/tools/token_tools.c ./sources/tools/tools_cd.c \
 				./sources/tools/tools_cd2.c ./sources/tools/tools_cd3.c \
-				./sources/tools/tools_export.c \
+				./sources/tools/tools_export.c ./sources/tools/tools_substitution.c \
 
 SRCS			= ${MAIN} ${BUILTINS} ${EXEC} ${EXIT} ${PARSING} ${TOOLS}
 
