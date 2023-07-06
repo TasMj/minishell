@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 21:13:13 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 21:35:30 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/06 02:01:36 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	err_cd(t_cmd *cmd, char *path)
 	{
 		cmd->data->code_err = 127;
 		err_write("cd: ..: No such file or directory\n", 2);
+		free(path);
 		return (1);
 	}
 	if (is_dir(path) == 0)

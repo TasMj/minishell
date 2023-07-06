@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/07/06 00:44:18 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/06 01:57:33 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ int	ft_cd(t_cmd *cmd)
 	int		ret;
 
 	c = malloc(sizeof(t_cd));
-	if (intit_cd(cmd, c) == 1)
-		return (1);
+	if (singleton_minishell()->x->nb_cmd > 1)
+		return (0);
 	ret = cd_home(cmd, c);
 	if (ret != 0)
 		return (ret);

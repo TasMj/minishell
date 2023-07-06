@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 21:10:01 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/06 00:44:31 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/06 01:46:14 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ int	invalid_option(t_cmd *cmd, t_cd *c)
 int	end_cd(t_cmd *cmd, t_cd *c)
 {
 	if (err_cd(cmd, c->path) == 1)
+	{
+		free(c);	
 		return (1);
+	}
 	*cmd->cmd = c->tmp;
 	modify_pwd(c->path);
 	set_old_path(c->old_path);
@@ -49,6 +52,7 @@ int	intit_cd(t_cmd *cmd, t_cd *c)
 	c->path = NULL;
 	if (cmd->data->x->nb_cmd > 1)
 	{
+		printf("%s\n", c->path);
 		if (err_nb_cmd(cmd, c->path) == 1)
 		{
 			free(c);	
