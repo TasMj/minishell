@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   other_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 21:12:26 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/05 21:13:10 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/06 02:13:17 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,33 @@ char	*get_venv(char *str)
 	}
 	*g_list_env = tmp;
 	return (NULL);
+}
+
+int	ft_isspace(char c)
+{
+	if (c == '\t' || c == '\n' || c == '\v'
+		|| c == '\f' || c == '\r' || c == ' ' || c == '\0')
+		return (1);
+	else
+		return (0);
+}
+
+int	space_only(char *p)
+{
+	char	*char_ptr;
+
+	char_ptr = p;
+	if (char_ptr != NULL)
+	{
+		while (*char_ptr)
+		{
+			if (ft_isspace(*char_ptr))
+				char_ptr++;
+			else
+				return (0);
+		}
+		return (1);
+	}
+	else
+		return (1);
 }

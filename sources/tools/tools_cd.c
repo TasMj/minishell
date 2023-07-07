@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 21:10:01 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/06 01:46:14 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/06 02:56:31 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	end_cd(t_cmd *cmd, t_cd *c)
 {
 	if (err_cd(cmd, c->path) == 1)
 	{
-		free(c);	
+		free(c);
 		return (1);
 	}
 	*cmd->cmd = c->tmp;
@@ -55,7 +55,7 @@ int	intit_cd(t_cmd *cmd, t_cd *c)
 		printf("%s\n", c->path);
 		if (err_nb_cmd(cmd, c->path) == 1)
 		{
-			free(c);	
+			free(c);
 			return (1);
 		}
 	}

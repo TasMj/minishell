@@ -6,17 +6,17 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 12:14:14 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 20:28:27 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/06 02:38:43 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef STRUCT_H
-#define STRUCT_H
+#ifndef STRUCT_H
+# define STRUCT_H
 
 /******************************************************************************/
 /*                                includes                                    */
 /******************************************************************************/
-#include "minishell.h"
+# include "minishell.h"
 
 /******************************************************************************/
 /*                               structures                                   */
@@ -35,16 +35,16 @@ typedef struct s_list
 
 typedef struct s_substitution
 {
-    char    		*var_substitute;
-    char    		*keep_var;
-    char			*keep_var2;
-    char    		*new_content;
-    char    		*without_dollar;
-    char			*stock;
-    int				start;
-    int				end;
-    int				deb;
-    int				i;
+	char			*var_substitute;
+	char			*keep_var;
+	char			*keep_var2;
+	char			*new_content;
+	char			*without_dollar;
+	char			*stock;
+	int				start;
+	int				end;
+	int				deb;
+	int				i;
 	int				flag;
 	int				flag_space;
 	int				flag_keep_quote;
@@ -74,21 +74,21 @@ typedef struct s_path
 
 typedef struct s_cmd
 {
-	int		id;
-	t_list	**token;
-	t_list	**cmd;
-	char	**tab;
-	char	*path;
-	int		*redir;
-	char	**file;
-	int		nb_redir;
-	pid_t	pid;
-	char	**tab_env;
-	int		status;
-	struct s_minishell *data;
+	int					id;
+	t_list				**token;
+	t_list				**cmd;
+	char				**tab;
+	char				*path;
+	int					*redir;
+	char				**file;
+	int					nb_redir;
+	pid_t				pid;
+	char				**tab_env;
+	int					status;
+	struct s_minishell	*data;
 }	t_cmd;
 
-typedef struct	s_hdoc
+typedef struct s_hdoc
 {
 	char	*delim;
 	int		hd_pipe[2];
@@ -115,11 +115,11 @@ typedef struct s_minishell
 
 typedef struct s_echo
 {
-    t_list  *tmp;
-    char    *stockage;
-    int     flag;
-    int     to_free;
-}t_echo;
+	t_list	*tmp;
+	char	*stockage;
+	int		flag;
+	int		to_free;
+}	t_echo;
 
 typedef struct s_min_max
 {

@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 21:15:13 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/06 01:38:41 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/06 02:57:35 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,14 @@ int	go_chdir(t_cmd *cmd, t_cd *c)
 	modify_pwd(c->path);
 	if (c->path)
 		free(c->path);
-	free(c);	
+	free(c);
 	return (2);
 }
 
 int	cd_home(t_cmd *cmd, t_cd *c)
 {
 	if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && (*cmd->cmd)->next == NULL)
-		return (go_chdir(cmd,c));
+		return (go_chdir(cmd, c));
 	else if ((*cmd->cmd)->next && ft_strcmp((".."), \
 	(*cmd->cmd)->next->content) == 0)
 	{
@@ -80,14 +80,14 @@ int	cd_home(t_cmd *cmd, t_cd *c)
 			free(c);
 			cmd->data->code_err = 127;
 			err_write("cd: ..: No such file or directory\n", 2);
-			return(1);
+			return (1);
 		}
 	}
 	else if (ft_strcmp("cd", (*cmd->cmd)->content) == 0
 		&& is_in_env("HOME") == 0)
 	{
 		*cmd->cmd = c->tmp;
-		free(c);			
+		free(c);
 		return (err_msg(4, "IGNORE", 1));
 	}
 	return (0);

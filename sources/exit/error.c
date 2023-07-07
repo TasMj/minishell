@@ -6,11 +6,18 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 13:28:23 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 22:27:14 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/06 02:23:04 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_main_tools(t_minishell *data)
+{
+	free_list_token_content(data->token);
+	free_list(data->token);
+	free(data->input);
+}
 
 int	err_msg(int n, char *msg_err, int code_err)
 {

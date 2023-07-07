@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:49:25 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 18:12:37 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/06 02:32:21 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -62,7 +61,7 @@ extern t_list	**g_list_env;
 /*                                   enum                                     */
 /******************************************************************************/
 
-enum token_type {
+enum e_token_type {
 	WORD,
 	APPEND,
 	HEREDOC,
@@ -72,8 +71,6 @@ enum token_type {
 	END
 };
 
-
 void	print_list(t_list **list);
-
 
 #endif
