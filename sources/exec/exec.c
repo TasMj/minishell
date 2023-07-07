@@ -117,6 +117,7 @@ int	we_exec(t_minishell *data)
 	}
 	open_pipes(data);
 	exec_heredoc(data);
+
 	if (go_exec(data->x, data) != 0)
 	{
 		data->code_err = 1;

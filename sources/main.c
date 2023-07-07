@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/07/06 02:22:47 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/07 14:00:29 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	init_main(char **env, int argc, char **argv)
 
 void	executing(t_minishell *data)
 {
-	data->code_err = 0;
+	// data->code_err = 0;
 	if (syntax_error(data) == 3)
 		we_exec(data);
 	set_signal();
