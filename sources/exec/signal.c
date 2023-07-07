@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:43:39 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 18:02:22 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/07 13:41:16 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 
 void	handle_signal(int sigid)
 {
-	t_minishell	*data;
-
-	data = singleton_minishell();
 	if (sigid == SIGINT)
 	{
 		write(2, "\n", 1);

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/05 17:57:21 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/07 13:42:02 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	check_cmd(t_cmd *cmd)
 	msg_err = 0;
 	if (!cmd->cmd)
 		return (0);
-	if (cmd->cmd && (has_slash(cmd) == 1 || is_in_env("PATH") == 0))
+	if (cmd->cmd && (has_slash(cmd) == 1 || (is_in_env("PATH") == 0 && is_builtin(cmd) == 0)))
 		return (cmd_access(cmd, msg_err));
 	cmd->tab = lst_to_tab(g_list_env);
 	if (is_in_env("PATH") == 1)

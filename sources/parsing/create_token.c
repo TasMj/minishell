@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/07/06 02:56:01 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/07 13:42:57 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*get_input(t_minishell *data)
 	char	*input;
 	char	*prompt;
 
-	prompt = ft_strdup("> ");
+	prompt = ft_strdup("[MINI]$> ");
 	input = readline(prompt);
 	free(prompt);
 	if (input == NULL)
