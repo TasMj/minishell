@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/07/06 02:49:48 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/07 14:28:59 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	set_old_path(char *path)
 	t_list	*tmp;
 	char	*copy_env;
 
-	if (is_in_env("OLDPWD") == 0)
+	if (is_in_env("OLDPWD") == 0 || !path)
 		return (1);
 	tmp = *g_list_env;
 	while (*g_list_env)
@@ -36,6 +36,7 @@ int	set_old_path(char *path)
 		}
 		free(copy_env);
 	}
+	printf("%s\n", path);
 	return (0);
 }
 

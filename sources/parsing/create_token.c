@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/07/07 13:42:57 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/07 14:06:22 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*get_input(t_minishell *data)
 	char	*input;
 	char	*prompt;
 
-	prompt = ft_strdup("[MINI]$> ");
+	prompt = ft_strdup("$> ");
 	input = readline(prompt);
 	free(prompt);
 	if (input == NULL)
