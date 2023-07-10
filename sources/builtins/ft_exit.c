@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 13:02:44 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/07 13:56:27 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 16:42:29 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,13 @@
 
 void	ft_exit(t_minishell *data)
 {
-	int	code;
-
-	printf("here\n");
 	destroy_exec(data->x);
 	free_list_token_content(data->token);
 	free_list(data->token);
 	free_list_token_content(g_list_env);
 	free_list(g_list_env);
-	code = singleton_minishell()->code_err;
 	free(singleton_minishell());
-	exit(code);
+	exit(g_exit_code);
 }
 
 long long	ft_capped_atoll(const char *nptr, int *bool)
@@ -61,7 +57,7 @@ void	ft_exit_code(t_cmd *cmd, t_minishell *data)
 	int			bool;
 
 	bool = 0;
-	data->code_err = ft_capped_atoll((*cmd->cmd)->next->content, &bool);
+	g_exit_code = ft_capped_atoll((*cmd->cmd)->next->content, &bool);
 	if (data->x->nb_cmd > 1 && cmd->id == data->x->nb_cmd - 1)
 		return ;
 	if (is_numeric((*cmd->cmd)->next->content) == 0 || bool != 0)
@@ -70,12 +66,12 @@ void	ft_exit_code(t_cmd *cmd, t_minishell *data)
 		put_str_err("minishell: exit: ");
 		put_str_err((*cmd->cmd)->next->content);
 		put_str_err(": numeric argument required\n");
-		data->code_err = 2;
+		g_exit_code = 2;
 		ft_exit(data);
 	}
 	else if (ft_lstsize(*(cmd->cmd)) > 2)
 	{
-		data->code_err = 1;
+		g_exit_code = 1;
 		printf("exit\n");
 		put_str_err("minishell: exit: too many arguments\n");
 		return ;

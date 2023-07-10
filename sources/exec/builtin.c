@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:42:19 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 13:07:59 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 16:43:03 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	handle_builtin(t_cmd *cmd, t_minishell *data)
 	int	tmp_in;
 	int	tmp_out;
 
+	g_exit_code = 0;
 	if (handle_exit(cmd, data) == 1)
 		return (0);
 	tmp_in = dup(STDIN_FILENO);

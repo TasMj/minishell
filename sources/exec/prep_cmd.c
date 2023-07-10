@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/07 13:42:02 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 16:44:04 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static int	check_cmd(t_cmd *cmd)
 		put_str_err((*cmd->cmd)->content);
 		put_str_err(": command not found\n");
 		if (cmd->id == cmd->data->x->nb_cmd - 1)
-			cmd->data->code_err = 127;
+			g_exit_code = 127;
 		return (free_tab(cmd->tab), 0);
 	}
 	free_tab(cmd->tab);

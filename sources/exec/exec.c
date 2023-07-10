@@ -66,7 +66,7 @@ int	wait_child(t_xek *x)
 			if (x->cmd[i].id == x->nb_cmd - 1)
 			{
 				if (WIFEXITED(ret))
-					x->cmd->data->code_err = WEXITSTATUS(ret);
+					g_exit_code = WEXITSTATUS(ret);
 				else if (WIFSIGNALED(ret))
 					handle_term_sig(ret);
 			}
@@ -120,7 +120,7 @@ int	we_exec(t_minishell *data)
 
 	if (go_exec(data->x, data) != 0)
 	{
-		data->code_err = 1;
+		g_exit_code = 1;
 		return (destroy_exec(data->x), 1);
 	}
 	destroy_exec(data->x);

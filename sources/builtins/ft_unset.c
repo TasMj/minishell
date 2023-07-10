@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:35 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 22:19:34 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/10 16:42:56 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,19 @@ void	write_msg(char *str)
 	msg_err = ft_strjoin("unset: `", str);
 	if (str[0] == '-')
 	{
-		singleton_minishell()->code_err = 2;
+		g_exit_code = 2;
 		msg_err = ft_strjoin_mod(msg_err, "': invalid option\n", 1);
 		err_write(msg_err, 2);
 	}
 	else if (contain_exclam(str) == 1)
 	{
-		singleton_minishell()->code_err = 0;
+		g_exit_code = 0;
 		msg_err = ft_strjoin_mod(msg_err, "': event not found\n", 1);
 		err_write(msg_err, 0);
 	}
 	else
 	{
-		singleton_minishell()->code_err = 1;
+		g_exit_code = 1;
 		msg_err = ft_strjoin_mod(msg_err, "': not a valid identifier\n", 1);
 		err_write(msg_err, 1);
 	}

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:10:27 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/05 16:28:30 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 16:43:22 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ static int	write_in_hdoc(t_hdoc *hdoc, t_minishell *data)
 	handle_signal_hdoc();
 	input = read_n_write(hdoc, data);
 	while (input && (!input[0] || ft_strcmp(input, hdoc->delim))
-		&& (singleton_minishell()->code_err != 130))
+		&& (g_exit_code != 130))
 	{
 		free(input);
-		if (singleton_minishell()->code_err == 130)
+		if (g_exit_code == 130)
 			break ;
 		input = read_n_write(hdoc, data);
 	}

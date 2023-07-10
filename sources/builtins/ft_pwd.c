@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:29 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 12:39:22 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 16:42:45 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_pwd(void)
 		printf("%s\n", cwd);
 	else
 	{
-		singleton_minishell()->code_err = 1;
+		g_exit_code = 1;
 		perror("pwd error");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/07/07 14:28:59 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 15:18:49 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	set_old_path(char *path)
 		}
 		free(copy_env);
 	}
-	printf("%s\n", path);
 	return (0);
 }
 

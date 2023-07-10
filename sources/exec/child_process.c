@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 19:56:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/05 15:35:01 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 16:43:12 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_access(char *file, t_cmd *cmd)
 	{
 		if (access(file, R_OK) == -1)
 		{
-			cmd->data->code_err = 1;
+			g_exit_code = 1;
 			put_str_err("minishell: ");
 			put_str_err((*cmd->cmd)->content);
 			put_str_err(": ");
@@ -49,7 +49,7 @@ int	check_access(char *file, t_cmd *cmd)
 	}
 	else
 	{
-		cmd->data->code_err = 1;
+		g_exit_code = 1;
 		put_str_err("minishell: ");
 		put_str_err(file);
 		put_str_err(": No such file or directory\n");

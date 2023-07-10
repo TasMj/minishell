@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_cd2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 21:13:13 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/06 02:01:36 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/10 14:46:48 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	chdir_err(t_cmd *cmd, char *path)
 	msg_err = ft_strjoin_mod(msg_err, (*cmd->cmd)->next->content, 1);
 	msg_err = ft_strjoin_mod(msg_err, ": No such file or directory\n", 1);
 	err_write(msg_err, 2);
-	cmd->data->code_err = 127;
+	cmd->data->code_err = 1;
 	free(msg_err);
 	free(path);
 }

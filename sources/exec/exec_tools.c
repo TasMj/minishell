@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 17:15:49 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/05 17:17:10 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 16:43:34 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	is_builtin(t_cmd *cmd)
 void	handle_term_sig(int ret)
 {
 	signal_signal(ret);
-	singleton_minishell()->code_err = 128 + WTERMSIG(ret);
-	if (singleton_minishell()->code_err == 139)
+	g_exit_code = 128 + WTERMSIG(ret);
+	if (g_exit_code == 139)
 		put_str_err("Segmentation fault\n");
 }
 
