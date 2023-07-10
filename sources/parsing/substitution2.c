@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitution2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 22:37:35 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 23:05:59 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/10 20:13:41 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	go_to_code_err(t_substitution *s, t_minishell *data)
 	s->end = s->i;
 	s->keep_var = ft_strdup_size((*data->token)->content + s->start, \
 	(s->end - s->start));
-	s->var_substitute = substitution(data, s->keep_var);
+	s->var_substitute = substitution(s->keep_var);
 	deb = s->i;
 	s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
 	while ((*data->token)->content[s->i] != '\0'
@@ -61,7 +61,7 @@ void	go_to_rest(t_substitution *s, t_minishell *data)
 	s->end = s->i;
 	s->keep_var = ft_strdup_size((*data->token)->content + s->start, \
 	(s->end - s->start));
-	s->var_substitute = substitution(data, s->keep_var);
+	s->var_substitute = substitution(s->keep_var);
 	if (s->var_substitute && ft_strlen(s->var_substitute) != 0)
 		s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preparsing2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 22:41:06 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 23:46:48 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/10 19:59:27 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	syntax_error(t_minishell *data)
 	return (3);
 }
 
-int	err_quote(t_list **lst, t_minishell *data)
+int	err_quote(t_list **lst)
 {
 	t_list	*tmp;
 
@@ -51,7 +51,7 @@ int	err_quote(t_list **lst, t_minishell *data)
 	if (ft_lstsize(*lst) == 1 && (ft_strcmp((*lst)->content, "\'\'") == 0
 			|| ft_strcmp((*lst)->content, "\"\"") == 0))
 	{
-		data->code_err = 127;
+		g_exit_code = 127;
 		put_str_err("minishell: : command not found\n");
 		return (1);
 	}

@@ -6,16 +6,18 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/07/10 16:42:03 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 21:48:24 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	g_exit_code;
+
 int	init_list(t_minishell *data)
 {
 	data->token = create_token(data->token, data->input);
-	if (err_quote(data->token, data) == 1)
+	if (err_quote(data->token) == 1)
 		return (1);
 	get_type(data->token);
 	substitute_dollar(data);
@@ -48,7 +50,6 @@ int	init_main(char **env, int argc, char **argv)
 	g_list_env = get_list_env(env);
 	if (!g_list_env)
 		return (perror("env malloc error\n"), 1);
-	singleton_minishell()->code_err = 0;
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_substitution.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 22:34:52 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/06 01:39:09 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/10 20:00:20 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ static char	*remove_dollar(char *str)
 	return (token);
 }
 
-char	*substitution(t_minishell *data, char *token)
+char	*substitution(char *token)
 {
 	char	*variable;
 	char	*var_check;
 
 	variable = NULL;
 	if ((ft_strlen(token) == 2) && ft_strcmp(token, "$?") == 0)
-		variable = ft_itoa(data->code_err);
+		variable = ft_itoa(g_exit_code);
 	else if (token[0] == '$')
 	{
 		var_check = remove_dollar(token);

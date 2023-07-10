@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:43:39 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/07 13:41:16 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 19:58:08 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	handle_signal(int sigid)
 	if (sigid == SIGINT)
 	{
 		write(2, "\n", 1);
-		singleton_minishell()->code_err = 130;
+		g_exit_code = 130;
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -32,14 +32,14 @@ void	ctrl_c_hdoc(int sig)
 	(void) sig;
 	close(0);
 	printf("\n");
-	singleton_minishell()->code_err = -42;
+	g_exit_code = -42;
 }
 
 void	signal_signal(int signal)
 {
 	if (signal == SIGINT)
 	{
-		singleton_minishell()->code_err = 130;
+		g_exit_code = 130;
 		write(2, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();

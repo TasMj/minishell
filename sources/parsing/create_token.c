@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/07/10 14:53:07 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 19:58:23 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*get_input(t_minishell *data)
 	char	*prompt;
 	char	*code;
 
-	code = ft_itoa(data->code_err);
+	code = ft_itoa(g_exit_code);
 	prompt = ft_strdup(code);
 	prompt = ft_strjoin_mod(prompt, "> ", 1);
 	free(code);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preparsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:56:18 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 22:42:26 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/10 19:58:36 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ int	list_one_tok_bis(t_minishell *data)
 		|| ft_strcmp((*data->token)->content, ">>") == 0
 		|| ft_strcmp((*data->token)->content, "<>") == 0)
 	{
-		data->code_err = 2;
+		g_exit_code = 2;
 		return (err_msg(0, "IGNORE", 2));
 	}
 	else if (ft_strcmp((*data->token)->content, "|") == 0)
 	{
-		data->code_err = 2;
+		g_exit_code = 2;
 		msg_err = ft_strjoin("syntax error near unexpected token `", \
 		(*data->token)->content);
 		msg_err = ft_strjoin_mod(msg_err, "'\n", 1);
@@ -35,7 +35,7 @@ int	list_one_tok_bis(t_minishell *data)
 	}
 	else if (ft_strcmp((*data->token)->content, "!") == 0)
 	{
-		data->code_err = 1;
+		g_exit_code = 1;
 		return (1);
 	}
 	return (0);
@@ -58,7 +58,7 @@ int	print_err_syntax(t_minishell *data, t_list *tmp)
 {
 	char	*msg_err;
 
-	data->code_err = 2;
+	g_exit_code = 2;
 	msg_err = ft_strjoin("syntax error near unexpected token `", \
 	(*data->token)->content);
 	msg_err = ft_strjoin_mod(msg_err, "'\n", 1);

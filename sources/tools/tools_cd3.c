@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 21:15:13 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/07 14:20:08 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 19:59:04 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	cd_home(t_cmd *cmd, t_cd *c)
 		if (c->path == NULL)
 		{
 			free(c);
-			cmd->data->code_err = 127;
+			g_exit_code = 127;
 			err_write("cd: ..: No such file or directory\n", 2);
 			return (1);
 		}

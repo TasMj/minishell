@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 04:17:24 by tas               #+#    #+#             */
-/*   Updated: 2023/07/06 02:55:44 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/10 20:14:08 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,9 @@ void		put_nbr(char *str, long int n, size_t i);
 char		*var_name(char *str);
 int			check_var(char *str);
 char		*set_tmp(char *tmp, t_substitution *s);
-void		in_substitution(t_substitution *s, t_minishell *data);
+void		in_substitution(t_substitution *s);
 void		sub_rest(t_substitution *s, char *str);
-void		hdoc_exclam(t_substitution *s, char *str, t_minishell *data);
+void		hdoc_exclam(t_substitution *s, char *str);
 void		go_to_dollar(t_substitution *s, t_minishell *d);
 void		quotes_next_to_dollar(t_minishell *data, t_substitution *s);
 int			space_only(char *p);
