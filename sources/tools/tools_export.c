@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 21:49:28 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 21:53:55 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/10 22:21:17 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,15 @@ void	err_exclam(char *msg_err, char *stock, char *copy)
 	free(copy);
 }
 
-int	add_modif(char *copy, char *stock, t_list *tmp)
+int	add_modif(char *copy, char *stock, t_list *tmp, t_minishell *data)
 {
-	if (is_in_env(copy) == 0)
+	if (is_in_env(copy, data) == 0)
 	{
 		free(copy);
-		add_var_env(stock, tmp);
+		add_var_env(stock, tmp, data);
 		return (0);
 	}
-	else if (modify_var(stock, tmp) == 1)
+	else if (modify_var(stock, tmp, data) == 1)
 	{
 		free(copy);
 		free(stock);

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/07/10 21:48:24 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 22:07:53 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ t_minishell	*singleton_minishell(void)
 	return (data);
 }
 
-int	init_main(char **env, int argc, char **argv)
+int	init_main(char **env, int argc, char **argv, t_minishell *data)
 {
 	(void)argc;
 	(void)argv;
 	g_exit_code = 0;
-	g_list_env = get_list_env(env);
-	if (!g_list_env)
+	data->env = get_list_env(env);
+	if (!data->env)
 		return (perror("env malloc error\n"), 1);
 	return (0);
 }
@@ -65,7 +65,7 @@ int	main(int argc, char **argv, char **env)
 	t_minishell	*data;
 
 	data = singleton_minishell();
-	if (init_main(env, argc, argv) == 1)
+	if (init_main(env, argc, argv, data) == 1)
 		return (1);
 	while (1)
 	{
@@ -82,6 +82,6 @@ int	main(int argc, char **argv, char **env)
 			free_main_tools(data);
 		}
 	}
-	free_list_token_content(g_list_env);
-	return (free_list(g_list_env), 0);
+	free_list_token_content(data->env);
+	return (free_list(data->env), 0);
 }

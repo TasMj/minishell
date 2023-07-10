@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 13:28:23 by tas               #+#    #+#             */
-/*   Updated: 2023/07/06 02:23:04 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/10 22:05:33 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void	free_end(t_minishell *data)
 	free_list_token_content(data->token);
 	free_list(data->token);
 	free(data->input);
-	free_list_token_content(g_list_env);
-	free_list(g_list_env);
+	free_list_token_content(data->env);
+	free_list(data->env);
 }
 
 void	free_list_token_content(t_list **list_token)

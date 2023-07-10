@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   other_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 21:12:26 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/06 02:13:17 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/10 22:06:48 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,27 @@ int	extract_str(char *str)
 	return (i);
 }
 
-char	*get_venv(char *str)
+char	*get_venv(char *str, t_minishell *data)
 {
 	t_list	*tmp;
 	char	*var;
 	char	*copy_env;
 
-	tmp = *g_list_env;
-	while (*g_list_env)
+	tmp = *data->env;
+	while (*data->env)
 	{
-		copy_env = del_equal((*g_list_env)->content);
+		copy_env = del_equal((*data->env)->content);
 		if (ft_strcmp(str, copy_env) == 0)
 		{
-			var = after_equal((*g_list_env)->content);
-			*g_list_env = tmp;
+			var = after_equal((*data->env)->content);
+			*data->env = tmp;
 			free(copy_env);
 			return (var);
 		}
 		free(copy_env);
-		(*g_list_env) = (*g_list_env)->next;
+		(*data->env) = (*data->env)->next;
 	}
-	*g_list_env = tmp;
+	*data->env = tmp;
 	return (NULL);
 }
 

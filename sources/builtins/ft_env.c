@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:48 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 22:01:11 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/10 22:03:12 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_list	**get_list_env(char **env)
 	return (list_env);
 }
 
-int	ft_env(t_list **l)
+int	ft_env(t_list **l, t_minishell *data)
 {
 	t_list	*tmp;
 	t_list	*tmp_cmd;
@@ -51,12 +51,12 @@ int	ft_env(t_list **l)
 		*l = tmp_cmd;
 		return (1);
 	}
-	tmp = *g_list_env;
-	while (*g_list_env != NULL)
+	tmp = *data->env;
+	while (*data->env != NULL)
 	{
-		printf("%s\n", (*g_list_env)->content);
-		(*g_list_env) = (*g_list_env)->next;
+		printf("%s\n", (*data->env)->content);
+		(*data->env) = (*data->env)->next;
 	}
-	*g_list_env = tmp;
+	*data->env = tmp;
 	return (0);
 }

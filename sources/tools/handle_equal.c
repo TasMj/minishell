@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:43:39 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/05 20:45:08 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 22:06:10 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,24 +79,24 @@ char	*after_equal(char *str)
 	return (var);
 }
 
-int	is_in_env(char *str)
+int	is_in_env(char *str, t_minishell *data)
 {
 	t_list	*tmp;
 	char	*copy;
 
-	tmp = *g_list_env;
-	while (*g_list_env)
+	tmp = *data->env;
+	while (*data->env)
 	{
-		copy = del_equal((*g_list_env)->content);
+		copy = del_equal((*data->env)->content);
 		if (ft_strcmp(str, copy) == 0)
 		{
 			free(copy);
-			*g_list_env = tmp;
+			*data->env = tmp;
 			return (1);
 		}
 		free(copy);
-		(*g_list_env) = (*g_list_env)->next;
+		(*data->env) = (*data->env)->next;
 	}
-	*g_list_env = tmp;
+	*data->env = tmp;
 	return (0);
 }

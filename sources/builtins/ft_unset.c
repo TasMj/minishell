@@ -6,54 +6,54 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:35 by tas               #+#    #+#             */
-/*   Updated: 2023/07/10 16:42:56 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 22:18:14 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*to_del(char *var, char *str)
+t_list	*to_del(char *var, char *str, t_minishell *data)
 {
 	t_list	*tmp_first;
 	t_list	*tmp_next;
 	t_list	*var_before;
 
-	tmp_first = *g_list_env;
-	while ((*g_list_env)->next != NULL && ft_strcmp(var, str) == 1)
+	tmp_first = *data->env;
+	while ((*data->env)->next != NULL && ft_strcmp(var, str) == 1)
 	{
-		var_before = (*g_list_env);
-		(*g_list_env) = (*g_list_env)->next;
+		var_before = (*data->env);
+		(*data->env) = (*data->env)->next;
 		free(var);
-		var = var_name((*g_list_env)->content);
+		var = var_name((*data->env)->content);
 	}
-	(*g_list_env) = var_before;
-	if ((*g_list_env)->next->next != NULL)
-		tmp_next = (*g_list_env)->next->next;
+	(*data->env) = var_before;
+	if ((*data->env)->next->next != NULL)
+		tmp_next = (*data->env)->next->next;
 	else
 		tmp_next = NULL;
-	free((*g_list_env)->next->content);
-	free((*g_list_env)->next);
-	(*g_list_env)->next = tmp_next;
+	free((*data->env)->next->content);
+	free((*data->env)->next);
+	(*data->env)->next = tmp_next;
 	free(var);
 	return (tmp_first);
 }
 
 /* delet an environement var */
-static	void	del(char *str)
+static	void	del(char *str, t_minishell *data)
 {
 	t_list	*tmp_first;
 	char	*var;
 
-	var = var_name((*g_list_env)->content);
+	var = var_name((*data->env)->content);
 	if (ft_strcmp(var, str) == 0)
 	{
-		tmp_first = (*g_list_env)->next;
-		free((*g_list_env)->content);
-		free(*g_list_env);
+		tmp_first = (*data->env)->next;
+		free((*data->env)->content);
+		free(*data->env);
 	}
 	else
-		tmp_first = to_del(var, str);
-	*g_list_env = tmp_first;
+		tmp_first = to_del(var, str, data);
+	*data->env = tmp_first;
 }
 
 void	write_msg(char *str)
@@ -92,7 +92,7 @@ int	not_options(char *str)
 	return (0);
 }
 
-int	ft_unset(t_list **list_token)
+int	ft_unset(t_list **list_token, t_minishell *data)
 {
 	if (!(*list_token)->next)
 		return (0);
@@ -101,8 +101,8 @@ int	ft_unset(t_list **list_token)
 		return (0);
 	while (*list_token != NULL)
 	{
-		if (check_var((*list_token)->content) == 1)
-			del((*list_token)->content);
+		if (check_var((*list_token)->content, data) == 1)
+			del((*list_token)->content, data);
 		(*list_token) = (*list_token)->next;
 	}
 	return (0);

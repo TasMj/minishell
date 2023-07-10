@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_builtin_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:08:46 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/05 22:52:33 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/10 22:07:01 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,24 +68,24 @@ char	*var_name(char *str)
 }
 
 /* check if the variable is in the env */
-int	check_var(char *str)
+int	check_var(char *str, t_minishell *data)
 {
 	t_list	*tmp;
 	char	*var;
 
-	tmp = *g_list_env;
-	while (*g_list_env)
+	tmp = *data->env;
+	while (*data->env)
 	{
-		var = var_name((*g_list_env)->content);
+		var = var_name((*data->env)->content);
 		if (ft_strcmp(var, str) == 0)
 		{
-			*g_list_env = tmp;
+			*data->env = tmp;
 			free(var);
 			return (1);
 		}
 		free(var);
-		(*g_list_env) = (*g_list_env)->next;
+		(*data->env) = (*data->env)->next;
 	}
-	*g_list_env = tmp;
+	*data->env = tmp;
 	return (0);
 }

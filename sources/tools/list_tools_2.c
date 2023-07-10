@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   list_tools_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:49:14 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/05 22:40:30 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/10 22:06:28 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	**ft_copy_list(t_list **copy)
+t_list	**ft_copy_list(t_list **copy, t_minishell *data)
 {
-	while (*g_list_env)
+	while (*data->env)
 	{
-		add_list(copy, (*g_list_env)->content, 0);
-		(*g_list_env) = (*g_list_env)->next;
+		add_list(copy, (*data->env)->content, 0);
+		(*data->env) = (*data->env)->next;
 	}
 	return (copy);
 }

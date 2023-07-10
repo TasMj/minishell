@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/07/05 21:57:38 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/10 22:29:29 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	**g_list_env;
+// t_list	**g_list_env;
 
 /* sort the environement by ascii */
-static int	sort_env_ascii(void)
+static int	sort_env_ascii(t_minishell *data)
 {
 	t_list	**copy;
 
@@ -23,7 +23,7 @@ static int	sort_env_ascii(void)
 	if (!copy)
 		return (1);
 	ft_memset(copy, 0, sizeof(t_list));
-	copy = ft_copy_list(copy);
+	copy = ft_copy_list(copy, data);
 	copy = sort_env(copy);
 	print_export(copy);
 	free_list(copy);
@@ -31,7 +31,7 @@ static int	sort_env_ascii(void)
 }
 
 /* add new variable to the environement */
-int	add_var_env(char *stock, t_list *tmp)
+int	add_var_env(char *stock, t_list *tmp, t_minishell *data)
 {
 	char	*copy;
 	char	*msg_err;
@@ -55,28 +55,28 @@ int	add_var_env(char *stock, t_list *tmp)
 		err_exclam(msg_err, stock, copy);
 		return (1);
 	}
-	add_list(g_list_env, stock, 0);
+	add_list(data->env, stock, 0);
 	free(copy);
 	return (0);
 }
 
 /* modify the value of an environement arg that already exist */
-int	modify_var(char *stock, t_list *tmp)
+int	modify_var(char *stock, t_list *tmp, t_minishell *data)
 {
 	char	*copy_env;
 	char	*copy_token;
 
-	while (*g_list_env)
+	while (*data->env)
 	{
-		copy_env = del_equal((*g_list_env)->content);
+		copy_env = del_equal((*data->env)->content);
 		copy_token = del_equal(stock);
 		if (ft_strcmp(copy_env, copy_token) == 1)
-			(*g_list_env) = (*g_list_env)->next;
+			(*data->env) = (*data->env)->next;
 		else if (ft_strcmp(copy_env, copy_token) == 0)
 		{
-			free((*g_list_env)->content);
-			(*g_list_env)->content = ft_strdup(stock);
-			*g_list_env = tmp;
+			free((*data->env)->content);
+			(*data->env)->content = ft_strdup(stock);
+			*data->env = tmp;
 			free(copy_env);
 			free(copy_token);
 			return (1);
@@ -109,16 +109,16 @@ static	char	*extract_stock(t_list **list_token)
 	return (stock);
 }
 
-int	ft_export(t_list **list_token)
+int	ft_export(t_list **list_token, t_minishell *data)
 {
 	t_list	*tmp;
 	char	*stock;
 	char	*copy;
 
-	tmp = *g_list_env;
+	tmp = *data->env;
 	if (ft_lstsize(*list_token) == 1)
 	{
-		if (sort_env_ascii() != 0)
+		if (sort_env_ascii(data) != 0)
 			return (1);
 	}
 	else
@@ -127,11 +127,11 @@ int	ft_export(t_list **list_token)
 		{
 			stock = extract_stock(list_token);
 			copy = del_equal(stock);
-			if (add_modif(copy, stock, tmp) == 0)
+			if (add_modif(copy, stock, tmp, data) == 0)
 				return (0);
 			(*list_token) = (*list_token)->next;
 		}
 	}
-	*g_list_env = tmp;
+	*data->env = tmp;
 	return (0);
 }

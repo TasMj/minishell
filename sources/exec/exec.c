@@ -17,7 +17,7 @@ int	exec_it(t_cmd *cmd, t_minishell *data)
 	signal_default();
 	if (!cmd->path && is_builtin(cmd) == 0 && has_slash(cmd) == 0)
 		ft_exit(data);
-	cmd->tab_env = lst_to_tab(g_list_env);
+	cmd->tab_env = lst_to_tab(data->env);
 	if (has_slash(cmd) == 1)
 	{
 		if (execve((*cmd->cmd)->content, cmd->tab, cmd->tab_env) != 0)

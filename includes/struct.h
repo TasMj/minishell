@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 12:14:14 by tas               #+#    #+#             */
-/*   Updated: 2023/07/06 02:38:43 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/10 22:01:27 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ typedef struct s_minishell
 	t_list			**token;
 	int				code_err;
 	struct s_xek	*x;
+	t_list			**env;
 }	t_minishell;
 
 typedef struct s_echo

@@ -6,21 +6,21 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 21:15:13 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/10 19:59:04 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 22:28:02 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	handl_root(t_cmd *cmd, t_cd *c)
+int	handl_root(t_cmd *cmd, t_cd *c, t_minishell *data)
 {
 	if (ft_lstsize(*cmd->cmd) == 2
 		&& contain_slash((*cmd->cmd)->next->content) == 0)
 	{
 		chdir("/");
 		*cmd->cmd = c->tmp;
-		set_old_path(c->old_path);
-		modify_pwd("/");
+		set_old_path(c->old_path, data);
+		modify_pwd("/", data);
 		if (c->path)
 			free(c->path);
 		free(c);
@@ -29,11 +29,11 @@ int	handl_root(t_cmd *cmd, t_cd *c)
 	return (0);
 }
 
-int	cd_directory(t_cd *c, t_cmd *cmd)
+int	cd_directory(t_cd *c, t_cmd *cmd, t_minishell *data)
 {
 	if (c->path)
 		return (0);
-	c->home = get_venv("HOME");
+	c->home = get_venv("HOME", data);
 	if (c->home == NULL && ft_strlen((*cmd->cmd)->next->content) == 0)
 	{
 		return (err_msg(4, "IGNORE", 2));
@@ -49,9 +49,9 @@ int	cd_directory(t_cd *c, t_cmd *cmd)
 	return (0);
 }
 
-int	go_chdir(t_cmd *cmd, t_cd *c)
+int	go_chdir(t_cmd *cmd, t_cd *c, t_minishell *data)
 {
-	c->path = get_venv("HOME");
+	c->path = get_venv("HOME", data);
 	if (c->path == NULL)
 	{
 		free(c);
@@ -59,18 +59,18 @@ int	go_chdir(t_cmd *cmd, t_cd *c)
 	}
 	*cmd->cmd = c->tmp;
 	chdir(c->path);
-	set_old_path(c->old_path);
-	modify_pwd(c->path);
+	set_old_path(c->old_path, data);
+	modify_pwd(c->path, data);
 	if (c->path)
 		free(c->path);
 	free(c);
 	return (2);
 }
 
-int	cd_home(t_cmd *cmd, t_cd *c)
+int	cd_home(t_cmd *cmd, t_cd *c, t_minishell *data)
 {
 	if (ft_strcmp("cd", (*cmd->cmd)->content) == 0 && (*cmd->cmd)->next == NULL)
-		return (go_chdir(cmd, c));
+		return (go_chdir(cmd, c, data));
 	else if ((*cmd->cmd)->next && ft_strcmp((".."), \
 	(*cmd->cmd)->next->content) == 0)
 	{
@@ -84,7 +84,7 @@ int	cd_home(t_cmd *cmd, t_cd *c)
 		}
 	}
 	else if (ft_strcmp("cd", (*cmd->cmd)->content) == 0
-		&& is_in_env("HOME") == 0)
+		&& is_in_env("HOME", data) == 0)
 	{
 		*cmd->cmd = c->tmp;
 		free(c);

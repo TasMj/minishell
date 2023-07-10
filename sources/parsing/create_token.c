@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:36:17 by tas               #+#    #+#             */
-/*   Updated: 2023/07/10 19:58:23 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 22:05:56 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ char	*get_input(t_minishell *data)
 	{
 		free(input);
 		write(1, "exit\n", 5);
-		free_list_token_content(g_list_env);
-		free_list(g_list_env);
+		free_list_token_content(data->env);
+		free_list(data->env);
 		free(data);
 		exit(EXIT_FAILURE);
 	}

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/10 16:44:04 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 22:20:50 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,17 @@ static t_list	**get_cmd(t_list *token)
 
 /* Verifie si la commande est valide 
 ex : ls -> OK, jules -> not found */
-static int	check_cmd(t_cmd *cmd)
+static int	check_cmd(t_cmd *cmd, t_minishell *data)
 {
 	char	*msg_err;
 
 	msg_err = 0;
 	if (!cmd->cmd)
 		return (0);
-	if (cmd->cmd && (has_slash(cmd) == 1 || (is_in_env("PATH") == 0 && is_builtin(cmd) == 0)))
+	if (cmd->cmd && (has_slash(cmd) == 1 || (is_in_env("PATH", data) == 0 && is_builtin(cmd) == 0)))
 		return (cmd_access(cmd, msg_err));
-	cmd->tab = lst_to_tab(g_list_env);
-	if (is_in_env("PATH") == 1)
+	cmd->tab = lst_to_tab(data->env);
+	if (is_in_env("PATH", data) == 1)
 		cmd->path = find_path(cmd->tab, (*cmd->cmd)->content);
 	if (!cmd->path && is_builtin(cmd) == 0)
 	{
@@ -90,12 +90,12 @@ static int	check_cmd(t_cmd *cmd)
 }
 
 /* Init tous les param de chaque cmd */
-static int	fill_cmd(t_cmd *cmd, t_list *elem)
+static int	fill_cmd(t_cmd *cmd, t_list *elem, t_minishell *data)
 {
 	cmd->data = singleton_minishell();
 	cmd->token = clone_to_pipe(elem);
 	cmd->cmd = get_cmd(*(cmd->token));
-	if (check_cmd(cmd) != 0)
+	if (check_cmd(cmd, data) != 0)
 		return (1);
 	if (cmd->cmd)
 		cmd->tab = lst_to_tab(cmd->cmd);
@@ -121,7 +121,7 @@ int	prep_cmd(t_minishell *data)
 	while (elem)
 	{
 		data->x->cmd[i].id = i;
-		ret = fill_cmd(&(data->x->cmd[i]), elem);
+		ret = fill_cmd(&(data->x->cmd[i]), elem, data);
 		if (ret != 0)
 			return (ret);
 		while (elem && elem->type != PIPE)

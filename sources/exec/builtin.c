@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:42:19 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/10 16:43:03 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 22:24:55 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,24 @@
 void	print_list(t_list **list);
 void	ft_pwd(void);
 
-int	select_builtin(t_cmd *cmd)
+int	select_builtin(t_cmd *cmd, t_minishell *data)
 {
 	if (ft_strcmp((*cmd->cmd)->content, "cd") == 0)
-		return (ft_cd(cmd));
+		return (ft_cd(cmd, data));
 	else if (ft_strcmp((*cmd->cmd)->content, "echo") == 0)
 		return (ft_echo(cmd->cmd));
 	else if (ft_strcmp((*cmd->cmd)->content, "env") == 0)
-		return (ft_env(cmd->cmd));
+		return (ft_env(cmd->cmd, data));
 	else if (ft_strcmp((*cmd->cmd)->content, "export") == 0)
-		return (ft_export(cmd->cmd));
+		return (ft_export(cmd->cmd, data));
 	else if (ft_strcmp((*cmd->cmd)->content, "pwd") == 0)
 		handle_pwd(cmd);
 	else if (ft_strcmp((*cmd->cmd)->content, "unset") == 0)
-		return (ft_unset(cmd->cmd));
+		return (ft_unset(cmd->cmd, data));
 	return (0);
 }
 
-static int	exec_builtin(t_cmd *cmd)
+static int	exec_builtin(t_cmd *cmd, t_minishell *data)
 {
 	t_list	*tmp;
 	int		ret;
@@ -41,7 +41,7 @@ static int	exec_builtin(t_cmd *cmd)
 		return (-1);
 	ret = 0;
 	tmp = *cmd->cmd;
-	ret = select_builtin(cmd);
+	ret = select_builtin(cmd, data);
 	if (ret != 0)
 		return (1);
 	*cmd->cmd = tmp;
@@ -88,7 +88,7 @@ int	handle_builtin(t_cmd *cmd, t_minishell *data)
 		return (1);
 	}
 	else
-		if (exec_builtin(cmd) != 0)
+		if (exec_builtin(cmd, data) != 0)
 			return (dup_n_close(tmp_in, tmp_out), 1);
 	dup_n_close(tmp_in, tmp_out);
 	return (0);
