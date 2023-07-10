@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:10:00 by tas               #+#    #+#             */
-/*   Updated: 2023/07/10 22:28:38 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 23:16:17 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	ft_cd(t_cmd *cmd, t_minishell *data)
 
 	c = malloc(sizeof(t_cd));
 	intit_cd(cmd, c);
-	if (singleton_minishell()->x->nb_cmd > 1)
+	if (data->x->nb_cmd > 1)
 		return (0);
 	ret = cd_home(cmd, c, data);
 	if (ret != 0)

@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 22:34:52 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/10 20:00:20 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 22:37:42 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*remove_dollar(char *str)
 	return (token);
 }
 
-char	*substitution(char *token)
+char	*substitution(char *token, t_minishell *data)
 {
 	char	*variable;
 	char	*var_check;
@@ -62,8 +62,8 @@ char	*substitution(char *token)
 	else if (token[0] == '$')
 	{
 		var_check = remove_dollar(token);
-		if (is_in_env(var_check))
-			variable = get_venv(var_check);
+		if (is_in_env(var_check, data))
+			variable = get_venv(var_check, data);
 		else
 			variable = "";
 		free(var_check);

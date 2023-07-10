@@ -6,13 +6,13 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:01:33 by tmejri            #+#    #+#             */
-/*   Updated: 2023/07/10 20:14:01 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 22:39:04 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	hdoc_exclam(t_substitution *s, char *str)
+void	hdoc_exclam(t_substitution *s, char *str, t_minishell *data)
 {
 	int		deb;
 	char	*tmp;
@@ -21,7 +21,7 @@ void	hdoc_exclam(t_substitution *s, char *str)
 	s->i += 2;
 	s->end = s->i;
 	s->keep_var = ft_strdup_size(str + s->start, (s->end - s->start));
-	s->var_substitute = substitution(s->keep_var);
+	s->var_substitute = substitution(s->keep_var, data);
 	deb = s->i;
 	s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
 	while (str[s->i] != '\0' && (!ft_isalnum(str[s->i]) && str[s->i] != '$'))
@@ -43,7 +43,7 @@ void	hdoc_rest(t_substitution *s, char *str, t_minishell *data)
 		s->i++;
 	s->end = s->i;
 	s->keep_var = ft_strdup_size(str + s->start, (s->end - s->start));
-	s->var_substitute = substitution(s->keep_var);
+	s->var_substitute = substitution(s->keep_var, data);
 	if (ft_strlen(s->var_substitute) != 0)
 		s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
 	else
@@ -84,7 +84,7 @@ void	sub_dol_hdox_bis(t_substitution *s, char *str, t_minishell *data)
 		s->i++;
 	s->end = s->i;
 	s->keep_var = ft_strdup_size(str + s->start, (s->end - s->start));
-	s->var_substitute = substitution(s->keep_var);
+	s->var_substitute = substitution(s->keep_var, data);
 	if (s->var_substitute && ft_strlen(s->var_substitute) != 0)
 		s->new_content = ft_strjoin_mod(s->new_content, s->var_substitute, 3);
 	else

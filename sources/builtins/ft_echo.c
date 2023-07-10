@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:09:31 by tas               #+#    #+#             */
-/*   Updated: 2023/07/06 02:39:25 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/07/10 23:45:55 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ int	ft_echo(t_list **list_token)
 		else
 			(*list_token) = (*list_token)->next;
 	}
-	if (e->flag != 1 && e->stockage != NULL)
-		printf("%s\n", e->stockage);
+	if (e->flag != 1)
+		to_vomit(e->stockage);
 	else if (e->flag != 0 && e->stockage != NULL)
 		printf("%s", e->stockage);
 	if (e->to_free == 1)

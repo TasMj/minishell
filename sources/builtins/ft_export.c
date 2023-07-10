@@ -6,13 +6,11 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:11:23 by tas               #+#    #+#             */
-/*   Updated: 2023/07/10 22:29:29 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 22:49:57 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// t_list	**g_list_env;
 
 /* sort the environement by ascii */
 static int	sort_env_ascii(t_minishell *data)

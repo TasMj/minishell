@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 19:39:21 by tas               #+#    #+#             */
-/*   Updated: 2023/07/10 22:07:53 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 22:52:56 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,15 @@ int	init_list(t_minishell *data)
 	return (0);
 }
 
-t_minishell	*singleton_minishell(void)
+t_minishell	*set_data(void)
 {
-	static t_minishell	*data = NULL;
+	t_minishell	*data;
 
-	if (data == NULL)
-	{
-		data = (t_minishell *)malloc(sizeof(t_minishell));
-		data->input = NULL;
-		data->token = NULL;
-		data->x = NULL;
-	}
+	data = NULL;
+	data = (t_minishell *)malloc(sizeof(t_minishell));
+	data->input = NULL;
+	data->token = NULL;
+	data->x = NULL;
 	return (data);
 }
 
@@ -64,7 +62,7 @@ int	main(int argc, char **argv, char **env)
 {
 	t_minishell	*data;
 
-	data = singleton_minishell();
+	data = set_data();
 	if (init_main(env, argc, argv, data) == 1)
 		return (1);
 	while (1)

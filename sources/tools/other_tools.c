@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 21:12:26 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/10 22:06:48 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 23:46:37 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,12 @@ int	space_only(char *p)
 	}
 	else
 		return (1);
+}
+
+void	to_vomit(char *stockage)
+{
+	if (stockage == NULL)
+		printf("\n");
+	else
+		printf("%s\n", stockage);
 }

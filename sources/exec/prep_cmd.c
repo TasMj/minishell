@@ -6,7 +6,7 @@
 /*   By: jthuysba <jthuysba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 16:21:12 by jthuysba          #+#    #+#             */
-/*   Updated: 2023/07/10 22:20:50 by jthuysba         ###   ########.fr       */
+/*   Updated: 2023/07/10 23:24:15 by jthuysba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ static int	check_cmd(t_cmd *cmd, t_minishell *data)
 	msg_err = 0;
 	if (!cmd->cmd)
 		return (0);
-	if (cmd->cmd && (has_slash(cmd) == 1 || (is_in_env("PATH", data) == 0 && is_builtin(cmd) == 0)))
+	if (cmd->cmd && (has_slash(cmd) == 1
+			|| (is_in_env("PATH", data) == 0 && is_builtin(cmd) == 0)))
 		return (cmd_access(cmd, msg_err));
 	cmd->tab = lst_to_tab(data->env);
 	if (is_in_env("PATH", data) == 1)
@@ -92,7 +93,7 @@ static int	check_cmd(t_cmd *cmd, t_minishell *data)
 /* Init tous les param de chaque cmd */
 static int	fill_cmd(t_cmd *cmd, t_list *elem, t_minishell *data)
 {
-	cmd->data = singleton_minishell();
+	cmd->data = data;
 	cmd->token = clone_to_pipe(elem);
 	cmd->cmd = get_cmd(*(cmd->token));
 	if (check_cmd(cmd, data) != 0)
